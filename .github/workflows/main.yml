@@ -18,6 +18,9 @@ jobs:
 
     - name: Publish HomeBalls.App.UI
       run: dotnet publish '.\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj' -c Release -o '.\release' --nologo
+      
+    - name: Print directories
+      run: ls -LR
 
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.2.2
