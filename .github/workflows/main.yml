@@ -25,3 +25,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: 'src/HomeBalls.App.UI/wwwroot'
+
+    - name: Change base-tag in index.html from / to /HomeBalls
+      run: sed -i 's/<base href="\/" \/>/<base href="\/HomeBalls\/" \/>/g' release/wwwroot/index.html
