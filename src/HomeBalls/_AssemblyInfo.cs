@@ -1,0 +1,1 @@
+[assembly:InternalsVisibleTo("CEo.Pokemon.HomeBalls.Tests")]
