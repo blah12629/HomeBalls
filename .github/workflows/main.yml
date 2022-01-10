@@ -22,12 +22,12 @@ jobs:
     - name: Change base-tag in index.html from / to /HomeBalls
       run: sed -i 's/<base href="\/" \/>/<base href="\/HomeBalls\/" \/>/g' 'release/wwwroot/index.html'
 
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: 'release/wwwroot'
-
-    - name: Add .nojekyll file
-      run: touch release/wwwroot/.nojekyll
