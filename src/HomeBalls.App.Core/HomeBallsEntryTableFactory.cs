@@ -41,7 +41,7 @@ public class HomeBallsEntryTableFactory :
             columns,
             indexMap,
             new HomeBallsEntryCollection(),
-            LoggerFactory.CreateLogger(typeof(HomeBallsEntryTable)));
+            LoggerFactory?.CreateLogger(typeof(HomeBallsEntryTable)));
         foreach (var entry in entries) table.Add(entry);
 
         return table;
@@ -57,7 +57,7 @@ public class HomeBallsEntryTableFactory :
             .ThenBy(form => form.FormId)
             .Select(async form => new HomeBallsEntryColumn(
                 await CreateCellsAsync(cancellationToken),
-                LoggerFactory.CreateLogger(typeof(HomeBallsEntryColumn))));
+                LoggerFactory?.CreateLogger(typeof(HomeBallsEntryColumn))));
 
         return (await Task.WhenAll(loadingTask)).ToList().AsReadOnly();
     }
