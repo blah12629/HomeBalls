@@ -17,11 +17,11 @@ jobs:
         include-prerelease: true
 
     - name: Publish HomeBalls.App.UI
-      run: dotnet publish .\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj -c Release -o .\release --nologo
+      run: dotnet publish '.\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj' -c Release -o '.\release' --nologo
 
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: .\release\wwwroot
+        FOLDER: '.\release\wwwroot'
