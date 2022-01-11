@@ -15,6 +15,9 @@ jobs:
       with:
         dotnet-version: '6.0.100'
         include-prerelease: true
+        
+    - name: Setup Tailwind
+      run: npm install tailwindcss postcss autoprefixer postcss-cli
 
     - name: Publish HomeBalls.App.UI
       run: dotnet publish '.\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj' -c Release -o '.\release' --nologo
