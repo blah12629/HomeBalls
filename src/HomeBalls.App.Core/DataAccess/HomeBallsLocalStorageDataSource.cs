@@ -131,16 +131,17 @@ public class HomeBallsLocalStorageDataSource :
         where TKey : notnull
         where TRecord : notnull, IKeyed, IIdentifiable
     {
-        var dataString = await LocalStorage.GetItemAsStringAsync(
+        var deserializationType = typeof(ICollection<>)
+            .MakeGenericType(TypeMap.GetProtobufConcreteType(dataSet.ElementType));
+        var dataString = await LocalStorage.GetItemAsync<String>(
             dataSet.ElementType.GetFullNameNonNull(),
             cancellationToken);
+
         var dataBytes = Convert.FromBase64String(dataString);
         using var memory = new MemoryStream(dataBytes);
 
-        var loaded = (IEnumerable<TRecord>)ProtoBuf.Serializer.Deserialize(
-            typeof(ICollection<>).MakeGenericType(
-                TypeMap.GetProtobufConcreteType(dataSet.ElementType)),
-            memory);
+        var loaded = (IEnumerable<TRecord>)ProtoBuf.Serializer
+            .Deserialize(deserializationType, memory);
 
         dataSet.AddRange(loaded);
         return this;

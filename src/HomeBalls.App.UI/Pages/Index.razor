@@ -1,7 +1,33 @@
 ﻿@page "/"
+@inject IHomeBallsEntryTableFactory TableFactory
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@if (Table != default)
+{
+    <span>Table loaded successfully</span>
+    @foreach (var column in Table.Columns)
+    {
+        <span>@column.SpeciesId</span>
+        <span>@column.FormId</span>
+        <br />
+    }
+}
+
+@code {
+    IHomeBallsEntryTable? _table;
+    IHomeBallsEntryTable? Table
+    {
+        get => _table;
+        set { _table = value; StateHasChanged(); }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
+    }
+}

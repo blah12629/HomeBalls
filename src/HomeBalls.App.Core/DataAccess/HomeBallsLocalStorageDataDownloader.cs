@@ -64,12 +64,8 @@ public class HomeBallsLocalStorageDataDownloader :
         CancellationToken cancellationToken = default)
     {
         var data = await RawDataClient.GetByteArrayAsync(fileName, cancellationToken);
-
-        await LocalStorage.SetItemAsync(
-            identifier,
-            Convert.ToBase64String(data),
-            cancellationToken);
-
+        var dataString = Convert.ToBase64String(data);
+        await LocalStorage.SetItemAsync(identifier, dataString, cancellationToken);
         return this;
     }
 
