@@ -4,6 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCoreNamedRecord<UInt16>,
         IHomeBallsItem
     {
+        #nullable disable
+        public EFCoreItem() { }
+        #nullable enable
+
         public virtual Byte CategoryId { get; init; }
 
         public virtual EFCoreItemCategory Category { get; init; }

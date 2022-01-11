@@ -60,16 +60,21 @@ async Task initializeDataContextAsync(
     IHomeBallsDataInitializer initializer,
     CancellationToken cancellationToken = default)
 {
-    await initializer.StartConversionAsync();
-    await initializer.PostProcessDataAsync();
+    await initializer.StartConversionAsync(cancellationToken);
+    await initializer.PostProcessDataAsync(cancellationToken);
 
     await using (var context = createDataContext())
     {
-        await context.Database.EnsureDeletedAsync();
-        await context.Database.EnsureCreatedAsync();
+        await context.Database.EnsureDeletedAsync(cancellationToken);
+        await context.Database.EnsureCreatedAsync(cancellationToken);
     }
 
-    try { await initializer.SaveToDataDbContextAsync(createDataContext()); }
+    try
+    {
+        await initializer.SaveToDataDbContextAsync(
+            createDataContext(),
+            cancellationToken);
+    }
     catch(Exception exception) { logger.LogError(exception, default); }
 }
 

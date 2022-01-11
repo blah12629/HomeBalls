@@ -4,6 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCoreNamedRecord<Byte>,
         IHomeBallsGameVersion
     {
+        #nullable disable
+        public EFCoreGameVersion() { }
+        #nullable enable
+
         public virtual Byte GenerationId { get; init; }
 
         public virtual EFCoreGeneration Generation { get; init; }

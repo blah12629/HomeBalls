@@ -4,6 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCoreNamedRecord<Byte>,
         IHomeBallsNature
     {
+        #nullable disable
+        public EFCoreNature() { }
+        #nullable enable
+
         public virtual Byte DecreasedStatId { get; init; }
 
         public virtual EFCoreStat DecreasedStat { get; init; }

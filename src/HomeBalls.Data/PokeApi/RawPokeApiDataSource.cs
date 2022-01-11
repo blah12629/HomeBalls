@@ -14,7 +14,7 @@ public interface IRawPokeApiDataSource :
 
     IRawPokeApiDataSet<Byte, RawPokeApiEggGroup> EggGroups { get; }
 
-    IRawPokeApiDataSet<RawPokeApiEvolutionChain> EvolutionChains { get; }
+    IRawPokeApiDataSet<UInt16, RawPokeApiEvolutionChain> EvolutionChains { get; }
 
     IRawPokeApiDataSet<RawPokeApiGenerationName> GenerationNames { get; }
 
@@ -98,7 +98,7 @@ public partial class RawPokeApiDataSource :
         AbilityNames = createList<RawPokeApiAbilityName>();
         EggGroupProse = createList<RawPokeApiEggGroupProse>();
         EggGroups = createDictionary<Byte, RawPokeApiEggGroup>();
-        EvolutionChains = createList<RawPokeApiEvolutionChain>();
+        EvolutionChains = createDictionary<UInt16, RawPokeApiEvolutionChain>();
         GenerationNames = createList<RawPokeApiGenerationName>();
         Generations = createDictionary<Byte, RawPokeApiGeneration>();
         ItemCategories = createDictionary<Byte, RawPokeApiItemCategory>();
@@ -160,7 +160,7 @@ public partial class RawPokeApiDataSource :
 
     public IRawPokeApiDataSet<Byte, RawPokeApiEggGroup> EggGroups { get; }
 
-    public IRawPokeApiDataSet<RawPokeApiEvolutionChain> EvolutionChains { get; }
+    public IRawPokeApiDataSet<UInt16, RawPokeApiEvolutionChain> EvolutionChains { get; }
 
     public IRawPokeApiDataSet<RawPokeApiGenerationName> GenerationNames { get; }
 

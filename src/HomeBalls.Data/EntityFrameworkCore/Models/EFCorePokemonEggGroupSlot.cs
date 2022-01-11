@@ -4,6 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCorePokemonFormComponent,
         IHomeBallsPokemonEggGroupSlot
     {
+        #nullable disable
+        public EFCorePokemonEggGroupSlot() { }
+        #nullable enable
+
         public virtual Byte EggGroupId { get; init; }
 
         public virtual EFCorePokemonEggGroup EggGroup { get; init; }

@@ -5,6 +5,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         IKeyed<UInt32>,
         IHomeBallsString
     {
+        #nullable disable
+        public EFCoreString() { }
+        #nullable enable
+
         public virtual UInt32 Id { get; init; }
 
         public virtual Byte LanguageId { get; init; }

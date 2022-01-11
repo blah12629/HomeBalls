@@ -5,6 +5,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         IKeyed<UInt32>,
         IHomeBallsEntityComponent
     {
+        #nullable disable
+        protected EFCorePokemonFormComponent() { }
+        #nullable enable
+
         public virtual UInt32 Id { get; init; }
 
         public virtual UInt16 SpeciesId { get; init; }

@@ -8,6 +8,10 @@ public abstract record RawPokeApiRecord<TKey> :
     IIdentifiable
     where TKey : struct, INumber<TKey>
 {
+    #nullable disable
+    public RawPokeApiRecord() { }
+    #nullable enable
+
     public virtual TKey Id { get; init; }
 
     public virtual String Identifier { get; init; }
@@ -22,6 +26,10 @@ public abstract record RawPokeApiGlobalObject : RawPokeApiRecord
 
 public record RawPokeApiName : RawPokeApiGlobalObject
 {
+    #nullable disable
+    public RawPokeApiName() { }
+    #nullable enable
+
     public virtual String Name { get; init; }
 }
 
@@ -53,13 +61,15 @@ public record RawPokeApiEggGroupProse : RawPokeApiName
 
 public record RawPokeApiEggGroup : RawPokeApiRecord<Byte> { }
 
-public record RawPokeApiEvolutionChain : RawPokeApiRecord, IKeyed<UInt16>
+public record RawPokeApiEvolutionChain : RawPokeApiRecord, IKeyed<UInt16>, IIdentifiable
 {
     public virtual UInt16 Id { get; init; }
 
     public virtual UInt16? BabyTriggerItemId { get; init; }
 
     dynamic IKeyed.Id => Id;
+
+    String IIdentifiable.Identifier => Id.ToString();
 }
 
 public record RawPokeApiGenerationName : RawPokeApiName
@@ -107,6 +117,10 @@ public record RawPokeApiLanguage : RawPokeApiRecord<Byte>
 
 public record RawPokeApiMoveDamageClassProse : RawPokeApiName
 {
+    #nullable disable
+    public RawPokeApiMoveDamageClassProse() { }
+    #nullable enable
+
     public virtual Byte MoveDamageClassId { get; init; }
 
     public virtual String Description { get; init; }

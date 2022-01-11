@@ -8,6 +8,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         IKeyed,
         IIdentifiable
     {
+        #nullable disable
+        protected EFCoreRecord() { }
+        #nullable enable
+
         protected internal abstract dynamic Id { get; }
 
         public virtual String Identifier { get; init; }
@@ -21,6 +25,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         IIdentifiable
         where TKey : notnull, IEquatable<TKey>
     {
+        #nullable disable
+        protected EFCoreRecord() { }
+        #nullable enable
+
         public virtual TKey Id { get; init; }
 
         public virtual String Identifier { get; init; }

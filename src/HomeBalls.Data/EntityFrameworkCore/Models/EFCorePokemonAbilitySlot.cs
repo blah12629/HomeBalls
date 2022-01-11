@@ -4,6 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCorePokemonFormComponent,
         IHomeBallsPokemonAbilitySlot
     {
+        #nullable disable
+        public EFCorePokemonAbilitySlot() { }
+        #nullable enable
+
         public virtual UInt16 AbilityId { get; init; }
 
         public virtual EFCorePokemonAbility Ability { get; init; }

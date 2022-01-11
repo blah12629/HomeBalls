@@ -4,6 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCorePokemonFormComponent,
         IHomeBallsPokemonTypeSlot
     {
+        #nullable disable
+        public EFCorePokemonTypeSlot() { }
+        #nullable enable
+
         public virtual Byte TypeId { get; init; }
 
         public virtual EFCoreType Type { get; init; }

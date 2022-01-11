@@ -4,6 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCoreNamedRecord,
         IHomeBallsPokemonForm
     {
+        #nullable disable
+        public EFCorePokemonForm() { }
+        #nullable enable
+
         protected internal override dynamic Id => new { SpeciesId, FormId };
 
         public virtual UInt16 SpeciesId { get; init; }
