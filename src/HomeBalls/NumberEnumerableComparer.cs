@@ -29,8 +29,5 @@ public class NumberEnumerableEqualityComparer<TNumber> :
         [DisallowNull] IEnumerable<TNumber> obj) =>
         obj.GetHashCode();
 
-    public int GetHashCode(object obj)
-    {
-        throw new NotImplementedException();
-    }
+    public virtual Int32 GetHashCode(Object obj) => obj.GetHashCode();
 }

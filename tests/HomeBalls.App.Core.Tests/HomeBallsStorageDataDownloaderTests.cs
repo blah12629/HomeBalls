@@ -17,8 +17,6 @@ public class HomeBallsLocalStorageDataDownloaderTests
 
     protected HomeBallsLocalStorageDataDownloader Sut => CreateSut(new HttpClient());
 
-    protected String DataRootDirectory => @"..\..\..\..\..\src\Pokemon.HomeBalls.Data\data_protobuf";
-
     protected HomeBallsLocalStorageDataDownloader CreateSut(HttpClient dataClient) =>
         new HomeBallsLocalStorageDataDownloader(dataClient, LocalStorage, Logger);
 
@@ -66,7 +64,7 @@ public class HomeBallsLocalStorageDataDownloaderTests
         var (identifier, fileName) = (
             "CEo.Pokemon.HomeBalls.IHomeBallsGameVersion",
             "CEo.Pokemon.HomeBalls.IHomeBallsGameVersion.bin");
-        var filePath = LocalFileSystem.Path.Join(DataRootDirectory, fileName);
+        var filePath = LocalFileSystem.Path.Join(ProtobufDataRoot, fileName);
         var cancellationToken = default(CancellationToken);
 
         var returnValue = await LocalFileSystem.File

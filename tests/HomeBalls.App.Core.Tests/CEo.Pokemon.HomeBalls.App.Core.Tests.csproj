@@ -2,13 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
-
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\HomeBalls\CEo.Pokemon.HomeBalls.csproj" />
+    <ProjectReference Include="..\..\src\HomeBalls.App.Core\CEo.Pokemon.HomeBalls.App.Core.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.1.5" />
@@ -25,11 +29,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\HomeBalls\CEo.Pokemon.HomeBalls.csproj" />
-    <ProjectReference Include="..\..\src\HomeBalls.App.Core\CEo.Pokemon.HomeBalls.App.Core.csproj" />
   </ItemGroup>
 
 </Project>

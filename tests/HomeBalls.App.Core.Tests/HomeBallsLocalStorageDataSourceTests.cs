@@ -24,8 +24,6 @@ public class HomeBallsLocalStorageDataSourceTests
 
     protected HomeBallsLocalStorageDataSource Sut { get; }
 
-    protected String DataRootDirectory => @"..\..\..\..\..\src\Pokemon.HomeBalls.Data\data_protobuf";
-
     protected async Task EnsureLoadedAsync_ShouldDeserializeToDataSet_NonTest<TKey, TRecord>(
         Func<TRecord, TKey>? keySelector)
         where TKey : notnull
@@ -39,7 +37,7 @@ public class HomeBallsLocalStorageDataSourceTests
         var cancellationToken = default(CancellationToken);
         var identifier = dataSet.ElementType.GetFullNameNonNull();
         var fileName = identifier.AddFileExtension(_Values.DefaultProtobufExtension);
-        var filePath = LocalFileSystem.Path.Join(DataRootDirectory, fileName);
+        var filePath = LocalFileSystem.Path.Join(ProtobufDataRoot, fileName);
 
         var returnValue = Convert.ToBase64String(
             await LocalFileSystem.File.ReadAllBytesAsync(filePath));
