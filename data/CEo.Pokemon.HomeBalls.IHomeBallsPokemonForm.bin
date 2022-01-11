@@ -1,243 +1,243 @@
 
-
-
-	bulbasaur
-
-
-
+
+
+0	bulbasaur
+
+
+0
 charmander
+
+
+0squirtle
+
+
+
+0caterpie
 
-
-squirtle
+
+0weedle
 
-
-
-caterpie
-
-
-weedle
-
-
-pidgey
-
-
-rattata
-
-
-rattata-alola
-
-
-spearow
-
-
-ekans
+
+0pidgey
 
-
-	sandshrew
+
+0rattata
 
-
-sandshrew-alola
+
+0rattata-alola
 
-
-	nidoran-f
+
+0spearow
+
+
+0ekans
+
+
+0	sandshrew
+
+
+0sandshrew-alola
+
+
+0	nidoran-f
+
+
+ 0	nidoran-m
+
+
+%0vulpix
+
+
+%0vulpix-alola
+
+
+)0zubat
+
+
++0oddish
+
+
+.0paras
 
-
- 	nidoran-m
-
-
-%vulpix
-
-
-%vulpix-alola
-
-
-)zubat
-
-
-+oddish
-
-
-.paras
-
-
-0venonat
-
-
-2diglett
-
-
-2diglett-alola
-
-
-4meowth
-
-
-4meowth-alola
-
-
-4meowth-galar
+
+00venonat
+
+
+20diglett
+
+
+20diglett-alola
+
+
+40meowth
+
+
+40meowth-alola
+
+
+40meowth-galar
 
 
 4meowth-gmax
-
-
-6psyduck
-
-
-8mankey
 
-
-:	growlithe
-
-
-<poliwag
-
-
-?abra
+
+60psyduck
+
+
+80mankey
+
+
+:0	growlithe
+
+
+<0poliwag
 
-
-Bmachop
-
-
-E
+
+?0abra
+
+
+B0machop
+
+
+E0
 bellsprout
+
+
+H0	tentacool
 
-
-H	tentacool
-
-
-Jgeodude
-
-
-Jgeodude-alola
-
-
-Mponyta
-
-
-Mponyta-galar
-
-
-Oslowpoke
-
-
-Oslowpoke-galar
-
-
-Q	magnemite
-
-
-S	farfetchd
+
+J0geodude
 
-
-Sfarfetchd-galar
-
-
-Tdoduo
-
-
-Vseel
-
-
-Xgrimer
-
-
-Xgrimer-alola
+
+J0geodude-alola
 
-
-Zshellder
-
-
-\gastly
-
-
-_onix
-
-
-`drowzee
-
-
-bkrabby
-
-
-dvoltorb
-
-
-f	exeggcute
-
-
-hcubone
-
-
-l	lickitung
-
-
-mkoffing
-
-
-orhyhorn
-
-
-rtangela
+
+M0ponyta
+
+
+M0ponyta-galar
 
-
-s
+
+O0slowpoke
+
+
+O0slowpoke-galar
+
+
+Q0	magnemite
+
+
+S0	farfetchd
+
+
+S0farfetchd-galar
+
+
+T0doduo
+
+
+V0seel
+
+
+X0grimer
+
+
+X0grimer-alola
+
+
+Z0shellder
+
+
+\0gastly
+
+
+_0onix
+
+
+`0drowzee
+
+
+b0krabby
+
+
+d0voltorb
+
+
+f0	exeggcute
+
+
+h0cubone
+
+
+l0	lickitung
+
+
+m0koffing
+
+
+o0rhyhorn
+
+
+r0tangela
+
+
+s0
 kangaskhan
 
 
 skangaskhan-mega
-
-
-thorsea
-
-
-vgoldeen
-
-
-xstaryu
-
-
-{scyther
-
-
-pinsir
+
+
+t0horsea
+
+
+v0goldeen
+
+
+x0staryu
+
+
+{0scyther
+
+
+0pinsir
 
 
 pinsir-mega
-
-
-€tauros
 
-
-magikarp
-
-
-ƒlapras
+	
+€0tauros
+
+	
+0magikarp
+
+	
+ƒ0lapras
 
 
 ƒlapras-gmax
 
 
 „ditto
-
-
-…eevee
+
+	
+…0eevee
 
 
 …
 eevee-gmax
-
-
-‰porygon
-
-
-Šomanyte
-
-
-Œkabuto
-
-
-Ž
+
+	
+‰0porygon
+
+	
+Š0omanyte
+
+	
+Œ0kabuto
+
+	
+Ž0
 aerodactyl
 
 
@@ -260,9 +260,9 @@ aerodactyl
 
 
 ’moltres-galar
-
-
-“dratini
+
+	
+“0dratini
 
 
 –mewtwo
@@ -275,72 +275,72 @@ aerodactyl
 
 
 —mew
+
+	
+˜0	chikorita
+
+	
+›0	cyndaquil
+
+	
+ž0totodile
 
-
-˜	chikorita
-
-
-›	cyndaquil
+	
+¡0sentret
+
+	
+£0hoothoot
 
-
-žtotodile
+	
+¥0ledyba
+
+	
+§0spinarak
+
+	
+ª0chinchou
 
-
-¡sentret
-
-
-£hoothoot
-
-
-¥ledyba
-
-
-§spinarak
-
-
-ªchinchou
-
-
-¬pichu
+	
+¬0pichu
 
 
 ¬pichu-spiky-eared
+
+	
+­0cleffa
+
+	
+®0	igglybuff
+
+	
+¯0togepi
 
-
-­cleffa
+	
+±0natu
+
+	
+³0mareep
+
+	
+»0hoppip
+
+	
+¾0aipom
 
-
-®	igglybuff
-
-
-¯togepi
-
-
-±natu
-
-
-³mareep
-
-
-»hoppip
-
-
-¾aipom
+	
+¿0sunkern
 
-
-¿sunkern
-
-
-Áyanma
-
-
-Âwooper
-
-
-Æmurkrow
-
-
-È
+	
+Á0yanma
+
+	
+Â0wooper
+
+	
+Æ0murkrow
+
+	
+È0
 misdreavus
 
 
@@ -427,87 +427,87 @@ misdreavus
 
 
 Éunown-question
-
-
-Ë	girafarig
-
-
-Ìpineco
-
-
-Î	dunsparce
-
-
-Ïgligar
+
+	
+Ë0	girafarig
 
-
-Ñsnubbull
+	
+Ì0pineco
+
+	
+Î0	dunsparce
 
-
-Óqwilfish
-
-
-Õshuckle
+	
+Ï0gligar
+
+	
+Ñ0snubbull
+
+	
+Ó0qwilfish
 
-
-Ö	heracross
+	
+Õ0shuckle
+
+	
+Ö0	heracross
 
 
 Öheracross-mega
-
-
-×sneasel
 
-
-Ø	teddiursa
-
-
-Úslugma
-
-
-Üswinub
+	
+×0sneasel
+
+	
+Ø0	teddiursa
+
+	
+Ú0slugma
+
+	
+Ü0swinub
+
+	
+Þ0corsola
+
+	
+Þ0corsola-galar
+
+	
+ß0remoraid
+
+	
+á0delibird
+
+	
+ã0skarmory
+
+	
+ä0houndour
+
+	
+ç0phanpy
+
+	
+ê0stantler
+
+	
+ë0smeargle
+
+	
+ì0tyrogue
+
+	
+î0smoochum
+
+	
+ï0elekid
 
-
-Þcorsola
-
-
-Þcorsola-galar
-
-
-ßremoraid
-
-
-ádelibird
-
-
-ãskarmory
-
-
-ähoundour
-
-
-çphanpy
-
-
-êstantler
-
-
-ësmeargle
-
-
-ìtyrogue
-
-
-îsmoochum
-
-
-ïelekid
-
-
-ðmagby
-
-
-ñmiltank
+	
+ð0magby
+
+	
+ñ0miltank
 
 
 óraikou
@@ -517,9 +517,9 @@ misdreavus
 
 
 õsuicune
-
-
-ölarvitar
+
+	
+ö0larvitar
 
 
 ùlugia
@@ -529,165 +529,162 @@ misdreavus
 
 
 ûcelebi
-
-
-ütreecko
-
-
-ÿtorchic
-
-
-‚mudkip
 
-
-…	poochyena
+	
+ü0treecko
 
-
-‡	zigzagoon
-
-
-‡zigzagoon-galar
-
-
-‰wurmple
-
-
-Žlotad
-
-
-‘seedot
-
-
-”taillow
-
-
-–wingull
-
-
-˜ralts
-
-
-›surskit
-
-
-	shroomish
-
-
-Ÿslakoth
-
-
-¢nincada
-
-
-¥whismur
+	
+ÿ0torchic
 
-
-¨makuhita
+	
+‚0mudkip
+
+	
+…0	poochyena
+
+	
+‡0	zigzagoon
+
+	
+‡0zigzagoon-galar
+
+	
+‰0wurmple
 
-
-ªazurill
+	
+Ž0lotad
 
-
-«nosepass
-
-
-¬skitty
+	
+‘0seedot
+
+	
+”0taillow
+
+	
+–0wingull
 
-
-®sableye
+	
+˜0ralts
+
+	
+›0surskit
+
+	
+0	shroomish
+
+	
+Ÿ0slakoth
+
+	
+¢0nincada
+
+	
+¥0whismur
+
+	
+¨0makuhita
+
+	
+«0nosepass
+
+	
+¬0skitty
+
+	
+®0sableye
 
 
 ®sableye-mega
-
-
-¯mawile
+
+	
+¯0mawile
 
 
 ¯mawile-mega
-
-
-°aron
+
+	
+°0aron
+
+	
+³0meditite
+
+	
+µ0	electrike
 
-
-³meditite
+	
+·0plusle
+
+	
+¸0minun
 
-
-µ	electrike
-
-
-·plusle
-
-
-¸minun
+	
+¹0volbeat
+
+	
+º0illumise
+
+	
+¼0gulpin
+
+	
+¾0carvanha
+
+	
+À0wailmer
 
-
-¹volbeat
+	
+Â0numel
+
+	
+Ä0torkoal
 
-
-ºillumise
-
-
-¼gulpin
+	
+Å0spoink
 
-
-¾carvanha
-
-
-Àwailmer
-
-
-Ânumel
-
-
-Ätorkoal
-
-
-Åspoink
-
-
-Çspinda
+	
+Ç0spinda
+
+	
+È0trapinch
 
-
-Ètrapinch
-
-
-Ëcacnea
-
-
-Íswablu
+	
+Ë0cacnea
 
-
-Ïzangoose
-
-
-Ðseviper
+	
+Í0swablu
+
+	
+Ï0zangoose
+
+	
+Ð0seviper
+
+	
+Ñ0lunatone
+
+	
+Ò0solrock
+
+	
+Ó0barboach
+
+	
+Õ0corphish
 
-
-Ñlunatone
-
-
-Òsolrock
+	
+×0baltoy
 
-
-Óbarboach
+	
+Ù0lileep
+
+	
+Û0anorith
 
-
-Õcorphish
-
-
-×baltoy
-
-
-Ùlileep
-
-
-Ûanorith
-
-
-Ýfeebas
-
-
-ßcastform
+	
+Ý0feebas
+
+	
+ß0castform
 
 
 ßcastform-sunny
@@ -697,49 +694,46 @@ misdreavus
 
 
 ßcastform-snowy
+
+	
+à0kecleon
+
+	
+á0shuppet
+
+	
+ã0duskull
+
+	
+å0tropius
 
-
-àkecleon
-
-
-áshuppet
-
-
-ãduskull
-
-
-åtropius
-
-
-çabsol
+	
+ç0absol
 
 
 ç
 absol-mega
-
-
-èwynaut
-
-
-ésnorunt
-
-
-ëspheal
-
-
-îclamperl
 
-
-ñ	relicanth
+	
+é0snorunt
+
+	
+ë0spheal
+
+	
+î0clamperl
+
+	
+ñ0	relicanth
+
+	
+ò0luvdisc
 
-
-òluvdisc
-
-
-óbagon
-
-
-öbeldum
+	
+ó0bagon
+
+	
+ö0beldum
 
 
 ùregirock
@@ -794,130 +788,109 @@ absol-mega
 
 
 ‚deoxys-speed
-
-
-ƒturtwig
-
-
-†chimchar
-
-
-‰piplup
-
-
-Œstarly
-
-
-bidoof
 
-
-‘	kricketot
-
-
-“shinx
-
-
-–budew
+	
+ƒ0turtwig
+
+	
+†0chimchar
 
-
-˜cranidos
+	
+‰0piplup
 
-
-šshieldon
+	
+Œ0starly
+
+	
+0bidoof
 
-
-œburmy-plant
+	
+‘0	kricketot
+
+	
+“0shinx
+
+	
+˜0cranidos
+
+	
+š0shieldon
+
+	
+œ0burmy-plant
 
 
 œburmy-sandy
 
 
 œburmy-trash
-
-
-Ÿcombee
-
-
-¡	pachirisu
-
-
-¢buizel
-
-
-¤cherubi
-
-
-¦shellos-west
-
-
-¦shellos-east
 
-
-©drifloon
-
-
-«buneary
-
-
-¯glameow
-
-
-±	chingling
-
-
-²stunky
-
-
-´bronzor
-
-
-¶bonsly
-
-
-·mime-jr
-
-
-¸happiny
-
-
-¹chatot
-
-
-º	spiritomb
-
-
-»gible
+	
+Ÿ0combee
+
+	
+¡0	pachirisu
 
-
-¾munchlax
-
-
-¿riolu
+	
+¢0buizel
+
+	
+¤0cherubi
+
+	
+¦0shellos-west
+
+	
+¦0shellos-east
 
-
-Á
-hippopotas
-
-
-Ãskorupi
-
-
-Åcroagunk
+	
+©0drifloon
 
-
-Ç	carnivine
+	
+«0buneary
+
+	
+¯0glameow
+
+	
+²0stunky
+
+	
+´0bronzor
+
+	
+¹0chatot
+
+	
+º0	spiritomb
 
-
-Èfinneon
+	
+»0gible
 
-
-Êmantyke
-
-
-Ësnover
-
-
-ßrotom
+	
+¿0riolu
+
+	
+Á0
+hippopotas
+
+	
+Ã0skorupi
+
+	
+Å0croagunk
+
+	
+Ç0	carnivine
+
+	
+È0finneon
+
+	
+Ë0snover
+
+	
+ß0rotom
 
 
 ß
@@ -965,9 +938,9 @@ rotom-wash
 
 
 è	cresselia
-
-
-éphione
+
+	
+é0phione
 
 
 êmanaphy
@@ -1043,145 +1016,145 @@ arceus-ice
 
 
 îvictini
-
-
-ïsnivy
-
-
-òtepig
-
-
-õoshawott
-
-
-øpatrat
-
-
-úlillipup
-
-
-ýpurrloin
 
-
-ÿpansage
+	
+ï0snivy
 
-
-pansear
-
-
-ƒpanpour
-
-
-…munna
-
-
-‡pidove
-
-
-Šblitzle
+	
+ò0tepig
 
-
-Œ
-roggenrola
-
-
-woobat
+	
+õ0oshawott
+
+	
+ø0patrat
+
+	
+ú0lillipup
+
+	
+ý0purrloin
+
+	
+ÿ0pansage
+
+	
+0pansear
+
+	
+ƒ0panpour
 
-
-‘drilbur
-
-
-“audino
+	
+…0munna
+
+	
+‡0pidove
+
+	
+Š0blitzle
+
+	
+Œ0
+roggenrola
+
+	
+0woobat
+
+	
+‘0drilbur
+
+	
+“0audino
 
 
 “audino-mega
-
-
-”timburr
-
-
-—tympole
-
-
-šthroh
-
-
-›sawk
-
-
-œsewaddle
-
-
-Ÿvenipede
-
-
-¢cottonee
-
-
-¤petilil
-
-
-¦basculin-red-striped
- 
-
-¦basculin-blue-striped
-
-
-§sandile
-
-
-ªdarumaka
-
-
-ªdarumaka-galar
-
-
-¬maractus
-
-
-­dwebble
-
-
-¯scraggy
-
-
-±sigilyph
-
-
-²yamask
-
-
-²yamask-galar
-
-
-´tirtouga
-
-
-¶archen
-
-
-¸trubbish
-
-
-ºzorua
-
-
-¼minccino
-
-
-¾gothita
-
-
-Ásolosis
-
-
-Äducklett
 
-
-Æ	vanillite
-
-
-Édeerling-spring
+	
+”0timburr
+
+	
+—0tympole
+
+	
+š0throh
+
+	
+›0sawk
+
+	
+œ0sewaddle
+
+	
+Ÿ0venipede
+
+	
+¢0cottonee
+
+	
+¤0petilil
+!
+	
+¦0basculin-red-striped
+"
+	
+¦0basculin-blue-striped
+
+	
+§0sandile
+
+	
+ª0darumaka
+
+	
+ª0darumaka-galar
+
+	
+¬0maractus
+
+	
+­0dwebble
+
+	
+¯0scraggy
+
+	
+±0sigilyph
+
+	
+²0yamask
+
+	
+²0yamask-galar
+
+	
+´0tirtouga
+
+	
+¶0archen
+
+	
+¸0trubbish
+
+	
+º0zorua
+
+	
+¼0minccino
+
+	
+¾0gothita
+
+	
+Á0solosis
+
+	
+Ä0ducklett
+
+	
+Æ0	vanillite
+
+	
+É0deerling-spring
 
 
 Édeerling-summer
@@ -1191,92 +1164,92 @@ roggenrola
 
 
 Édeerling-winter
-
-
-Ëemolga
-
-
-Ì
+
+	
+Ë0emolga
+
+	
+Ì0
 karrablast
-
-
-Îfoongus
-
-
-Ðfrillish
 
-
-Ò	alomomola
-
-
-Ójoltik
-
-
-Õ	ferroseed
-
-
-×klink
-
-
-Útynamo
-
-
-Ýelgyem
-
-
-ßlitwick
-
-
-âaxew
-
-
-åcubchoo
-
-
-ç	cryogonal
-
-
-èshelmet
-
-
-êstunfisk
-
-
-êstunfisk-galar
-
-
-ëmienfoo
-
-
-í	druddigon
-
-
-îgolett
-
-
-ðpawniard
+	
+Î0foongus
 
-
-ò
-bouffalant
-
-
-órufflet
-
-
-õvullaby
-
-
-÷heatmor
-
-
-ødurant
-
-
-ùdeino
+	
+Ð0frillish
+
+	
+Ò0	alomomola
 
-
-ülarvesta
+	
+Ó0joltik
+
+	
+Õ0	ferroseed
+
+	
+×0klink
+
+	
+Ú0tynamo
+
+	
+Ý0elgyem
+
+	
+ß0litwick
+
+	
+â0axew
+
+	
+å0cubchoo
+
+	
+ç0	cryogonal
+
+	
+è0shelmet
+
+	
+ê0stunfisk
+
+	
+ê0stunfisk-galar
+
+	
+ë0mienfoo
+
+	
+í0	druddigon
+
+	
+î0golett
+
+	
+ð0pawniard
+
+	
+ò0
+bouffalant
+
+	
+ó0rufflet
+
+	
+õ0vullaby
+
+	
+÷0heatmor
+
+	
+ø0durant
+
+	
+ù0deino
+
+	
+ü0larvesta
 
 
 þcobalion
@@ -1346,25 +1319,25 @@ bouffalant
 
 
 ‰genesect-chill
-
-
-Šchespin
-
-
-fennekin
-
-
-froakie
-
-
-“bunnelby
+
+	
+Š0chespin
 
-
-•
+	
+0fennekin
+
+	
+0froakie
+
+	
+“0bunnelby
+
+	
+•0
 fletchling
-
-
-˜scatterbug-icy-snow
+ 
+	
+˜0scatterbug-icy-snow
 
 
 ˜scatterbug-polar
@@ -1423,33 +1396,33 @@ fletchling
 
 
 ˜scatterbug-poke-ball
-
-
-›litleo
-
-
-flabebe-red
-
-
-flabebe-yellow
-
-
-flabebe-orange
-
-
-flabebe-blue
+
+	
+›0litleo
 
-
-flabebe-white
-
-
- skiddo
-
-
-¢pancham
+	
+0flabebe-red
+
+	
+0flabebe-yellow
+
+	
+0flabebe-orange
+
+	
+0flabebe-blue
 
-
-¤furfrou-natural
+	
+0flabebe-white
+
+	
+ 0skiddo
+
+	
+¢0pancham
+
+	
+¤0furfrou-natural
 
 
 ¤furfrou-heart
@@ -1478,76 +1451,76 @@ fletchling
 
 ¤
 furfrou-pharaoh
-
-
-¥espurr
-
-
-§honedge
 
-
-ªspritzee
-
-
-¬swirlix
-
-
-®inkay
-
-
-°binacle
-
-
-²skrelp
+	
+¥0espurr
 
-
-´	clauncher
+	
+§0honedge
 
-
-¶
+	
+ª0spritzee
+
+	
+¬0swirlix
+
+	
+®0inkay
+
+	
+°0binacle
+
+	
+²0skrelp
+
+	
+´0	clauncher
+
+	
+¶0
 helioptile
-
-
-¸tyrunt
-
-
-ºamaura
 
-
-½hawlucha
-
-
-¾dedenne
-
-
-¿carbink
-
-
-Àgoomy
-
-
-Ãklefki
+	
+¸0tyrunt
 
-
-Äphantump
+	
+º0amaura
+
+	
+½0hawlucha
+
+	
+¾0dedenne
+
+	
+¿0carbink
+
+	
+À0goomy
+
+	
+Ã0klefki
+
+	
+Ä0phantump
+
+	
+Æ0pumpkaboo-average
 
-
-Æpumpkaboo-average
-
-
-Æpumpkaboo-small
-
-
-Æpumpkaboo-large
-
-
-Æpumpkaboo-super
+	
+Æ0pumpkaboo-small
+
+	
+Æ0pumpkaboo-large
+
+	
+Æ0pumpkaboo-super
+
+	
+È0bergmite
 
-
-Èbergmite
-
-
-Ênoibat
+	
+Ê0noibat
 
 
 Ìxerneas-neutral
@@ -1586,31 +1559,31 @@ zygarde-50
 
 
 Ñ	volcanion
-
-
-Òrowlet
-
-
-Õlitten
-
-
-Øpopplio
-
-
-Ûpikipek
-
-
-Þyungoos
-
-
-àgrubbin
-
-
-ã
+
+	
+Ò0rowlet
+
+	
+Õ0litten
+
+	
+Ø0popplio
+
+	
+Û0pikipek
+
+	
+Þ0yungoos
+
+	
+à0grubbin
+
+	
+ã0
 crabrawler
-
-
-åoricorio-baile
+
+	
+å0oricorio-baile
 
 
 åoricorio-pom-pom
@@ -1620,63 +1593,63 @@ crabrawler
 
 
 åoricorio-sensu
-
-
-æcutiefly
-
-
-èrockruff
-
-
-èrockruff-own-tempo
-
-
-êwishiwashi-solo
+
+	
+æ0cutiefly
+
+	
+è0rockruff
+
+	
+è0rockruff-own-tempo
+
+	
+ê0wishiwashi-solo
 
 
 êwishiwashi-school
-
-
-ëmareanie
-
-
-ímudbray
-
-
-ïdewpider
-
-
-ñfomantis
-
-
-ómorelull
-
-
-õsalandit
-
-
-÷stufful
+
+	
+ë0mareanie
 
-
-ù	bounsweet
-
-
-ücomfey
+	
+í0mudbray
+
+	
+ï0dewpider
+
+	
+ñ0fomantis
+
+	
+ó0morelull
+
+	
+õ0salandit
+
+	
+÷0stufful
+
+	
+ù0	bounsweet
 
-
-ýoranguru
-
-
-þ	passimian
-
-
-ÿwimpod
-
-
-	sandygast
-
-
-ƒ	pyukumuku
+	
+ü0comfey
+
+	
+ý0oranguru
+
+	
+þ0	passimian
+
+	
+ÿ0wimpod
+
+	
+0	sandygast
+
+	
+ƒ0	pyukumuku
 
 
 „	type-null
@@ -1701,46 +1674,46 @@ crabrawler
 
 
 †minior-violet-meteor
-
-
-†
-minior-red
-
-
-†	minior-orange
-
-
-†
-minior-yellow
 
-
-†minior-green
-
-
-†minior-blue
+	
+†0
+minior-red
+
+	
+†	0minior-orange
+
+	
+†
+0minior-yellow
+
+	
+†0minior-green
 
-
-†minior-indigo
-
-
-†minior-violet
-
-
-‡komala
-
-
-ˆ
+	
+†0minior-blue
+
+	
+†0minior-indigo
+
+	
+†0minior-violet
+
+	
+‡0komala
+
+	
+ˆ0
 turtonator
-
-
-‰
+
+	
+‰0
 togedemaru
 
 
 ‰togedemaru-totem
-
-
-Šmimikyu-disguised
+
+	
+Š0mimikyu-disguised
 
 
 Šmimikyu-busted
@@ -1750,18 +1723,18 @@ togedemaru
 
 
 Šmimikyu-totem-busted
-
-
-‹bruxish
-
-
-Œdrampa
+
+	
+‹0bruxish
 
-
-dhelmise
-
-
-Žjangmo-o
+	
+Œ0drampa
+
+	
+0dhelmise
+
+	
+Ž0jangmo-o
 
 
 ‘	tapu-koko
@@ -1835,121 +1808,121 @@ celesteela
 
 
 ¨meltan
-
-
-ªgrookey
 
-
-­	scorbunny
-
-
-°sobble
-
-
-³skwovet
+	
+ª0grookey
+
+	
+­0	scorbunny
 
-
-µrookidee
-
-
-¸blipbug
-
-
-»nickit
+	
+°0sobble
+
+	
+³0skwovet
 
-
-½
-gossifleur
-
-
-¿wooloo
-
-
-Áchewtle
-
-
-Ãyamper
+	
+µ0rookidee
+
+	
+¸0blipbug
 
-
-Årolycoly
-
-
-Èapplin
+	
+»0nickit
+
+	
+½0
+gossifleur
+
+	
+¿0wooloo
 
-
-Ë	silicobra
-
-
-Í	cramorant
+	
+Á0chewtle
+
+	
+Ã0yamper
+
+	
+Å0rolycoly
+
+	
+È0applin
+
+	
+Ë0	silicobra
+
+	
+Í0	cramorant
 
 
 Ícramorant-gulping
 
 
 Ícramorant-gorging
-
-
-Îarrokuda
-
-
-Ðtoxel
 
-
-Ò
+	
+Î0arrokuda
+
+	
+Ð0toxel
+
+	
+Ò0
 sizzlipede
-
-
-Ô	clobbopus
-
-
-Ösinistea-phony
+
+	
+Ô0	clobbopus
+
+	
+Ö0sinistea-phony
 
 
 Ösinistea-antique
-
-
-Øhatenna
-
-
-Ûimpidimp
-
-
-ämilcery
-
-
-æfalinks
+
+	
+Ø0hatenna
 
-
-ç
+	
+Û0impidimp
+
+	
+ä0milcery
+
+	
+æ0falinks
+
+	
+ç0
 pincurchin
-
-
-èsnom
-
-
-êstonjourner
-
-
-ë
+
+	
+è0snom
+
+	
+ê0stonjourner
+
+	
+ë0
 eiscue-ice
 
 
 ëeiscue-noice
-
-
-ìindeedee-male
 
-
-ìindeedee-female
-
-
-ímorpeko-full-belly
+	
+ì0indeedee-male
+
+	
+ì0indeedee-female
+
+	
+í0morpeko-full-belly
 
 
 ímorpeko-hangry
-
-
-îcufant
+
+	
+î0cufant
 
 
 ð	dracozolt
@@ -1962,15 +1935,15 @@ eiscue-ice
 
 
 ó	arctovish
-
-
-ô	duraludon
+
+	
+ô0	duraludon
 
 
 ôduraludon-gmax
-
-
-õdreepy
+
+	
+õ0dreepy
 
 
 øzacian-hero
@@ -2319,9 +2292,6 @@ hitmonchan
 
 
 p8o@rhydon
-
-
-	q8¸@chansey
 
 
 
@@ -2334,12 +2304,6 @@ hitmonchan
 
 
 y8x@starmie
-
-
-	z8·@mr-mime
-
-
-	z8·@mr-mime-galar
 
 
 	|8î@jynx
@@ -2378,14 +2342,6 @@ electabuzz
 
 
 8Œ@kabutops
-
-
-
-8¾@snorlax
-
-
-
-8¾@snorlax-gmax
 
 
 
@@ -2434,14 +2390,6 @@ electabuzz
 
 
 ´8³@flaaffy
-
-
-
-·8ª@marill
-
-
-
-¹8¶@	sudowoodo
 
 
 
@@ -2468,10 +2416,6 @@ electabuzz
 
 
 	Ç8O@slowking-galar
-
-
-
-Ê8è@	wobbuffet
 
 
 
@@ -2509,10 +2453,6 @@ forretress
 
 
 à8ß@	octillery
-
-
-
-â8Ê@mantine
 
 
 
@@ -2618,6 +2558,10 @@ masquerain
 
 
 ©8¨@hariyama
+
+
+
+ªHçazurill
 
 
 
@@ -2642,10 +2586,6 @@ masquerain
 
 
 ¶8µ@manectric-mega
-
-
-
-»8–@roselia
 
 
 
@@ -2726,10 +2666,10 @@ masquerain
 
 
 ä8ã@dusclops
-
-
+
 
-æ8±@chimecho
+
+èHèwynaut
 
 
 
@@ -2787,6 +2727,10 @@ kricketune
 
 
 ”8“@luxio
+
+
+
+–H§budew
 
 
 
@@ -2871,6 +2815,10 @@ kricketune
 
 
 °8¯@purugly
+
+
+
+±H©	chingling
 
 
 
@@ -2879,10 +2827,26 @@ kricketune
 
 
 µ8´@bronzong
+
+
+
+¶H¤bonsly
+
+
+
+·H£mime-jr
+
+
+
+¸H¨happiny
 
 
 
 ¼8»@gabite
+
+
+
+¾H¥munchlax
 
 
 
@@ -2907,6 +2871,10 @@ kricketune
 
 
 É8È@lumineon
+
+
+
+ÊH¦mantyke
 
 
 
@@ -3946,6 +3914,22 @@ victreebel
 
 
 ^8]@gengar-gmax
+
+
+q08¸@chansey
+
+
+z08·@mr-mime
+
+
+z08·@mr-mime-galar
+
+
+08¾@snorlax
+
+
+
+8¾@snorlax-gmax
 
 
 
@@ -3978,10 +3962,12 @@ feraligatr
 
 
 	¶8,@	bellossom
-
-
-
-¸8·@	azumarill
+
+
+·08ª@marill
+
+
+¹08¶@	sudowoodo
 
 
 	º8=@politoed
@@ -3989,12 +3975,15 @@ feraligatr
 
 
 ½8¼@jumpluff
+
+
+Ê08è@	wobbuffet
+
+
+â08Ê@mantine
 
 
 	æ8u@kingdra
-
-
-	ò8q@blissey
 
 
 
@@ -4067,10 +4056,16 @@ feraligatr
 
 
 ²8±@aggron-mega
+
+
+»08–@roselia
 
 
 
 Ê8É@flygon
+
+
+æ08±@chimecho
 
 
 
@@ -4111,10 +4106,6 @@ feraligatr
 
 
 •8”@luxray
-
-
-
-—8»@roserade
 
 
 
@@ -4495,10 +4486,21 @@ grimmsnarl
 
 
 Þ8ˆ@	obstagoon
-
-
-	â8z@mr-rime
 
 
 
 ÷8ö@	dragapult
+
+
+
+¸8·@	azumarill
+
+
+	ò8q@blissey
+
+
+
+—8»@roserade
+
+
+	â8z@mr-rime
