@@ -50,9 +50,10 @@ public class HomeBallsLocalStorageDataDownloader :
         CancellationToken cancellationToken = default)
     {
         var startEventArgs = EventRaiser.Raise(DataDownloading);
+        var downloadTasks = identifiers.Select(pair =>
+            DownloadAsync(pair.Identifier, pair.FileName , cancellationToken)); 
 
-        await Task.WhenAll(identifiers.Select(pair =>
-            DownloadAsync(pair.Identifier, pair.FileName , cancellationToken)));
+        await Task.WhenAll(downloadTasks);
 
         EventRaiser.Raise(DataDownloaded, startEventArgs.StartTime);
         return this;

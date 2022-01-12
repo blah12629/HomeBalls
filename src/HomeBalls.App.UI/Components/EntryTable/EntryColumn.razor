@@ -1,0 +1,6 @@
+<img src="@($"https://www.serebii.net/pokedex-swsh/icon/{Column.SpeciesId.ToString().PadLeft(3, '0')}.png")" />
+
+@code {
+    [Parameter, EditorRequired]
+    public IHomeBallsEntryColumn Column { get; init; }
+}

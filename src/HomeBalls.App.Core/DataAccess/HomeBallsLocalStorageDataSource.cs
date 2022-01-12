@@ -121,6 +121,7 @@ public class HomeBallsLocalStorageDataSource :
             EnsureLoadedAsync(SourceMutable.Stats, cancellationToken),
             EnsureLoadedAsync(SourceMutable.Types, cancellationToken));
 
+        IsLoaded = true;
         EventRaiser.Raise(DataLoaded, start.StartTime);
         return this;
     }
@@ -131,15 +132,13 @@ public class HomeBallsLocalStorageDataSource :
         where TKey : notnull
         where TRecord : notnull, IKeyed, IIdentifiable
     {
-        var deserializationType = typeof(ICollection<>)
+        var deserializationType = typeof(IEnumerable<>)
             .MakeGenericType(TypeMap.GetProtobufConcreteType(dataSet.ElementType));
         var dataString = await LocalStorage.GetItemAsync<String>(
             dataSet.ElementType.GetFullNameNonNull(),
             cancellationToken);
 
-        var dataBytes = Convert.FromBase64String(dataString);
-        using var memory = new MemoryStream(dataBytes);
-
+        using var memory = new MemoryStream(Convert.FromBase64String(dataString));
         var loaded = (IEnumerable<TRecord>)ProtoBuf.Serializer
             .Deserialize(deserializationType, memory);
 

@@ -11,6 +11,7 @@ global using CsvHelper.Configuration;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 
 global using Pluralize.NET;
@@ -25,5 +26,6 @@ global using System.IO.Abstractions;
 global using System.Linq;
 global using System.Linq.Expressions;
 global using System.Net.Http;
+global using System.Reflection;
 global using System.Threading;
 global using System.Threading.Tasks;

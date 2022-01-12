@@ -5,7 +5,7 @@ public static class HomeBallsEnumerableExtensions
     // public static Type GetElementType<T>(this IEnumerable<T> enumerable) =>
     //     enumerable is IHomeBallsEnumerable<T> homeBallsEnumerable ?
     //         homeBallsEnumerable.ElementType :
-    //         typeof(T); 
+    //         typeof(T);
 }
 
 public static class HomeBallsCollectionExtensions

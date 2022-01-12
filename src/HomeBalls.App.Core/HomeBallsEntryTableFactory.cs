@@ -55,11 +55,24 @@ public class HomeBallsEntryTableFactory :
             .Where(form => form.IsBreedable)
             .OrderBy(form => form.SpeciesId)
             .ThenBy(form => form.FormId)
-            .Select(async form => new HomeBallsEntryColumn(
-                await CreateCellsAsync(cancellationToken),
-                LoggerFactory?.CreateLogger(typeof(HomeBallsEntryColumn))));
+            .Select(form => CreateColumnAsync(form, cancellationToken));
 
         return (await Task.WhenAll(loadingTask)).ToList().AsReadOnly();
+    }
+
+    protected internal virtual async Task<IHomeBallsEntryColumn> CreateColumnAsync(
+        IHomeBallsPokemonForm form,
+        CancellationToken cancellationToken = default)
+    {
+        var column = new HomeBallsEntryColumn(
+            await CreateCellsAsync(cancellationToken),
+            LoggerFactory?.CreateLogger(typeof(HomeBallsEntryColumn)))
+        {
+            SpeciesId = form.SpeciesId,
+            FormId = form.FormId
+        };
+
+        return column;
     }
 
     protected internal virtual async Task<IReadOnlyList<IHomeBallsEntryCell>> CreateCellsAsync(

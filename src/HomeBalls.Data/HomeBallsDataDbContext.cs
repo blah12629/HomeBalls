@@ -132,21 +132,65 @@ public class HomeBallsDataDbContext :
         await Task.WhenAll(
             EnsureDataSetLoadedAsync(
                 DataCache.GameVersions,
-                GameVersions.Include(version => version.Names),
+                GameVersions.Include(named => named.Names),
                 cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.Generations, Generations, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.Items, Items, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.ItemCategories, ItemCategories, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.Languages, Languages, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.Moves, Moves, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.MoveDamageCategories, MoveDamageCategories, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.Natures, Natures, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.PokemonAbilities, PokemonAbilities, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.PokemonEggGroups, PokemonEggGroups, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.PokemonForms, PokemonForms, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.PokemonSpecies, PokemonSpecies, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.Stats, Stats, cancellationToken),
-            EnsureDataSetLoadedAsync(DataCache.Types, Types, cancellationToken));
+            EnsureDataSetLoadedAsync(
+                DataCache.Generations,
+                Generations.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.Items,
+                Items.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.ItemCategories,
+                ItemCategories,
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.Languages,
+                Languages.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.Moves,
+                Moves.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.MoveDamageCategories,
+                MoveDamageCategories.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.Natures,
+                Natures.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.PokemonAbilities,
+                PokemonAbilities.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.PokemonEggGroups,
+                PokemonEggGroups.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.PokemonForms,
+                PokemonForms
+                    .Include(form => form.Names)
+                    .Include(form => form.Abilities)
+                    .Include(form => form.EggGroups)
+                    .Include(form => form.Types)
+                    .AsSplitQuery(),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.PokemonSpecies,
+                PokemonSpecies.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.Stats,
+                Stats.Include(named => named.Names),
+                cancellationToken),
+            EnsureDataSetLoadedAsync(
+                DataCache.Types,
+                Types.Include(named => named.Names),
+                cancellationToken));
 
         return this;
     }
@@ -160,17 +204,7 @@ public class HomeBallsDataDbContext :
         where TEntity : class, TRecord
     {
         var query = dataQueryable;
-
-        if (typeof(TEntity).IsAssignableTo(typeof(INamed)))
-            query = query.Include(named => ((INamed)named).Names);
-
-        if (typeof(TEntity).IsAssignableTo(typeof(EFCorePokemonForm)))
-            query = query
-                .Include(form => ((EFCorePokemonForm)(Object)form).Types)
-                .Include(form => ((EFCorePokemonForm)(Object)form).Abilities)
-                .Include(form => ((EFCorePokemonForm)(Object)form).EggGroups);
-
-        dataSet.Clear().AddRange(await dataQueryable.ToListAsync());
+        dataSet.Clear().AddRange(await dataQueryable.AsNoTracking().ToListAsync());
         return this;
     }
 

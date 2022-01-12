@@ -1,14 +1,4 @@
-﻿using CEo.Pokemon.HomeBalls;
-using CEo.Pokemon.HomeBalls.Data;
-using CEo.Pokemon.HomeBalls.Data.PokeApi;
-using CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore;
-using CEo.Pokemon.HomeBalls.ProtocolBuffers;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ProtoBuf;
-using ProtoBuf.Meta;
-
-var githubKey = "raw.github/pokeapi";
+﻿var githubKey = "raw.github/pokeapi";
 var serviceCollection = new ServiceCollection()
     .AddScoped<IFileSystem, FileSystem>()
     .AddDbContextFactory<HomeBallsDataDbContext>(
@@ -101,15 +91,12 @@ var exporter = new HomeBallsDataProtobufExporter(
 await initializeDataContextAsync(initializer);
 await exportDataContextAsync(exporter);
 
-// STOPPED HERE. Work on these next:
-// > Unit Test if the serialization and deserialization actually works [DONE]
-// > A services to export HomeBallsDataDbContext to Protobuf [DONE]
-//   (the above code, but on a separate class)
-// > Remove `IHomeBallsDataSource` or rewrite it in such a way that it uses
-//   `IHomeBallsDataSet` instead of `IQueryable`
-// > Either fix database data (evolution data, etc),
-//    or move on to App.Models.LocalStorageDataSource
-//   (encode each IHomeBallsDataSource property as a Base64String)
+var formBytes = (await fileSystem.File.ReadAllBytesAsync(
+    @"data_protobuf\CEo.Pokemon.HomeBalls.IHomeBallsPokemonForm.bin"))
+    .AsMemory();
+var forms = ProtoBuf.Serializer.Deserialize<IEnumerable<ProtobufPokemonForm>>(formBytes);
+foreach (var form in forms.Where(form => form.IsBreedable).Take(5))
+    logger.LogInformation($"{form.Identifier}\t{form.Names.Count()}");
 
 var runTime = DateTime.UtcNow - startTime;
 logger.LogInformation($"Application completed after `{runTime}`.");

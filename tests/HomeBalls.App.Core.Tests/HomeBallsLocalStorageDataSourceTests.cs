@@ -2,8 +2,10 @@ namespace CEo.Pokemon.HomeBalls.App.Core.DataAccess.Tests;
 
 public class HomeBallsLocalStorageDataSourceTests
 {
-    public HomeBallsLocalStorageDataSourceTests()
+    public HomeBallsLocalStorageDataSourceTests(ITestOutputHelper output)
     {
+        Output = output;
+
         LocalFileSystem = new FileSystem();
         LocalStorage = Substitute.For<ILocalStorageService>();
         Downlaoder = Substitute.For<IHomeBallsLocalStorageDataDownloader>();
@@ -24,27 +26,30 @@ public class HomeBallsLocalStorageDataSourceTests
 
     protected HomeBallsLocalStorageDataSource Sut { get; }
 
+    protected ITestOutputHelper Output { get; }
+
     protected async Task EnsureLoadedAsync_ShouldDeserializeToDataSet_NonTest<TKey, TRecord>(
         Func<TRecord, TKey>? keySelector)
         where TKey : notnull
         where TRecord : notnull, IKeyed, IIdentifiable
     {
-        var dataSet =
-            keySelector == default ?
-                new HomeBallsDataSet<TKey, TRecord>() :
-                new HomeBallsDataSet<TKey, TRecord>(keySelector, record =>
-                    ((dynamic)record).Identifier);
-        var cancellationToken = default(CancellationToken);
+        var dataSet = keySelector == default ?
+            new HomeBallsDataSet<TKey, TRecord>() :
+            new HomeBallsDataSet<TKey, TRecord>(keySelector, record =>
+                (record as IIdentifiable)!.Identifier);
         var identifier = dataSet.ElementType.GetFullNameNonNull();
         var fileName = identifier.AddFileExtension(_Values.DefaultProtobufExtension);
         var filePath = LocalFileSystem.Path.Join(ProtobufDataRoot, fileName);
 
-        var returnValue = Convert.ToBase64String(
-            await LocalFileSystem.File.ReadAllBytesAsync(filePath));
-        LocalStorage.GetItemAsStringAsync(identifier, cancellationToken)
-            .ReturnsForAnyArgs(ValueTask.FromResult(returnValue));
+        var bytes = await LocalFileSystem.File.ReadAllBytesAsync(filePath);
+        var returnValue = Convert.ToBase64String(bytes);
+        var returnValueTask = ValueTask.FromResult(returnValue);
+        LocalStorage.GetItemAsync<String>(identifier, Arg.Any<CancellationToken>())
+            .ReturnsForAnyArgs(returnValueTask);
+        LocalStorage.GetItemAsStringAsync(identifier, Arg.Any<CancellationToken>())
+            .ReturnsForAnyArgs(returnValueTask);
 
-        await Sut.EnsureLoadedAsync(dataSet, cancellationToken);
+        await Sut.EnsureLoadedAsync(dataSet);
         dataSet.Should().NotBeEmpty();
     }
 
