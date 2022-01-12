@@ -430,6 +430,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mr-2 {
   margin-right: 0.5rem;
 }
+.inline-block {
+  display: inline-block;
+}
 .flex {
   display: flex;
 }

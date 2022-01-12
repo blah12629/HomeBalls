@@ -10,8 +10,8 @@
   "resources": {
     "assembly": {
       "Blazored.LocalStorage.dll": "sha256-ItMv+HytRb8SgPKYiz75PK0k+DFgN1E247PZT\/8lODs=",
-      "CEo.Pokemon.HomeBalls.App.Core.dll": "sha256-uBtGFqhaOfBqy7uvZzPNana9N6cBU+ioMeriFCXb4X8=",
-      "CEo.Pokemon.HomeBalls.App.UI.dll": "sha256-039HMFYeAa7fMDV1y90WQnCAviGXesbPrSqAwXcAqfI=",
+      "CEo.Pokemon.HomeBalls.App.Core.dll": "sha256-IYnQRfBqVLnVgED7YBjuK3jrYJ3ltJZB41BHMR7mT08=",
+      "CEo.Pokemon.HomeBalls.App.UI.dll": "sha256-\/joZKyGNZz0h8FxXSwEbb+3ICQLLAJ319A\/L5wF5l3E=",
       "CEo.Pokemon.HomeBalls.dll": "sha256-HWZcldG5n0dVHeKMc5dawKm1Eb24H7m\/ZHTo+pZxnNY=",
       "Mapster.Core.dll": "sha256-t4scC57orK9Pzk+stzDyapVp1P7RjVmaEkumPBlVL5c=",
       "Mapster.dll": "sha256-+lPyy3ceV5DvNOOuNjSSZF+ayNUIfFHpllnjpIQfTMA=",
@@ -24,7 +24,7 @@
       "Microsoft.Extensions.Configuration.Json.dll": "sha256-qz9LdxCn3nMi6hlP7yZp3WDJyH2RtmsUwjumH0G9+T4=",
       "Microsoft.Extensions.DependencyInjection.Abstractions.dll": "sha256-dHh3W+i+pN\/f\/YtSSq0jQI2IoYPsF+fnPlKAjiukkm4=",
       "Microsoft.Extensions.DependencyInjection.dll": "sha256-pYDNELbgbO60zgvgH5SP8004wkA0+o\/KlQxFXl\/uS2A=",
-      "Microsoft.Extensions.Logging.Abstractions.dll": "sha256-TRNTFmr4v\/NihKH5GsgMpxlsL8cNzVjL56jL5\/HK3tg=",
+      "Microsoft.Extensions.Logging.Abstractions.dll": "sha256-n8ttEPjw3e06qvpow5Qajz\/os0NHOo0JqVLSXVZQt0E=",
       "Microsoft.Extensions.Logging.dll": "sha256-aj8Tk1BLrOE4y41oBvw\/VGDdmvACVEpGmiEDNrA7Hco=",
       "Microsoft.Extensions.Options.dll": "sha256-1tB1TdOK1QaMSk7+PPe5sikuuMC9hs8bkujWqFMdAx4=",
       "Microsoft.Extensions.Primitives.dll": "sha256-YColTWA58whC+8aBjv1O7HgsyYrbHTba601EkNDWAlo=",
@@ -57,7 +57,7 @@
       "System.Reflection.Emit.Lightweight.dll": "sha256-Q5H1wm+aHr7t0KO6eh3lUkm21itdbqOPzThAjuCYwig=",
       "System.Reflection.Primitives.dll": "sha256-P7M3u0H\/+6542QZyX6yi7KPE\/aQliPQtBI7Nnk6iyLY=",
       "System.Runtime.CompilerServices.Unsafe.dll": "sha256-lWLrP2SkeEtjbEdvnCokKxYOu+LNxC\/N+o9fErOPhWw=",
-      "System.Runtime.dll": "sha256-2K+Xbz+W6ErNBBkn4FON1cBsgFenTfNwsbdsw6tcXY0=",
+      "System.Runtime.dll": "sha256-hMNxeBIfdo6ZnG9ZA7fNRSspi+cyewPHM4LzGEjNqTc=",
       "System.Runtime.InteropServices.dll": "sha256-8SR0GF3LR+l2kgBT6EflZSvpc3AKkGw4OSE2be0uTug=",
       "System.Runtime.Serialization.Formatters.dll": "sha256-s5GcLOStuRF\/sdvSoX5peZsnCaSvoJh6IuySYBkIUVE=",
       "System.Text.Encoding.Extensions.dll": "sha256-m91SjlkWRKyra2\/cbMJDzCNh5rRWFukna85wA3fqFn0=",
