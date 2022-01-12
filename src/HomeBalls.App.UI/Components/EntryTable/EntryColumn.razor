@@ -1,6 +1,20 @@
-<img src="@($"https://www.serebii.net/pokedex-swsh/icon/{Column.SpeciesId.ToString().PadLeft(3, '0')}.png")" />
+@inject IHomeBallsDataSource DataSource
+@inject IPokemonSpriteService SpriteService
+
+<img src="@SpriteUrl" class="inline-block" />
+<span class="inline-block">@SpeciesName</span>
 
 @code {
+    IHomeBallsEntryColumn? _column;
+
     [Parameter, EditorRequired]
-    public IHomeBallsEntryColumn Column { get; init; }
+    public IHomeBallsEntryColumn Column { get => _column!; init => _column = value; }
+
+    String SpriteUrl => SpriteService
+        .GetSerebiiSpriteUri(DataSource.PokemonForms[(Column.SpeciesId, Column.FormId)])
+        .ToString();
+
+    String SpeciesName => DataSource
+        .PokemonSpecies[Column.SpeciesId].Names
+        .Single(name => name.LanguageId == 9).Value;
 }
