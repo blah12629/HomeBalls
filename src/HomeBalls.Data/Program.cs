@@ -88,15 +88,16 @@ var exporter = new HomeBallsDataProtobufExporter(
     protobufConverter,
     loggerFactory.CreateLogger<HomeBallsDataProtobufExporter>());
 
-await initializeDataContextAsync(initializer);
-await exportDataContextAsync(exporter);
+// await initializeDataContextAsync(initializer);
+// await exportDataContextAsync(exporter);
 
-var formBytes = (await fileSystem.File.ReadAllBytesAsync(
-    @"data_protobuf\CEo.Pokemon.HomeBalls.IHomeBallsPokemonForm.bin"))
-    .AsMemory();
-var forms = ProtoBuf.Serializer.Deserialize<IEnumerable<ProtobufPokemonForm>>(formBytes);
-foreach (var form in forms.Where(form => form.IsBreedable).Take(5))
-    logger.LogInformation($"{form.Identifier}\t{form.Names.Count()}");
+var entriesInitializer = new HomeBallsEntryCollectionInitializer(logger);
+var dataContext = await createDataContext().EnsureLoadedAsync();
+var entries = await entriesInitializer.InitializeAsync(dataContext);
+await dataContext.DisposeAsync();
+logger.LogInformation(entries.Count.ToString());
+
+// STOPPED HERE: Creating EntryCollection next.
 
 var runTime = DateTime.UtcNow - startTime;
 logger.LogInformation($"Application completed after `{runTime}`.");

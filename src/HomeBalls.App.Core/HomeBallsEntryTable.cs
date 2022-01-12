@@ -68,6 +68,8 @@ public class HomeBallsEntryTable :
             cell.ObtainedStatus = entry.HasHiddenAbility ?
                 HomeBallsEntryObtainedStatus.ObtainedWithHiddenAbility :
                 HomeBallsEntryObtainedStatus.ObtainedWithoutHiddenAbility);
+
+        CollectionChanged?.Invoke(this, e);
     }
 
     protected internal virtual void InvokeOnEntries(

@@ -39,8 +39,6 @@ public record HomeBallsEntry :
 
     protected internal IEventRaiser EventRaiser { get; }
 
-    protected internal ILogger? Logger { get; }
-
     public UInt16 SpeciesId { get; init; }
 
     public Byte FormId { get; init; }
@@ -66,7 +64,7 @@ public record HomeBallsEntry :
         init => (_addedOn, LastUpdatedOn) = (value, value);
     }
 
-    public virtual DateTime LastUpdatedOn { get; protected internal set; }
+    public virtual DateTime LastUpdatedOn { get; protected set; }
 
     public event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged;
 
