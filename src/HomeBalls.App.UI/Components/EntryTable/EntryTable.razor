@@ -10,9 +10,20 @@
     </Loading>
 }
 
-else @foreach (var column in Table.Columns)
+else
 {
-    <EntryColumn Column="@column" />
+    <table>
+        <thead>
+            <EntryHeader />
+        </thead>
+
+        <tbody>
+            @foreach (var column in Table.Columns)
+            {
+                <EntryColumn Column="@column" />
+            }
+        </tbody>
+    </table>
 }
 
 @code {

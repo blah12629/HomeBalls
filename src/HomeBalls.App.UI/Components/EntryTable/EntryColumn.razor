@@ -1,8 +1,10 @@
 @inject IHomeBallsDataSource DataSource
 @inject IPokemonSpriteService SpriteService
 
-<img src="@SpriteUrl" class="inline-block" />
-<span class="inline-block">@SpeciesName</span>
+<tr>
+    <td><img src="@SpriteUrl" /></td>
+    <td><span>@SpeciesName</span></td>
+</tr>
 
 @code {
     IHomeBallsEntryColumn? _column;
