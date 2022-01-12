@@ -86,11 +86,12 @@ public class HomeBallsEntryTableFactory :
         CancellationToken cancellationToken = default)
     {
         if (DefaultCells != default) return this;
+        var comparer = new HomeBallsPokeballComparer().UseGameIndexComparison();
 
         await DataSource.EnsureLoadedAsync(cancellationToken);
         DefaultCells = DataSource.Items
             .Where(item => item.Identifier.Contains("ball"))
-            .OrderBy(item => item.Id)
+            .OrderBy(item => item, comparer)
             .Select(item => new HomeBallsEntryCell { BallId = item.Id })
             .ToList().AsReadOnly();
 
