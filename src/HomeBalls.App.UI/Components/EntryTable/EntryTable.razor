@@ -1,6 +1,16 @@
+@inherits HomeBallsComponentBase
 @inject IHomeBallsEntryTableFactory TableFactory
 
-@foreach (var column in Table?.Columns ?? new IHomeBallsEntryColumn[] { })
+@if (Table == default)
+{
+    <Loading>
+        <Message>
+            <span>Loading a table...</span>
+        </Message>
+    </Loading>
+}
+
+else @foreach (var column in Table.Columns)
 {
     <EntryColumn Column="@column" />
 }

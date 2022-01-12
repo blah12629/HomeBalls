@@ -12,6 +12,9 @@ module.exports = {
   darkMode: 'media', // false or 'media' or 'class'
   theme: {
     extend: {
+      animation: {
+        'spin-partial': 'spin-partial 2s linear infinite',
+      },
       colors: {
         dream: {
           pink: "#ea609a",
@@ -24,6 +27,12 @@ module.exports = {
       },
       fontSize: {
         '0': '0rem',
+      },
+      keyframes: {
+        'spin-partial': {
+          '0%': { transform: 'rotate(0deg)' },
+          '37.5%, 100%': { transform: 'rotate(360deg)' }
+        }
       },
       spacing: {
         '1.75': '0.4375rem/* 7px */;',

@@ -1,0 +1,28 @@
+@inherits HomeBallsComponentBase
+
+<div class="w-full text-center">
+    <div class="flex justify-center w-full">
+        <img src="@ImageUrl" class="animate-spin-partial" />
+    </div>
+
+    @Message
+</div>
+
+@code {
+    public String ImageUrl => (Byte)Size < 40 ?
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dream-ball.png" :
+        "https://archives.bulbagarden.net/media/upload/2/27/Dream_Dream_Ball_Sprite.png";
+
+    [Parameter]
+    public LoadingImageSize Size { get; init; }
+
+    [Parameter]
+    public RenderFragment? Message { get; init; }
+
+    public enum LoadingImageSize : Byte
+    {
+        Sprite = 30,
+        GlobalLinkSmall = 40,
+        GlobalLink = 80
+    }
+}
