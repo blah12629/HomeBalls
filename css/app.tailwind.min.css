@@ -439,6 +439,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-full {
   width: 100%;
 }
+.w-10 {
+  width: 2.5rem;
+}
 @-webkit-keyframes spin-partial {
 
   0% {
