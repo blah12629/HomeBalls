@@ -430,8 +430,44 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mr-2 {
   margin-right: 0.5rem;
 }
+.flex {
+  display: flex;
+}
 .table {
   display: table;
+}
+.w-full {
+  width: 100%;
+}
+.w-10 {
+  width: 2.5rem;
+}
+@-webkit-keyframes spin-partial {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  37.5%, 100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin-partial {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  37.5%, 100% {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-partial {
+  -webkit-animation: spin-partial 2s linear infinite;
+          animation: spin-partial 2s linear infinite;
+}
+.justify-center {
+  justify-content: center;
 }
 .px-4 {
   padding-left: 1rem;
@@ -443,4 +479,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pl-4 {
   padding-left: 1rem;
+}
+.text-center {
+  text-align: center;
 }

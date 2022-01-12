@@ -3,9 +3,9 @@
 
 @if (Table == default)
 {
-    <Loading>
+    <Loading Size="@LoadingImageSize.GlobalLinkSmall">
         <Message>
-            <span>Loading a table...</span>
+            <span>Loading...</span>
         </Message>
     </Loading>
 }
@@ -16,29 +16,18 @@ else @foreach (var column in Table.Columns)
 }
 
 @code {
-    IHomeBallsEntryTable? _table;
-    IHomeBallsEntryTable? Table
-    {
-        get => _table;
-        set { _table = value; StateHasChanged(); }
-    }
+    IHomeBallsEntryTable? Table { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine($"Initialized `{GetType().Name}`.");
+        await base.OnInitializedAsync();
         await SetTableAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(Boolean firstRender)
-    {
-        Console.WriteLine($"Rendered `{GetType().Name}`");
-        @* if (firstRender) await SetTableAsync(); *@
     }
 
     protected async Task SetTableAsync()
     {
-        Console.WriteLine("Creating table.");
-        Table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
-        Console.WriteLine("Table created.");
+        await Task.Delay(200);
+        Table = await Task.Run<IHomeBallsEntryTable>(() =>
+            TableFactory.CreateTableAsync(new HomeBallsEntryCollection()));
     }
 }

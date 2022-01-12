@@ -8,6 +8,12 @@ public interface IHomeBallsLocalStorageDataSource :
 {
     new ValueTask<IHomeBallsLocalStorageDataSource> EnsureLoadedAsync(
         CancellationToken cancellationToken = default);
+
+    ValueTask<IHomeBallsLocalStorageDataSource> EnsureLoadedAsync<TKey, TRecord>(
+        Func<IHomeBallsDataSourceMutable, IHomeBallsDataSet<TKey, TRecord>> dataSetNavigation,
+        CancellationToken cancellationToken = default)
+        where TKey : notnull
+        where TRecord : notnull, IKeyed, IIdentifiable;
 }
 
 public class HomeBallsLocalStorageDataSource :
@@ -33,6 +39,7 @@ public class HomeBallsLocalStorageDataSource :
         TypeMap = typeMap;
         EventRaiser = new EventRaiser().RaisedBy(this);
         Logger = logger;
+        IsLoaded = new Dictionary<String, Boolean> { };
     }
 
     protected internal ILocalStorageService LocalStorage { get; }
@@ -49,7 +56,7 @@ public class HomeBallsLocalStorageDataSource :
 
     protected internal ILogger? Logger { get; }
 
-    protected internal Boolean IsLoaded { get; set; }
+    protected internal IDictionary<String, Boolean> IsLoaded { get; }
 
     public IReadOnlyCollection<IHomeBallsReadOnlyCollection<IHomeBallsEntity>> Entities => SourceMutable.Entities;
 
@@ -100,12 +107,11 @@ public class HomeBallsLocalStorageDataSource :
     public virtual async ValueTask<HomeBallsLocalStorageDataSource> EnsureLoadedAsync(
         CancellationToken cancellationToken = default)
     {
-        if (IsLoaded) return this;
         await EnsureDownloadedAsync(cancellationToken);
 
         var start = EventRaiser.Raise(DataLoading);
-
-        await Task.WhenAll(
+        var loadingTasks = new[]
+        {
             EnsureLoadedAsync(SourceMutable.GameVersions, cancellationToken),
             EnsureLoadedAsync(SourceMutable.Generations, cancellationToken),
             EnsureLoadedAsync(SourceMutable.ItemCategories, cancellationToken),
@@ -119,30 +125,41 @@ public class HomeBallsLocalStorageDataSource :
             EnsureLoadedAsync(SourceMutable.PokemonForms, cancellationToken),
             EnsureLoadedAsync(SourceMutable.PokemonSpecies, cancellationToken),
             EnsureLoadedAsync(SourceMutable.Stats, cancellationToken),
-            EnsureLoadedAsync(SourceMutable.Types, cancellationToken));
+            EnsureLoadedAsync(SourceMutable.Types, cancellationToken)
+        };
 
-        IsLoaded = true;
+        foreach (var task in loadingTasks) await task;
         EventRaiser.Raise(DataLoaded, start.StartTime);
         return this;
     }
 
-    protected internal virtual async Task<HomeBallsLocalStorageDataSource> EnsureLoadedAsync<TKey, TRecord>(
+    public virtual ValueTask<HomeBallsLocalStorageDataSource> EnsureLoadedAsync<TKey, TRecord>(
+        Func<IHomeBallsDataSourceMutable, IHomeBallsDataSet<TKey, TRecord>> dataSetNavigation,
+        CancellationToken cancellationToken = default)
+        where TKey : notnull
+        where TRecord : notnull, IKeyed, IIdentifiable =>
+        EnsureLoadedAsync(dataSetNavigation(SourceMutable), cancellationToken);
+
+    protected internal virtual async ValueTask<HomeBallsLocalStorageDataSource> EnsureLoadedAsync<TKey, TRecord>(
         IHomeBallsDataSet<TKey, TRecord> dataSet,
         CancellationToken cancellationToken = default)
         where TKey : notnull
         where TRecord : notnull, IKeyed, IIdentifiable
     {
+        var identifier = dataSet.ElementType.GetFullNameNonNull();
+        IsLoaded.TryAdd(identifier, false);
+        if (IsLoaded[identifier]) return this;
+
         var deserializationType = typeof(IEnumerable<>)
             .MakeGenericType(TypeMap.GetProtobufConcreteType(dataSet.ElementType));
-        var dataString = await LocalStorage.GetItemAsync<String>(
-            dataSet.ElementType.GetFullNameNonNull(),
-            cancellationToken);
+        var dataString = await LocalStorage.GetItemAsync<String>(identifier, cancellationToken);
 
         using var memory = new MemoryStream(Convert.FromBase64String(dataString));
         var loaded = (IEnumerable<TRecord>)ProtoBuf.Serializer
             .Deserialize(deserializationType, memory);
 
         dataSet.AddRange(loaded);
+        IsLoaded[identifier] = true;
         return this;
     }
 
@@ -185,5 +202,11 @@ public class HomeBallsLocalStorageDataSource :
 
     async ValueTask<IHomeBallsLoadableDataSource> IAsyncLoadable<IHomeBallsLoadableDataSource>
         .EnsureLoadedAsync(CancellationToken cancellationToken) =>
+        await EnsureLoadedAsync(cancellationToken);
+
+    async ValueTask<IHomeBallsLocalStorageDataSource> IHomeBallsLocalStorageDataSource
+        .EnsureLoadedAsync<TKey, TRecord>(
+            Func<IHomeBallsDataSourceMutable, IHomeBallsDataSet<TKey, TRecord>> dataSetNavigation,
+            CancellationToken cancellationToken) =>
         await EnsureLoadedAsync(cancellationToken);
 }
