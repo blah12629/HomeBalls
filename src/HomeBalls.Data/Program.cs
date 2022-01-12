@@ -79,6 +79,19 @@ async Task exportDataContextAsync(
     }
 }
 
+async Task exportEntriesAsync(
+    CancellationToken cancellationToken = default)
+{
+    IHomeBallsEntryCollection entries;
+    var entriesInitializer = new HomeBallsEntryCollectionInitializer(logger);
+    await using (var dataContext = await createDataContext().EnsureLoadedAsync())
+        entries = await entriesInitializer.InitializeAsync(dataContext);
+
+    // ProtoBuf.Serializer.Serialize<IEnumerable<>>
+    // STOPPED HERE: deciding whether to code up an exporter class or not.
+    //   Move on to App.Core support for localstorageentrycollection
+}
+
 var startTime = DateTime.UtcNow;
 var dataSource = new RawPokeApiDataSource(fileSystem, httpClient, fileNameService, csvFactory, logger);
 var initializer = new PokeApiDataInitializer(dataSource, converter, logger);
@@ -90,12 +103,7 @@ var exporter = new HomeBallsDataProtobufExporter(
 
 // await initializeDataContextAsync(initializer);
 // await exportDataContextAsync(exporter);
-
-var entriesInitializer = new HomeBallsEntryCollectionInitializer(logger);
-var dataContext = await createDataContext().EnsureLoadedAsync();
-var entries = await entriesInitializer.InitializeAsync(dataContext);
-await dataContext.DisposeAsync();
-logger.LogInformation(entries.Count.ToString());
+await exportEntriesAsync();
 
 // STOPPED HERE: Creating EntryCollection next.
 

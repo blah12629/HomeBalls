@@ -47,6 +47,27 @@ public abstract record MockNamedRecord<TKey> : MockIdentifiableRecord<TKey>, INa
     IEnumerable<IHomeBallsString> INamed.Names => Names;
 }
 
+public record MockEntry : MockRecord, IHomeBallsEntry
+{
+    public UInt16 SpeciesId { get; init; }
+
+    public Byte FormId { get; init; }
+
+    public UInt16 BallId { get; init; }
+
+    public Boolean HasHiddenAbility { get; set; }
+
+    public ICollection<UInt16> AvailableEggMoveIds { get; init; }
+
+    public DateTime AddedOn { get; init; }
+
+    public DateTime LastUpdatedOn { get; init; }
+
+    public event EventHandler<HomeBallsPropertyChangedEventArgs> PropertyChanged;
+
+    public Boolean Equals(IHomeBallsEntry other) => throw new NotImplementedException();
+}
+
 public record MockGameVersion : MockNamedRecord<Byte>, IHomeBallsGameVersion
 {
     public Byte GenerationId { get; init; }

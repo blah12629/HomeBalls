@@ -1,5 +1,6 @@
 global using CaseExtensions;
 
+global using CEo.Pokemon.HomeBalls;
 global using CEo.Pokemon.HomeBalls.Data;
 global using CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore;
 global using CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations;
