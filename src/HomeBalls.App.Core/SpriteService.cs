@@ -1,14 +1,15 @@
 namespace CEo.Pokemon.HomeBalls.App.Core;
 
-public interface IPokemonSpriteService
+public interface ISpriteService
 {
     Uri GetSerebiiSpriteUri(IHomeBallsPokemonForm pokemon);
+
+    Uri GetSpriteUri(IHomeBallsItem item);
 }
 
-public class PokemonSpriteService :
-    IPokemonSpriteService
+public class SpriteService : ISpriteService
 {
-    public PokemonSpriteService(
+    public SpriteService(
         ILogger? logger = default)
     {
         Logger = logger;
@@ -25,6 +26,10 @@ public class PokemonSpriteService :
         var id = GetSerebiiId(pokemon);
         return new Uri($"https://www.serebii.net/pokedex-swsh/icon/{id}.png");
     }
+
+    public virtual Uri GetSpriteUri(IHomeBallsItem item) => new Uri(
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/" +
+        $"{item.Identifier}.png");
 
     protected virtual String GetSerebiiId(IHomeBallsPokemonForm pokemon)
     {

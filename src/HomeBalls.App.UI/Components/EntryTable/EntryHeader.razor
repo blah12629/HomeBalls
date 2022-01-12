@@ -1,4 +1,16 @@
 <tr>
     <th />
     <th />
+
+    @foreach (var id in BallIds)
+    {
+        <EntryHeaderCell BallId="@id" />
+    }
 </tr>
+
+@code {
+    IReadOnlyList<UInt16>? _ballIds;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<UInt16> BallIds { get => _ballIds!; init => _ballIds = value; }
+}

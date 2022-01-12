@@ -1,9 +1,14 @@
 @inject IHomeBallsDataSource DataSource
-@inject IPokemonSpriteService SpriteService
+@inject ISpriteService SpriteService
 
 <tr>
     <td><img src="@SpriteUrl" /></td>
     <td><span>@SpeciesName</span></td>
+
+    @foreach (var cell in Column)
+    {
+        <EntryColumnCell Cell="@cell" />
+    }
 </tr>
 
 @code {

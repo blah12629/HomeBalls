@@ -32,8 +32,8 @@ builder.Services
         new HomeBallsEntryTableFactory(
             services.GetRequiredService<IHomeBallsLocalStorageDataSource>(),
             services.GetRequiredService<ILoggerFactory>()))
-    .AddScoped<IPokemonSpriteService>(services =>
-        new PokemonSpriteService(
-            services.GetRequiredService<ILogger<PokemonSpriteService>>()));
+    .AddScoped<ISpriteService>(services =>
+        new SpriteService(
+            services.GetRequiredService<ILogger<SpriteService>>()));
 
 await builder.Build().RunAsync();

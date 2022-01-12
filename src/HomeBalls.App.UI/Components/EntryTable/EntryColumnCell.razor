@@ -1,0 +1,26 @@
+@inject IHomeBallsDataSource DataSource
+@inject ISpriteService SpriteService
+
+@if (IsBallShown)
+{
+    <td />
+}
+
+@code {
+    IHomeBallsEntryCell? _cell;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsEntryCell Cell { get => _cell!; init => _cell = value; }
+
+    IHomeBallsItem Ball => DataSource.Items[Cell.BallId];
+
+    Boolean IsBallShown => Ball.CategoryId == 39 || Ball.Id == 5 || Ball.Id > 456;
+
+    String SpriteUrl => SpriteService.GetSpriteUri(Ball).ToString();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Cell.PropertyChanged += (sender, e) => StateHasChanged();
+    }
+}

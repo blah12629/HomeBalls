@@ -14,7 +14,7 @@ else
 {
     <table>
         <thead>
-            <EntryHeader />
+            <EntryHeader BallIds="@BallIds" />
         </thead>
 
         <tbody>
@@ -28,6 +28,11 @@ else
 
 @code {
     IHomeBallsEntryTable? Table { get; set; }
+
+    IReadOnlyList<UInt16>? BallIds => Table?.Columns
+        .FirstOrDefault()?
+        .Select(cell => cell.BallId)?
+        .ToList().AsReadOnly();
 
     protected override async Task OnInitializedAsync()
     {

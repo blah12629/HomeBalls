@@ -1,0 +1,20 @@
+@inject IHomeBallsDataSource DataSource
+@inject ISpriteService SpriteService
+
+@if (IsBallShown)
+{
+    <th>
+        <img src="@SpriteUrl" />
+    </th>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public UInt16 BallId { get; init; }
+
+    IHomeBallsItem Ball => DataSource.Items[BallId];
+
+    Boolean IsBallShown => Ball.CategoryId == 39 || Ball.Id == 5 || Ball.Id > 456;
+
+    String SpriteUrl => SpriteService.GetSpriteUri(Ball).ToString();
+}
