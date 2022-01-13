@@ -15,18 +15,20 @@
 
 else
 {
-    <table class="min-w-full table-fixed">
-        <thead>
-            <EntryHeader BallIds="@BallIds" />
-        </thead>
+    <div class="overflow-x-scroll">
+        <table class="min-w-full table-fixed">
+            <thead>
+                <EntryHeader BallIds="@BallIds" />
+            </thead>
 
-        <tbody>
-            @foreach (var column in Table.Columns)
-            {
-                <EntryColumn Column="@column" />
-            }
-        </tbody>
-    </table>
+            <tbody>
+                @foreach (var column in Table.Columns)
+                {
+                    <EntryColumn Column="@column" />
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 @code {
