@@ -461,14 +461,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-7 {
   width: 1.75rem;
 }
-.w-4\/5 {
-  width: 80%;
-}
 .w-full {
   width: 100%;
 }
 .w-10 {
   width: 2.5rem;
+}
+.w-4\/5 {
+  width: 80%;
 }
 .w-14 {
   width: 3.5rem;
@@ -518,6 +518,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .overflow-hidden {
   overflow: hidden;
 }
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+.whitespace-nowrap {
+  white-space: nowrap;
+}
 .border-r {
   border-right-width: 1px;
 }
@@ -555,6 +561,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pt-0 {
   padding-top: 0px;
+}
+.text-left {
+  text-align: left;
 }
 .text-center {
   text-align: center;
