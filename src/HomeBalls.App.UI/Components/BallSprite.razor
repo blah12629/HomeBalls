@@ -1,0 +1,16 @@
+@inject ISpriteService SpriteService
+
+<div class="w-6 h-6 mx-auto overflow-hidden">
+    <div class="w-7.5 h-7.5">
+        <img src="@SpriteUrl" class="object-contain" />
+    </div>
+</div>
+
+@code {
+    IHomeBallsItem? _ball;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsItem Ball { get => _ball!; init => _ball = value; }
+
+    String SpriteUrl => SpriteService.GetSpriteUri(Ball).ToString();
+}

@@ -1,38 +1,73 @@
 @inject IHomeBallsDataSource DataSource
 @inject ISpriteService SpriteService
 
-<tr>
-    <td class="border-r border-dream-purple">
-        <div class="block text-center">
+<tr class="hover:bg-dream hover:bg-opacity-20">
+    <td />
+
+    <td class="py-1">
+        <Html5Center>
             <Sprite Source="@SpriteUrl" />
-        </div>
+        </Html5Center>
     </td>
 
-    <td class="text-xs text-right">
-        <span>@Column.SpeciesId</span>
+    <td class="pt-0.75 text-xs text-right">
+        <span>@Column.SpeciesId &nbsp;</span>
     </td>
 
     <td class="text-sm">
         <span>@SpeciesName</span>
     </td>
 
+    <td class="pt-0.75 text-xs border-r border-opacity-50 border-dream-purple">
+        @if (FormIdentifier != default)
+        {
+            <span>@FormIdentifier</span>
+        }
+    </td>
+
     @foreach (var cell in Column)
     {
         <EntryColumnCell Cell="@cell" />
     }
+
+    <td />
 </tr>
 
 @code {
     IHomeBallsEntryColumn? _column;
+    IHomeBallsPokemonForm? _form;
+    IHomeBallsPokemonSpecies? _species;
+    String? _formIdentifier;
+    Boolean _formIdentifierComputed;
 
     [Parameter, EditorRequired]
     public IHomeBallsEntryColumn Column { get => _column!; init => _column = value; }
 
+    IHomeBallsPokemonForm Form => _form ??= DataSource
+        .PokemonForms[(Column.SpeciesId, Column.FormId)];
+
+    IHomeBallsPokemonSpecies Species => _species ??= DataSource
+        .PokemonSpecies[Column.SpeciesId];
+
     String SpriteUrl => SpriteService
-        .GetSerebiiSpriteUri(DataSource.PokemonForms[(Column.SpeciesId, Column.FormId)])
+        .GetSerebiiSpriteUri(Form)
         .ToString();
 
-    String SpeciesName => DataSource
-        .PokemonSpecies[Column.SpeciesId].Names
-        .Single(name => name.LanguageId == 9).Value;
+    String SpeciesName => Species.Names
+        .Single(name => name.LanguageId == 9)
+        .Value;
+
+    String? FormIdentifier
+    {
+        get
+        {
+            if(_formIdentifierComputed) return _formIdentifier;
+
+            var identifier = Form.Identifier;
+            var hyphenIndex = identifier.IndexOf('-');
+            _formIdentifierComputed = true;
+            return _formIdentifier = (
+                hyphenIndex < 0 ? default : identifier[(hyphenIndex + 1) ..]);
+        }
+    }
 }

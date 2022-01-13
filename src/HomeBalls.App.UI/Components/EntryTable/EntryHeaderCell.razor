@@ -3,7 +3,9 @@
 
 @if (IsBallShown)
 {
-    <th><Sprite Source="@SpriteUrl" /></th>
+    <th class="w-8 pt-0.75 border-b border-opacity-50 border-dream-purple">
+        <BallSprite Ball="@Ball" />
+    </th>
 }
 
 @code {

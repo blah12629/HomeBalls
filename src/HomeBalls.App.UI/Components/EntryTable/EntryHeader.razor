@@ -1,12 +1,16 @@
 <tr>
+    <th />
     <th class="w-14" />
     <th class="w-8" />
-    <th />
+    <th class="w-24" />
+    <th class="w-24" />
 
     @foreach (var id in BallIds)
     {
         <EntryHeaderCell BallId="@id" />
     }
+
+    <th />
 </tr>
 
 @code {

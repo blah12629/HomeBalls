@@ -1,20 +1,23 @@
 @using static HomeBallsEntryObtainedStatus
 @inject IHomeBallsDataSource DataSource
-@inject ISpriteService SpriteService
 
 @if (IsBallShown)
 {
     @if (Cell.ObtainedStatus == NotObtained)
     {
-        <td />
+        <td class="pt-0.75 cursor-pointer hover:bg-dream hover:bg-opacity-50" />
     }
     @if (Cell.ObtainedStatus == ObtainedWithoutHiddenAbility)
     {
-        <td class="grayscale"><Sprite Source="@SpriteUrl" /></td>
+        <td class="pt-0.75 cursor-pointer grayscale hover:bg-dream hover:bg-opacity-50">
+            <BallSprite Ball="@Ball" />
+        </td>
     }
     else if (Cell.ObtainedStatus == ObtainedWithHiddenAbility)
     {
-        <td><Sprite Source="@SpriteUrl" /></td>
+        <td class="pt-0.75 cursor-pointer hover:bg-dream hover:bg-opacity-50">
+            <BallSprite Ball="@Ball" />
+        </td>
     }
 }
 
@@ -27,8 +30,6 @@
     IHomeBallsItem Ball => DataSource.Items[Cell.BallId];
 
     Boolean IsBallShown => Ball.CategoryId == 39 || Ball.Id == 5 || Ball.Id > 456;
-
-    String SpriteUrl => SpriteService.GetSpriteUri(Ball).ToString();
 
     protected override async Task OnInitializedAsync()
     {

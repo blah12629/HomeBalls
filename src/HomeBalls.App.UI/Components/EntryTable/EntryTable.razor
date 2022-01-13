@@ -15,7 +15,7 @@
 
 else
 {
-    <table class="table-fixed">
+    <table class="min-w-full table-fixed">
         <thead>
             <EntryHeader BallIds="@BallIds" />
         </thead>
@@ -68,9 +68,9 @@ else
         var startTime = DateTime.Now;
         foreach (var entry in Entries)
         {
-            if (i == Byte.MaxValue)
+            if (i == 100)
             {
-                await Task.Delay(1);
+                await Task.Delay(5);
                 i = Byte.MinValue;
             }
 
