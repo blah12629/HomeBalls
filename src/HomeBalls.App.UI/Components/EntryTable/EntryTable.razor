@@ -1,11 +1,12 @@
 @inherits HomeBallsComponentBase
+@inject IHomeBallsLocalStorageDataSource Data
 @inject IHomeBallsEntryTableFactory TableFactory
 
 @if (Table == default)
 {
     <Loading Size="@LoadingImageSize.GlobalLinkSmall">
         <Message>
-            <span>Loading...</span>
+            <span>@Message</span>
         </Message>
     </Loading>
 }
@@ -18,16 +19,23 @@ else
         </thead>
 
         <tbody>
-            @foreach (var column in Table.Columns)
-            {
+            <Virtualize Items="@Table.Columns" Context="column" TItem="@IHomeBallsEntryColumn">
                 <EntryColumn Column="@column" />
-            }
+            </Virtualize>
         </tbody>
     </table>
 }
 
 @code {
+    String? _message = "Downloading data...";
+
     IHomeBallsEntryTable? Table { get; set; }
+
+    String? Message
+    {
+        get => _message;
+        set { _message = value; StateHasChanged(); }
+    }
 
     IReadOnlyList<UInt16>? BallIds => Table?.Columns
         .FirstOrDefault()?
@@ -40,10 +48,25 @@ else
         await SetTableAsync();
     }
 
-    protected async Task SetTableAsync()
+    async Task SetTableAsync()
     {
         await Task.Delay(200);
-        Table = await Task.Run<IHomeBallsEntryTable>(() =>
-            TableFactory.CreateTableAsync(new HomeBallsEntryCollection()));
+
+        var downloadStart = DateTime.Now;
+        await Data.EnsureLoadedAsync(data => data.Items);
+        await Task.Delay(100);
+        await Data.EnsureLoadedAsync(data => data.PokemonForms);
+        await Task.Delay(100);
+        await Data.EnsureLoadedAsync(data => data.PokemonSpecies);
+        writeElapsed(downloadStart);
+        await Task.Delay(100);
+
+        Message = "Generating table...";
+        var tableStart = DateTime.Now;
+        Table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
+        writeElapsed(tableStart);
+
+        static void writeElapsed(DateTime start) =>
+            Console.WriteLine(DateTime.Now - start);
     }
 }

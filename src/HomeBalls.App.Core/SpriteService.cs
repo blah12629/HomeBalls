@@ -33,6 +33,8 @@ public class SpriteService : ISpriteService
 
     protected virtual String GetSerebiiId(IHomeBallsPokemonForm pokemon)
     {
+        if (!pokemon.IsBreedable) throw new NotSupportedException();
+
         var key = (pokemon.SpeciesId, pokemon.FormId);
         if (SerebiiIdLookup.TryGetValue(key, out var value)) return value;
 

@@ -80,16 +80,25 @@ async Task exportDataContextAsync(
 }
 
 async Task exportEntriesAsync(
+    IFileSystem fileSystem,
+    IHomeBallsProtobufConverter converter,
     CancellationToken cancellationToken = default)
 {
     IHomeBallsEntryCollection entries;
-    var entriesInitializer = new HomeBallsEntryCollectionInitializer(logger);
-    await using (var dataContext = await createDataContext().EnsureLoadedAsync())
-        entries = await entriesInitializer.InitializeAsync(dataContext);
+    var initializer = new HomeBallsEntryCollectionInitializer(logger);
+    await using (var dataContext = await createDataContext()
+        .EnsureLoadedAsync(cancellationToken))
+        entries = await initializer.InitializeAsync(dataContext, cancellationToken);
+        
+    var exporter = new HomeBallsEntriesProtobufExporter(fileSystem, converter, logger);
+    await exporter.ExportEntriesAsync(entries, cancellationToken);
 
-    // ProtoBuf.Serializer.Serialize<IEnumerable<>>
-    // STOPPED HERE: deciding whether to code up an exporter class or not.
-    //   Move on to App.Core support for localstorageentrycollection
+    // STOPPED HERE: Move on to App.Core support for localstorageentrycollection
+    //   Also add message support for TableFactory.
+    //   [ "Downloading data", "Generating table", "Filling it up" ]
+    //   Maybe make tablefactory only generate an empty table and just statehaschanged()
+    //     the cell when new entry added
+    //   EntryTable unit test: Add_ShouldRaiseCellPropertyChanged_WhenNewEntryAdded()
 }
 
 var startTime = DateTime.UtcNow;
@@ -103,9 +112,7 @@ var exporter = new HomeBallsDataProtobufExporter(
 
 // await initializeDataContextAsync(initializer);
 // await exportDataContextAsync(exporter);
-await exportEntriesAsync();
-
-// STOPPED HERE: Creating EntryCollection next.
+await exportEntriesAsync(fileSystem, protobufConverter);
 
 var runTime = DateTime.UtcNow - startTime;
 logger.LogInformation($"Application completed after `{runTime}`.");

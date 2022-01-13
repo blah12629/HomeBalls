@@ -107,8 +107,6 @@ public class HomeBallsLocalStorageDataSource :
     public virtual async ValueTask<HomeBallsLocalStorageDataSource> EnsureLoadedAsync(
         CancellationToken cancellationToken = default)
     {
-        await EnsureDownloadedAsync(cancellationToken);
-
         var start = EventRaiser.Raise(DataLoading);
         var loadingTasks = new[]
         {
@@ -146,6 +144,8 @@ public class HomeBallsLocalStorageDataSource :
         where TKey : notnull
         where TRecord : notnull, IKeyed, IIdentifiable
     {
+        await EnsureDownloadedAsync(dataSet, cancellationToken);
+
         var identifier = dataSet.ElementType.GetFullNameNonNull();
         IsLoaded.TryAdd(identifier, false);
         if (IsLoaded[identifier]) return this;
@@ -163,29 +163,20 @@ public class HomeBallsLocalStorageDataSource :
         return this;
     }
 
-    protected internal virtual async Task<HomeBallsLocalStorageDataSource> EnsureDownloadedAsync(
+    protected internal virtual async Task<HomeBallsLocalStorageDataSource> EnsureDownloadedAsync<TKey, TRecord>(
+        IHomeBallsDataSet<TKey, TRecord> dataSet,
         CancellationToken cancellationToken = default)
+        where TKey : notnull
+        where TRecord : notnull, IKeyed, IIdentifiable
     {
-        var toDownload = await GetEntitiesToDownloadAsync(cancellationToken);
-        if (toDownload.Count == 0) return this;
+        var identifier = dataSet.ElementType.GetFullNameNonNull();
+        if (await LocalStorage.ContainKeyAsync(identifier, cancellationToken)) return this;
 
-        await Downloader.DownloadAsync(toDownload.Keys, cancellationToken);
+        await Downloader.DownloadAsync(
+            identifier,
+            identifier.AddFileExtension(_Values.DefaultProtobufExtension),
+            cancellationToken);
         return this;
-    }
-
-    protected internal virtual async Task<IReadOnlyDictionary<String, Type>> GetEntitiesToDownloadAsync(
-        CancellationToken cancellationToken = default)
-    {
-        var toDownload = new Dictionary<String, Type> { };
-
-        foreach (var dataSet in SourceMutable.Entities)
-        {
-            var identifier = dataSet.ElementType.GetFullNameNonNull();
-            if (await LocalStorage.ContainKeyAsync(identifier, cancellationToken)) continue;
-            toDownload.Add(identifier, dataSet.ElementType);
-        }
-
-        return toDownload.AsReadOnly();
     }
 
     async ValueTask<IHomeBallsLocalStorageDataSource> IAsyncLoadable<IHomeBallsLocalStorageDataSource>
@@ -208,5 +199,5 @@ public class HomeBallsLocalStorageDataSource :
         .EnsureLoadedAsync<TKey, TRecord>(
             Func<IHomeBallsDataSourceMutable, IHomeBallsDataSet<TKey, TRecord>> dataSetNavigation,
             CancellationToken cancellationToken) =>
-        await EnsureLoadedAsync(cancellationToken);
+        await EnsureLoadedAsync(dataSetNavigation, cancellationToken);
 }

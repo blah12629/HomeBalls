@@ -4,6 +4,11 @@ public interface IHomeBallsLocalStorageDataDownloader :
     INotifyDataDownloading
 {
     Task<IHomeBallsLocalStorageDataDownloader> DownloadAsync(
+        String identifier,
+        String? fileName = default,
+        CancellationToken cancellationToken = default);
+
+    Task<IHomeBallsLocalStorageDataDownloader> DownloadAsync(
         IEnumerable<String> identifiers,
         CancellationToken cancellationToken = default);
 
@@ -59,11 +64,12 @@ public class HomeBallsLocalStorageDataDownloader :
         return this;
     }
 
-    protected internal virtual async Task<HomeBallsLocalStorageDataDownloader> DownloadAsync(
+    public virtual async Task<HomeBallsLocalStorageDataDownloader> DownloadAsync(
         String identifier,
-        String fileName,
+        String? fileName = default,
         CancellationToken cancellationToken = default)
     {
+        fileName = fileName ?? identifier.AddFileExtension(_Values.DefaultProtobufExtension);
         var data = await RawDataClient.GetByteArrayAsync(fileName, cancellationToken);
         var dataString = Convert.ToBase64String(data);
         await LocalStorage.SetItemAsync(identifier, dataString, cancellationToken);
@@ -79,4 +85,11 @@ public class HomeBallsLocalStorageDataDownloader :
         IEnumerable<(String Identifier, String FileName)> identifiers,
         CancellationToken cancellationToken) =>
         await DownloadAsync(identifiers, cancellationToken);
+
+    async Task<IHomeBallsLocalStorageDataDownloader> IHomeBallsLocalStorageDataDownloader
+        .DownloadAsync(
+            String identifier,
+            String? fileName,
+            CancellationToken cancellationToken) =>
+        await DownloadAsync(identifier, fileName, cancellationToken);
 }

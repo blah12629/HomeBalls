@@ -3,19 +3,20 @@ namespace CEo.Pokemon.HomeBalls.App.Core;
 public interface IHomeBallsEntryTable :
     IHomeBallsEntryCollection
 {
-    IReadOnlyList<IHomeBallsEntryColumn> Columns { get; }
+    IList<IHomeBallsEntryColumn> Columns { get; }
 }
 
 public class HomeBallsEntryTable :
     IHomeBallsEntryTable
 {
     public HomeBallsEntryTable(
-        IReadOnlyList<IHomeBallsEntryColumn> loadedColumns,
+        List<IHomeBallsEntryColumn> loadedColumns,
         IReadOnlyDictionary<(UInt16 SpeciesId, Byte FormId), Int32> columnsIndexMap,
         IHomeBallsEntryCollection entries,
         ILogger? logger)
     {
-        (Columns, ColumnsIndexMap) = (loadedColumns, columnsIndexMap);
+        (Columns, ColumnsMutable) = (loadedColumns.AsReadOnly(), loadedColumns);
+        ColumnsIndexMap = columnsIndexMap;
         Entries = entries;
         EventRaiser = new EventRaiser();
         Logger = logger;
@@ -25,7 +26,9 @@ public class HomeBallsEntryTable :
 
     public IReadOnlyList<IHomeBallsEntryColumn> Columns { get; }
 
-    protected IReadOnlyDictionary<(UInt16 SpeciesId, Byte FormId), Int32> ColumnsIndexMap { get; }
+    protected internal IList<IHomeBallsEntryColumn> ColumnsMutable { get; }
+
+    protected internal IReadOnlyDictionary<(UInt16 SpeciesId, Byte FormId), Int32> ColumnsIndexMap { get; }
 
     public virtual Type ElementType => Entries.ElementType;
 
@@ -38,6 +41,8 @@ public class HomeBallsEntryTable :
     protected internal IEventRaiser EventRaiser { get; }
 
     protected internal ILogger? Logger { get; }
+
+    IList<IHomeBallsEntryColumn> IHomeBallsEntryTable.Columns => ColumnsMutable;
 
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
