@@ -3,17 +3,13 @@
 
 @if (IsBallShown)
 {
-    @if (Cell.ObtainedStatus == HomeBallsEntryObtainedStatus.NotObtained)
+    @if (Cell.ObtainedStatus == HomeBallsEntryObtainedStatus.ObtainedWithoutHiddenAbility)
     {
-        <td />
+        <td class="grayscale"><Sprite Source="@SpriteUrl" /></td>
     }
-    else if (Cell.ObtainedStatus == HomeBallsEntryObtainedStatus.ObtainedWithoutHiddenAbility)
+    else if (Cell.ObtainedStatus == HomeBallsEntryObtainedStatus.ObtainedWithHiddenAbility)
     {
-        <td><img src="@SpriteUrl" class="grayscale" /></td>
-    }
-    else
-    {
-        <td><img src="@SpriteUrl"/></td>
+        <td><Sprite Source="@SpriteUrl" /></td>
     }
 }
 

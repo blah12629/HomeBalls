@@ -433,6 +433,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mr-2 {
   margin-right: 0.5rem;
 }
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
 .flex {
   display: flex;
 }
@@ -444,6 +450,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-10 {
   width: 2.5rem;
+}
+.w-4\/5 {
+  width: 80%;
+}
+.w-12 {
+  width: 3rem;
+}
+.w-8 {
+  width: 2rem;
 }
 @-webkit-keyframes spin-partial {
 
@@ -472,6 +487,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .justify-center {
   justify-content: center;
 }
+.border-r {
+  border-right-width: 1px;
+}
+.border-dream-purple {
+  --tw-border-opacity: 1;
+  border-color: rgb(144 112 175 / var(--tw-border-opacity));
+}
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -485,6 +511,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .text-center {
   text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 .grayscale {
   --tw-grayscale: grayscale(100%);

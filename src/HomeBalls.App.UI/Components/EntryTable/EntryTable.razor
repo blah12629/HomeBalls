@@ -13,15 +13,16 @@
 
 else
 {
-    <table>
+    <table class="table-fixed">
         <thead>
             <EntryHeader BallIds="@BallIds" />
         </thead>
 
         <tbody>
-            <Virtualize Items="@Table.Columns" Context="column" TItem="@IHomeBallsEntryColumn">
+            @foreach (var column in Table.Columns)
+            {
                 <EntryColumn Column="@column" />
-            </Virtualize>
+            }
         </tbody>
     </table>
 }

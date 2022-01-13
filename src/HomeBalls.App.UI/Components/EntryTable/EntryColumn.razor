@@ -2,9 +2,19 @@
 @inject ISpriteService SpriteService
 
 <tr>
-    <td><img src="@SpriteUrl" /></td>
-    <td><span>@Column.SpeciesId</span></td>
-    <td><span>@SpeciesName</span></td>
+    <td class="border-r border-dream-purple">
+        <div class="block text-center">
+            <Sprite Source="@SpriteUrl" />
+        </div>
+    </td>
+
+    <td class="text-xs text-right">
+        <span>@Column.SpeciesId</span>
+    </td>
+
+    <td class="text-sm">
+        <span>@SpeciesName</span>
+    </td>
 
     @foreach (var cell in Column)
     {
