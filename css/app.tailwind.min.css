@@ -427,6 +427,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .static {
   position: static;
 }
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
 .mt-4 {
   margin-top: 1rem;
 }
@@ -445,6 +449,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .table {
   display: table;
 }
+.h-6 {
+  height: 1.5rem;
+}
+.h-7 {
+  height: 1.75rem;
+}
+.w-6 {
+  width: 1.5rem;
+}
+.w-7 {
+  width: 1.75rem;
+}
 .w-full {
   width: 100%;
 }
@@ -459,6 +475,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-8 {
   width: 2rem;
+}
+.w-24 {
+  width: 6rem;
+}
+.min-w-full {
+  min-width: 100%;
 }
 .table-fixed {
   table-layout: fixed;
@@ -487,15 +509,27 @@ Ensure the default browser behavior of the `hidden` attribute.
   -webkit-animation: spin-partial 2s linear infinite;
           animation: spin-partial 2s linear infinite;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .justify-center {
   justify-content: center;
+}
+.overflow-hidden {
+  overflow: hidden;
 }
 .border-r {
   border-right-width: 1px;
 }
+.border-b {
+  border-bottom-width: 1px;
+}
 .border-dream-purple {
   --tw-border-opacity: 1;
   border-color: rgb(144 112 175 / var(--tw-border-opacity));
+}
+.border-opacity-50 {
+  --tw-border-opacity: 0.5;
 }
 .object-contain {
   -o-object-fit: contain;
@@ -509,8 +543,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
 .pl-4 {
   padding-left: 1rem;
+}
+.pt-0\.75 {
+  padding-top: 0.1875rem/* 3px */;;
+}
+.pt-0 {
+  padding-top: 0px;
 }
 .text-center {
   text-align: center;
@@ -529,4 +573,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .grayscale {
   --tw-grayscale: grayscale(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.hover\:bg-dream:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 180 208 / var(--tw-bg-opacity));
+}
+.hover\:bg-opacity-20:hover {
+  --tw-bg-opacity: 0.2;
+}
+.hover\:bg-opacity-50:hover {
+  --tw-bg-opacity: 0.5;
 }
