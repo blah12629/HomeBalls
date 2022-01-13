@@ -487,27 +487,27 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 @-webkit-keyframes spin-partial {
 
-  0% {
+  0%, 75% {
     transform: rotate(0deg);
   }
 
-  37.5%, 100% {
+  100% {
     transform: rotate(360deg);
   }
 }
 @keyframes spin-partial {
 
-  0% {
+  0%, 75% {
     transform: rotate(0deg);
   }
 
-  37.5%, 100% {
+  100% {
     transform: rotate(360deg);
   }
 }
 .animate-spin-partial {
-  -webkit-animation: spin-partial 2s linear infinite;
-          animation: spin-partial 2s linear infinite;
+  -webkit-animation: spin-partial 1.5s linear infinite;
+          animation: spin-partial 1.5s linear infinite;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -562,6 +562,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-right {
   text-align: right;
 }
+.text-0 {
+  font-size: 0rem;
+}
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
@@ -569,6 +572,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+.text-dream-black {
+  --tw-text-opacity: 1;
+  color: rgb(75 81 79 / var(--tw-text-opacity));
 }
 .grayscale {
   --tw-grayscale: grayscale(100%);

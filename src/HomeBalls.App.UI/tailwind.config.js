@@ -13,7 +13,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'spin-partial': 'spin-partial 2s linear infinite',
+        'spin-partial': 'spin-partial 1.5s linear infinite',
       },
       colors: {
         dream: {
@@ -30,8 +30,8 @@ module.exports = {
       },
       keyframes: {
         'spin-partial': {
-          '0%': { transform: 'rotate(0deg)' },
-          '37.5%, 100%': { transform: 'rotate(360deg)' }
+          '0%, 75%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' }
         }
       },
       spacing: {
