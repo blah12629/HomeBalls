@@ -1,12 +1,12 @@
 namespace CEo.Pokemon.HomeBalls.App.Core.DataAccess.Tests;
 
-public class HomeBallsLocalStorageDataDownloaderTests
+public class HomeBallsLocalStorageDownloaderTests
 {
-    public HomeBallsLocalStorageDataDownloaderTests()
+    public HomeBallsLocalStorageDownloaderTests()
     {
         LocalFileSystem = new FileSystem();
         LocalStorage = Substitute.For<ILocalStorageService>();
-        Logger = Substitute.For<ILogger<HomeBallsLocalStorageDataDownloader>>();
+        Logger = Substitute.For<ILogger<HomeBallsLocalStorageDownloader>>();
     }
 
     protected IFileSystem LocalFileSystem { get; }
@@ -15,23 +15,23 @@ public class HomeBallsLocalStorageDataDownloaderTests
 
     protected ILogger Logger { get; }
 
-    protected HomeBallsLocalStorageDataDownloader Sut => CreateSut(new HttpClient());
+    protected HomeBallsLocalStorageDownloader Sut => CreateSut(new HttpClient());
 
-    protected HomeBallsLocalStorageDataDownloader CreateSut(HttpClient dataClient) =>
-        new HomeBallsLocalStorageDataDownloader(dataClient, LocalStorage, Logger);
+    protected HomeBallsLocalStorageDownloader CreateSut(HttpClient dataClient) =>
+        new HomeBallsLocalStorageDownloader(dataClient, LocalStorage, Logger);
 
     [Fact]
     public Task DownloadAsync_ShouldRaiseDataDownloading_WhenDownloadFails() =>
         DownloadAsync_WhenDonwloadFails(monitor => monitor.Should()
-            .Raise(nameof(HomeBallsLocalStorageDataDownloader.DataDownloading)));
+            .Raise(nameof(HomeBallsLocalStorageDownloader.DataDownloading)));
 
     [Fact]
     public Task DownloadAsync_ShouldNotRaiseDataDownloaded_WhenDownloadFails() =>
         DownloadAsync_WhenDonwloadFails(monitor => monitor.Should()
-            .NotRaise(nameof(HomeBallsLocalStorageDataDownloader.DataDownloaded)));
+            .NotRaise(nameof(HomeBallsLocalStorageDownloader.DataDownloaded)));
 
     protected async Task DownloadAsync_WhenDonwloadFails(
-        Action<IMonitor<HomeBallsLocalStorageDataDownloader>> assertions)
+        Action<IMonitor<HomeBallsLocalStorageDownloader>> assertions)
     {
         var sut = Sut;
         var monitor = sut.Monitor();
@@ -46,8 +46,8 @@ public class HomeBallsLocalStorageDataDownloaderTests
     public Task DownloadAsync_ShouldRaiseAllDataDownloadActionEvents_WhenSuccessful() =>
         DownloadAsync_WhenSuccessful((identifier, fileName, monitor) =>
         {
-            monitor.Should().Raise(nameof(HomeBallsLocalStorageDataDownloader.DataDownloading));
-            monitor.Should().Raise(nameof(HomeBallsLocalStorageDataDownloader.DataDownloaded));
+            monitor.Should().Raise(nameof(HomeBallsLocalStorageDownloader.DataDownloading));
+            monitor.Should().Raise(nameof(HomeBallsLocalStorageDownloader.DataDownloaded));
         });
 
     [Fact]
@@ -59,7 +59,7 @@ public class HomeBallsLocalStorageDataDownloaderTests
                 Arg.Any<CancellationToken>()));
 
     protected async Task DownloadAsync_WhenSuccessful(
-        Action<String, String, IMonitor<HomeBallsLocalStorageDataDownloader>> assertions)
+        Action<String, String, IMonitor<HomeBallsLocalStorageDownloader>> assertions)
     {
         var (identifier, fileName) = (
             "CEo.Pokemon.HomeBalls.IHomeBallsGameVersion",

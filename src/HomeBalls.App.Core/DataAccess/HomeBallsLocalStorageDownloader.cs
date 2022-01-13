@@ -1,26 +1,26 @@
 namespace CEo.Pokemon.HomeBalls.App.Core.DataAccess;
 
-public interface IHomeBallsLocalStorageDataDownloader :
+public interface IHomeBallsLocalStorageDownloader :
     INotifyDataDownloading
 {
-    Task<IHomeBallsLocalStorageDataDownloader> DownloadAsync(
+    Task<IHomeBallsLocalStorageDownloader> DownloadAsync(
         String identifier,
         String? fileName = default,
         CancellationToken cancellationToken = default);
 
-    Task<IHomeBallsLocalStorageDataDownloader> DownloadAsync(
+    Task<IHomeBallsLocalStorageDownloader> DownloadAsync(
         IEnumerable<String> identifiers,
         CancellationToken cancellationToken = default);
 
-    Task<IHomeBallsLocalStorageDataDownloader> DownloadAsync(
+    Task<IHomeBallsLocalStorageDownloader> DownloadAsync(
         IEnumerable<(String Identifier, String FileName)> identifiers,
         CancellationToken cancellationToken = default);
 }
 
-public class HomeBallsLocalStorageDataDownloader :
-    IHomeBallsLocalStorageDataDownloader
+public class HomeBallsLocalStorageDownloader :
+    IHomeBallsLocalStorageDownloader
 {
-    public HomeBallsLocalStorageDataDownloader(
+    public HomeBallsLocalStorageDownloader(
         HttpClient rawDataClient,
         ILocalStorageService localStorage,
         ILogger? logger = default)
@@ -43,14 +43,14 @@ public class HomeBallsLocalStorageDataDownloader :
 
     public event EventHandler<TimedActionEndedEventArgs>? DataDownloaded;
 
-    public virtual Task<HomeBallsLocalStorageDataDownloader> DownloadAsync(
+    public virtual Task<HomeBallsLocalStorageDownloader> DownloadAsync(
         IEnumerable<String> identifiers,
         CancellationToken cancellationToken = default) =>
         DownloadAsync(
             identifiers.Select(id => (id, id.AddFileExtension(_Values.DefaultProtobufExtension))),
             cancellationToken);
 
-    public virtual async Task<HomeBallsLocalStorageDataDownloader> DownloadAsync(
+    public virtual async Task<HomeBallsLocalStorageDownloader> DownloadAsync(
         IEnumerable<(String Identifier, String FileName)> identifiers,
         CancellationToken cancellationToken = default)
     {
@@ -64,7 +64,7 @@ public class HomeBallsLocalStorageDataDownloader :
         return this;
     }
 
-    public virtual async Task<HomeBallsLocalStorageDataDownloader> DownloadAsync(
+    public virtual async Task<HomeBallsLocalStorageDownloader> DownloadAsync(
         String identifier,
         String? fileName = default,
         CancellationToken cancellationToken = default)
@@ -76,17 +76,17 @@ public class HomeBallsLocalStorageDataDownloader :
         return this;
     }
 
-    async Task<IHomeBallsLocalStorageDataDownloader> IHomeBallsLocalStorageDataDownloader.DownloadAsync(
+    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsLocalStorageDownloader.DownloadAsync(
         IEnumerable<String> identifiers,
         CancellationToken cancellationToken) =>
         await DownloadAsync(identifiers, cancellationToken);
 
-    async Task<IHomeBallsLocalStorageDataDownloader> IHomeBallsLocalStorageDataDownloader.DownloadAsync(
+    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsLocalStorageDownloader.DownloadAsync(
         IEnumerable<(String Identifier, String FileName)> identifiers,
         CancellationToken cancellationToken) =>
         await DownloadAsync(identifiers, cancellationToken);
 
-    async Task<IHomeBallsLocalStorageDataDownloader> IHomeBallsLocalStorageDataDownloader
+    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsLocalStorageDownloader
         .DownloadAsync(
             String identifier,
             String? fileName,

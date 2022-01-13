@@ -1,5 +1,6 @@
 @inherits HomeBallsComponentBase
 @inject IHomeBallsLocalStorageDataSource Data
+@inject IHomeBallsLocalStorageEntryCollection Entries
 @inject IHomeBallsEntryTableFactory TableFactory
 
 @if (Table == default)
@@ -52,20 +53,31 @@ else
     async Task SetTableAsync()
     {
         await Task.Delay(200);
-
-        var downloadStart = DateTime.Now;
-        await Data.EnsureLoadedAsync(data => data.Items);
-        await Task.Delay(100);
-        await Data.EnsureLoadedAsync(data => data.PokemonForms);
-        await Task.Delay(100);
-        await Data.EnsureLoadedAsync(data => data.PokemonSpecies);
-        writeElapsed(downloadStart);
-        await Task.Delay(100);
+        await DownloadDataAsync();
 
         Message = "Generating table...";
         var tableStart = DateTime.Now;
         Table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
-        writeElapsed(tableStart);
+        Console.WriteLine(DateTime.Now - tableStart);
+
+        foreach (var entry in Entries) Table.Add(entry);
+    }
+
+    async Task DownloadDataAsync()
+    {
+        var delay = 100;
+        await executeAsync(Data.EnsureLoadedAsync(data => data.Items), "Downloaded items.");
+        await executeAsync(Data.EnsureLoadedAsync(data => data.PokemonForms), "Downloaded forms.");
+        await executeAsync(Data.EnsureLoadedAsync(data => data.PokemonSpecies), "Downloaded species.");
+        await executeAsync(Entries.EnsureLoadedAsync(), "Downloaded entries.");
+
+        async Task executeAsync<T>(ValueTask<T> ensureLoadedTask, String message)
+        {
+            var startTime = DateTime.Now;
+            await ensureLoadedTask;
+            writeElapsed(startTime);
+            await Task.Delay(delay);
+        }
 
         static void writeElapsed(DateTime start) =>
             Console.WriteLine(DateTime.Now - start);

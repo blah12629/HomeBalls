@@ -8,9 +8,9 @@ public class HomeBallsLocalStorageDataSourceTests
 
         LocalFileSystem = new FileSystem();
         LocalStorage = Substitute.For<ILocalStorageService>();
-        Downlaoder = Substitute.For<IHomeBallsLocalStorageDataDownloader>();
+        Downlaoder = Substitute.For<IHomeBallsLocalStorageDownloader>();
         TypeMap = Substitute.ForPartsOf<HomeBallsProtobufTypeMap>();
-        Logger = Substitute.For<ILogger<HomeBallsLocalStorageDataSourceTests>>();
+        Logger = Substitute.For<ILogger<HomeBallsLocalStorageDataSource>>();
         Sut = new(LocalStorage, Downlaoder, TypeMap, Logger);
     }
 
@@ -18,7 +18,7 @@ public class HomeBallsLocalStorageDataSourceTests
 
     protected ILocalStorageService LocalStorage { get; }
 
-    protected IHomeBallsLocalStorageDataDownloader Downlaoder { get; }
+    protected IHomeBallsLocalStorageDownloader Downlaoder { get; }
 
     protected IHomeBallsProtobufTypeMap TypeMap { get; }
 

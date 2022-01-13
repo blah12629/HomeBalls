@@ -454,11 +454,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-4\/5 {
   width: 80%;
 }
-.w-12 {
-  width: 3rem;
+.w-14 {
+  width: 3.5rem;
 }
 .w-8 {
   width: 2rem;
+}
+.table-fixed {
+  table-layout: fixed;
 }
 @-webkit-keyframes spin-partial {
 

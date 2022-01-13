@@ -10,24 +10,34 @@ builder.Services
     .AddBlazoredLocalStorage()
     .AddScoped<IHomeBallsProtobufTypeMap>(services =>
         new HomeBallsProtobufTypeMap())
-    .AddScoped<IHomeBallsLocalStorageDataDownloader>(services =>
+    .AddScoped<IHomeBallsLocalStorageDownloader>(services =>
     {
         var client = services.GetRequiredService<HttpClient>();
         client.BaseAddress = new Uri($"{builder.HostEnvironment.BaseAddress}/data/");
 
-        return new HomeBallsLocalStorageDataDownloader(
+        return new HomeBallsLocalStorageDownloader(
             client,
             services.GetRequiredService<ILocalStorageService>(),
-            services.GetRequiredService<ILogger<HomeBallsLocalStorageDataDownloader>>());
+            services.GetRequiredService<ILogger<HomeBallsLocalStorageDownloader>>());
     })
+
     .AddScoped<IHomeBallsLocalStorageDataSource>(services =>
         new HomeBallsLocalStorageDataSource(
             services.GetRequiredService<ILocalStorageService>(),
-            services.GetRequiredService<IHomeBallsLocalStorageDataDownloader>(),
+            services.GetRequiredService<IHomeBallsLocalStorageDownloader>(),
             services.GetRequiredService<IHomeBallsProtobufTypeMap>(),
             services.GetRequiredService<ILogger<HomeBallsLocalStorageDataSource>>()))
     .AddScoped<IHomeBallsDataSource>(services =>
         services.GetRequiredService<IHomeBallsLocalStorageDataSource>())
+
+    .AddScoped<IHomeBallsLocalStorageEntryCollection>(services =>
+        new HomeBallsLocalStorageEntryCollection(
+            services.GetRequiredService<ILocalStorageService>(),
+            services.GetRequiredService<IHomeBallsLocalStorageDownloader>(),
+            services.GetRequiredService<ILogger<HomeBallsEntryCollection>>()))
+    .AddScoped<IHomeBallsEntryCollection>(services =>
+        services.GetRequiredService<IHomeBallsEntryCollection>())
+
     .AddScoped<IHomeBallsEntryTableFactory>(services =>
         new HomeBallsEntryTableFactory(
             services.GetRequiredService<IHomeBallsDataSource>(),

@@ -21,7 +21,7 @@ public class HomeBallsLocalStorageDataSource :
 {
     public HomeBallsLocalStorageDataSource(
         ILocalStorageService localStorage,
-        IHomeBallsLocalStorageDataDownloader downloader,
+        IHomeBallsLocalStorageDownloader downloader,
         IHomeBallsProtobufTypeMap typeMap,
         ILogger? logger) :
         this(localStorage, new HomeBallsDataSourceMutable(), downloader, typeMap, logger) { }
@@ -29,7 +29,7 @@ public class HomeBallsLocalStorageDataSource :
     public HomeBallsLocalStorageDataSource(
         ILocalStorageService localStorage,
         IHomeBallsDataSourceMutable dataSource,
-        IHomeBallsLocalStorageDataDownloader downloader,
+        IHomeBallsLocalStorageDownloader downloader,
         IHomeBallsProtobufTypeMap typeMap,
         ILogger? logger)
     {
@@ -48,7 +48,7 @@ public class HomeBallsLocalStorageDataSource :
 
     protected internal IHomeBallsDataSource Source { get; }
 
-    protected internal IHomeBallsLocalStorageDataDownloader Downloader { get; }
+    protected internal IHomeBallsLocalStorageDownloader Downloader { get; }
 
     protected internal IHomeBallsProtobufTypeMap TypeMap { get; }
 
@@ -144,32 +144,30 @@ public class HomeBallsLocalStorageDataSource :
         where TKey : notnull
         where TRecord : notnull, IKeyed, IIdentifiable
     {
-        await EnsureDownloadedAsync(dataSet, cancellationToken);
-
         var identifier = dataSet.ElementType.GetFullNameNonNull();
         IsLoaded.TryAdd(identifier, false);
         if (IsLoaded[identifier]) return this;
+
+        await EnsureDownloadedAsync(identifier, cancellationToken);
 
         var deserializationType = typeof(IEnumerable<>)
             .MakeGenericType(TypeMap.GetProtobufConcreteType(dataSet.ElementType));
         var dataString = await LocalStorage.GetItemAsync<String>(identifier, cancellationToken);
 
-        using var memory = new MemoryStream(Convert.FromBase64String(dataString));
-        var loaded = (IEnumerable<TRecord>)ProtoBuf.Serializer
-            .Deserialize(deserializationType, memory);
+        IEnumerable<TRecord> loaded;
+        await using (var memory = new MemoryStream(Convert.FromBase64String(dataString)))
+            loaded = (IEnumerable<TRecord>)ProtoBuf.Serializer
+                .Deserialize(deserializationType, memory);
 
         dataSet.AddRange(loaded);
         IsLoaded[identifier] = true;
         return this;
     }
 
-    protected internal virtual async Task<HomeBallsLocalStorageDataSource> EnsureDownloadedAsync<TKey, TRecord>(
-        IHomeBallsDataSet<TKey, TRecord> dataSet,
+    protected internal virtual async Task<HomeBallsLocalStorageDataSource> EnsureDownloadedAsync(
+        String identifier,
         CancellationToken cancellationToken = default)
-        where TKey : notnull
-        where TRecord : notnull, IKeyed, IIdentifiable
     {
-        var identifier = dataSet.ElementType.GetFullNameNonNull();
         if (await LocalStorage.ContainKeyAsync(identifier, cancellationToken)) return this;
 
         await Downloader.DownloadAsync(
