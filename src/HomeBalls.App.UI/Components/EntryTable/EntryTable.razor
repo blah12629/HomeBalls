@@ -2,6 +2,7 @@
 @inject IHomeBallsLocalStorageDataSource Data
 @inject IHomeBallsLocalStorageEntryCollection Entries
 @inject IHomeBallsEntryTableFactory TableFactory
+@inject ILogger<EntryTable> Logger
 
 @if (Table == default)
 {
@@ -33,6 +34,8 @@ else
 
     IHomeBallsEntryTable? Table { get; set; }
 
+    Boolean IsTableFilled { get; set; }
+
     String? Message
     {
         get => _message;
@@ -44,11 +47,40 @@ else
         .Select(cell => cell.BallId)?
         .ToList().AsReadOnly();
 
+    protected override void SetServices()
+    {
+        base.SetServices();
+        base.Logger = Logger;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         await SetTableAsync();
     }
+
+    protected override async Task OnAfterRenderAsync(Boolean firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender || Table == default || IsTableFilled) return;
+
+        var i = Byte.MinValue;
+        var startTime = DateTime.Now;
+        foreach (var entry in Entries)
+        {
+            if (i == Byte.MaxValue)
+            {
+                await Task.Delay(1);
+                i = Byte.MinValue;
+            }
+
+            Table!.Add(entry);
+            i ++;
+        }
+
+        Logger.LogInformation($"Table filled. {DateTime.Now - startTime}");
+        IsTableFilled = true;
+    }    
 
     async Task SetTableAsync()
     {
@@ -58,9 +90,7 @@ else
         Message = "Generating table...";
         var tableStart = DateTime.Now;
         Table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
-        Console.WriteLine(DateTime.Now - tableStart);
-
-        foreach (var entry in Entries) Table.Add(entry);
+        Logger.LogDebug($"Generated table. {DateTime.Now - tableStart}");
     }
 
     async Task DownloadDataAsync()
@@ -75,11 +105,8 @@ else
         {
             var startTime = DateTime.Now;
             await ensureLoadedTask;
-            writeElapsed(startTime);
+            Logger.LogDebug($"{message} {DateTime.Now - startTime}");
             await Task.Delay(delay);
         }
-
-        static void writeElapsed(DateTime start) =>
-            Console.WriteLine(DateTime.Now - start);
     }
 }

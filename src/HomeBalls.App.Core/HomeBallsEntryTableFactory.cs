@@ -13,6 +13,9 @@ public interface IHomeBallsEntryTableFactory
 public class HomeBallsEntryTableFactory :
     IHomeBallsEntryTableFactory
 {
+    IReadOnlyList<IHomeBallsEntryCell>? _defaultCells;
+    IReadOnlyDictionary<UInt16, Int32>? _defaultIndexMap;
+
     public HomeBallsEntryTableFactory(
         IHomeBallsDataSource dataSource,
         ILoggerFactory? loggerFactory)
@@ -27,7 +30,22 @@ public class HomeBallsEntryTableFactory :
 
     protected internal virtual ILogger? Logger { get; }
 
-    protected internal virtual IReadOnlyList<IHomeBallsEntryCell>? DefaultCells { get; set; }
+    protected internal virtual IReadOnlyList<IHomeBallsEntryCell>? DefaultCells
+    {
+        get => _defaultCells;
+        set
+        {
+            if (_defaultCells == value) return;
+            _defaultCells = value;
+            _defaultIndexMap = default;
+        }
+    }
+
+    protected internal virtual IReadOnlyDictionary<UInt16, Int32> DefaultIndexMap =>
+        _defaultIndexMap ??= DefaultCells?
+            .Select((cell, index) => (Id: cell.BallId, Index: index))
+            .ToDictionary(pair => pair.Id, pair => pair.Index).AsReadOnly() ??
+            throw new ArgumentException($"Parameter not set.", nameof(DefaultCells));
 
     public virtual async Task<IHomeBallsEntryTable> CreateTableAsync(
         CancellationToken cancellationToken = default)
@@ -71,9 +89,13 @@ public class HomeBallsEntryTableFactory :
         IHomeBallsPokemonForm form,
         CancellationToken cancellationToken = default)
     {
-        var column = new HomeBallsEntryColumn(
-            await CreateCellsAsync(cancellationToken),
-            LoggerFactory?.CreateLogger(typeof(HomeBallsEntryColumn)))
+        var cells = await CreateCellsAsync(cancellationToken);
+        var indexMap = DefaultIndexMap
+            .ToDictionary(pair => pair.Key, pair => pair.Value)
+            .AsReadOnly();
+        var logger = LoggerFactory?.CreateLogger(typeof(HomeBallsEntryColumn));
+
+        var column = new HomeBallsEntryColumn(cells, indexMap, logger)
         {
             SpeciesId = form.SpeciesId,
             FormId = form.FormId

@@ -92,13 +92,6 @@ async Task exportEntriesAsync(
         
     var exporter = new HomeBallsEntriesProtobufExporter(fileSystem, converter, logger);
     await exporter.ExportEntriesAsync(entries, cancellationToken);
-
-    // STOPPED HERE: Move on to App.Core support for localstorageentrycollection
-    //   Also add message support for TableFactory.
-    //   [ "Downloading data", "Generating table", "Filling it up" ]
-    //   Maybe make tablefactory only generate an empty table and just statehaschanged()
-    //     the cell when new entry added
-    //   EntryTable unit test: Add_ShouldRaiseCellPropertyChanged_WhenNewEntryAdded()
 }
 
 var startTime = DateTime.UtcNow;

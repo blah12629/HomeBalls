@@ -1,13 +1,18 @@
+@using static HomeBallsEntryObtainedStatus
 @inject IHomeBallsDataSource DataSource
 @inject ISpriteService SpriteService
 
 @if (IsBallShown)
 {
-    @if (Cell.ObtainedStatus == HomeBallsEntryObtainedStatus.ObtainedWithoutHiddenAbility)
+    @if (Cell.ObtainedStatus == NotObtained)
+    {
+        <td />
+    }
+    @if (Cell.ObtainedStatus == ObtainedWithoutHiddenAbility)
     {
         <td class="grayscale"><Sprite Source="@SpriteUrl" /></td>
     }
-    else if (Cell.ObtainedStatus == HomeBallsEntryObtainedStatus.ObtainedWithHiddenAbility)
+    else if (Cell.ObtainedStatus == ObtainedWithHiddenAbility)
     {
         <td><Sprite Source="@SpriteUrl" /></td>
     }

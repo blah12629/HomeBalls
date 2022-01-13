@@ -13,7 +13,7 @@ public class HomeBallsEntryTable :
         List<IHomeBallsEntryColumn> loadedColumns,
         IReadOnlyDictionary<(UInt16 SpeciesId, Byte FormId), Int32> columnsIndexMap,
         IHomeBallsEntryCollection entries,
-        ILogger? logger)
+        ILogger? logger = default)
     {
         (Columns, ColumnsMutable) = (loadedColumns.AsReadOnly(), loadedColumns);
         ColumnsIndexMap = columnsIndexMap;

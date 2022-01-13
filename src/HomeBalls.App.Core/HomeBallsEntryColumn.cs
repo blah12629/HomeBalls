@@ -18,10 +18,24 @@ public class HomeBallsEntryColumn :
         ILogger? logger = default)
     {
         Cells = cells;
+        IndexMap = cells
+            .Select((cell, index) => (Id: cell.BallId, Index: index))
+            .ToDictionary(pair => pair.Id, pair => pair.Index);
+        Logger = logger;
+    }
+
+    public HomeBallsEntryColumn(
+        IReadOnlyList<IHomeBallsEntryCell> cells,
+        IReadOnlyDictionary<UInt16, Int32> indexMap,
+        ILogger? logger = default)
+    {
+        (Cells, IndexMap) = (cells, indexMap);
         Logger = logger;
     }
 
     protected internal IReadOnlyList<IHomeBallsEntryCell> Cells { get; }
+
+    protected internal IReadOnlyDictionary<UInt16, Int32> IndexMap { get; }
 
     protected internal ILogger? Logger { get; }
 
@@ -33,7 +47,7 @@ public class HomeBallsEntryColumn :
 
     public virtual Int32 Count => Cells.Count;
 
-    public virtual IHomeBallsEntryCell this[UInt16 ballId] => throw new NotImplementedException();
+    public virtual IHomeBallsEntryCell this[UInt16 ballId] => Cells[IndexMap[ballId]];
 
     public virtual IEnumerator<IHomeBallsEntryCell> GetEnumerator() => Cells.GetEnumerator();
 
