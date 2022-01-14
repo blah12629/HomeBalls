@@ -42,8 +42,12 @@ builder.Services
         new HomeBallsEntryTableFactory(
             services.GetRequiredService<IHomeBallsDataSource>(),
             services.GetRequiredService<ILoggerFactory>()))
-    .AddScoped<ISpriteService>(services =>
-        new SpriteService(
-            services.GetRequiredService<ILogger<SpriteService>>()));
+
+    .AddScoped<IHomeBallsBreedablesSpriteService>(services =>
+        new HomeBallsBreedablesSpriteService(
+            services.GetRequiredService<ILogger<HomeBallsBreedablesSpriteService>>()))
+    .AddScoped<IHomeBallsBreedablesFormIdentifierService>(services =>
+        new HomeBallsBreedablesFormIdentifierService(
+            services.GetRequiredService<ILogger<HomeBallsBreedablesFormIdentifierService>>()));
 
 await builder.Build().RunAsync();

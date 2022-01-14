@@ -1,15 +1,16 @@
 namespace CEo.Pokemon.HomeBalls.App.Core;
 
-public interface ISpriteService
+public interface IHomeBallsBreedablesSpriteService
 {
     Uri GetSerebiiSpriteUri(IHomeBallsPokemonForm pokemon);
 
     Uri GetSpriteUri(IHomeBallsItem item);
 }
 
-public class SpriteService : ISpriteService
+public class HomeBallsBreedablesSpriteService :
+    IHomeBallsBreedablesSpriteService
 {
-    public SpriteService(
+    public HomeBallsBreedablesSpriteService(
         ILogger? logger = default)
     {
         Logger = logger;

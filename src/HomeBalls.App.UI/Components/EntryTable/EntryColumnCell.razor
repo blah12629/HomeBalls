@@ -5,17 +5,17 @@
 {
     @if (Cell.ObtainedStatus == NotObtained)
     {
-        <td class="pt-0.75 cursor-pointer hover:bg-dream hover:bg-opacity-50" />
+        <td class="cursor-pointer hover:bg-dream hover:bg-opacity-50" />
     }
     @if (Cell.ObtainedStatus == ObtainedWithoutHiddenAbility)
     {
-        <td class="pt-0.75 cursor-pointer grayscale hover:bg-dream hover:bg-opacity-50">
+        <td class="cursor-pointer hover:bg-dream hover:bg-opacity-50">
             <BallSprite Ball="@Ball" />
         </td>
     }
     else if (Cell.ObtainedStatus == ObtainedWithHiddenAbility)
     {
-        <td class="pt-0.75 cursor-pointer hover:bg-dream hover:bg-opacity-50">
+        <td class="cursor-pointer hover:bg-dream hover:bg-opacity-50">
             <BallSprite Ball="@Ball" />
         </td>
     }

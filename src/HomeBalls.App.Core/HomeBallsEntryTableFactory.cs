@@ -78,8 +78,7 @@ public class HomeBallsEntryTableFactory :
     {
         var loadingTask = DataSource.PokemonForms
             .Where(form => form.IsBreedable)
-            .OrderBy(form => form.SpeciesId)
-            .ThenBy(form => form.FormId)
+            .OrderBy(form => form, new HomeBallsPokemonFormComparer())
             .Select(form => CreateColumnAsync(form, cancellationToken));
 
         return (await Task.WhenAll(loadingTask)).ToList();

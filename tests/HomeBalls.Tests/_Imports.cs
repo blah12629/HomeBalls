@@ -1,3 +1,4 @@
+global using CEo.Pokemon.HomeBalls.ProtocolBuffers;
 global using CEo.Pokemon.HomeBalls.Tests;
 
 global using FluentAssertions;

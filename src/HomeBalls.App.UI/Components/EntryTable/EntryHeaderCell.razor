@@ -1,11 +1,11 @@
 @inject IHomeBallsDataSource DataSource
-@inject ISpriteService SpriteService
+@inject IHomeBallsBreedablesSpriteService SpriteService
 
 @if (IsBallShown)
 {
-    <th class="w-8 pt-0.75 border-b border-opacity-50 border-dream-purple">
+    <td class="sticky top-0 w-8 bg-white border-b border-opacity-50 border-dream-purple">
         <BallSprite Ball="@Ball" />
-    </th>
+    </td>
 }
 
 @code {

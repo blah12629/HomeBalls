@@ -1,27 +1,26 @@
 @inject IHomeBallsDataSource DataSource
-@inject ISpriteService SpriteService
+@inject IHomeBallsBreedablesSpriteService SpriteService
+@inject IHomeBallsBreedablesFormIdentifierService IdentifierService
 
-<tr class="hover:bg-dream hover:bg-opacity-20">
-    <td class="text-0" />
+<tr class="hover:bg-dream hover:bg-opacity-20" id="@Id">
+    <td class="sticky left-0 bg-white text-0 h-6.5" />
 
-    <td class="py-1">
-        <Html5Center>
-            <Sprite Source="@SpriteUrl" />
-        </Html5Center>
+    <td class="sticky left-0 py-1 overflow-hidden bg-white">
+        <span class="hidden mx-auto sm:table-cell">
+            <img src="@SpriteUrl" class="object-contain w-4/5" />
+        </span>
     </td>
 
-    <td class="pt-0.75 overflow-hidden text-xs text-right whitespace-nowrap">
+    <td class="sticky left-0 overflow-hidden text-xs text-right bg-white sm:left-14 whitespace-nowrap">
         <span>@Column.SpeciesId &nbsp;</span>
     </td>
 
-    <td class="overflow-hidden text-sm text-left whitespace-nowrap">
-        <span>@SpeciesName</span>
-    </td>
+    <td class="sticky overflow-hidden text-xs text-left bg-white border-r border-opacity-50 left-8 sm:left-22 whitespace-nowrap border-dream-purple">
+        <span class="font-semibold">@SpeciesName</span>
 
-    <td class="pt-0.75 overflow-hidden text-xs text-left border-r border-opacity-50 border-dream-purple whitespace-nowrap">
-        @if (FormIdentifier != default)
+        @if (FormIdentifier != String.Empty)
         {
-            <span>@FormIdentifier</span>
+            <span>&nbsp; @FormIdentifier</span>
         }
     </td>
 
@@ -37,11 +36,11 @@
     IHomeBallsEntryColumn? _column;
     IHomeBallsPokemonForm? _form;
     IHomeBallsPokemonSpecies? _species;
-    String? _formIdentifier;
-    Boolean _formIdentifierComputed;
 
     [Parameter, EditorRequired]
     public IHomeBallsEntryColumn Column { get => _column!; init => _column = value; }
+
+    String Id => $"cpf-{Column.SpeciesId}-{Column.FormId}";
 
     IHomeBallsPokemonForm Form => _form ??= DataSource
         .PokemonForms[(Column.SpeciesId, Column.FormId)];
@@ -57,17 +56,5 @@
         .Single(name => name.LanguageId == 9)
         .Value;
 
-    String? FormIdentifier
-    {
-        get
-        {
-            if(_formIdentifierComputed) return _formIdentifier;
-
-            var identifier = Form.Identifier;
-            var hyphenIndex = identifier.IndexOf('-');
-            _formIdentifierComputed = true;
-            return _formIdentifier = (
-                hyphenIndex < 0 ? default : identifier[(hyphenIndex + 1) ..]);
-        }
-    }
+    String? FormIdentifier => IdentifierService.GetIdentifier(Form);
 }
