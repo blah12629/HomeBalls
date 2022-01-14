@@ -455,3 +455,4 @@ $RECYCLE.BIN/
 
 src/HomeBalls.Data/data
 src/HomeBalls.Data/data_protobuf
+src/HomeBalls.App.UI/wwwroot/css/app.tailwind.min.css
