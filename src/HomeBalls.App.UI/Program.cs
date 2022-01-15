@@ -40,7 +40,7 @@ builder.Services
 
     .AddScoped<IHomeBallsEntryTableFactory>(services =>
         new HomeBallsEntryTableFactory(
-            services.GetRequiredService<IHomeBallsDataSource>(),
+            services.GetRequiredService<IHomeBallsLocalStorageDataSource>(),
             services.GetRequiredService<ILoggerFactory>()))
 
     .AddScoped<IHomeBallsBreedablesSpriteService>(services =>

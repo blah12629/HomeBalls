@@ -447,12 +447,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: auto;
   margin-right: auto;
 }
-.mt-4 {
-  margin-top: 1rem;
-}
-.mr-2 {
-  margin-right: 0.5rem;
-}
 .inline-block {
   display: inline-block;
 }
@@ -578,9 +572,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-b {
   border-bottom-width: 1px;
 }
-.border-r {
-  border-right-width: 1px;
-}
 .border-dream-dark {
   --tw-border-opacity: 1;
   border-color: rgb(224 152 179 / var(--tw-border-opacity));
@@ -620,9 +611,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pt-0 {
   padding-top: 0px;
-}
-.pl-4 {
-  padding-left: 1rem;
 }
 .text-left {
   text-align: left;

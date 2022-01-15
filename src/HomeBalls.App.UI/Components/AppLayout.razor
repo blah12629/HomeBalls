@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="w-full border-b lg:w-160 lg:border-r border-dream-dark">
+@* <div class="w-full border-b lg:w-160 lg:border-r border-dream-dark">
     <Options />
 </div>
 
@@ -12,4 +12,14 @@
     <div class="flex-grow overflow-scroll">
         @Body
     </div>
+</div> *@
+
+<div class="w-full border-b lg:w-160 lg:border-r border-dream-dark">
+    <Navigation />
+
+    <Options />
+</div>
+
+<div class="flex-grow overflow-scroll">
+    @Body
 </div>

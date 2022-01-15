@@ -17,14 +17,14 @@ public class HomeBallsEntryTableFactory :
     IReadOnlyDictionary<UInt16, Int32>? _defaultIndexMap;
 
     public HomeBallsEntryTableFactory(
-        IHomeBallsDataSource dataSource,
+        IHomeBallsLocalStorageDataSource dataSource,
         ILoggerFactory? loggerFactory)
     {
         DataSource = dataSource;
         LoggerFactory = loggerFactory;
     }
 
-    protected internal virtual IHomeBallsDataSource DataSource { get; }
+    protected internal virtual IHomeBallsLocalStorageDataSource DataSource { get; }
 
     protected internal virtual ILoggerFactory? LoggerFactory { get; }
 
@@ -50,6 +50,7 @@ public class HomeBallsEntryTableFactory :
     public virtual async Task<IHomeBallsEntryTable> CreateTableAsync(
         CancellationToken cancellationToken = default)
     {
+        await EnsureLoadedAsync(cancellationToken);
         var columns = await CreateColumnsAsync(cancellationToken);
         var indexMap = columns
             .Select((column, index) => (Column: column, Index: index))
@@ -120,5 +121,26 @@ public class HomeBallsEntryTableFactory :
             .ToList().AsReadOnly();
 
         return ValueTask.FromResult(this);
+    }
+
+    protected internal virtual async Task<HomeBallsEntryTableFactory> EnsureLoadedAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var delay = 100;
+        await ensureLoaded(source => source.Items);
+        await ensureLoaded(source => source.PokemonForms);
+        return this;
+
+        async Task ensureLoaded<TKey, TRecord>(
+            Func<IHomeBallsDataSourceMutable, IHomeBallsDataSet<TKey, TRecord>> navigation)
+            where TKey : notnull
+            where TRecord : notnull, IKeyed, IIdentifiable
+        {
+            var startTime = DateTime.Now;
+            await DataSource.EnsureLoadedAsync<TKey, TRecord>(
+                navigation,
+                cancellationToken);
+            await Task.Delay(delay);
+        }
     }
 }

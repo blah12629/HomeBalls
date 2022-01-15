@@ -4,6 +4,12 @@ public interface IHomeBallsEntryTable :
     IHomeBallsEntryCollection
 {
     IList<IHomeBallsEntryColumn> Columns { get; }
+
+    Task AddRangeByBatchAsync(
+        IEnumerable<IHomeBallsEntry> entries,
+        UInt16 batchSize,
+        Func<Task>? postBatchAddTask = default,
+        CancellationToken cancellationToken = default);
 }
 
 public class HomeBallsEntryTable :
@@ -47,6 +53,31 @@ public class HomeBallsEntryTable :
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
     public virtual void Add(IHomeBallsEntry item) => Entries.Add(item);
+
+    public virtual async Task AddRangeByBatchAsync(
+        IEnumerable<IHomeBallsEntry> entries,
+        UInt16 batchSize,
+        Func<Task>? postBatchAddTask = null,
+        CancellationToken cancellationToken = default)
+    {
+        var count = UInt16.MinValue;
+        var task = postBatchAddTask?.Invoke();
+        var isTaskDefault = task == default;
+
+        foreach (var entry in entries)
+        {
+            if (count == batchSize) await resetCountAsync();
+            Add(entry);
+            count ++;
+        }
+
+        async Task resetCountAsync()
+        {
+            if (!isTaskDefault) await task!;
+            await Task.Delay(5);
+            count = Byte.MinValue;
+        }
+    }
 
     public virtual void Clear() => Entries.Clear();
 

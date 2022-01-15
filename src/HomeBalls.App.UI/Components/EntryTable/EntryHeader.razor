@@ -2,14 +2,14 @@
     <th class="sticky top-0 left-0 z-10 bg-white border-b border-opacity-50 border-dream-purple text-0" />
     <th class="sticky top-0 left-0 z-10 w-0 min-w-0 bg-white border-b border-opacity-50 border-dream-purple sm:w-14 sm:min-w-14 " />
     <th class="sticky top-0 left-0 z-10 w-8 bg-white border-b border-opacity-50 sm:left-14 border-dream-purple min-w-8" />
-    <th class="sticky top-0 z-10 bg-white border-b border-r border-opacity-50 left-8 sm:left-22 border-dream-purple w-36 min-w-36" />
+    <th class="sticky top-0 z-10 bg-white border-b border-opacity-50 left-8 sm:left-22 border-dream-purple w-36 min-w-36" />
 
     @foreach (var id in BallIds)
     {
         <EntryHeaderCell BallId="@id" />
     }
 
-    <th class="border-b border-opacity-50 text-0 border-dream-purple" />
+    <th class="sticky top-0 border-b border-opacity-50 text-0 border-dream-purple" />
 </tr>
 
 @code {

@@ -15,20 +15,18 @@
 
 else
 {
-    <div>
-        <table class="min-w-full bg-white border-separate table-fixed text-dream-black border-spacing-0">
-            <thead>
-                <EntryHeader BallIds="@BallIds" />
-            </thead>
+    <table class="min-w-full bg-white border-separate table-fixed text-dream-black border-spacing-0">
+        <thead>
+            <EntryHeader BallIds="@BallIds" />
+        </thead>
 
-            <tbody>
-                @foreach (var column in Table.Columns)
-                {
-                    <EntryColumn Column="@column" />
-                }
-            </tbody>
-        </table>
-    </div>
+        <tbody>
+            @foreach (var column in Table.Columns)
+            {
+                <EntryColumn Column="@column" />
+            }
+        </tbody>
+    </table>
 }
 
 @code {
@@ -58,7 +56,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        await SetTableAsync();
+        await Task.Delay(100);
+
+        var table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
+        await Data.EnsureLoadedAsync(data => data.PokemonSpecies);
+        Table = table;
     }
 
     protected override async Task OnAfterRenderAsync(Boolean firstRender)
@@ -66,49 +68,10 @@ else
         await base.OnAfterRenderAsync(firstRender);
         if (firstRender || Table == default || IsTableFilled) return;
 
-        var i = Byte.MinValue;
         var startTime = DateTime.Now;
-        foreach (var entry in Entries)
-        {
-            if (i == 100)
-            {
-                await Task.Delay(5);
-                i = Byte.MinValue;
-            }
-
-            Table!.Add(entry);
-            i ++;
-        }
-
-        Logger.LogInformation($"Table filled. {DateTime.Now - startTime}");
+        await Entries.EnsureLoadedAsync();
+        await Table.AddRangeByBatchAsync(Entries, 100);
+        Logger.LogDebug($"Table filled after {DateTime.Now - startTime}.");
         IsTableFilled = true;
-    }    
-
-    async Task SetTableAsync()
-    {
-        await Task.Delay(200);
-        await DownloadDataAsync();
-
-        Message = "Generating table...";
-        var tableStart = DateTime.Now;
-        Table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
-        Logger.LogDebug($"Generated table. {DateTime.Now - tableStart}");
-    }
-
-    async Task DownloadDataAsync()
-    {
-        var delay = 100;
-        await executeAsync(Data.EnsureLoadedAsync(data => data.Items), "Downloaded items.");
-        await executeAsync(Data.EnsureLoadedAsync(data => data.PokemonForms), "Downloaded forms.");
-        await executeAsync(Data.EnsureLoadedAsync(data => data.PokemonSpecies), "Downloaded species.");
-        await executeAsync(Entries.EnsureLoadedAsync(), "Downloaded entries.");
-
-        async Task executeAsync<T>(ValueTask<T> ensureLoadedTask, String message)
-        {
-            var startTime = DateTime.Now;
-            await ensureLoadedTask;
-            Logger.LogDebug($"{message} {DateTime.Now - startTime}");
-            await Task.Delay(delay);
-        }
     }
 }
