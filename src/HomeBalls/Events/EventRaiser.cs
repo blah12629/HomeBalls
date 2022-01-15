@@ -21,11 +21,13 @@ public interface IEventRaiser
         IEqualityComparer? comparer = default);
 
     TimedActionStartingEventArgs Raise(
-        EventHandler<TimedActionStartingEventArgs>? handler);
+        EventHandler<TimedActionStartingEventArgs>? handler,
+        String? propertyName = default);
 
     TimedActionEndedEventArgs Raise(
         EventHandler<TimedActionEndedEventArgs>? handler,
-        DateTime startTime);
+        DateTime startTime,
+        String? propertyName = default);
 }
 
 public class EventRaiser : IEventRaiser
@@ -72,13 +74,15 @@ public class EventRaiser : IEventRaiser
     }
 
     public virtual TimedActionStartingEventArgs Raise(
-        EventHandler<TimedActionStartingEventArgs>? handler) =>
-        Raise(handler, new TimedActionStartingEventArgs(DateTime.Now));
+        EventHandler<TimedActionStartingEventArgs>? handler,
+        String? propertyName = default) =>
+        Raise(handler, new TimedActionStartingEventArgs(DateTime.Now, propertyName));
 
     public virtual TimedActionEndedEventArgs Raise(
         EventHandler<TimedActionEndedEventArgs>? handler,
-        DateTime startTime) =>
-        Raise(handler, new TimedActionEndedEventArgs(startTime, DateTime.Now));
+        DateTime startTime,
+        String? propertyName = default) =>
+        Raise(handler, new TimedActionEndedEventArgs(startTime, DateTime.Now, propertyName));
 
     public virtual EventRaiser RaisedBy(Object sender)
     {

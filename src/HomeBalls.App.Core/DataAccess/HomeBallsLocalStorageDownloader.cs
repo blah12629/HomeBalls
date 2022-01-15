@@ -54,13 +54,10 @@ public class HomeBallsLocalStorageDownloader :
         IEnumerable<(String Identifier, String FileName)> identifiers,
         CancellationToken cancellationToken = default)
     {
-        var startEventArgs = EventRaiser.Raise(DataDownloading);
         var downloadTasks = identifiers.Select(pair =>
             DownloadAsync(pair.Identifier, pair.FileName , cancellationToken)); 
 
         await Task.WhenAll(downloadTasks);
-
-        EventRaiser.Raise(DataDownloaded, startEventArgs.StartTime);
         return this;
     }
 
@@ -70,9 +67,13 @@ public class HomeBallsLocalStorageDownloader :
         CancellationToken cancellationToken = default)
     {
         fileName = fileName ?? identifier.AddFileExtension(_Values.DefaultProtobufExtension);
+        var start = EventRaiser.Raise(DataDownloading, fileName);
+
         var data = await RawDataClient.GetByteArrayAsync(fileName, cancellationToken);
         var dataString = Convert.ToBase64String(data);
         await LocalStorage.SetItemAsync(identifier, dataString, cancellationToken);
+
+        EventRaiser.Raise(DataDownloaded, start.StartTime, fileName);
         return this;
     }
 

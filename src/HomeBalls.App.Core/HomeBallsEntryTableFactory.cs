@@ -1,6 +1,9 @@
 namespace CEo.Pokemon.HomeBalls.App.Core;
 
-public interface IHomeBallsEntryTableFactory
+public interface IHomeBallsEntryTableFactory :
+    INotifyDataDownloading,
+    INotifyDataLoading,
+    INotifyTableCreating
 {
     Task<IHomeBallsEntryTable> CreateTableAsync(
         CancellationToken cancellationToken = default);
@@ -22,11 +25,16 @@ public class HomeBallsEntryTableFactory :
     {
         DataSource = dataSource;
         LoggerFactory = loggerFactory;
+
+        EventRaiser = new EventRaiser();
+        Logger = LoggerFactory?.CreateLogger<HomeBallsEntryTableFactory>();
     }
 
     protected internal virtual IHomeBallsLocalStorageDataSource DataSource { get; }
 
     protected internal virtual ILoggerFactory? LoggerFactory { get; }
+
+    protected internal virtual IEventRaiser EventRaiser { get; }
 
     protected internal virtual ILogger? Logger { get; }
 
@@ -47,10 +55,40 @@ public class HomeBallsEntryTableFactory :
             .ToDictionary(pair => pair.Id, pair => pair.Index).AsReadOnly() ??
             throw new ArgumentException($"Parameter not set.", nameof(DefaultCells));
 
+    public event EventHandler<TimedActionStartingEventArgs>? DataDownloading
+    {
+        add => DataSource.DataDownloading += value;
+        remove => DataSource.DataDownloading -= value;
+    }
+
+    public event EventHandler<TimedActionEndedEventArgs>? DataDownloaded
+    {
+        add => DataSource.DataDownloaded += value;
+        remove => DataSource.DataDownloaded -= value;
+    }
+
+    public event EventHandler<TimedActionStartingEventArgs>? DataLoading
+    {
+        add => DataSource.DataLoading += value;
+        remove => DataSource.DataLoading -= value;
+    }
+
+    public event EventHandler<TimedActionEndedEventArgs>? DataLoaded
+    {
+        add => DataSource.DataLoaded += value;
+        remove => DataSource.DataLoaded -= value;
+    }
+
+    public event EventHandler<TimedActionStartingEventArgs>? TableCreating;
+
+    public event EventHandler<TimedActionEndedEventArgs>? TableCreated;
+
     public virtual async Task<IHomeBallsEntryTable> CreateTableAsync(
         CancellationToken cancellationToken = default)
     {
         await EnsureLoadedAsync(cancellationToken);
+
+        var start = EventRaiser.Raise(TableCreating);
         var columns = await CreateColumnsAsync(cancellationToken);
         var indexMap = columns
             .Select((column, index) => (Column: column, Index: index))
@@ -58,11 +96,13 @@ public class HomeBallsEntryTableFactory :
                 pair => (pair.Column.SpeciesId, pair.Column.FormId),
                 pair => pair.Index);
 
-        return new HomeBallsEntryTable(
+        var table = new HomeBallsEntryTable(
             columns,
             indexMap,
             new HomeBallsEntryCollection(),
             LoggerFactory?.CreateLogger(typeof(HomeBallsEntryTable)));;
+        EventRaiser.Raise(TableCreated, start.StartTime);
+        return table;
     }
 
     public virtual async Task<IHomeBallsEntryTable> CreateTableAsync(

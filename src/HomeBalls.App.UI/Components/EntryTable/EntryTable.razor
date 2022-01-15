@@ -56,6 +56,13 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+
+        TableFactory.DataLoaded += (sender, e) =>
+            Logger.LogInformation($"{e.PropertyName} loaded in {e.ElapsedTime}.");
+
+        TableFactory.TableCreated += (sender, e) =>
+            Logger.LogInformation($"Table created in {e.ElapsedTime}.");
+
         await Task.Delay(100);
 
         var table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());

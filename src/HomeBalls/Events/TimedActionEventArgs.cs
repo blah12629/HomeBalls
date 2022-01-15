@@ -3,42 +3,53 @@ namespace CEo.Pokemon.HomeBalls;
 public abstract record TimedActionEventArgs : RecordEventArgs
 {
     protected TimedActionEventArgs(
-        DateTime? startTime = default(DateTime?)) =>
+        DateTime? startTime,
+        String? propertyName)
+    {
         StartTime = startTime ?? DateTime.Now;
+        PropertyName = propertyName;
+    }
 
     public virtual DateTime StartTime { get; }
+
+    public virtual String? PropertyName { get; }
 }
 
 
 public record TimedActionStartingEventArgs : TimedActionEventArgs
 {
     public TimedActionStartingEventArgs(
-        DateTime? startTime = default(DateTime?)) :
-        base(startTime) { }
+        DateTime? startTime = default(DateTime?),
+        String? propertyName = default(String)) :
+        base(startTime, propertyName) { }
 }
 
 public record TimedActionEndedEventArgs : TimedActionEventArgs
 {
     public TimedActionEndedEventArgs(
         DateTime startTime,
-        DateTime? endTime = default(DateTime?)) :
-        this(startTime, endTime ?? DateTime.Now) { }
+        DateTime? endTime = default(DateTime?),
+        String? propertyName = default(String)) :
+        this(startTime, endTime ?? DateTime.Now, propertyName) { }
 
     public TimedActionEndedEventArgs(
         DateTime startTime,
-        TimeSpan elapsedTime) :
-        this(startTime, startTime + elapsedTime, elapsedTime) { }
+        TimeSpan elapsedTime,
+        String? propertyName = default(String)) :
+        this(startTime, startTime + elapsedTime, elapsedTime, propertyName) { }
 
     private TimedActionEndedEventArgs(
         DateTime startTime,
-        DateTime endTime) :
-        this(startTime, endTime, endTime - startTime) { }
+        DateTime endTime,
+        String? propertyName = default(String)) :
+        this(startTime, endTime, endTime - startTime, propertyName) { }
 
     protected TimedActionEndedEventArgs(
         DateTime startTime,
         DateTime endTime,
-        TimeSpan elapsedTime) :
-        base(startTime) =>
+        TimeSpan elapsedTime,
+        String? propertyName) :
+        base(startTime, propertyName) =>
         (EndTime, ElapsedTime) = (endTime, elapsedTime);
 
     public virtual DateTime EndTime { get; }

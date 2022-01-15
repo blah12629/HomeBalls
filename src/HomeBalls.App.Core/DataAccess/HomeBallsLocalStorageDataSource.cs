@@ -107,7 +107,6 @@ public class HomeBallsLocalStorageDataSource :
     public virtual async ValueTask<HomeBallsLocalStorageDataSource> EnsureLoadedAsync(
         CancellationToken cancellationToken = default)
     {
-        var start = EventRaiser.Raise(DataLoading);
         var loadingTasks = new[]
         {
             EnsureLoadedAsync(SourceMutable.GameVersions, cancellationToken),
@@ -127,7 +126,6 @@ public class HomeBallsLocalStorageDataSource :
         };
 
         foreach (var task in loadingTasks) await task;
-        EventRaiser.Raise(DataLoaded, start.StartTime);
         return this;
     }
 
@@ -149,6 +147,7 @@ public class HomeBallsLocalStorageDataSource :
         if (IsLoaded[identifier]) return this;
 
         await EnsureDownloadedAsync(identifier, cancellationToken);
+        var start = EventRaiser.Raise(DataLoading, identifier);
 
         var deserializationType = typeof(IEnumerable<>)
             .MakeGenericType(TypeMap.GetProtobufConcreteType(dataSet.ElementType));
@@ -161,6 +160,7 @@ public class HomeBallsLocalStorageDataSource :
 
         dataSet.AddRange(loaded);
         IsLoaded[identifier] = true;
+        EventRaiser.Raise(DataLoaded, start.StartTime, identifier);
         return this;
     }
 
