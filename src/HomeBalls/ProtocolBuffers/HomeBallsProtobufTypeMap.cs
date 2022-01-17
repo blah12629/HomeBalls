@@ -11,6 +11,8 @@ public class HomeBallsProtobufTypeMap :
     protected internal IReadOnlyDictionary<Type, Type> InterfaceToProtobufLookup { get; } =
         new Dictionary<Type, Type>
         {
+            [typeof(IHomeBallsEntry)] = typeof(ProtobufEntry),
+            [typeof(IHomeBallsEntryLegality)] = typeof(ProtobufEntryLegality),
             [typeof(IHomeBallsGameVersion)] = typeof(ProtobufGameVersion),
             [typeof(IHomeBallsGeneration)] = typeof(ProtobufGeneration),
             [typeof(IHomeBallsItem)] = typeof(ProtobufItem),

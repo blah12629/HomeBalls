@@ -52,10 +52,11 @@ public class PokeApiDataInitializer :
 
         var rawChain = RawData.EvolutionChains[rawSpecies.EvolutionChainId.Value];
         var itemId = rawChain.BabyTriggerItemId;
-        if (itemId.HasValue) PokemonForms[(form.SpeciesId, form.FormId)] = form with
-        {
-            BabyTriggerId = itemId
-        };
+        if (itemId.HasValue)
+            PokemonForms[new HomeBallsPokemonFormKey(form.SpeciesId, form.FormId)] = form with
+            {
+                BabyTriggerId = itemId
+            };
 
         return thisTask;
     }
@@ -144,7 +145,7 @@ public class PokeApiDataInitializer :
                 (859, 1), (868, 1), (870, 1), (871, 1), (872, 1), (874, 1), (875, 1),
                 (876, 1), (876, 2), (877, 1), (878, 1), (884, 1), (885, 1)
         };
-        var invalidIndices = new List<(UInt16, Byte)> { };
+        var invalidIndices = new List<HomeBallsPokemonFormKey> { };
 
         await Task.WhenAll(indices.Select(i => setIsBreedableAsync(i.Item1, i.Item2)));
         if (invalidIndices.Count > 0)
@@ -155,7 +156,7 @@ public class PokeApiDataInitializer :
 
         Task setIsBreedableAsync(UInt16 SpeciesId, Byte FormId, Boolean value = true)
         {
-            var index = (SpeciesId, FormId);
+            var index = new HomeBallsPokemonFormKey(SpeciesId, FormId);
             try { PokemonForms[index] = PokemonForms[index] with { IsBreedable = true }; }
             catch { invalidIndices.Add(index); }
             return Task.CompletedTask;

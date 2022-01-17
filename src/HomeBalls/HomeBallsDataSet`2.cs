@@ -4,8 +4,8 @@ public interface IHomeBallsDataSet<TKey, TRecord> :
     IHomeBallsEnumerable<TRecord>,
     IHomeBallsReadOnlyDataSet<TKey, TRecord>,
     ICollection<TRecord>
-    where TKey : notnull
-    where TRecord : notnull, IKeyed, IIdentifiable
+    where TKey : notnull, IEquatable<TKey>
+    where TRecord : notnull, IKeyed<TKey>, IIdentifiable
 {
     new TRecord this[TKey key] { get; set; }
 
@@ -28,30 +28,13 @@ public interface IHomeBallsDataSet<TKey, TRecord> :
 
 public class HomeBallsDataSet<TKey, TRecord> :
     IHomeBallsDataSet<TKey, TRecord>
-    where TKey : notnull
-    where TRecord : notnull, IKeyed, IIdentifiable
+    where TKey : notnull, IEquatable<TKey>
+    where TRecord : notnull, IKeyed<TKey>, IIdentifiable
 {
-    protected internal static TKey GetKey(TRecord record)
+    public HomeBallsDataSet()
     {
-        if (typeof(TRecord).IsAssignableTo(typeof(IKeyed<>).MakeGenericType(typeof(TKey))))
-            return record.Id;
-
-        throw new NotSupportedException();
-    }
-
-    protected internal static String GetIdentifier(TRecord record) =>
-        record is IIdentifiable identifiable ?
-            identifiable.Identifier :
-            throw new NotSupportedException();
-
-    public HomeBallsDataSet() : this(GetKey, GetIdentifier) { }
-
-    public HomeBallsDataSet(
-        Func<TRecord, TKey> keySelector,
-        Func<TRecord, String> identifierSelector)
-    {
-        KeySelector = keySelector;
-        IdentifierSelector = identifierSelector;
+        KeySelector = record => record.Id;
+        IdentifierSelector = record => record.Identifier;
 
         KeyDictionary = new Dictionary<TKey, TRecord> { };
         IdentifierDictionary = new Dictionary<String, TRecord> { };

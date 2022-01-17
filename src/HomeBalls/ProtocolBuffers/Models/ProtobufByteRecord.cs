@@ -10,8 +10,6 @@ public abstract record ProtobufByteRecord :
 {
     [ProtoMember(2)]
     public virtual Byte Id { get; init; }
-
-    dynamic IKeyed.Id => Id;
 }
 
 [ProtoContract]

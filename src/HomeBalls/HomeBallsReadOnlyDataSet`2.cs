@@ -3,8 +3,8 @@ namespace CEo.Pokemon.HomeBalls;
 public interface IHomeBallsReadOnlyDataSet<TKey, TRecord> :
     IHomeBallsEnumerable<TRecord>,
     IReadOnlyCollection<TRecord>
-    where TKey : notnull
-    where TRecord : notnull, IKeyed, IIdentifiable
+    where TKey : notnull, IEquatable<TKey>
+    where TRecord : notnull, IKeyed<TKey>, IIdentifiable
 {
     TRecord this[TKey key] { get; }
 
@@ -27,8 +27,8 @@ public interface IHomeBallsReadOnlyDataSet<TKey, TRecord> :
 
 public class HomeBallsReadOnlyDataSet<TKey, TRecord> :
     IHomeBallsReadOnlyDataSet<TKey, TRecord>
-    where TKey : notnull
-    where TRecord : notnull, IKeyed, IIdentifiable
+    where TKey : notnull, IEquatable<TKey>
+    where TRecord : notnull, IKeyed<TKey>, IIdentifiable
 {
     public HomeBallsReadOnlyDataSet(
         IHomeBallsDataSet<TKey, TRecord> dataSet) =>

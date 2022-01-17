@@ -5,6 +5,10 @@ public record ProtobufEntry :
     ProtobufRecord,
     IHomeBallsEntry
 {
+    HomeBallsEntryKey? _id;
+
+    public virtual HomeBallsEntryKey Id => _id ??= new(SpeciesId, FormId, BallId);
+
     [ProtoMember(1)]
     public virtual UInt16 SpeciesId { get; init; }
 
@@ -27,7 +31,7 @@ public record ProtobufEntry :
     [ProtoMember(7)]
     public virtual DateTime LastUpdatedOn { get; init; }
 
-    public event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged;
+    public event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged { add { } remove { } }
 
     public virtual Boolean Equals(IHomeBallsEntry? other) =>
         SpeciesId == other?.SpeciesId &&

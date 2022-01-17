@@ -16,8 +16,6 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         public virtual EFCoreLanguage Language { get; init; }
 
         public virtual String Value { get; init; }
-
-        dynamic IKeyed.Id => Id;
     }
 }
 

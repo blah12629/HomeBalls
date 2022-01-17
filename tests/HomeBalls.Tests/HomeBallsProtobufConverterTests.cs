@@ -16,6 +16,7 @@ public class HomeBallsProtobufConverterTests : HomeBallsBaseTest
     [
         Theory,
         InlineData(typeof(IHomeBallsEntry), typeof(MockEntry), typeof(ProtobufEntry)),
+        InlineData(typeof(IHomeBallsEntryLegality), typeof(MockEntryLegality), typeof(ProtobufEntryLegality)),
         InlineData(typeof(IHomeBallsGameVersion), typeof(MockGameVersion), typeof(ProtobufGameVersion)),
         InlineData(typeof(IHomeBallsGeneration), typeof(MockGeneration), typeof(ProtobufGeneration)),
         InlineData(typeof(IHomeBallsItem), typeof(MockItem), typeof(ProtobufItem)),
@@ -50,6 +51,7 @@ public class HomeBallsProtobufConverterTests : HomeBallsBaseTest
     [
         Theory,
         InlineData(typeof(IHomeBallsEntry), typeof(MockEntry)),
+        InlineData(typeof(IHomeBallsEntryLegality), typeof(MockEntryLegality)),
         InlineData(typeof(IHomeBallsGameVersion), typeof(MockGameVersion)),
         InlineData(typeof(IHomeBallsGeneration), typeof(MockGeneration)),
         InlineData(typeof(IHomeBallsItem), typeof(MockItem)),

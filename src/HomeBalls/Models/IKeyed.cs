@@ -1,12 +1,7 @@
 namespace CEo.Pokemon.HomeBalls;
 
-public interface IKeyed
-{
-    dynamic Id { get; }
-}
-
-public interface IKeyed<TKey> : IKeyed
+public interface IKeyed<TKey>
     where TKey : notnull, IEquatable<TKey>
 {
-    new TKey Id { get; }
+    TKey Id { get; }
 }

@@ -4,32 +4,10 @@ namespace CEo.Pokemon.HomeBalls.Tests;
 
 public abstract record MockRecord : HomeBallsRecord, IHomeBallsEntity { }
 
-public abstract record MockKeyedRecord : MockRecord, IKeyed
-{
-    protected internal abstract dynamic Id { get; }
-
-    dynamic IKeyed.Id => Id;
-}
-
-public abstract record MockIdentifiableRecord : MockKeyedRecord, IIdentifiable
-{
-    public virtual String Identifier { get; init; }
-}
-
-public abstract record MockNamedRecord : MockIdentifiableRecord, INamed<MockString>
-{
-    public virtual IEnumerable<MockString> Names { get; init; } =
-        new List<MockString> { }.AsReadOnly();
-
-    IEnumerable<IHomeBallsString> INamed.Names => Names;
-}
-
 public abstract record MockKeyedRecord<TKey> : MockRecord, IKeyed<TKey>
     where TKey : notnull, IEquatable<TKey>
 {
-    public TKey Id { get; init; }
-
-    dynamic IKeyed.Id => Id;
+    public virtual TKey Id { get; init; }
 }
 
 public abstract record MockIdentifiableRecord<TKey> : MockKeyedRecord<TKey>, IIdentifiable
@@ -47,13 +25,16 @@ public abstract record MockNamedRecord<TKey> : MockIdentifiableRecord<TKey>, INa
     IEnumerable<IHomeBallsString> INamed.Names => Names;
 }
 
-public record MockEntry : MockRecord, IHomeBallsEntry
+public record MockEntry : MockKeyedRecord<HomeBallsEntryKey>, IHomeBallsEntry
 {
-    public UInt16 SpeciesId { get; init; }
+    UInt16 _speciesId, _ballId;
+    Byte _formId;
 
-    public Byte FormId { get; init; }
+    public UInt16 SpeciesId { get => _speciesId; init { _speciesId = value; Id = new(SpeciesId, FormId, BallId); } }
 
-    public UInt16 BallId { get; init; }
+    public Byte FormId { get => _formId; init { _formId = value; Id = new(SpeciesId, FormId, BallId); } }
+
+    public UInt16 BallId { get => _ballId; init { _ballId = value; Id = new(SpeciesId, FormId, BallId); } }
 
     public Boolean HasHiddenAbility { get; set; }
 
@@ -63,9 +44,26 @@ public record MockEntry : MockRecord, IHomeBallsEntry
 
     public DateTime LastUpdatedOn { get; init; }
 
+    HomeBallsEntryKey IKeyed<HomeBallsEntryKey>.Id => (HomeBallsEntryKey)Id;
+
     public event EventHandler<HomeBallsPropertyChangedEventArgs> PropertyChanged;
 
     public Boolean Equals(IHomeBallsEntry other) => throw new NotImplementedException();
+}
+
+public record MockEntryLegality : MockKeyedRecord<HomeBallsEntryKey>, IHomeBallsEntryLegality
+{
+    public UInt16 SpeciesId { get => Id.SpeciesId; init => Id = new(value, FormId, BallId); }
+
+    public Byte FormId { get => Id.FormId; init => Id = new(SpeciesId, value, BallId); }
+
+    public UInt16 BallId { get => Id.BallId; init => Id = new(SpeciesId, FormId, value); }
+
+    public Boolean IsObtainable { get; init; }
+
+    public Boolean IsObtainableWithHiddenAbility { get; init; }
+
+    String IIdentifiable.Identifier => Id.ToString();
 }
 
 public record MockGameVersion : MockNamedRecord<Byte>, IHomeBallsGameVersion
@@ -120,13 +118,14 @@ public record MockPokemonEggGroupSlot : MockRecord, IHomeBallsPokemonEggGroupSlo
     public virtual Byte Slot { get; init; }
 }
 
-public record MockPokemonForm : MockNamedRecord, IHomeBallsPokemonForm
+public record MockPokemonForm : MockNamedRecord<HomeBallsPokemonFormKey>, IHomeBallsPokemonForm
 {
-    protected internal override dynamic Id => new { SpeciesId, FormId };
+    UInt16 _speciesId;
+    Byte _formId;
 
-    public virtual UInt16 SpeciesId { get; init; }
+    public UInt16 SpeciesId { get => _speciesId; init { _speciesId = value; Id = new(SpeciesId, FormId); } }
 
-    public virtual Byte FormId { get; init; }
+    public Byte FormId { get => _formId; init { _formId = value; Id = new(SpeciesId, FormId); } }
 
     public virtual IEnumerable<MockPokemonTypeSlot> Types { get; init; } =
         new List<MockPokemonTypeSlot> { }.AsReadOnly();
@@ -150,6 +149,8 @@ public record MockPokemonForm : MockNamedRecord, IHomeBallsPokemonForm
     IEnumerable<IHomeBallsPokemonAbilitySlot> IHomeBallsPokemonForm.Abilities => Abilities;
 
     IEnumerable<IHomeBallsPokemonEggGroupSlot> IHomeBallsPokemonForm.EggGroups => EggGroups;
+
+    HomeBallsPokemonFormKey IKeyed<HomeBallsPokemonFormKey>.Id => (HomeBallsPokemonFormKey)Id;
 }
 
 public record MockPokemonSpecies : MockNamedRecord<UInt16>, IHomeBallsPokemonSpecies

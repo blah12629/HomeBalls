@@ -4,8 +4,14 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         EFCoreRecord<Byte>,
         IHomeBallsItemCategory
     {
+        #nullable disable
+        public EFCoreItemCategory() { }
+        #nullable enable
+    
         public virtual IEnumerable<EFCoreItem> Items { get; init; } =
             new List<EFCoreItem> { };
+
+        public virtual String Identifier { get; init; }
     }
 }
 

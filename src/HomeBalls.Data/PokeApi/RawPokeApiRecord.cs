@@ -15,8 +15,6 @@ public abstract record RawPokeApiRecord<TKey> :
     public virtual TKey Id { get; init; }
 
     public virtual String Identifier { get; init; }
-
-    dynamic IKeyed.Id => Id;
 }
 
 public abstract record RawPokeApiGlobalObject : RawPokeApiRecord
@@ -66,8 +64,6 @@ public record RawPokeApiEvolutionChain : RawPokeApiRecord, IKeyed<UInt16>, IIden
     public virtual UInt16 Id { get; init; }
 
     public virtual UInt16? BabyTriggerItemId { get; init; }
-
-    dynamic IKeyed.Id => Id;
 
     String IIdentifiable.Identifier => Id.ToString();
 }
@@ -241,8 +237,6 @@ public record RawPokeApiPokemonEvolution :
     public virtual Boolean NeedsOverworldRain { get; init; }
 
     public virtual Boolean TurnUpsideDown { get; init; }
-
-    dynamic IKeyed.Id => Id;
 }
 
 public record RawPokeApiPokemonFormName : RawPokeApiGlobalObject

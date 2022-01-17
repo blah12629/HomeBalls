@@ -6,6 +6,8 @@ public class HomeBallsProtobufTypeMapTests
 
     [
         Theory,
+        InlineData(typeof(IHomeBallsEntry), typeof(ProtobufEntry)),
+        InlineData(typeof(IHomeBallsEntryLegality), typeof(ProtobufEntryLegality)),
         InlineData(typeof(IHomeBallsGameVersion), typeof(ProtobufGameVersion)),
         InlineData(typeof(IHomeBallsGeneration), typeof(ProtobufGeneration)),
         InlineData(typeof(IHomeBallsItem), typeof(ProtobufItem)),

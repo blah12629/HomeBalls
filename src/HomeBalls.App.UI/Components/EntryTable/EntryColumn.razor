@@ -45,7 +45,7 @@
     String Id => $"cpf-{Column.SpeciesId}-{Column.FormId}";
 
     IHomeBallsPokemonForm Form => _form ??= DataSource
-        .PokemonForms[(Column.SpeciesId, Column.FormId)];
+        .PokemonForms[new HomeBallsPokemonFormKey(Column.SpeciesId, Column.FormId)];
 
     IHomeBallsPokemonSpecies Species => _species ??= DataSource
         .PokemonSpecies[Column.SpeciesId];

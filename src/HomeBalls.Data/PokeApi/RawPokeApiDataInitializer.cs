@@ -22,9 +22,7 @@ public class RawPokeApiDataInitializer :
         Natures = add(new HomeBallsDataSet<Byte, EFCoreNature> { });
         PokemonAbilities = add(new HomeBallsDataSet<UInt16, EFCorePokemonAbility> { });
         PokemonEggGroups = add(new HomeBallsDataSet<Byte, EFCorePokemonEggGroup> { });
-        PokemonForms = add(new HomeBallsDataSet<(UInt16, Byte), EFCorePokemonForm>(
-            form => (form.SpeciesId, form.FormId),
-            form => form.Identifier));
+        PokemonForms = add(new HomeBallsDataSet<HomeBallsPokemonFormKey, EFCorePokemonForm>());
         PokemonSpecies = add(new HomeBallsDataSet<UInt16, EFCorePokemonSpecies> { });
         Stats = add(new HomeBallsDataSet<Byte, EFCoreStat> { });
         Types = add(new HomeBallsDataSet<Byte, EFCoreType> { });
@@ -32,8 +30,8 @@ public class RawPokeApiDataInitializer :
 
         IHomeBallsDataSet<TKey, TRecord> add<TKey, TRecord>(
             IHomeBallsDataSet<TKey, TRecord> dataSet)
-            where TKey : notnull
-            where TRecord : notnull, EFCoreBaseRecord, IKeyed, IIdentifiable
+            where TKey : notnull, IEquatable<TKey>
+            where TRecord : notnull, EFCoreBaseRecord, IKeyed<TKey>, IIdentifiable
         {
             recordCollections.Add(dataSet);
             return dataSet;
@@ -62,7 +60,8 @@ public class RawPokeApiDataInitializer :
 
     protected internal IHomeBallsDataSet<Byte, EFCorePokemonEggGroup> PokemonEggGroups { get; }
 
-    protected internal IHomeBallsDataSet<(UInt16 SpeciesId, Byte FormId), EFCorePokemonForm> PokemonForms { get; }
+    // protected internal IHomeBallsDataSet<(UInt16 SpeciesId, Byte FormId), EFCorePokemonForm> PokemonForms { get; }
+    protected internal IHomeBallsDataSet<HomeBallsPokemonFormKey, EFCorePokemonForm> PokemonForms { get; }
 
     protected internal IHomeBallsDataSet<UInt16, EFCorePokemonSpecies> PokemonSpecies { get; }
 
@@ -135,8 +134,8 @@ public class RawPokeApiDataInitializer :
         IHomeBallsDataSet<TKey, TRecord> dataSet,
         Func<IEnumerable<TRecord>> getData,
         CancellationToken cancellationToken = default)
-        where TKey : notnull
-        where TRecord : notnull, IKeyed, IIdentifiable
+        where TKey : notnull, IEquatable<TKey>
+        where TRecord : notnull, IKeyed<TKey>, IIdentifiable
         {
             dataSet.Clear().AddRange(getData());
             return Task.FromResult(this);

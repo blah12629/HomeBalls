@@ -24,9 +24,9 @@ builder.Services
     .AddScoped<IHomeBallsLocalStorageDataSource>(services =>
         new HomeBallsLocalStorageDataSource(
             services.GetRequiredService<ILocalStorageService>(),
-            services.GetRequiredService<IHomeBallsLocalStorageDownloader>(),
             services.GetRequiredService<IHomeBallsProtobufTypeMap>(),
-            services.GetRequiredService<ILogger<HomeBallsLocalStorageDataSource>>()))
+            services.GetRequiredService<IHomeBallsLocalStorageDownloader>(),
+            services.GetRequiredService<ILoggerFactory>()))
     .AddScoped<IHomeBallsDataSource>(services =>
         services.GetRequiredService<IHomeBallsLocalStorageDataSource>())
 

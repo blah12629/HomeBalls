@@ -4,7 +4,7 @@ public interface IHomeBallsDataProtobufExporter :
     IFileLoadable<IHomeBallsDataProtobufExporter>
 {
     Task<IHomeBallsDataProtobufExporter> ExportDataAsync(
-        IHomeBallsDataSource dataSource,
+        IHomeBallsLoadableDataSource dataSource,
         CancellationToken cancellationToken = default);
 }
 
@@ -32,14 +32,39 @@ public class HomeBallsDataProtobufExporter :
     protected internal String RootDirectory { get; set; }
 
     public virtual async Task<HomeBallsDataProtobufExporter> ExportDataAsync(
-        IHomeBallsDataSource dataSource,
+        IHomeBallsLoadableDataSource dataSource,
         CancellationToken cancellationToken = default)
     {
-        await Task.WhenAll(dataSource.Entities.Select(entities =>
-            ExportDataAsync(entities, cancellationToken)));
+        await Task.WhenAll(new[]
+        {
+            ExportDataAsync(dataSource.GameVersions, cancellationToken),
+            ExportDataAsync(dataSource.Generations, cancellationToken),
+            ExportDataAsync(dataSource.Items, cancellationToken),
+            ExportDataAsync(dataSource.ItemCategories, cancellationToken),
+            ExportDataAsync(dataSource.Languages, cancellationToken),
+            ExportDataAsync(dataSource.Legalities, cancellationToken),
+            ExportDataAsync(dataSource.Moves, cancellationToken),
+            ExportDataAsync(dataSource.MoveDamageCategories, cancellationToken),
+            ExportDataAsync(dataSource.Natures, cancellationToken),
+            ExportDataAsync(dataSource.PokemonAbilities, cancellationToken),
+            ExportDataAsync(dataSource.PokemonEggGroups, cancellationToken),
+            ExportDataAsync(dataSource.PokemonForms, cancellationToken),
+            ExportDataAsync(dataSource.PokemonSpecies, cancellationToken),
+            ExportDataAsync(dataSource.Stats, cancellationToken),
+            ExportDataAsync(dataSource.Types, cancellationToken)
+        });
 
         return this;
     }
+
+    protected internal virtual async Task<HomeBallsDataProtobufExporter> ExportDataAsync<TKey, TRecord>(
+        IHomeBallsLoadableDataSet<TKey, TRecord> entities,
+        CancellationToken cancellationToken = default)
+        where TKey : notnull, IEquatable<TKey>
+        where TRecord : notnull, IHomeBallsEntity, IKeyed<TKey>, IIdentifiable =>
+        await ExportDataAsync(
+            (IHomeBallsReadOnlyCollection<TRecord>)(await entities.EnsureLoadedAsync(cancellationToken)).Values,
+            cancellationToken);
 
     protected internal virtual async Task<HomeBallsDataProtobufExporter> ExportDataAsync<T>(
         IHomeBallsReadOnlyCollection<T> entities,
@@ -100,6 +125,7 @@ public class HomeBallsDataProtobufExporter :
         IEnumerable converted;
         (elementType, converted) = ((Type, IEnumerable))(rawData.ElementType switch
         {
+            var t when t.IsAssignableTo(typeof(IHomeBallsEntryLegality)) => (typeof(ProtobufEntryLegality), Converter.Convert((IEnumerable<IHomeBallsEntryLegality>)rawData)),
             var t when t.IsAssignableTo(typeof(IHomeBallsGameVersion)) => (typeof(ProtobufGameVersion), Converter.Convert((IEnumerable<IHomeBallsGameVersion>)rawData)),
             var t when t.IsAssignableTo(typeof(IHomeBallsGeneration)) => (typeof(ProtobufGeneration), Converter.Convert((IEnumerable<IHomeBallsGeneration>)rawData)),
             var t when t.IsAssignableTo(typeof(IHomeBallsItem)) => (typeof(ProtobufItem), Converter.Convert((IEnumerable<IHomeBallsItem>)rawData)),
@@ -131,7 +157,7 @@ public class HomeBallsDataProtobufExporter :
 
     async Task<IHomeBallsDataProtobufExporter> IHomeBallsDataProtobufExporter
         .ExportDataAsync(
-            IHomeBallsDataSource dataSource,
+            IHomeBallsLoadableDataSource dataSource,
             CancellationToken cancellationToken) =>
         await ExportDataAsync(dataSource, cancellationToken);
 

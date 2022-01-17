@@ -14,6 +14,9 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
 
         public virtual IEnumerable<EFCorePokemonForm> BabyTriggerFor { get; init; } =
             new List<EFCorePokemonForm> { };
+
+        public virtual IEnumerable<EFCoreEntryLegality> LegalOn { get; init; } =
+            new List<EFCoreEntryLegality> { };
     }
 }
 
@@ -31,6 +34,7 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations
         {
             base.ConfigureCore();
             ConfigureCategory();
+            ConfigureLegalOn();
         }
 
         protected internal virtual void ConfigureCategory() =>
@@ -38,5 +42,11 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations
                 .HasOne(item => item.Category)
                 .WithMany(category => category.Items)
                 .HasForeignKey(item => item.CategoryId));
+
+        protected internal virtual void ConfigureLegalOn() =>
+            ConfigureLogged(() => Builder
+                .HasMany(item => item.LegalOn)
+                .WithOne(legality => legality.Ball)
+                .HasForeignKey(legality => legality.BallId));
     }
 }

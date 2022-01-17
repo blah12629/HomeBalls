@@ -79,7 +79,7 @@ public interface IHomeBallsPokemonEggGroup :
 
 public interface IHomeBallsPokemonForm :
     IHomeBallsEntity,
-    IKeyed,
+    IKeyed<HomeBallsPokemonFormKey>,
     IIdentifiable,
     INamed
 {

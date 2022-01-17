@@ -18,8 +18,6 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         public virtual EFCorePokemonForm Form { get; init; }
 
         public virtual Byte Slot { get; init; }
-
-        dynamic IKeyed.Id => Id;
     }
 }
 

@@ -1,20 +1,26 @@
 namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
 {
     public record EFCorePokemonForm :
-        EFCoreNamedRecord,
+        EFCoreNamedRecord<HomeBallsPokemonFormKey>,
         IHomeBallsPokemonForm
     {
         #nullable disable
         public EFCorePokemonForm() { }
         #nullable enable
 
-        protected internal override dynamic Id => new { SpeciesId, FormId };
-
-        public virtual UInt16 SpeciesId { get; init; }
+        public virtual UInt16 SpeciesId
+        {
+            get => Id.SpeciesId;
+            init => Id = new(value, FormId);
+        }
 
         public virtual EFCorePokemonSpecies Species { get; init; }
 
-        public virtual Byte FormId { get; init; }
+        public virtual Byte FormId
+        {
+            get => Id.FormId;
+            init => Id = new(SpeciesId, value);
+        }
 
         public virtual Boolean IsBreedable { get; init; }
 
@@ -46,6 +52,9 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
 
         public virtual EFCoreItem? BabyTrigger { get; init; }
 
+        public virtual IEnumerable<EFCoreEntryLegality> LegalOn { get; init; } =
+            new List<EFCoreEntryLegality> { };
+
         IEnumerable<IHomeBallsPokemonTypeSlot> IHomeBallsPokemonForm.Types => Types;
 
         IEnumerable<IHomeBallsPokemonAbilitySlot> IHomeBallsPokemonForm.Abilities => Abilities;
@@ -67,6 +76,7 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations
         protected internal override void ConfigureCore()
         {
             base.ConfigureCore();
+            ConfigureId();
             ConfigureSpecies();
             ConfigureEvolvesFrom();
             ConfigureEvolvesTo();
@@ -74,11 +84,16 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations
             ConfigureTypes();
             ConfigureEggGroups();
             ConfigureBabyTrigger();
+            ConfigureLegalOn();
         }
 
         protected internal override void ConfigureKey() =>
             ConfigureLogged(() => Builder
                 .HasKey(form => new { form.SpeciesId, form.FormId }));
+
+        protected internal virtual void ConfigureId() =>
+            ConfigureLogged(() => Builder
+                .Ignore(form => form.Id));
 
         protected internal virtual void ConfigureSpecies() =>
             ConfigureLogged(() => Builder
@@ -121,5 +136,11 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations
                 .HasOne(form => form.BabyTrigger)
                 .WithMany(item => item.BabyTriggerFor)
                 .HasForeignKey(form => form.BabyTriggerId));
+
+        protected internal virtual void ConfigureLegalOn() =>
+            ConfigureLogged(() => Builder
+                .HasMany(form => form.LegalOn)
+                .WithOne(legality => legality.Form)
+                .HasForeignKey(legality => new { legality.SpeciesId, legality.FormId }));
     }
 }

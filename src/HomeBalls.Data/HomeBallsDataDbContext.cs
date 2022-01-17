@@ -2,7 +2,9 @@ namespace CEo.Pokemon.HomeBalls.Data;
 
 public class HomeBallsDataDbContext :
     DbContext,
-    IHomeBallsLoadableDataSource
+    IHomeBallsLoadableDataSource,
+    IAsyncLoadable<HomeBallsDataDbContext>,
+    INotifyDataLoading
 {
     public HomeBallsDataDbContext(
         DbContextOptions options,
@@ -11,76 +13,238 @@ public class HomeBallsDataDbContext :
     {
         LoggerFactory = loggerFactory;
         Logger = LoggerFactory?.CreateLogger<HomeBallsDataDbContext>();
-        DataCache = new HomeBallsDataSourceMutable();
+
+        var loadables = new List<IAsyncLoadable> { };
+        Loadables = loadables.AsReadOnly();
+
+        GameVersionsLoadable = createDbSet<Byte, IHomeBallsGameVersion, EFCoreGameVersion>(
+            () => Set<EFCoreGameVersion>(),
+            (version, cancellationToken) => version
+                .Include(version => version.Names)
+                .ToListAsync(cancellationToken));
+        GenerationsLoadable = createDbSet<Byte, IHomeBallsGeneration, EFCoreGeneration>(
+            () => Set<EFCoreGeneration>(),
+            (generation, cancellationToken) => generation
+                .Include(generation => generation.Names)
+                .ToListAsync(cancellationToken));
+        ItemsLoadable = createDbSet<UInt16, IHomeBallsItem, EFCoreItem>(
+            () => Set<EFCoreItem>(),
+            (item, cancellationToken) => item
+                .Include(item => item.Names)
+                .ToListAsync(cancellationToken));
+        ItemCategoriesLoadable = createDbSet<Byte, IHomeBallsItemCategory, EFCoreItemCategory>(
+            () => Set<EFCoreItemCategory>(),
+            (category, cancellationToken) => category
+                .ToListAsync(cancellationToken));
+        LanguagesLoadable = createDbSet<Byte, IHomeBallsLanguage, EFCoreLanguage>(
+            () => Set<EFCoreLanguage>(),
+            (language, cancellationToken) => language
+                .Include(language => language.Names)
+                .ToListAsync(cancellationToken));
+        LegalitiesLoadable = createDbSet<HomeBallsEntryKey, IHomeBallsEntryLegality, EFCoreEntryLegality>(
+            () => Set<EFCoreEntryLegality>(),
+            (language, cancellationToken) => language
+                .ToListAsync(cancellationToken));
+        MovesLoadable = createDbSet<UInt16, IHomeBallsMove, EFCoreMove>(
+            () => Set<EFCoreMove>(),
+            (move, cancellationToken) => move
+                .Include(move => move.Names)
+                .ToListAsync(cancellationToken));
+        MoveDamageCategoriesLoadable = createDbSet<Byte, IHomeBallsMoveDamageCategory, EFCoreMoveDamageCategory>(
+            () => Set<EFCoreMoveDamageCategory>(),
+            (category, cancellationToken) => category
+                .Include(category => category.Names)
+                .ToListAsync(cancellationToken));
+        NaturesLoadable = createDbSet<Byte, IHomeBallsNature, EFCoreNature>(
+            () => Set<EFCoreNature>(),
+            (nature, cancellationToken) => nature
+                .Include(nature => nature.Names)
+                .ToListAsync(cancellationToken));
+        PokemonAbilitiesLoadable = createDbSet<UInt16, IHomeBallsPokemonAbility, EFCorePokemonAbility>(
+            () => Set<EFCorePokemonAbility>(),
+            (ability, cancellationToken) => ability
+                .Include(ability => ability.Names)
+                .ToListAsync(cancellationToken));
+        PokemonEggGroupsLoadable = createDbSet<Byte, IHomeBallsPokemonEggGroup, EFCorePokemonEggGroup>(
+            () => Set<EFCorePokemonEggGroup>(),
+            (group, cancellationToken) => group
+                .Include(group => group.Names)
+                .ToListAsync(cancellationToken));
+        PokemonFormsLoadable = createDbSet<HomeBallsPokemonFormKey, IHomeBallsPokemonForm, EFCorePokemonForm>(
+            () => Set<EFCorePokemonForm>(),
+            (form, cancellationToken) => form
+                .Include(form => form.Names)
+                .Include(form => form.Abilities)
+                .Include(form => form.EggGroups)
+                .Include(form => form.Types)
+                .AsSplitQuery()
+                .ToListAsync(cancellationToken));
+        PokemonSpeciesLoadable = createDbSet<UInt16, IHomeBallsPokemonSpecies, EFCorePokemonSpecies>(
+            () => Set<EFCorePokemonSpecies>(),
+            (species, cancellationToken) => species
+                .Include(species => species.Names)
+                .ToListAsync(cancellationToken));
+        StatsLoadable = createDbSet<Byte, IHomeBallsStat, EFCoreStat>(
+            () => Set<EFCoreStat>(),
+            (stat, cancellationToken) => stat
+                .Include(stat => stat.Names)
+                .ToListAsync(cancellationToken));
+        TypesLoadable = createDbSet<Byte, IHomeBallsType, EFCoreType>(
+            () => Set<EFCoreType>(),
+            (type, cancellationToken) => type
+                .Include(type => type.Names)
+                .ToListAsync(cancellationToken));
+
+        HomeBallsLoadableDataDbSet<TKey, TEntity, TRecord> createDbSet<TKey, TEntity, TRecord>(
+            Func<DbSet<TRecord>> getDbSet,
+            Func<DbSet<TRecord>, CancellationToken, Task<List<TRecord>>> getEntitiesTask)
+            where TKey : notnull, IEquatable<TKey>
+            where TEntity : notnull, IKeyed<TKey>, IIdentifiable
+            where TRecord : class, TEntity
+        {
+            var dbSet = new HomeBallsLoadableDataDbSet<TKey, TEntity, TRecord>(
+                getDbSet,
+                async (dbSet, cancellationToken) => await getEntitiesTask.Invoke(dbSet, cancellationToken),
+                LoggerFactory?.CreateLogger(typeof(HomeBallsLoadableDataDbSet<TKey, TEntity, TRecord>)));
+
+            loadables.Add(dbSet);
+            return dbSet;
+        }
     }
 
     protected internal virtual ILoggerFactory? LoggerFactory { get; }
 
     protected internal virtual ILogger? Logger { get; }
 
-    public virtual DbSet<EFCoreGameVersion> GameVersions => Set<EFCoreGameVersion>();
+    protected internal IReadOnlyCollection<IAsyncLoadable> Loadables { get; }
 
-    public virtual DbSet<EFCoreGeneration> Generations => Set<EFCoreGeneration>();
+    public virtual DbSet<EFCoreGameVersion> GameVersions => GameVersionsLoadable;
 
-    public virtual DbSet<EFCoreItem> Items => Set<EFCoreItem>();
+    public virtual DbSet<EFCoreGeneration> Generations => GenerationsLoadable;
 
-    public virtual DbSet<EFCoreItemCategory> ItemCategories => Set<EFCoreItemCategory>();
+    public virtual DbSet<EFCoreItem> Items => ItemsLoadable;
 
-    public virtual DbSet<EFCoreLanguage> Languages => Set<EFCoreLanguage>();
+    public virtual DbSet<EFCoreItemCategory> ItemCategories => ItemCategoriesLoadable;
 
-    public virtual DbSet<EFCoreMove> Moves => Set<EFCoreMove>();
+    public virtual DbSet<EFCoreLanguage> Languages => LanguagesLoadable;
+
+    public virtual DbSet<EFCoreEntryLegality> Legalities => LegalitiesLoadable;
+
+    public virtual DbSet<EFCoreMove> Moves => MovesLoadable;
     
-    public virtual DbSet<EFCoreMoveDamageCategory> MoveDamageCategories => Set<EFCoreMoveDamageCategory>();
+    public virtual DbSet<EFCoreMoveDamageCategory> MoveDamageCategories => MoveDamageCategoriesLoadable;
 
-    public virtual DbSet<EFCoreNature> Natures => Set<EFCoreNature>();
+    public virtual DbSet<EFCoreNature> Natures => NaturesLoadable;
 
-    public virtual DbSet<EFCorePokemonAbility> PokemonAbilities => Set<EFCorePokemonAbility>();
+    public virtual DbSet<EFCorePokemonAbility> PokemonAbilities => PokemonAbilitiesLoadable;
 
-    public virtual DbSet<EFCorePokemonEggGroup> PokemonEggGroups => Set<EFCorePokemonEggGroup>();
+    public virtual DbSet<EFCorePokemonEggGroup> PokemonEggGroups => PokemonEggGroupsLoadable;
 
-    public virtual DbSet<EFCorePokemonForm> PokemonForms => Set<EFCorePokemonForm>();
+    public virtual DbSet<EFCorePokemonForm> PokemonForms => PokemonFormsLoadable;
 
     public virtual DbSet<EFCorePokemonFormComponent> PokemonFormComponents => Set<EFCorePokemonFormComponent>();
 
-    public virtual DbSet<EFCorePokemonSpecies> PokemonSpecies => Set<EFCorePokemonSpecies>();
+    public virtual DbSet<EFCorePokemonSpecies> PokemonSpecies => PokemonSpeciesLoadable;
 
-    public virtual DbSet<EFCoreStat> Stats => Set<EFCoreStat>();
+    public virtual DbSet<EFCoreStat> Stats => StatsLoadable;
 
     public virtual DbSet<EFCoreString> Strings => Set<EFCoreString>();
 
-    public virtual DbSet<EFCoreType> Types => Set<EFCoreType>();
+    public virtual DbSet<EFCoreType> Types => TypesLoadable;
 
-    protected internal IHomeBallsDataSourceMutable DataCache { get; }
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsGameVersion, EFCoreGameVersion> GameVersionsLoadable { get; }
 
-    IReadOnlyCollection<IHomeBallsReadOnlyCollection<IHomeBallsEntity>> IHomeBallsDataSource.Entities => DataCache.Entities;
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsGeneration, EFCoreGeneration> GenerationsLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGameVersion> IHomeBallsDataSource.GameVersions => DataCache.GameVersions;
+    protected internal virtual HomeBallsLoadableDataDbSet<UInt16, IHomeBallsItem, EFCoreItem> ItemsLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGeneration> IHomeBallsDataSource.Generations => DataCache.Generations;
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsItemCategory, EFCoreItemCategory> ItemCategoriesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsItem> IHomeBallsDataSource.Items => DataCache.Items;
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsLanguage, EFCoreLanguage> LanguagesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsItemCategory> IHomeBallsDataSource.ItemCategories => DataCache.ItemCategories;
+    protected internal virtual HomeBallsLoadableDataDbSet<HomeBallsEntryKey, IHomeBallsEntryLegality, EFCoreEntryLegality> LegalitiesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsLanguage> IHomeBallsDataSource.Languages => DataCache.Languages;
+    protected internal virtual HomeBallsLoadableDataDbSet<UInt16, IHomeBallsMove, EFCoreMove> MovesLoadable { get; }
+    
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsMoveDamageCategory, EFCoreMoveDamageCategory> MoveDamageCategoriesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsMove> IHomeBallsDataSource.Moves => DataCache.Moves;
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsNature, EFCoreNature> NaturesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsMoveDamageCategory> IHomeBallsDataSource.MoveDamageCategories => DataCache.MoveDamageCategories;
+    protected internal virtual HomeBallsLoadableDataDbSet<UInt16, IHomeBallsPokemonAbility, EFCorePokemonAbility> PokemonAbilitiesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsNature> IHomeBallsDataSource.Natures => DataCache.Natures;
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsPokemonEggGroup, EFCorePokemonEggGroup> PokemonEggGroupsLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsPokemonAbility> IHomeBallsDataSource.PokemonAbilities => DataCache.PokemonAbilities;
+    protected internal virtual HomeBallsLoadableDataDbSet<HomeBallsPokemonFormKey, IHomeBallsPokemonForm, EFCorePokemonForm> PokemonFormsLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsPokemonEggGroup> IHomeBallsDataSource.PokemonEggGroups => DataCache.PokemonEggGroups;
+    protected internal virtual HomeBallsLoadableDataDbSet<UInt16, IHomeBallsPokemonSpecies, EFCorePokemonSpecies> PokemonSpeciesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<(UInt16 SpeciesId, Byte FormId), IHomeBallsPokemonForm> IHomeBallsDataSource.PokemonForms => DataCache.PokemonForms;
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsStat, EFCoreStat> StatsLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsPokemonSpecies> IHomeBallsDataSource.PokemonSpecies => DataCache.PokemonSpecies;
+    protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsType, EFCoreType> TypesLoadable { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsStat> IHomeBallsDataSource.Stats => DataCache.Stats;
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsGameVersion> IHomeBallsLoadableDataSource.GameVersions => GameVersionsLoadable;
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsType> IHomeBallsDataSource.Types => DataCache.Types;
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsGeneration> IHomeBallsLoadableDataSource.Generations => GenerationsLoadable;
+
+    IHomeBallsLoadableDataSet<UInt16, IHomeBallsItem> IHomeBallsLoadableDataSource.Items => ItemsLoadable;
+
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsItemCategory> IHomeBallsLoadableDataSource.ItemCategories => ItemCategoriesLoadable;
+
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsLanguage> IHomeBallsLoadableDataSource.Languages => LanguagesLoadable;
+
+    IHomeBallsLoadableDataSet<HomeBallsEntryKey, IHomeBallsEntryLegality> IHomeBallsLoadableDataSource.Legalities => LegalitiesLoadable;
+
+    IHomeBallsLoadableDataSet<UInt16, IHomeBallsMove> IHomeBallsLoadableDataSource.Moves => MovesLoadable;
+
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsMoveDamageCategory> IHomeBallsLoadableDataSource.MoveDamageCategories => MoveDamageCategoriesLoadable;
+
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsNature> IHomeBallsLoadableDataSource.Natures => NaturesLoadable;
+
+    IHomeBallsLoadableDataSet<UInt16, IHomeBallsPokemonAbility> IHomeBallsLoadableDataSource.PokemonAbilities => PokemonAbilitiesLoadable;
+
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsPokemonEggGroup> IHomeBallsLoadableDataSource.PokemonEggGroups => PokemonEggGroupsLoadable;
+
+    IHomeBallsLoadableDataSet<HomeBallsPokemonFormKey, IHomeBallsPokemonForm> IHomeBallsLoadableDataSource.PokemonForms => PokemonFormsLoadable;
+
+    IHomeBallsLoadableDataSet<UInt16, IHomeBallsPokemonSpecies> IHomeBallsLoadableDataSource.PokemonSpecies => PokemonSpeciesLoadable;
+
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsStat> IHomeBallsLoadableDataSource.Stats => StatsLoadable;
+
+    IHomeBallsLoadableDataSet<Byte, IHomeBallsType> IHomeBallsLoadableDataSource.Types => TypesLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGameVersion> IHomeBallsDataSource.GameVersions => GameVersionsLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGeneration> IHomeBallsDataSource.Generations => GenerationsLoadable;
+
+    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsItem> IHomeBallsDataSource.Items => ItemsLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsItemCategory> IHomeBallsDataSource.ItemCategories => ItemCategoriesLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsLanguage> IHomeBallsDataSource.Languages => LanguagesLoadable;
+
+    IHomeBallsReadOnlyDataSet<HomeBallsEntryKey, IHomeBallsEntryLegality> IHomeBallsDataSource.Legalities => LegalitiesLoadable;
+
+    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsMove> IHomeBallsDataSource.Moves => MovesLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsMoveDamageCategory> IHomeBallsDataSource.MoveDamageCategories => MoveDamageCategoriesLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsNature> IHomeBallsDataSource.Natures => NaturesLoadable;
+
+    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsPokemonAbility> IHomeBallsDataSource.PokemonAbilities => PokemonAbilitiesLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsPokemonEggGroup> IHomeBallsDataSource.PokemonEggGroups => PokemonEggGroupsLoadable;
+
+    IHomeBallsReadOnlyDataSet<HomeBallsPokemonFormKey, IHomeBallsPokemonForm> IHomeBallsDataSource.PokemonForms => PokemonFormsLoadable;
+
+    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsPokemonSpecies> IHomeBallsDataSource.PokemonSpecies => PokemonSpeciesLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsStat> IHomeBallsDataSource.Stats => StatsLoadable;
+
+    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsType> IHomeBallsDataSource.Types => TypesLoadable;
+
+    public event EventHandler<TimedActionStartingEventArgs>? DataLoading;
+
+    public event EventHandler<TimedActionEndedEventArgs>? DataLoaded;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -90,6 +254,7 @@ public class HomeBallsDataDbContext :
 
     protected internal virtual void ApplyConfigurations(ModelBuilder modelBuilder)
     {
+        ApplyConfiguration<EFCoreEntryLegalityConfiguration, EFCoreEntryLegality>(modelBuilder);
         ApplyConfiguration<EFCoreGameVersionConfiguration, EFCoreGameVersion>(modelBuilder);
         ApplyConfiguration<EFCoreGenerationConfiguration, EFCoreGeneration>(modelBuilder);
         ApplyConfiguration<EFCoreItemConfiguration, EFCoreItem>(modelBuilder);
@@ -126,93 +291,16 @@ public class HomeBallsDataDbContext :
             LoggerFactory?.CreateLogger<TConfiguration>()
         })!;
 
-    public virtual async Task<HomeBallsDataDbContext> EnsureLoadedAsync(
+    public virtual async ValueTask<HomeBallsDataDbContext> EnsureLoadedAsync(
         CancellationToken cancellationToken = default)
     {
-        await Task.WhenAll(
-            EnsureDataSetLoadedAsync(
-                DataCache.GameVersions,
-                GameVersions.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.Generations,
-                Generations.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.Items,
-                Items.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.ItemCategories,
-                ItemCategories,
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.Languages,
-                Languages.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.Moves,
-                Moves.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.MoveDamageCategories,
-                MoveDamageCategories.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.Natures,
-                Natures.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.PokemonAbilities,
-                PokemonAbilities.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.PokemonEggGroups,
-                PokemonEggGroups.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.PokemonForms,
-                PokemonForms
-                    .Include(form => form.Names)
-                    .Include(form => form.Abilities)
-                    .Include(form => form.EggGroups)
-                    .Include(form => form.Types)
-                    .AsSplitQuery(),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.PokemonSpecies,
-                PokemonSpecies.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.Stats,
-                Stats.Include(named => named.Names),
-                cancellationToken),
-            EnsureDataSetLoadedAsync(
-                DataCache.Types,
-                Types.Include(named => named.Names),
-                cancellationToken));
+        await Task.WhenAll(Loadables.Select(async loadable =>
+            await loadable.EnsureLoadedAsync(cancellationToken)));
 
         return this;
     }
 
-    protected internal virtual async Task<HomeBallsDataDbContext> EnsureDataSetLoadedAsync<TKey, TRecord, TEntity>(
-        IHomeBallsDataSet<TKey, TRecord> dataSet,
-        IQueryable<TEntity> dataQueryable,
-        CancellationToken cancellationToken = default)
-        where TKey : notnull
-        where TRecord : notnull, IKeyed, IIdentifiable
-        where TEntity : class, TRecord
-    {
-        var query = dataQueryable;
-        dataSet.Clear().AddRange(await dataQueryable.AsNoTracking().ToListAsync());
-        return this;
-    }
+    async ValueTask IAsyncLoadable.EnsureLoadedAsync(CancellationToken cancellationToken) => await EnsureLoadedAsync(cancellationToken);
 
-    async ValueTask<IHomeBallsLoadableDataSource> IAsyncLoadable<IHomeBallsLoadableDataSource>
-        .EnsureLoadedAsync(CancellationToken cancellationToken) =>
-        await EnsureLoadedAsync(cancellationToken);
-
-    async ValueTask IAsyncLoadable
-        .EnsureLoadedAsync(CancellationToken cancellationToken) =>
-        await EnsureLoadedAsync(cancellationToken);
+    async ValueTask<IHomeBallsLoadableDataSource> IAsyncLoadable<IHomeBallsLoadableDataSource>.EnsureLoadedAsync(CancellationToken cancellationToken)  => await EnsureLoadedAsync(cancellationToken);
 }

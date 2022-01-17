@@ -1,6 +1,7 @@
 namespace CEo.Pokemon.HomeBalls.ProtocolBuffers;
 
 public interface IHomeBallsProtobufConverter :
+    IHomeBallsProtobufConverter<IHomeBallsEntryLegality, ProtobufEntryLegality>,
     IHomeBallsProtobufConverter<IHomeBallsEntry, ProtobufEntry>,
     IHomeBallsProtobufConverter<IHomeBallsGameVersion, ProtobufGameVersion>,
     IHomeBallsProtobufConverter<IHomeBallsGeneration, ProtobufGeneration>,
@@ -43,6 +44,10 @@ public class HomeBallsProtobufConverter :
     public virtual ProtobufEntry Convert(IHomeBallsEntry source) => Convert<IHomeBallsEntry, ProtobufEntry>(source);
 
     public virtual IReadOnlyList<ProtobufEntry> Convert(IEnumerable<IHomeBallsEntry> sources) => Convert<IHomeBallsEntry, ProtobufEntry>(sources);
+
+    public virtual ProtobufEntryLegality Convert(IHomeBallsEntryLegality source) => Convert<IHomeBallsEntryLegality, ProtobufEntryLegality>(source);
+
+    public virtual IReadOnlyList<ProtobufEntryLegality> Convert(IEnumerable<IHomeBallsEntryLegality> sources) => Convert<IHomeBallsEntryLegality, ProtobufEntryLegality>(sources);
 
     public virtual ProtobufGameVersion Convert(IHomeBallsGameVersion source) => Convert<IHomeBallsGameVersion, ProtobufGameVersion>(source);
 

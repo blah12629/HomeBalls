@@ -74,7 +74,7 @@ async Task exportDataContextAsync(
 {
     await using (var data = createDataContext())
     {
-        await data.EnsureLoadedAsync();
+        await data.EnsureLoadedAsync(cancellationToken);
         await exporter.ExportDataAsync(data, cancellationToken);
     }
 }
@@ -103,8 +103,8 @@ var exporter = new HomeBallsDataProtobufExporter(
     protobufConverter,
     loggerFactory.CreateLogger<HomeBallsDataProtobufExporter>());
 
-// await initializeDataContextAsync(initializer);
-// await exportDataContextAsync(exporter);
+await initializeDataContextAsync(initializer);
+await exportDataContextAsync(exporter);
 await exportEntriesAsync(fileSystem, protobufConverter);
 
 var runTime = DateTime.UtcNow - startTime;

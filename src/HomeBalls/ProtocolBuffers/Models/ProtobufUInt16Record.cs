@@ -10,8 +10,6 @@ public abstract record ProtobufUInt16Record :
 {
     [ProtoMember(2)]
     public virtual UInt16 Id { get; init; }
-
-    dynamic IKeyed.Id => Id;
 }
 
 [ProtoContract]

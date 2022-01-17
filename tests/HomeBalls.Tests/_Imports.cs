@@ -3,6 +3,8 @@ global using CEo.Pokemon.HomeBalls.Tests;
 
 global using FluentAssertions;
 
+global using Mapster;
+
 global using NSubstitute;
 
 global using System;

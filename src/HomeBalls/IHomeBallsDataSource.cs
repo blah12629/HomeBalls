@@ -2,8 +2,6 @@ namespace CEo.Pokemon.HomeBalls;
 
 public interface IHomeBallsDataSource
 {
-    IReadOnlyCollection<IHomeBallsReadOnlyCollection<IHomeBallsEntity>> Entities { get; }
-
     IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGameVersion> GameVersions { get; }
 
     IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGeneration> Generations { get; }
@@ -13,6 +11,8 @@ public interface IHomeBallsDataSource
     IHomeBallsReadOnlyDataSet<Byte, IHomeBallsItemCategory> ItemCategories { get; }
 
     IHomeBallsReadOnlyDataSet<Byte, IHomeBallsLanguage> Languages { get; }
+
+    IHomeBallsReadOnlyDataSet<HomeBallsEntryKey, IHomeBallsEntryLegality> Legalities { get; }
 
     IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsMove> Moves { get; }
 
@@ -24,7 +24,7 @@ public interface IHomeBallsDataSource
 
     IHomeBallsReadOnlyDataSet<Byte, IHomeBallsPokemonEggGroup> PokemonEggGroups { get; }
 
-    IHomeBallsReadOnlyDataSet<(UInt16 SpeciesId, Byte FormId), IHomeBallsPokemonForm> PokemonForms { get; }
+    IHomeBallsReadOnlyDataSet<HomeBallsPokemonFormKey, IHomeBallsPokemonForm> PokemonForms { get; }
 
     IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsPokemonSpecies> PokemonSpecies { get; }
 
@@ -32,7 +32,3 @@ public interface IHomeBallsDataSource
 
     IHomeBallsReadOnlyDataSet<Byte, IHomeBallsType> Types { get; }
 }
-
-public interface IHomeBallsLoadableDataSource :
-    IHomeBallsDataSource,
-    IAsyncLoadable<IHomeBallsLoadableDataSource> { }

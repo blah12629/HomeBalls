@@ -88,7 +88,8 @@ public class HomeBallsEntryCollectionInitializer :
         {
             SpeciesId = speciesId,
             FormId = 1,
-            HasHiddenAbility = data.PokemonForms[(speciesId, 1)]
+            HasHiddenAbility = data
+                .PokemonForms[new HomeBallsPokemonFormKey(speciesId, 1)]
                 .Abilities.Any(ability => ability.IsHidden),
             AddedOn = addedOn
         };

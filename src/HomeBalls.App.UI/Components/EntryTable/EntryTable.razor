@@ -57,7 +57,7 @@ else
 
         await Task.Delay(100);
         var table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
-        await Data.EnsureLoadedAsync(data => data.PokemonSpecies);
+        await Data.PokemonSpecies.EnsureLoadedAsync();
         Table = table;
     }
 
@@ -69,7 +69,7 @@ else
         var startTime = DateTime.Now;
         await Entries.EnsureLoadedAsync();
         await Table.AddRangeByBatchAsync(Entries, 200);
-        Logger.LogDebug($"Table filled after {DateTime.Now - startTime}.");
+        Logger?.LogDebug($"Table filled after {DateTime.Now - startTime}.");
         IsTableFilled = true;
     }
 }

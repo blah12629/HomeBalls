@@ -2,6 +2,7 @@ namespace CEo.Pokemon.HomeBalls;
 
 public interface IHomeBallsEntry :
     IHomeBallsEntity,
+    IKeyed<HomeBallsEntryKey>,
     IHomeBallsNotifyPropertyChanged,
     IEquatable<IHomeBallsEntry>
 {
@@ -25,6 +26,7 @@ public record HomeBallsEntry :
     IHomeBallsEntry
 {
     Boolean _hasHiddenAbility;
+    HomeBallsEntryKey? _id;
     DateTime _addedOn;
 
     public HomeBallsEntry()
@@ -67,6 +69,8 @@ public record HomeBallsEntry :
     }
 
     public virtual DateTime LastUpdatedOn { get; set; }
+
+    public virtual HomeBallsEntryKey Id => _id ??= new(SpeciesId, FormId, BallId);
 
     public event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged;
 

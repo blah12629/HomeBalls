@@ -167,19 +167,16 @@ public class HomeBallsEntryTableFactory :
         CancellationToken cancellationToken = default)
     {
         var delay = 100;
-        await ensureLoaded(source => source.Items);
-        await ensureLoaded(source => source.PokemonForms);
+        await executeAsync(DataSource.Items.EnsureLoadedAsync(cancellationToken));
+        await executeAsync(DataSource.PokemonForms.EnsureLoadedAsync(cancellationToken));
         return this;
 
-        async Task ensureLoaded<TKey, TRecord>(
-            Func<IHomeBallsDataSourceMutable, IHomeBallsDataSet<TKey, TRecord>> navigation)
-            where TKey : notnull
-            where TRecord : notnull, IKeyed, IIdentifiable
+        async Task executeAsync<TKey, TRecord>(
+            ValueTask<IHomeBallsLoadableDataSet<TKey, TRecord>> navigation)
+            where TKey : notnull, IEquatable<TKey>
+            where TRecord : notnull, IKeyed<TKey>, IIdentifiable
         {
-            var startTime = DateTime.Now;
-            await DataSource.EnsureLoadedAsync<TKey, TRecord>(
-                navigation,
-                cancellationToken);
+            await navigation;
             await Task.Delay(delay);
         }
     }

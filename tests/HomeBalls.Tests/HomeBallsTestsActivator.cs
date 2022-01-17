@@ -18,7 +18,7 @@ public class HomeBallsTestsActivator
             type.IsValueType ? System.Activator.CreateInstance(type) :
             CreateEnumerable(type, ref i, listCount));
 
-        if (result != default) return result;
+        if (result != default) return adapt(result);
         result = System.Activator.CreateInstance(type);
 
         var properties = type
@@ -31,13 +31,18 @@ public class HomeBallsTestsActivator
         for (SByte k = 0; k < properties.Count; k ++, i = nextI(i))
         {
             var (property, setter) = properties[k];
+            if (property.PropertyType == typeof(HomeBallsPokemonFormKey)) continue;
+            else if (property.PropertyType == typeof(HomeBallsEntryKey)) continue;
+
             var value = CreateInstance(property.PropertyType, ref i, listCount);
             setter.Invoke(result, new Object?[] { value });
         }
 
-        return result ?? throw new ArgumentException();
+        return adapt(result ?? throw new ArgumentException());
 
         static SByte nextI(SByte i) => Convert.ToSByte(i == SByte.MaxValue ? 1 : i + 1);
+
+        static T adapt<T>(T item) where T : notnull => item.Adapt<T>();
     }
 
     public virtual Object? CreateNumber(Type type, SByte i)

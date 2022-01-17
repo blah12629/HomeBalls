@@ -6,6 +6,7 @@ namespace CEo.Pokemon.HomeBalls.ProtocolBuffers;
 [ProtoInclude(1, typeof(ProtobufByteRecord))]
 [ProtoInclude(2, typeof(ProtobufUInt16Record))]
 [ProtoInclude(3, typeof(ProtobufIdentifiableRecord))]
+[ProtoInclude(4, typeof(ProtobufEntryLegality))]
 public abstract record ProtobufEntity : ProtobufRecord, IHomeBallsEntity { }
 
 [ProtoContract]
@@ -30,6 +31,27 @@ public abstract record ProtobufNamedRecord :
 
     IEnumerable<IHomeBallsString> INamed.Names => Names;
 }
+
+[ProtoContract]
+public record ProtobufEntryLegality :
+    ProtobufRecord,
+    IHomeBallsEntryLegality
+{
+    public virtual HomeBallsEntryKey Id { get; init; }
+
+    public virtual UInt16 SpeciesId { get => Id.SpeciesId; init => Id = new(value, FormId, BallId); }
+
+    public virtual Byte FormId { get => Id.FormId; init => Id = new(SpeciesId, value, BallId); }
+
+    public virtual UInt16 BallId { get => Id.BallId; init => Id = new(SpeciesId, FormId, value); }
+
+    public virtual Boolean IsObtainable { get; init; }
+
+    public virtual Boolean IsObtainableWithHiddenAbility { get; init; }
+
+    String IIdentifiable.Identifier => Id.ToString();
+}
+
 
 [ProtoContract]
 public record ProtobufGameVersion :
@@ -108,11 +130,13 @@ public record ProtobufPokemonForm :
     ProtobufNamedRecord,
     IHomeBallsPokemonForm
 {
+    public virtual HomeBallsPokemonFormKey Id { get; init; }
+
     [ProtoMember(1)]
-    public virtual UInt16 SpeciesId { get; init; }
+    public virtual UInt16 SpeciesId { get => Id.SpeciesId; init => Id = new(value, FormId); }
 
     [ProtoMember(2)]
-    public virtual Byte FormId { get; init; }
+    public virtual Byte FormId { get => Id.FormId; init => Id = new(SpeciesId, value); }
 
     [ProtoMember(3)]
     public virtual IEnumerable<ProtobufPokemonFormTypeSlot> Types { get; init; } =
@@ -137,8 +161,6 @@ public record ProtobufPokemonForm :
 
     [ProtoMember(9)]
     public virtual UInt16? BabyTriggerId { get; init; }
-
-    dynamic IKeyed.Id => new { SpeciesId, FormId };
 
     IEnumerable<IHomeBallsPokemonTypeSlot> IHomeBallsPokemonForm.Types => Types;
 

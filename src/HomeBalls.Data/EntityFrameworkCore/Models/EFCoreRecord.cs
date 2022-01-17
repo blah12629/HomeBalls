@@ -3,26 +3,9 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
     public abstract record EFCoreBaseRecord :
         HomeBallsRecord { }
 
-    public abstract record EFCoreRecord :
-        EFCoreBaseRecord,
-        IKeyed,
-        IIdentifiable
-    {
-        #nullable disable
-        protected EFCoreRecord() { }
-        #nullable enable
-
-        protected internal abstract dynamic Id { get; }
-
-        public virtual String Identifier { get; init; }
-
-        dynamic IKeyed.Id => Id;
-    }
-
     public abstract record EFCoreRecord<TKey> :
         EFCoreBaseRecord,
-        IKeyed<TKey>,
-        IIdentifiable
+        IKeyed<TKey>
         where TKey : notnull, IEquatable<TKey>
     {
         #nullable disable
@@ -30,27 +13,20 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         #nullable enable
 
         public virtual TKey Id { get; init; }
-
-        public virtual String Identifier { get; init; }
-
-        dynamic IKeyed.Id => Id;
-    }
-
-    public abstract record EFCoreNamedRecord :
-        EFCoreRecord,
-        INamed<EFCoreString>
-    {
-        public virtual IEnumerable<EFCoreString> Names { get; init; } =
-            new List<EFCoreString> { };
-
-        IEnumerable<IHomeBallsString> INamed.Names => Names;
     }
 
     public abstract record EFCoreNamedRecord<TKey> :
         EFCoreRecord<TKey>,
+        IIdentifiable,
         INamed<EFCoreString>
         where TKey : notnull, IEquatable<TKey>
     {
+        #nullable disable
+        protected EFCoreNamedRecord() { }
+        #nullable enable
+
+        public virtual String Identifier { get; init; }
+
         public virtual IEnumerable<EFCoreString> Names { get; init; } =
             new List<EFCoreString> { };
 
@@ -138,10 +114,6 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations
             else if (isRecord(typeof(IKeyed<UInt32>)))
                 ConfigureLogged(() => Builder
                     .HasKey(record => ((IKeyed<UInt32>)record).Id));
-
-            else if (isRecord(typeof(IKeyed)))
-                ConfigureLogged(() => Builder
-                    .HasKey(record => ((IKeyed)record).Id));
 
             Boolean isRecord(Type type) => RecordType.IsAssignableTo(type);
         }
