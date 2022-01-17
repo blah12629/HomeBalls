@@ -1,27 +1,21 @@
 namespace CEo.Pokemon.HomeBalls.App.UI.Components;
 
-public abstract class HomeBallsComponentBase : ComponentBase
+public abstract class HomeBallsComponentBase : OwningComponentBase
 {
     protected ILogger? Logger { get; set; }
-
-    protected virtual void SetServices() { }
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        SetServices();
-        Logger?.LogDebug($"Initialized `{GetType().Name}`.");
+        await InitializeServicesAsync();
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected virtual Task InitializeServicesAsync(
+        CancellationToken cancellationToken = default)
     {
-        await base.OnParametersSetAsync();
-        Logger?.LogDebug($"Parameters set on `{GetType().Name}`.");
-    }
+        Logger = ScopedServices.GetRequiredService<ILoggerFactory>()
+            .CreateLogger(GetType());
 
-    protected override async Task OnAfterRenderAsync(Boolean firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        Logger?.LogDebug($"Rendered `{GetType().Name}`.");
+        return Task.CompletedTask;
     }
 }

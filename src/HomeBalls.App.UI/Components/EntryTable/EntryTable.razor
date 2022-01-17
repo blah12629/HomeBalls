@@ -2,7 +2,6 @@
 @inject IHomeBallsLocalStorageDataSource Data
 @inject IHomeBallsLocalStorageEntryCollection Entries
 @inject IHomeBallsEntryTableFactory TableFactory
-@inject ILogger<EntryTable> Logger
 
 @if (Table == default)
 {
@@ -47,20 +46,14 @@ else
         .Select(cell => cell.BallId)?
         .ToList().AsReadOnly();
 
-    protected override void SetServices()
-    {
-        base.SetServices();
-        base.Logger = Logger;
-    }
-
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
         TableFactory.DataLoaded += (sender, e) =>
-            Logger.LogDebug($"{e.PropertyName} loaded in {e.ElapsedTime}.");
+            Logger?.LogDebug($"{e.PropertyName} loaded in {e.ElapsedTime}.");
         TableFactory.TableCreated += (sender, e) =>
-            Logger.LogDebug($"Table created in {e.ElapsedTime}.");
+            Logger?.LogDebug($"Table created in {e.ElapsedTime}.");
 
         await Task.Delay(100);
         var table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
