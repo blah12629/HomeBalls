@@ -612,6 +612,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pt-0 {
   padding-top: 0px;
 }
+.pl-3 {
+  padding-left: 0.75rem;
+}
+.pr-4 {
+  padding-right: 1rem;
+}
 .text-left {
   text-align: left;
 }
@@ -758,5 +764,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:border-r {
     border-right-width: 1px;
+  }
+
+  .lg\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }

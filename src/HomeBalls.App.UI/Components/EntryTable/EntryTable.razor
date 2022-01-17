@@ -58,13 +58,11 @@ else
         await base.OnInitializedAsync();
 
         TableFactory.DataLoaded += (sender, e) =>
-            Logger.LogInformation($"{e.PropertyName} loaded in {e.ElapsedTime}.");
-
+            Logger.LogDebug($"{e.PropertyName} loaded in {e.ElapsedTime}.");
         TableFactory.TableCreated += (sender, e) =>
-            Logger.LogInformation($"Table created in {e.ElapsedTime}.");
+            Logger.LogDebug($"Table created in {e.ElapsedTime}.");
 
         await Task.Delay(100);
-
         var table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
         await Data.EnsureLoadedAsync(data => data.PokemonSpecies);
         Table = table;
@@ -77,7 +75,7 @@ else
 
         var startTime = DateTime.Now;
         await Entries.EnsureLoadedAsync();
-        await Table.AddRangeByBatchAsync(Entries, 100);
+        await Table.AddRangeByBatchAsync(Entries, 200);
         Logger.LogDebug($"Table filled after {DateTime.Now - startTime}.");
         IsTableFilled = true;
     }
