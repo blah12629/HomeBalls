@@ -1,43 +1,53 @@
 namespace CEo.Pokemon.HomeBalls;
 
 public class HomeBallsObservableSet<T> :
-    ICollection<T>,
-    INotifyCollectionChanged
+    HomeBallsObservableList<T>
 {
-    public HomeBallsObservableSet()
-    {
-        EventRaiser = new EventRaiser().RaisedBy(this);
-        Items = new ObservableCollection<T> { };
+    public HomeBallsObservableSet(
+        ILogger? logger = default) :
+        this((items, index, item) => { }, logger) { }
 
-        Items.CollectionChanged += (s, e) => EventRaiser.Raise(CollectionChanged, e);
+    public HomeBallsObservableSet(
+        Action<IList<T>, Int32, T> addExistingAction,
+        ILogger? logger = default) :
+        base(logger) =>
+        AddExistingAction = addExistingAction;
+
+    protected internal Action<IList<T>, Int32, T> AddExistingAction { get; }
+
+    public override HomeBallsObservableSet<T> Add(T item)
+    {
+        var index = IndexOf(item);
+        if (index == -1) base.Add(item);
+        else AddExisting(Items, index, item);
+        return this;
     }
 
-    protected internal ObservableCollection<T> Items { get; }
-
-    protected internal IEventRaiser EventRaiser { get; }
-
-    public virtual Int32 Count => Items.Count;
-
-    Boolean ICollection<T>.IsReadOnly => false;
-
-    public event NotifyCollectionChangedEventHandler? CollectionChanged;
-
-    public virtual void Add(T item)
+    protected internal virtual HomeBallsObservableSet<T> AddExisting(
+        IList<T> items,
+        Int32 index,
+        T newValue)
     {
-        if (Contains(item)) return;
-        Items.Add(item);
+        AddExistingAction.Invoke(items, index, newValue);
+        return this;
+    }
+}
+
+public class HomeBallsEntryCollection :
+    HomeBallsObservableSet<IHomeBallsEntry>
+{
+    static void ReplaceExistingValue(
+        IList<IHomeBallsEntry> entries,
+        Int32 index,
+        IHomeBallsEntry entry)
+    {
+        var existingEntry = entries[index];
+        existingEntry.HasHiddenAbility = entry.HasHiddenAbility;
+        foreach (var id in entry.AvailableEggMoveIds)
+            existingEntry.AvailableEggMoveIds.Add(id);
     }
 
-    public virtual void Clear() => Items.Clear();
-
-    public virtual Boolean Contains(T item) => Items.Contains(item);
-
-    public virtual void CopyTo(T[] array, Int32 arrayIndex) =>
-        Items.CopyTo(array, arrayIndex);
-
-    public virtual IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
-
-    public virtual Boolean Remove(T item) => Items.Remove(item);
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public HomeBallsEntryCollection(
+        ILogger? logger = default) :
+        base(ReplaceExistingValue, logger) { }
 }

@@ -8,13 +8,34 @@ public interface IHomeBallsEntryCell :
 
     HomeBallsEntryObtainedStatus ObtainedStatus { get; set; }
 
+    HomeBallsEntryLegalityStatus LegalityStatus { get; set; }
+
     new IHomeBallsEntryCell Clone();
+}
+
+public enum HomeBallsEntryObtainedStatus
+{
+    NotObtained = 0,
+
+    ObtainedWithoutHiddenAbility = 1,
+
+    ObtainedWithHiddenAbility = 2
+}
+
+public enum HomeBallsEntryLegalityStatus
+{
+    NotObtainable = 0,
+
+    ObtainableWithoutHiddenAbility = 1,
+
+    ObtainableWithHiddenAbility = 2
 }
 
 public class HomeBallsEntryCell :
     IHomeBallsEntryCell
 {
     HomeBallsEntryObtainedStatus _obtainedStatus;
+    HomeBallsEntryLegalityStatus _legalityStatus;
 
     public HomeBallsEntryCell()
     {
@@ -36,12 +57,24 @@ public class HomeBallsEntryCell :
         }
     }
 
+    public virtual HomeBallsEntryLegalityStatus LegalityStatus
+    {
+        get => _legalityStatus;
+        set
+        {
+            var (oldValue, newValue) = (_legalityStatus, value);
+            _legalityStatus = value;
+            EventRaiser.Raise(PropertyChanged, oldValue, newValue);
+        }
+    }
+
     public event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged;
 
     public virtual HomeBallsEntryCell Clone() => new HomeBallsEntryCell
     {
         BallId = BallId,
-        ObtainedStatus = ObtainedStatus
+        ObtainedStatus = ObtainedStatus,
+        LegalityStatus = LegalityStatus
     };
 
     IHomeBallsEntryCell IHomeBallsEntryCell.Clone() => Clone();

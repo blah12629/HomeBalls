@@ -2,7 +2,7 @@ namespace CEo.Pokemon.HomeBalls.Data;
 
 public interface IHomeBallsEntryCollectionInitializer
 {
-    Task<IHomeBallsEntryCollection> InitializeAsync(
+    Task<ICollection<IHomeBallsEntry>> InitializeAsync(
         IHomeBallsDataSource data,
         CancellationToken cancellationToken = default);
 }
@@ -52,7 +52,7 @@ public class HomeBallsEntryCollectionInitializer :
     protected internal IReadOnlyCollection<UInt16> RareBallIds => _rareBallIds ??=
         ApriballIds.Concat(new UInt16[] { 617, 457, 5, 887 }).ToArray().AsReadOnly();
 
-    public virtual Task<IHomeBallsEntryCollection> InitializeAsync(
+    public virtual Task<ICollection<IHomeBallsEntry>> InitializeAsync(
         IHomeBallsDataSource data,
         CancellationToken cancellationToken = default)
     {
@@ -111,7 +111,7 @@ public class HomeBallsEntryCollectionInitializer :
         IReadOnlyCollection<UInt16> ballIds) =>
         ballIds.Select(id => entry with { BallId = id });
 
-    protected internal virtual IHomeBallsEntryCollection SortEntryCollection(
+    protected internal virtual ICollection<IHomeBallsEntry> SortEntryCollection(
         IEnumerable<IHomeBallsEntry> entries)
     {
         var entryCollection = new HomeBallsEntryCollection();

@@ -1,12 +1,9 @@
 namespace CEo.Pokemon.HomeBalls.App.Core;
 
 public interface IHomeBallsEntryColumn :
-    IHomeBallsReadOnlyCollection<IHomeBallsEntryCell>
+    IHomeBallsReadOnlyCollection<IHomeBallsEntryCell>,
+    IKeyed<HomeBallsPokemonFormKey>
 {
-    UInt16 SpeciesId { get; }
-
-    Byte FormId { get; }
-
     IHomeBallsEntryCell this[UInt16 ballId] { get; }
 }
 
@@ -39,9 +36,7 @@ public class HomeBallsEntryColumn :
 
     protected internal ILogger? Logger { get; }
 
-    public UInt16 SpeciesId { get; init; }
-
-    public Byte FormId { get; init; }
+    public HomeBallsPokemonFormKey Id { get; init; }
 
     public Type ElementType => typeof(IHomeBallsEntryCell);
 

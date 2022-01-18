@@ -1,9 +1,10 @@
 @using static HomeBallsEntryObtainedStatus
+@using static HomeBallsEntryLegalityStatus
 @inject IHomeBallsDataSource DataSource
 
 @if (IsBallShown)
 {
-    @if (Cell.ObtainedStatus == NotObtained)
+    @* @if (Cell.ObtainedStatus == NotObtained)
     {
         <td class="cursor-pointer hover:bg-dream hover:bg-opacity-50" />
     }
@@ -17,6 +18,33 @@
     {
         <td class="cursor-pointer hover:bg-dream hover:bg-opacity-50">
             <BallSprite Ball="@Ball" />
+        </td>
+    } *@
+
+    @if (Cell.LegalityStatus == NotObtainable)
+    {
+        <td class="bg-opacity-50 cursor-pointer bg-dream-purple" />
+    }
+
+    else if (Cell.LegalityStatus == ObtainableWithoutHiddenAbility)
+    {
+        <td class="bg-opacity-50 cursor-pointer bg-dream-pink">
+            @if (Cell.ObtainedStatus == ObtainedWithoutHiddenAbility ||
+                Cell.ObtainedStatus == ObtainedWithHiddenAbility)
+            {
+                <BallSprite Ball="@Ball" />
+            }
+        </td>
+    }
+
+    else if (Cell.LegalityStatus == ObtainableWithHiddenAbility)
+    {
+        <td class="cursor-pointer hover:bg-dream hover:bg-opacity-50">
+            @if (Cell.ObtainedStatus == ObtainedWithoutHiddenAbility ||
+                Cell.ObtainedStatus == ObtainedWithHiddenAbility)
+            {
+                <BallSprite Ball="@Ball" />
+            }
         </td>
     }
 }
@@ -34,6 +62,13 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Cell.PropertyChanged += (sender, e) => StateHasChanged();
+        Cell.PropertyChanged += OnCellPropertyChanged;
+    }
+
+    protected virtual void OnCellPropertyChanged(
+        Object? sender,
+        HomeBallsPropertyChangedEventArgs e)
+    {
+        if (Cell.LegalityStatus != NotObtainable) StateHasChanged();
     }
 }

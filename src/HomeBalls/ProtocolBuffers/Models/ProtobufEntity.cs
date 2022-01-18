@@ -39,14 +39,19 @@ public record ProtobufEntryLegality :
 {
     public virtual HomeBallsEntryKey Id { get; init; }
 
+    [ProtoMember(1)]
     public virtual UInt16 SpeciesId { get => Id.SpeciesId; init => Id = new(value, FormId, BallId); }
 
+    [ProtoMember(2)]
     public virtual Byte FormId { get => Id.FormId; init => Id = new(SpeciesId, value, BallId); }
 
+    [ProtoMember(3)]
     public virtual UInt16 BallId { get => Id.BallId; init => Id = new(SpeciesId, FormId, value); }
 
+    [ProtoMember(4)]
     public virtual Boolean IsObtainable { get; init; }
 
+    [ProtoMember(5)]
     public virtual Boolean IsObtainableWithHiddenAbility { get; init; }
 
     String IIdentifiable.Identifier => Id.ToString();

@@ -24,7 +24,7 @@ public class HomeBallsEntryCollectionTests
     [Fact]
     public void Add_ShouldRaiseExistingEntryPropertyChanged_WhenCollectionContainsEntry()
     {
-        var existingEntry = Sut.Entries[0];
+        var existingEntry = Sut.Items[0];
         var monitor = existingEntry.Monitor();
 
         var newEntry = new HomeBallsEntry { SpeciesId = 1, FormId = 1, BallId = 1 };

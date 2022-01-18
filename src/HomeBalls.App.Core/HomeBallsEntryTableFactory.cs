@@ -7,10 +7,6 @@ public interface IHomeBallsEntryTableFactory :
 {
     Task<IHomeBallsEntryTable> CreateTableAsync(
         CancellationToken cancellationToken = default);
-
-    Task<IHomeBallsEntryTable> CreateTableAsync(
-        IHomeBallsEntryCollection entries,
-        CancellationToken cancellationToken = default);
 }
 
 public class HomeBallsEntryTableFactory :
@@ -92,25 +88,10 @@ public class HomeBallsEntryTableFactory :
         var columns = await CreateColumnsAsync(cancellationToken);
         var indexMap = columns
             .Select((column, index) => (Column: column, Index: index))
-            .ToDictionary(
-                pair => (pair.Column.SpeciesId, pair.Column.FormId),
-                pair => pair.Index);
+            .ToDictionary(pair => pair.Column.Id, pair => pair.Index);
 
-        var table = new HomeBallsEntryTable(
-            columns,
-            indexMap,
-            new HomeBallsEntryCollection(),
-            LoggerFactory?.CreateLogger(typeof(HomeBallsEntryTable)));;
+        var table = new HomeBallsEntryTable(columns, indexMap, LoggerFactory);
         EventRaiser.Raise(TableCreated, start.StartTime);
-        return table;
-    }
-
-    public virtual async Task<IHomeBallsEntryTable> CreateTableAsync(
-        IHomeBallsEntryCollection entries,
-        CancellationToken cancellationToken = default)
-    {
-        var table = await CreateTableAsync(cancellationToken);
-        foreach (var entry in entries) table.Add(entry);
         return table;
     }
 
@@ -135,13 +116,7 @@ public class HomeBallsEntryTableFactory :
             .AsReadOnly();
         var logger = LoggerFactory?.CreateLogger(typeof(HomeBallsEntryColumn));
 
-        var column = new HomeBallsEntryColumn(cells, indexMap, logger)
-        {
-            SpeciesId = form.SpeciesId,
-            FormId = form.FormId
-        };
-
-        return column;
+        return new HomeBallsEntryColumn(cells, indexMap, logger) { Id = form.Id, };
     }
 
     protected internal virtual async Task<IReadOnlyList<IHomeBallsEntryCell>> CreateCellsAsync(

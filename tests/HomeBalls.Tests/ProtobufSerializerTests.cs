@@ -6,6 +6,7 @@ public class ProtobufSerializerTests : HomeBallsBaseTest
 {
     [
         Theory,
+        InlineData(typeof(ProtobufEntryLegality)),
         InlineData(typeof(ProtobufGameVersion)),
         InlineData(typeof(ProtobufGeneration)),
         InlineData(typeof(ProtobufItem)),

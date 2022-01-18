@@ -35,8 +35,8 @@ builder.Services
             services.GetRequiredService<ILocalStorageService>(),
             services.GetRequiredService<IHomeBallsLocalStorageDownloader>(),
             services.GetRequiredService<ILogger<HomeBallsEntryCollection>>()))
-    .AddScoped<IHomeBallsEntryCollection>(services =>
-        services.GetRequiredService<IHomeBallsEntryCollection>())
+    .AddScoped<IHomeBallsReadOnlyCollection<IHomeBallsEntry>>(services =>
+        services.GetRequiredService<IHomeBallsLocalStorageEntryCollection>())
 
     .AddScoped<IHomeBallsEntryTableFactory>(services =>
         new HomeBallsEntryTableFactory(
@@ -49,5 +49,9 @@ builder.Services
     .AddScoped<IHomeBallsBreedablesFormIdentifierService>(services =>
         new HomeBallsBreedablesFormIdentifierService(
             services.GetRequiredService<ILogger<HomeBallsBreedablesFormIdentifierService>>()));
+
+builder.Logging.SetMinimumLevel(LogLevel.Information)
+    .AddFilter(nameof(Microsoft.Extensions.Http), LogLevel.Information)
+    .AddFilter(nameof(System), LogLevel.Information);
 
 await builder.Build().RunAsync();

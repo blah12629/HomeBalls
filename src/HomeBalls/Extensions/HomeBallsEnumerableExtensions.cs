@@ -10,6 +10,32 @@ public static class HomeBallsEnumerableExtensions
 
 public static class HomeBallsCollectionExtensions
 {
+    public static async Task<TCollection> AddRangeByBatchAsync<TCollection, TElement>(
+        this TCollection collection,
+        IEnumerable<TElement> elements,
+        UInt32 batchSize,
+        Task? postBatchTask = default,
+        CancellationToken cancellationToken = default)
+        where TCollection : notnull, ICollection<TElement>
+    {
+        var task = postBatchTask ?? Task.CompletedTask;
+        var i = UInt32.MinValue;
+
+        foreach (var element in elements)
+        {
+            if (i == batchSize)
+            {
+                i = UInt32.MinValue;
+                await task;
+            }
+
+            collection.Add(element);
+            i ++;
+        }
+
+        return collection;
+    }
+
     public static IReadOnlyCollection<T> AsReadOnly<T>(
         this ICollection<T> collection) =>
         new HomeBallsReadOnlyCollection<T>(collection);

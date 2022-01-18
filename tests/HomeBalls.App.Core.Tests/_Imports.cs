@@ -9,6 +9,7 @@ global using FluentAssertions.Events;
 global using Microsoft.Extensions.Logging;
 
 global using NSubstitute;
+global using NSubstitute.Extensions;
 
 global using System;
 global using System.Collections.Generic;

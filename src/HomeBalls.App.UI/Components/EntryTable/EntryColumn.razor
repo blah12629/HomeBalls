@@ -14,7 +14,7 @@
     </td>
 
     <td class="sticky left-0 overflow-hidden text-xs text-right bg-white sm:left-14 whitespace-nowrap">
-        <span>@Column.SpeciesId &nbsp;</span>
+        <span>@Column.Id.SpeciesId &nbsp;</span>
     </td>
 
     <td class="sticky overflow-hidden text-xs text-left bg-white left-8 sm:left-22 whitespace-nowrap">
@@ -42,13 +42,12 @@
     [Parameter, EditorRequired]
     public IHomeBallsEntryColumn Column { get => _column!; init => _column = value; }
 
-    String Id => $"cpf-{Column.SpeciesId}-{Column.FormId}";
+    String Id => $"cpf-{Column.Id.SpeciesId}-{Column.Id.FormId}";
 
-    IHomeBallsPokemonForm Form => _form ??= DataSource
-        .PokemonForms[new HomeBallsPokemonFormKey(Column.SpeciesId, Column.FormId)];
+    IHomeBallsPokemonForm Form => _form ??= DataSource.PokemonForms[Column.Id];
 
     IHomeBallsPokemonSpecies Species => _species ??= DataSource
-        .PokemonSpecies[Column.SpeciesId];
+        .PokemonSpecies[Column.Id.SpeciesId];
 
     String SpriteUrl => SpriteService
         .GetSerebiiSpriteUri(Form)

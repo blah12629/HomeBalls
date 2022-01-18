@@ -56,7 +56,7 @@ else
             Logger?.LogDebug($"Table created in {e.ElapsedTime}.");
 
         await Task.Delay(100);
-        var table = await TableFactory.CreateTableAsync(new HomeBallsEntryCollection());
+        var table = await TableFactory.CreateTableAsync();
         await Data.PokemonSpecies.EnsureLoadedAsync();
         Table = table;
     }
@@ -67,8 +67,12 @@ else
         if (firstRender || Table == default || IsTableFilled) return;
 
         var startTime = DateTime.Now;
+        await Data.Legalities.EnsureLoadedAsync();
+        await Table.Legalities.AddRangeByBatchAsync(Data.Legalities, 200, Task.Delay(5));
+
         await Entries.EnsureLoadedAsync();
-        await Table.AddRangeByBatchAsync(Entries, 200);
+        await Table.Entries.AddRangeByBatchAsync(Entries, 200, Task.Delay(5));
+
         Logger?.LogDebug($"Table filled after {DateTime.Now - startTime}.");
         IsTableFilled = true;
     }

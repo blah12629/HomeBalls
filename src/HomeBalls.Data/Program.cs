@@ -85,7 +85,7 @@ async Task exportEntriesAsync(
     IHomeBallsProtobufConverter converter,
     CancellationToken cancellationToken = default)
 {
-    IHomeBallsEntryCollection entries;
+    ICollection<IHomeBallsEntry> entries;
     var initializer = new HomeBallsEntryCollectionInitializer(logger);
     await using (var dataContext = await createDataContext()
         .EnsureLoadedAsync(cancellationToken))
@@ -109,17 +109,17 @@ await initializeDataContextAsync(initializer, legalityInitializer);
 await exportDataContextAsync(exporter);
 await exportEntriesAsync(fileSystem, protobufConverter);
 
-await using (var dataContext = await createDataContext().EnsureLoadedAsync())
-{
-    // foreach (var breedable in await dataContext.PokemonFormsLoadable.EnsureLoadedAsync())
-    foreach (var breedable in ((IHomeBallsDataSource)dataContext).PokemonForms)
-    {
-        if (!breedable.IsBreedable) continue;
-        if (breedable.SpeciesId < 151) continue;
-        if (breedable.SpeciesId > 251) break;
-        Console.WriteLine($"/* {breedable.Identifier.PadRight(15)} */ legalities.AddRange(factory.Pokemon({breedable.SpeciesId}, {breedable.FormId}).CreateLegalities());");
-    }
-}
+// await using (var dataContext = await createDataContext().EnsureLoadedAsync())
+// {
+//     // foreach (var breedable in await dataContext.PokemonFormsLoadable.EnsureLoadedAsync())
+//     foreach (var breedable in ((IHomeBallsDataSource)dataContext).PokemonForms)
+//     {
+//         if (!breedable.IsBreedable) continue;
+//         if (breedable.SpeciesId < 151) continue;
+//         if (breedable.SpeciesId > 251) break;
+//         Console.WriteLine($"/* {breedable.Identifier.PadRight(15)} */ legalities.AddRange(factory.Pokemon({breedable.SpeciesId}, {breedable.FormId}).CreateLegalities());");
+//     }
+// }
 
 var runTime = DateTime.UtcNow - startTime;
 logger.LogInformation($"Application completed after `{runTime}`.");
