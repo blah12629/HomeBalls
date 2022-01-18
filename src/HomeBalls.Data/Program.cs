@@ -47,11 +47,12 @@ HomeBallsDataDbContext createDataContext()
 }
 
 async Task initializeDataContextAsync(
-    IHomeBallsDataInitializer initializer,
+    IHomeBallsDataInitializer dataInitializer,
+    IHomeBallsEntryLegalityInitializer legalityInitializer,
     CancellationToken cancellationToken = default)
 {
-    await initializer.StartConversionAsync(cancellationToken);
-    await initializer.PostProcessDataAsync(cancellationToken);
+    await dataInitializer.StartConversionAsync(cancellationToken);
+    await dataInitializer.PostProcessDataAsync(cancellationToken);
 
     await using (var context = createDataContext())
     {
@@ -59,12 +60,12 @@ async Task initializeDataContextAsync(
         await context.Database.EnsureCreatedAsync(cancellationToken);
     }
 
-    try
-    {
-        await initializer.SaveToDataDbContextAsync(
-            createDataContext(),
-            cancellationToken);
-    }
+    await using (var context = createDataContext())
+    try { await dataInitializer.SaveToDataDbContextAsync(context, cancellationToken); }
+    catch(Exception exception) { logger.LogError(exception, default); }
+
+    await using (var context = createDataContext())
+    try { await legalityInitializer.SaveToDataDbContextAsync(context, cancellationToken); }
     catch(Exception exception) { logger.LogError(exception, default); }
 }
 
@@ -102,10 +103,23 @@ var exporter = new HomeBallsDataProtobufExporter(
     fileSystem,
     protobufConverter,
     loggerFactory.CreateLogger<HomeBallsDataProtobufExporter>());
+var legalityInitializer = new HomeBallsEntryLegalityInitializer(logger);
 
-await initializeDataContextAsync(initializer);
+await initializeDataContextAsync(initializer, legalityInitializer);
 await exportDataContextAsync(exporter);
 await exportEntriesAsync(fileSystem, protobufConverter);
+
+await using (var dataContext = await createDataContext().EnsureLoadedAsync())
+{
+    // foreach (var breedable in await dataContext.PokemonFormsLoadable.EnsureLoadedAsync())
+    foreach (var breedable in ((IHomeBallsDataSource)dataContext).PokemonForms)
+    {
+        if (!breedable.IsBreedable) continue;
+        if (breedable.SpeciesId < 151) continue;
+        if (breedable.SpeciesId > 251) break;
+        Console.WriteLine($"/* {breedable.Identifier.PadRight(15)} */ legalities.AddRange(factory.Pokemon({breedable.SpeciesId}, {breedable.FormId}).CreateLegalities());");
+    }
+}
 
 var runTime = DateTime.UtcNow - startTime;
 logger.LogInformation($"Application completed after `{runTime}`.");

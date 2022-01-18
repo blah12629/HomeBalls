@@ -81,6 +81,7 @@ public class HomeBallsDataProtobufExporter :
                 element is IKeyed<Byte> byteKeyed ? byteKeyed.Id :
                 element is IKeyed<UInt16> shortKeyed ? shortKeyed.Id :
                 element is IHomeBallsPokemonForm form ? (form.SpeciesId, form.FormId) :
+                element is IHomeBallsEntryLegality legality ? (legality.SpeciesId, legality.FormId, legality.BallId) :
                 element)
             .ToList().AsReadOnly();
         var dataType = typeof(IEnumerable<>).MakeGenericType(elementType);

@@ -16,6 +16,8 @@ public interface IHomeBallsEntryLegality :
     Boolean IsObtainableWithHiddenAbility { get; }
 }
 
+// Maybe there's no need to implement a concrete type.
+
 public interface IHomeBallsEntryLegalityCollection :
     IReadOnlyCollection<IHomeBallsEntryLegality>
 {

@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.Data.PokeApi;
+namespace CEo.Pokemon.HomeBalls.Data;
 
 public interface IHomeBallsDataInitializer
 {

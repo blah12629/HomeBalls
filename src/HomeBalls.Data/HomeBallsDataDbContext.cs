@@ -118,39 +118,39 @@ public class HomeBallsDataDbContext :
 
     protected internal IReadOnlyCollection<IAsyncLoadable> Loadables { get; }
 
-    public virtual DbSet<EFCoreGameVersion> GameVersions => GameVersionsLoadable;
+    public virtual DbSet<EFCoreGameVersion> GameVersions => Set<EFCoreGameVersion>();
 
-    public virtual DbSet<EFCoreGeneration> Generations => GenerationsLoadable;
+    public virtual DbSet<EFCoreGeneration> Generations => Set<EFCoreGeneration>();
 
-    public virtual DbSet<EFCoreItem> Items => ItemsLoadable;
+    public virtual DbSet<EFCoreItem> Items => Set<EFCoreItem>();
 
-    public virtual DbSet<EFCoreItemCategory> ItemCategories => ItemCategoriesLoadable;
+    public virtual DbSet<EFCoreItemCategory> ItemCategories => Set<EFCoreItemCategory>();
 
-    public virtual DbSet<EFCoreLanguage> Languages => LanguagesLoadable;
+    public virtual DbSet<EFCoreLanguage> Languages => Set<EFCoreLanguage>();
 
-    public virtual DbSet<EFCoreEntryLegality> Legalities => LegalitiesLoadable;
+    public virtual DbSet<EFCoreEntryLegality> Legalities => Set<EFCoreEntryLegality>();
 
-    public virtual DbSet<EFCoreMove> Moves => MovesLoadable;
+    public virtual DbSet<EFCoreMove> Moves => Set<EFCoreMove>();
     
-    public virtual DbSet<EFCoreMoveDamageCategory> MoveDamageCategories => MoveDamageCategoriesLoadable;
+    public virtual DbSet<EFCoreMoveDamageCategory> MoveDamageCategories => Set<EFCoreMoveDamageCategory>();
 
-    public virtual DbSet<EFCoreNature> Natures => NaturesLoadable;
+    public virtual DbSet<EFCoreNature> Natures => Set<EFCoreNature>();
 
-    public virtual DbSet<EFCorePokemonAbility> PokemonAbilities => PokemonAbilitiesLoadable;
+    public virtual DbSet<EFCorePokemonAbility> PokemonAbilities => Set<EFCorePokemonAbility>();
 
-    public virtual DbSet<EFCorePokemonEggGroup> PokemonEggGroups => PokemonEggGroupsLoadable;
+    public virtual DbSet<EFCorePokemonEggGroup> PokemonEggGroups => Set<EFCorePokemonEggGroup>();
 
-    public virtual DbSet<EFCorePokemonForm> PokemonForms => PokemonFormsLoadable;
+    public virtual DbSet<EFCorePokemonForm> PokemonForms => Set<EFCorePokemonForm>();
 
     public virtual DbSet<EFCorePokemonFormComponent> PokemonFormComponents => Set<EFCorePokemonFormComponent>();
 
-    public virtual DbSet<EFCorePokemonSpecies> PokemonSpecies => PokemonSpeciesLoadable;
+    public virtual DbSet<EFCorePokemonSpecies> PokemonSpecies => Set<EFCorePokemonSpecies>();
 
-    public virtual DbSet<EFCoreStat> Stats => StatsLoadable;
+    public virtual DbSet<EFCoreStat> Stats => Set<EFCoreStat>();
 
     public virtual DbSet<EFCoreString> Strings => Set<EFCoreString>();
 
-    public virtual DbSet<EFCoreType> Types => TypesLoadable;
+    public virtual DbSet<EFCoreType> Types => Set<EFCoreType>();
 
     protected internal virtual HomeBallsLoadableDataDbSet<Byte, IHomeBallsGameVersion, EFCoreGameVersion> GameVersionsLoadable { get; }
 

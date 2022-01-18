@@ -25,7 +25,7 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
         public virtual UInt16 BallId
         {
             get => Id.BallId;
-            init => Id = new(SpeciesId, FormId, BallId);
+            init => Id = new(SpeciesId, FormId, value);
         }
 
         public virtual EFCoreItem Ball { get; init; }
@@ -34,7 +34,7 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore
 
         public virtual Boolean IsObtainableWithHiddenAbility { get; init; }
 
-        public virtual String Identifier { get; init; }
+        String IIdentifiable.Identifier => Id.ToString();
     }
 }
 
@@ -59,6 +59,8 @@ namespace CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations
         protected internal override void ConfigureKey() =>
             ConfigureLogged(() => Builder
                 .HasKey(legality => new { legality.SpeciesId, legality.FormId, legality.BallId }));
+
+        protected internal override void ConfigureIdentifier() { }
 
         protected internal virtual void ConfigureId() =>
             ConfigureLogged(() => Builder
