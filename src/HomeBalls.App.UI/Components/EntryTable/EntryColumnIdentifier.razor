@@ -1,0 +1,72 @@
+@inherits HomeBallsComponentBase
+@inject IHomeBallsLoadableDataSource Data
+@inject IHomeBallsBreedablesSpriteService SpriteService
+@inject IHomeBallsBreedablesFormIdentifierService IdentifierService
+
+<td class="sticky left-0 bg-white text-0 h-6.5" />
+
+<td class="sticky left-0 py-1 overflow-hidden text-center bg-white">
+    <center>
+        <span class="hidden sm:table-cell">
+            <img src="@SpriteUrl" class="object-contain w-4/5" />
+        </span>
+    </center>
+</td>
+
+<td class="sticky left-0 overflow-hidden text-xs text-right bg-white sm:left-14 whitespace-nowrap">
+    <span>@Column.Id.SpeciesId &nbsp;</span>
+</td>
+
+<td class="sticky overflow-hidden text-xs text-left bg-white left-8 sm:left-22 whitespace-nowrap">
+    @if (Species == default)
+    {
+        <span>@Form.Identifier</span>
+    }
+
+    else
+    {
+        <span class="font-semibold">@SpeciesName</span>
+
+        @if (FormIdentifier != String.Empty)
+        {
+            <span>&nbsp; @FormIdentifier</span>
+        }
+    }
+</td>
+
+@code {
+    IHomeBallsEntryColumn? _column;
+    IHomeBallsPokemonForm? _form;
+    IHomeBallsPokemonSpecies? _species;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsEntryColumn Column { get => _column!; init => _column = value; }
+
+    IHomeBallsPokemonForm Form => _form ??= Data.PokemonForms[Column.Id];
+
+    IHomeBallsPokemonSpecies? Species =>
+        Data.PokemonSpecies.TryGetValue(Column.Id.SpeciesId, out var value) ?
+            value :
+            default;
+
+    String SpriteUrl => SpriteService
+        .GetSerebiiSpriteUri(Form)
+        .ToString();
+
+    String? SpeciesName => Species?.Names
+        .Single(name => name.LanguageId == 9)
+        .Value;
+
+    String? FormIdentifier => IdentifierService.GetIdentifier(Form);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Data.PokemonSpecies.DataLoaded += OnSpeciesLoaded;
+    }
+
+    protected virtual void OnSpeciesLoaded(
+        Object? sender,
+        TimedActionEndedEventArgs e) =>
+        StateHasChanged();
+}

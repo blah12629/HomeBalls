@@ -10,6 +10,15 @@ public static class HomeBallsEnumerableExtensions
 
 public static class HomeBallsCollectionExtensions
 {
+    public static TCollection AddRange<TCollection, TElement>(
+        this TCollection collection,
+        IEnumerable<TElement> elements)
+        where TCollection : notnull, ICollection<TElement>
+    {
+        foreach (var element in elements) collection.Add(element);
+        return collection;
+    }
+
     public static async Task<TCollection> AddRangeByBatchAsync<TCollection, TElement>(
         this TCollection collection,
         IEnumerable<TElement> elements,
@@ -19,18 +28,11 @@ public static class HomeBallsCollectionExtensions
         where TCollection : notnull, ICollection<TElement>
     {
         var task = postBatchTask ?? Task.CompletedTask;
-        var i = UInt32.MinValue;
 
-        foreach (var element in elements)
+        foreach (var chunk in elements.Chunk((Int32)batchSize))
         {
-            if (i == batchSize)
-            {
-                i = UInt32.MinValue;
-                await task;
-            }
-
-            collection.Add(element);
-            i ++;
+            foreach (var element in chunk) collection.Add(element);
+            await task;
         }
 
         return collection;

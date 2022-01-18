@@ -1,30 +1,7 @@
-@inject IHomeBallsDataSource DataSource
-@inject IHomeBallsBreedablesSpriteService SpriteService
-@inject IHomeBallsBreedablesFormIdentifierService IdentifierService
+@inject IHomeBallsLoadableDataSource DataSource
 
 <tr class="hover:bg-dream hover:bg-opacity-20" id="@Id">
-    <td class="sticky left-0 bg-white text-0 h-6.5" />
-
-    <td class="sticky left-0 py-1 overflow-hidden text-center bg-white">
-        <center>
-            <span class="hidden sm:table-cell">
-                <img src="@SpriteUrl" class="object-contain w-4/5" />
-            </span>
-        </center>
-    </td>
-
-    <td class="sticky left-0 overflow-hidden text-xs text-right bg-white sm:left-14 whitespace-nowrap">
-        <span>@Column.Id.SpeciesId &nbsp;</span>
-    </td>
-
-    <td class="sticky overflow-hidden text-xs text-left bg-white left-8 sm:left-22 whitespace-nowrap">
-        <span class="font-semibold">@SpeciesName</span>
-
-        @if (FormIdentifier != String.Empty)
-        {
-            <span>&nbsp; @FormIdentifier</span>
-        }
-    </td>
+    <EntryColumnIdentifier Column="@Column" />
 
     @foreach (var cell in Column)
     {
@@ -36,26 +13,9 @@
 
 @code {
     IHomeBallsEntryColumn? _column;
-    IHomeBallsPokemonForm? _form;
-    IHomeBallsPokemonSpecies? _species;
 
     [Parameter, EditorRequired]
     public IHomeBallsEntryColumn Column { get => _column!; init => _column = value; }
 
     String Id => $"cpf-{Column.Id.SpeciesId}-{Column.Id.FormId}";
-
-    IHomeBallsPokemonForm Form => _form ??= DataSource.PokemonForms[Column.Id];
-
-    IHomeBallsPokemonSpecies Species => _species ??= DataSource
-        .PokemonSpecies[Column.Id.SpeciesId];
-
-    String SpriteUrl => SpriteService
-        .GetSerebiiSpriteUri(Form)
-        .ToString();
-
-    String SpeciesName => Species.Names
-        .Single(name => name.LanguageId == 9)
-        .Value;
-
-    String? FormIdentifier => IdentifierService.GetIdentifier(Form);
 }

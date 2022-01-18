@@ -50,15 +50,15 @@ else
     {
         await base.OnInitializedAsync();
 
-        TableFactory.DataLoaded += (sender, e) =>
-            Logger?.LogDebug($"{e.PropertyName} loaded in {e.ElapsedTime}.");
+        Data.DataLoaded += (sender, e) =>
+            Logger?.LogInformation($"{e.PropertyName} loaded in {e.ElapsedTime}.");
+        Entries.DataLoaded += (sender, e) =>
+            Logger?.LogInformation($"{sender?.GetType().GetFullNameNonNull()} loaded in {e.ElapsedTime}.");
         TableFactory.TableCreated += (sender, e) =>
-            Logger?.LogDebug($"Table created in {e.ElapsedTime}.");
+            Logger?.LogInformation($"Table created in {e.ElapsedTime}.");
 
         await Task.Delay(100);
-        var table = await TableFactory.CreateTableAsync();
-        await Data.PokemonSpecies.EnsureLoadedAsync();
-        Table = table;
+        Table = await TableFactory.CreateTableAsync();
     }
 
     protected override async Task OnAfterRenderAsync(Boolean firstRender)
@@ -66,14 +66,72 @@ else
         await base.OnAfterRenderAsync(firstRender);
         if (firstRender || Table == default || IsTableFilled) return;
 
-        var startTime = DateTime.Now;
+        await Task.Delay(100);
         await Data.Legalities.EnsureLoadedAsync();
-        await Table.Legalities.AddRangeByBatchAsync(Data.Legalities, 200, Task.Delay(5));
-
         await Entries.EnsureLoadedAsync();
-        await Table.Entries.AddRangeByBatchAsync(Entries, 200, Task.Delay(5));
+        Logger?.LogInformation("Filling table.");
 
-        Logger?.LogDebug($"Table filled after {DateTime.Now - startTime}.");
+        var startTime = DateTime.Now;
+        var legalities = Data.Legalities.OrderBy(entry => entry.SpeciesId).ToList();
+        var entries = Entries.OrderBy(entry => entry.SpeciesId).ToList();
+
+        var speciesIds = legalities
+            .Select(entry => entry.SpeciesId)
+            .GroupBy(entry => entry)
+            .Select(group => group.Key)
+            .ToList();
+
+        Int32 j = 0, k = 0;
+        for (var i = 0; i < speciesIds.Count; i ++)
+        {
+            var id = speciesIds[i];
+
+            for (; j < legalities.Count; j ++)
+            {
+                var legality = legalities[j];
+                if (legality.SpeciesId != id) break;
+                Table.Legalities.Add(legality);
+            }
+
+            for (; k < entries.Count; k ++)
+            {
+                var entry = entries[k];
+                if (entry.SpeciesId != id) break;
+                Table.Entries.Add(entry);
+            }
+
+            await Task.Delay(1);
+        }
+
+        @* Int32 i = 0, k = 0;
+        var speciesId = legalities[0].SpeciesId;
+        for (; i < legalities.Count; i ++)
+        {
+            var legality = legalities[i];
+            if (speciesId != legality.SpeciesId)
+            {
+                for (; k < entries.Count; k ++)
+                {
+                    var entry = entries[k];
+                    if (entry.SpeciesId > speciesId) break;
+
+                    Table.Entries.Add(entry);
+                }
+                await Task.Delay(1);
+                speciesId = legality.SpeciesId;
+            }
+
+            Table.Legalities.Add(legalities[i]);
+        }
+
+        for (; k < entries.Count; k ++)
+        {
+            var entry = entries[k];
+            if (entry.SpeciesId <= entry.SpeciesId) Table.Entries.Add(entry);
+        } *@
+
+        Logger?.LogInformation($"Table filled after {DateTime.Now - startTime}.");
+        await Data.PokemonSpecies.EnsureLoadedAsync();
         IsTableFilled = true;
     }
 }

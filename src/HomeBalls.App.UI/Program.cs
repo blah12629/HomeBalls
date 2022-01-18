@@ -27,6 +27,8 @@ builder.Services
             services.GetRequiredService<IHomeBallsProtobufTypeMap>(),
             services.GetRequiredService<IHomeBallsLocalStorageDownloader>(),
             services.GetRequiredService<ILoggerFactory>()))
+    .AddScoped<IHomeBallsLoadableDataSource>(services =>
+        services.GetRequiredService<IHomeBallsLocalStorageDataSource>())
     .AddScoped<IHomeBallsDataSource>(services =>
         services.GetRequiredService<IHomeBallsLocalStorageDataSource>())
 
@@ -49,9 +51,5 @@ builder.Services
     .AddScoped<IHomeBallsBreedablesFormIdentifierService>(services =>
         new HomeBallsBreedablesFormIdentifierService(
             services.GetRequiredService<ILogger<HomeBallsBreedablesFormIdentifierService>>()));
-
-builder.Logging.SetMinimumLevel(LogLevel.Information)
-    .AddFilter(nameof(Microsoft.Extensions.Http), LogLevel.Information)
-    .AddFilter(nameof(System), LogLevel.Information);
 
 await builder.Build().RunAsync();

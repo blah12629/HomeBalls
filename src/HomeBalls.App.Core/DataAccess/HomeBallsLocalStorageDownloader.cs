@@ -69,15 +69,8 @@ public class HomeBallsLocalStorageDownloader :
         fileName = fileName ?? identifier.AddFileExtension(_Values.DefaultProtobufExtension);
         var start = EventRaiser.Raise(DataDownloading, fileName);
 
-        String dataString;
-        using (var response = await RawDataClient.GetAsync(fileName, cancellationToken))
-        {
-            response.EnsureSuccessStatusCode();
-            Console.WriteLine(response.RequestMessage?.RequestUri);
-            var data = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-            dataString = Convert.ToBase64String(data);
-        }
-
+        var data = await RawDataClient.GetByteArrayAsync(fileName, cancellationToken);
+        var dataString = Convert.ToBase64String(data);
         await LocalStorage.SetItemAsync(identifier, dataString, cancellationToken);
 
         EventRaiser.Raise(DataDownloaded, start.StartTime, fileName);

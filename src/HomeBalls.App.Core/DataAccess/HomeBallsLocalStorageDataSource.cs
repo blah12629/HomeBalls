@@ -85,6 +85,8 @@ public class HomeBallsLocalStorageDataSource :
                 LoggerFactory?.CreateLogger(typeof(HomeBallsLocalStorageDataSet<TKey, TRecord>)));
 
             loadables.Add(set);
+            set.DataLoaded += (sender, e) => DataLoaded?.Invoke(sender, e);
+            set.DataLoading += (sender, e) => DataLoading?.Invoke(sender, e);
             return set;
         }
     }

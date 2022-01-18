@@ -2,7 +2,8 @@ namespace CEo.Pokemon.HomeBalls;
 
 public interface IHomeBallsLoadableDataSource :
     IHomeBallsDataSource,
-    IAsyncLoadable<IHomeBallsLoadableDataSource>
+    IAsyncLoadable<IHomeBallsLoadableDataSource>,
+    INotifyDataLoading
 {
     new IHomeBallsLoadableDataSet<Byte, IHomeBallsGameVersion> GameVersions { get; }
 
