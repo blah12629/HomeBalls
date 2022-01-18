@@ -591,9 +591,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(144 112 175 / var(--tw-bg-opacity));
 }
-.bg-dream-pink {
+.bg-dream-dark {
   --tw-bg-opacity: 1;
-  background-color: rgb(234 96 154 / var(--tw-bg-opacity));
+  background-color: rgb(224 152 179 / var(--tw-bg-opacity));
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
@@ -698,8 +698,15 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(244 180 208 / var(--tw-bg-opacity));
 }
+.hover\:bg-dream-dark:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(224 152 179 / var(--tw-bg-opacity));
+}
 .hover\:bg-opacity-20:hover {
   --tw-bg-opacity: 0.2;
+}
+.hover\:bg-opacity-75:hover {
+  --tw-bg-opacity: 0.75;
 }
 .hover\:bg-opacity-50:hover {
   --tw-bg-opacity: 0.5;
