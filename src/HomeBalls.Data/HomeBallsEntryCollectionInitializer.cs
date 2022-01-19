@@ -114,14 +114,18 @@ public class HomeBallsEntryCollectionInitializer :
     protected internal virtual ICollection<IHomeBallsEntry> SortEntryCollection(
         IEnumerable<IHomeBallsEntry> entries)
     {
-        var entryCollection = new HomeBallsEntryCollection();
+        var entryCollection = new List<IHomeBallsEntry>();
         var comparer = new HomeBallsPokeballComparer().UseGameIndexComparison();
 
-        foreach (var entry in entries
-            .OrderBy(entry => entry.SpeciesId)
-            .ThenBy(entry => entry.FormId)
-            .ThenBy(entry => new ProtobufItem { Id = entry.BallId }, comparer))
-            entryCollection.Add(entry);
+        foreach (var group in entries
+            .GroupBy(entry => entry.SpeciesId)
+            .OrderBy(group => group.Key))
+        {
+            foreach (var entry in group
+                .OrderBy(entry => entry.FormId)
+                .ThenBy(entry => new ProtobufItem { Id = entry.BallId }, comparer))
+                entryCollection.Add(entry);
+        }
 
         return entryCollection;
     }

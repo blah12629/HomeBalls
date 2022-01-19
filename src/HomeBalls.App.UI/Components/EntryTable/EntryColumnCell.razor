@@ -6,28 +6,34 @@
 {
     @if (Cell.LegalityStatus == NotObtainable)
     {
-        <td class="bg-opacity-50 cursor-pointer bg-dream-purple hover:bg-opacity-75" />
+        <td class="bg-opacity-50 cursor-pointer bg-dream-purple hover:bg-opacity-75">
+            <EntryColumnCellBallSprite
+                Ball="@Ball"
+                IsObtained="@IsObtained"
+                IsLegal="@IsLegal"
+                ShowIllegalEntries="@ShowIllegalEntries" />
+        </td>
     }
 
     else if (Cell.LegalityStatus == ObtainableWithoutHiddenAbility)
     {
         <td class="bg-opacity-50 cursor-pointer bg-dream-dark hover:bg-opacity-75">
-            @if (Cell.ObtainedStatus == ObtainedWithoutHiddenAbility ||
-                Cell.ObtainedStatus == ObtainedWithHiddenAbility)
-            {
-                <BallSprite Ball="@Ball" />
-            }
+            <EntryColumnCellBallSprite
+                Ball="@Ball"
+                IsObtained="@IsObtained"
+                IsLegal="@IsLegal"
+                ShowIllegalEntries="@ShowIllegalEntries" />
         </td>
     }
 
     else if (Cell.LegalityStatus == ObtainableWithHiddenAbility)
     {
         <td class="cursor-pointer hover:bg-dream-dark hover:bg-opacity-50">
-            @if (Cell.ObtainedStatus == ObtainedWithoutHiddenAbility ||
-                Cell.ObtainedStatus == ObtainedWithHiddenAbility)
-            {
-                <BallSprite Ball="@Ball" />
-            }
+            <EntryColumnCellBallSprite
+                Ball="@Ball"
+                IsObtained="@IsObtained"
+                IsLegal="@IsLegal"
+                ShowIllegalEntries="@ShowIllegalEntries" />
         </td>
     }
 }
@@ -42,6 +48,16 @@
 
     Boolean IsBallShown => Ball.CategoryId == 39 || Ball.Id == 5 || Ball.Id > 456;
 
+    Boolean IsObtained =>
+        Cell.ObtainedStatus == ObtainedWithHiddenAbility ||
+        Cell.ObtainedStatus == ObtainedWithoutHiddenAbility;
+
+    Boolean IsLegal =>
+        Cell.LegalityStatus == ObtainableWithHiddenAbility ||
+        Cell.LegalityStatus == ObtainableWithoutHiddenAbility;
+
+    Boolean ShowIllegalEntries => true;
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -52,6 +68,6 @@
         Object? sender,
         HomeBallsPropertyChangedEventArgs e)
     {
-        if (Cell.LegalityStatus != NotObtainable) StateHasChanged();
+        if (IsLegal || ShowIllegalEntries) StateHasChanged();
     }
 }

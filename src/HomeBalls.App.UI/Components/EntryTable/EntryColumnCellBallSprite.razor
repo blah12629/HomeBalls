@@ -1,0 +1,20 @@
+@if ((IsLegal || ShowIllegalEntries) && IsObtained)
+{
+    <BallSprite Ball="@Ball" />
+}
+
+@code {
+    IHomeBallsItem? _ball;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsItem Ball { get => _ball!; init => _ball = value; }
+
+    [Parameter, EditorRequired]
+    public Boolean IsObtained { get; init; }
+
+    [Parameter, EditorRequired]
+    public Boolean IsLegal { get; init; }
+
+    [Parameter, EditorRequired]
+    public Boolean ShowIllegalEntries { get; init; }
+}

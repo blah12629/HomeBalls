@@ -108,6 +108,8 @@ public class HomeBallsDataDbContext :
                 LoggerFactory?.CreateLogger(typeof(HomeBallsLoadableDataDbSet<TKey, TEntity, TRecord>)));
 
             loadables.Add(dbSet);
+            dbSet.DataLoading += (sender, e) => DataLoading?.Invoke(sender, e);
+            dbSet.DataLoaded += (sender, e) => DataLoaded?.Invoke(sender, e);
             return dbSet;
         }
     }
