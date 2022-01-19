@@ -12,36 +12,41 @@
     <!-- <link href="CEo.Pokemon.HomeBalls.App.UI.styles.css" rel="stylesheet" /> -->
 </head>
 
-<body class="text-dream-black">
-    <div class="flex flex-col w-full h-screen overflow-hidden">
-        <div class="flex-grow-0 border-b border-dream-dark">
-            <header class="flex-grow-0 bg-white px-3 py-1 pt-2 md:px-8 md:pt-3.5 md:pb-1.5">
-                <div class="w-max">
-                    <div class="inline-block align-top">
-                        <div class="overflow-hidden" style="width: 30px; height: 30px;">
-                            <img
-                                src="https://www.serebii.net/itemdex/sprites/pgl/dreamball.png"
-                                class="object-cover w-10 h-10 transition-transform duration-200 cursor-pointer hover:rotate-12"
-                                style="margin: -5px 0px 0px 0px;" />
-                        </div>
+<body>
+    <div class="theme-moon" id="theme-root">
+        <div class="flex flex-col w-screen h-screen overflow-hidden text-theme-black">
+
+            <header class="flex-grow-0 border-b border-theme-primary pt-1.5 px-3 pb-1 lg:pt-3 lg:px-4 lg:pb-1.5">
+                <div class="inline-block align-middle">
+                    <div class="w-8 h-8 overflow-hidden lg:w-12 lg:h-12">
+                        <img src="https://www.serebii.net/itemdex/sprites/pgl/dreamball.png"
+                            id="app-header-icon"
+                            class="object-cover w-10 h-10 -mt-1 ml-px lg:w-15 lg:h-15 lg:-mt-1.5 lg:ml-0.5 transition-transform duration-200 cursor-pointer hover:rotate-12"/>
                     </div>
-            
-                    <div class="inline-block align-middle pt-0.5 text-0 sm:pt-0">
-                        <span class="text-xl font-semibold lowercase sm:text-2xl">Home</span>
-                        <span class="text-sm font-bold uppercase sm:text-lg text-dream-pink">Balls</span>
+                </div>
+    
+                <div class="inline-block align-middle text-[4px] lg:pl-0.5">
+                    <div class="pt-1">
+                        <span class="text-xl font-semibold lowercase text-theme-black lg:text-3xl">Home</span>
+                        <span class="uppercase text-theme-primary font-bold text-[15.5px] lg:text-[23.25px]">Balls</span>
                     </div>
                 </div>
             </header>
-        </div>
+    
+            <div class="flex flex-col flex-grow overflow-hidden lg:flex-row" id="app">
 
-        <div id="app" class="flex flex-col flex-grow overflow-hidden lg:flex-row">
-            <div class="w-full text-center">
-                <div class="flex justify-center w-full">
-                    <img src="dream_ball.global_link.png" class="w-10 animate-spin-partial" />
+                <div class="w-full mt-3 text-center lg:text-xl">
+                    <div class="flex justify-center w-full">
+                        <img src="https://www.serebii.net/itemdex/sprites/pgl/dreamball.png"
+                            id="app-loading-icon"
+                            class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial"/>
+                    </div>
+                
+                    <span>Loading app...</span>
                 </div>
-            
-                <span class="text-dream-black">Loading app...</span>
+
             </div>
+
         </div>
     </div>
 
