@@ -1,5 +1,14 @@
 const colors = require('tailwindcss/colors')
 
+function addOpacity(variable) {
+  return ({ opacityValue }) => {
+    if (opacityValue === undefined) {
+      return `rgb(var(${variable}))`
+    }
+    return `rgb(var(${variable}) / ${opacityValue})`
+  }
+}
+
 module.exports = {
   mode: 'jit',
   purge: {
@@ -13,18 +22,13 @@ module.exports = {
         'spin-partial': 'spin-partial 1.5s linear infinite',
       },
       colors: {
-        dream: {
-          pink: '#ea609a',
-          purple: '#9070af',
-          white: '#ffffff',
-          black: '#4b514f',
-          DEFAULT: '#f4b4d0',
-          dark: '#e098b3',
-        },
-      },
-      fontSize: {
-        0: '0rem/* 0px */',
-        '2xs': ['0.625rem/* 10px */', '0.75rem/* 12px */'],
+        theme: {
+          primary: addOpacity('--color-primary'),
+          secondary: addOpacity('--color-secondary'),
+          accent: addOpacity('--color-accent'),
+          black: addOpacity('--color-black'),
+          white: addOpacity('--color-white')
+        }
       },
       keyframes: {
         'spin-partial': {
@@ -43,6 +47,7 @@ module.exports = {
         0.75: '0.1875rem/* 3px */;',
         1.75: '0.4375rem/* 7px */;',
         6.5: '1.625rem/* 26px */',
+        15: '3.75rem/* 60px */',
         22: '5.5rem/* 88px */;',
         128: '32rem/* 512px */;',
         160: '40rem/* 640px */;',

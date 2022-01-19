@@ -3,9 +3,13 @@
 
 @if (IsBallShown)
 {
-    <td class="sticky top-0 w-8 bg-white border-b border-opacity-50 border-dream-purple">
+    <td class="w-8 min-w-[32px] bg-theme-secondary bg-opacity-30 border-b border-theme-secondary">
         <BallSprite Ball="@Ball" />
     </td>
+
+    @* <td class="sticky top-0 w-8 bg-white border-b border-opacity-50 border-dream-purple">
+        <BallSprite Ball="@Ball" />
+    </td> *@
 }
 
 @code {

@@ -3,7 +3,36 @@
 @inject IHomeBallsBreedablesSpriteService SpriteService
 @inject IHomeBallsBreedablesFormIdentifierService IdentifierService
 
-<td class="sticky left-0 bg-white text-0 h-6.5" />
+<td class="bg-theme-secondary bg-opacity-30 group-hover:bg-theme-accent group-hover:bg-opacity-50">
+    <center>
+        <span class="hidden sm:table-cell">
+            <img src="@SpriteUrl" class="object-contain w-4/5">
+        </span>
+    </center>
+</td>
+
+<td class="text-right bg-theme-secondary bg-opacity-30 group-hover:bg-theme-accent group-hover:bg-opacity-50 overflow-ellipsis whitespace-nowrap">
+    <span class="text-xs">@Column.Id.SpeciesId &nbsp;</span>
+</td>
+
+<td class="bg-theme-secondary bg-opacity-30 text-0 group-hover:bg-theme-accent group-hover:bg-opacity-50">
+    @if (Species == default)
+    {
+        <span class="text-xs">@Form.Identifier</span>
+    }
+
+    else
+    {
+        <span class="text-xs font-semibold">@SpeciesName</span>
+
+        @if (FormIdentifier != String.Empty)
+        {
+            <span class="text-xs">&nbsp; @FormIdentifier</span>
+        }
+    }
+</td>
+
+@* <td class="sticky left-0 bg-white text-0 h-6.5" />
 
 <td class="sticky left-0 py-1 overflow-hidden text-center bg-white">
     <center>
@@ -32,7 +61,7 @@
             <span>&nbsp; @FormIdentifier</span>
         }
     }
-</td>
+</td> *@
 
 @code {
     IHomeBallsEntryColumn? _column;

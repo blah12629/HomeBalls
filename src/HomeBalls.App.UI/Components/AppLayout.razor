@@ -1,25 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
-@* <div class="w-full border-b lg:w-160 lg:border-r border-dream-dark">
-    <Options />
-</div>
-
-<div class="flex flex-col flex-grow">
-    <div class="flex-grow-0 border-b border-dream-dark">
-        <Navigation />
+<div class="flex flex-col flex-grow-0 overflow-scroll border-b border-theme-primary lg:border-b-0 lg:border-r lg:w-1/2">
+    <div class="flex-grow">
+        Navigation / Settings
     </div>
 
-    <div class="flex-grow overflow-scroll">
+    <footer class="hidden border-t lg:block border-theme-secondary">
+        <Footer />
+    </footer>
+</div>
+
+<div class="flex flex-col flex-grow overflow-y-scroll">
+    <div class="flex-grow overflow-x-scroll">
         @Body
     </div>
-</div> *@
 
-<div class="w-full pl-3 pr-4 border-b lg:w-160 lg:border-r border-dream-dark">
-    <Navigation />
-
-    <Options />
-</div>
-
-<div class="flex-grow overflow-scroll">
-    @Body
+    <footer class="sticky left-0 flex-grow-0 border-t lg:hidden border-theme-secondary">
+        <Footer />
+    </footer>
 </div>

@@ -5,7 +5,7 @@
 
 @if (Table == default)
 {
-    <Loading Size="@LoadingImageSize.GlobalLinkSmall">
+    <Loading>
         <Message>
             <span>@Message</span>
         </Message>
@@ -14,7 +14,7 @@
 
 else
 {
-    <table class="min-w-full bg-white border-separate table-fixed text-dream-black border-spacing-0">
+    <table class="min-w-full table-fixed">
         <thead>
             <EntryHeader BallIds="@BallIds" />
         </thead>
@@ -26,6 +26,19 @@ else
             }
         </tbody>
     </table>
+
+    @* <table class="min-w-full bg-white border-separate table-fixed text-dream-black border-spacing-0">
+        <thead>
+            <EntryHeader BallIds="@BallIds" />
+        </thead>
+
+        <tbody>
+            @foreach (var column in Table.Columns)
+            {
+                <EntryColumn Column="@column" />
+            }
+        </tbody>
+    </table> *@
 }
 
 @code {

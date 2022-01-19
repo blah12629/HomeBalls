@@ -2,8 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-primary: 255 181 214;
+    --color-secondary: 132 99 197;
+    --color-accent: 255 99 165;
+    --color-black: 49 49 49;
+    --color-white: 255 255 255;
+  }
+
+  .theme-dream {
+    --color-primary: 255 99 165;
+    --color-secondary: 132 99 197;
+    --color-accent: 255 181 214;
+    --color-black: 49 49 49;
+    --color-white: 255 255 255;
+  }
+
+  .theme-moon {
+    --color-primary: 74 197 239;
+    --color-secondary: 123 140 156;
+    --color-accent: 247 206 66;
+    --color-black: 49 49 49;
+    --color-white: 255 255 255;
+  }
+
+  .theme-lure {
+    --color-primary: 74 181 222;
+    --color-secondary: 222 90 107;
+    --color-accent: 255 197 82;
+    --color-black: 49 49 49;
+    --color-white: 255 255 255;
+  }
+}
+
 @layer utilities {
-    .border-spacing-0 {
-        border-spacing: 0;
-    }
+  .border-spacing-0 {
+    border-spacing: 0;
+  }
 }
