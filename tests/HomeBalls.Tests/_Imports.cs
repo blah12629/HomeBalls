@@ -14,6 +14,7 @@ global using System.Linq;
 global using System.IO;
 global using System.IO.Abstractions.TestingHelpers;
 global using System.Reflection;
+global using System.Threading;
 global using System.Threading.Tasks;
 
 global using Xunit;
