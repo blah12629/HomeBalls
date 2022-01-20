@@ -3,7 +3,7 @@
 @inject IHomeBallsBreedablesSpriteService SpriteService
 @inject IHomeBallsBreedablesFormIdentifierService IdentifierService
 
-<td class="sticky left-0.5 bg-theme-secondary bg-opacity-40 group-hover:bg-theme-accent group-hover:bg-opacity-60">
+<td class="sticky left-0.5 bg-theme-secondary-200 dark:bg-theme-secondary-800 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700">
     <center>
         <span class="hidden sm:table-cell">
             <img src="@SpriteUrl" class="object-contain w-4/5">
@@ -11,11 +11,11 @@
     </center>
 </td>
 
-<td class="sticky left-1 sm:left-[58px] text-right bg-theme-secondary bg-opacity-40 group-hover:bg-theme-accent group-hover:bg-opacity-60 overflow-ellipsis whitespace-nowrap">
+<td class="sticky left-1 sm:left-[58px] text-right bg-theme-secondary-200 dark:bg-theme-secondary-800 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700 overflow-ellipsis whitespace-nowrap">
     <span class="text-xs">@Column.Id.SpeciesId &nbsp;</span>
 </td>
 
-<td class="sticky left-9 sm:left-[88px] bg-theme-secondary bg-opacity-40 text-0 group-hover:bg-theme-accent group-hover:bg-opacity-60">
+<td class="sticky left-9 sm:left-[88px] bg-theme-secondary-200 dark:bg-theme-secondary-800 text-0 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700">
     @if (Species == default)
     {
         <span class="text-xs">@Form.Identifier</span>
@@ -31,37 +31,6 @@
         }
     }
 </td>
-
-@* <td class="sticky left-0 bg-white text-0 h-6.5" />
-
-<td class="sticky left-0 py-1 overflow-hidden text-center bg-white">
-    <center>
-        <span class="hidden sm:table-cell">
-            <img src="@SpriteUrl" class="object-contain w-4/5" />
-        </span>
-    </center>
-</td>
-
-<td class="sticky left-0 overflow-hidden text-xs text-right bg-white sm:left-14 whitespace-nowrap">
-    <span>@Column.Id.SpeciesId &nbsp;</span>
-</td>
-
-<td class="sticky overflow-hidden text-xs text-left bg-white left-8 sm:left-22 whitespace-nowrap">
-    @if (Species == default)
-    {
-        <span>@Form.Identifier</span>
-    }
-
-    else
-    {
-        <span class="font-semibold">@SpeciesName</span>
-
-        @if (FormIdentifier != String.Empty)
-        {
-            <span>&nbsp; @FormIdentifier</span>
-        }
-    }
-</td> *@
 
 @code {
     IHomeBallsEntryColumn? _column;

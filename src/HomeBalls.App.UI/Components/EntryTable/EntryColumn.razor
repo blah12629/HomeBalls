@@ -1,7 +1,7 @@
 @inject IHomeBallsLoadableDataSource DataSource
 
 <tr class="cursor-pointer group" id="@Id">
-    <td class="sticky left-0 h-6.5 bg-theme-secondary bg-opacity-40 group-hover:bg-theme-accent group-hover:bg-opacity-60" />
+    <td class="sticky left-0 h-6.5 bg-theme-secondary-200 dark:bg-theme-secondary-800 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700" />
 
     <EntryColumnIdentifier Column="@Column" />
 
@@ -12,17 +12,6 @@
 
     <td class="text-0" />
 </tr>
-
-@* <tr class="hover:bg-dream hover:bg-opacity-20" id="@Id">
-    <EntryColumnIdentifier Column="@Column" />
-
-    @foreach (var cell in Column)
-    {
-        <EntryColumnCell Cell="@cell" />
-    }
-
-    <td class="text-0" />
-</tr> *@
 
 @code {
     IHomeBallsEntryColumn? _column;

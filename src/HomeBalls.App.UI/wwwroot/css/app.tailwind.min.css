@@ -574,6 +574,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .table-fixed {
   table-layout: fixed;
 }
+.border-separate {
+  border-collapse: separate;
+}
 @-webkit-keyframes spin-partial {
 
   0%, 75% {
@@ -636,20 +639,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-opacity-50 {
   --tw-border-opacity: 0.5;
 }
-.bg-theme-secondary {
+.bg-theme-secondary-200 {
   --tw-bg-opacity: 1;
-  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-secondary-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-secondary-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-secondary-b) * 1) / var(--tw-bg-opacity));
+  background-color: rgb(calc(var(--color-white-r) * 0.6000000000000001 + var(--color-black-r) * 0 + var(--color-secondary-r) * 0.3999999999999999) calc(var(--color-white-g) * 0.6000000000000001 + var(--color-black-g) * 0 + var(--color-secondary-g) * 0.3999999999999999) calc(var(--color-white-b) * 0.6000000000000001 + var(--color-black-b) * 0 + var(--color-secondary-b) * 0.3999999999999999) / var(--tw-bg-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.bg-theme-primary {
+.bg-theme-primary-200 {
   --tw-bg-opacity: 1;
-  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-primary-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-primary-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-primary-b) * 1) / var(--tw-bg-opacity));
-}
-.bg-opacity-40 {
-  --tw-bg-opacity: 0.4;
+  background-color: rgb(calc(var(--color-white-r) * 0.6000000000000001 + var(--color-black-r) * 0 + var(--color-primary-r) * 0.3999999999999999) calc(var(--color-white-g) * 0.6000000000000001 + var(--color-black-g) * 0 + var(--color-primary-g) * 0.3999999999999999) calc(var(--color-white-b) * 0.6000000000000001 + var(--color-black-b) * 0 + var(--color-primary-b) * 0.3999999999999999) / var(--tw-bg-opacity));
 }
 .object-contain {
   -o-object-fit: contain;
@@ -730,26 +730,27 @@ Ensure the default browser behavior of the `hidden` attribute.
 .duration-200 {
   transition-duration: 200ms;
 }
+.border-spacing-0 {
+    border-spacing: 0;
+  }
 .hover\:rotate-12:hover {
   --tw-rotate: 12deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.hover\:bg-theme-primary:hover {
+.hover\:bg-theme-secondary-300:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-primary-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-primary-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-primary-b) * 1) / var(--tw-bg-opacity));
+  background-color: rgb(calc(var(--color-white-r) * 0.4 + var(--color-black-r) * 0 + var(--color-secondary-r) * 0.6) calc(var(--color-white-g) * 0.4 + var(--color-black-g) * 0 + var(--color-secondary-g) * 0.6) calc(var(--color-white-b) * 0.4 + var(--color-black-b) * 0 + var(--color-secondary-b) * 0.6) / var(--tw-bg-opacity));
+}
+.hover\:bg-theme-primary-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(calc(var(--color-white-r) * 0.4 + var(--color-black-r) * 0 + var(--color-primary-r) * 0.6) calc(var(--color-white-g) * 0.4 + var(--color-black-g) * 0 + var(--color-primary-g) * 0.6) calc(var(--color-white-b) * 0.4 + var(--color-black-b) * 0 + var(--color-primary-b) * 0.6) / var(--tw-bg-opacity));
 }
 .hover\:bg-opacity-20:hover {
   --tw-bg-opacity: 0.2;
 }
-.hover\:bg-opacity-60:hover {
-  --tw-bg-opacity: 0.6;
-}
-.group:hover .group-hover\:bg-theme-accent {
+.group:hover .group-hover\:bg-theme-accent-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-accent-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-accent-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-accent-b) * 1) / var(--tw-bg-opacity));
-}
-.group:hover .group-hover\:bg-opacity-60 {
-  --tw-bg-opacity: 0.6;
+  background-color: rgb(calc(var(--color-white-r) * 0.4 + var(--color-black-r) * 0 + var(--color-accent-r) * 0.6) calc(var(--color-white-g) * 0.4 + var(--color-black-g) * 0 + var(--color-accent-g) * 0.6) calc(var(--color-white-b) * 0.4 + var(--color-black-b) * 0 + var(--color-accent-b) * 0.6) / var(--tw-bg-opacity));
 }
 @media (prefers-color-scheme: dark) {
 
@@ -758,9 +759,34 @@ Ensure the default browser behavior of the `hidden` attribute.
     background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-black-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-black-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-black-b) * 1) / var(--tw-bg-opacity));
   }
 
+  .dark\:bg-theme-secondary-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.6000000000000001 + var(--color-secondary-r) * 0.3999999999999999) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.6000000000000001 + var(--color-secondary-g) * 0.3999999999999999) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.6000000000000001 + var(--color-secondary-b) * 0.3999999999999999) / var(--tw-bg-opacity));
+  }
+
+  .dark\:bg-theme-primary-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.6000000000000001 + var(--color-primary-r) * 0.3999999999999999) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.6000000000000001 + var(--color-primary-g) * 0.3999999999999999) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.6000000000000001 + var(--color-primary-b) * 0.3999999999999999) / var(--tw-bg-opacity));
+  }
+
   .dark\:text-theme-white {
     --tw-text-opacity: 1;
     color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-white-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-white-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-white-b) * 1) / var(--tw-text-opacity));
+  }
+
+  .dark\:hover\:bg-theme-secondary-700:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.4 + var(--color-secondary-r) * 0.6) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.4 + var(--color-secondary-g) * 0.6) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.4 + var(--color-secondary-b) * 0.6) / var(--tw-bg-opacity));
+  }
+
+  .dark\:hover\:bg-theme-primary-700:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.4 + var(--color-primary-r) * 0.6) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.4 + var(--color-primary-g) * 0.6) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.4 + var(--color-primary-b) * 0.6) / var(--tw-bg-opacity));
+  }
+
+  .group:hover .dark\:group-hover\:bg-theme-accent-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.4 + var(--color-accent-r) * 0.6) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.4 + var(--color-accent-g) * 0.6) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.4 + var(--color-accent-b) * 0.6) / var(--tw-bg-opacity));
   }
 }
 @media (min-width: 640px) {
