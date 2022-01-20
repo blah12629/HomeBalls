@@ -4,35 +4,35 @@
 
 @layer base {
   :root {
-    --color-primary: 255 181 214;
-    --color-secondary: 132 99 197;
-    --color-accent: 255 99 165;
-    --color-black: 49 49 49;
-    --color-white: 255 255 255;
+    --color-primary-r:   255; --color-primary-g:    99; --color-primary-b:   165;
+    --color-secondary-r: 132; --color-secondary-g:  99; --color-secondary-b: 197;
+    --color-accent-r:    255; --color-accent-g:    181; --color-accent-b:    214;
+    --color-black-r:      49; --color-black-g:      49; --color-black-b:      49;
+    --color-white-r:     255; --color-white-g:     255; --color-white-b:     255;
   }
 
   .theme-dream {
-    --color-primary: 255 99 165;
-    --color-secondary: 132 99 197;
-    --color-accent: 255 181 214;
-    --color-black: 49 49 49;
-    --color-white: 255 255 255;
+    --color-primary-r:   255; --color-primary-g:    99; --color-primary-b:   165;
+    --color-secondary-r: 132; --color-secondary-g:  99; --color-secondary-b: 197;
+    --color-accent-r:    255; --color-accent-g:    181; --color-accent-b:    214;
+    --color-black-r:      49; --color-black-g:      49; --color-black-b:      49;
+    --color-white-r:     255; --color-white-g:     255; --color-white-b:     255;
   }
 
   .theme-moon {
-    --color-primary: 74 197 239;
-    --color-secondary: 123 140 156;
-    --color-accent: 247 206 66;
-    --color-black: 49 49 49;
-    --color-white: 255 255 255;
+    --color-primary-r:    74; --color-primary-g:   197; --color-primary-b:   239;
+    --color-secondary-r: 123; --color-secondary-g: 140; --color-secondary-b: 156;
+    --color-accent-r:    247; --color-accent-g:    206; --color-accent-b:     66;
+    --color-black-r:      49; --color-black-g:      49; --color-black-b:      49;
+    --color-white-r:     255; --color-white-g:     255; --color-white-b:     255;
   }
 
   .theme-lure {
-    --color-primary: 74 181 222;
-    --color-secondary: 222 90 107;
-    --color-accent: 255 197 82;
-    --color-black: 49 49 49;
-    --color-white: 255 255 255;
+    --color-primary-r:    74; --color-primary-g:   181; --color-primary-b:   222;
+    --color-secondary-r: 222; --color-secondary-g:  90; --color-secondary-b: 107;
+    --color-accent-r:    255; --color-accent-g:    197; --color-accent-b:     82;
+    --color-black-r:      49; --color-black-g:      49; --color-black-b:      49;
+    --color-white-r:     255; --color-white-g:     255; --color-white-b:     255;
   }
 }
 

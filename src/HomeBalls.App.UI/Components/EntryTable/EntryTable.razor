@@ -26,19 +26,6 @@ else
             }
         </tbody>
     </table>
-
-    @* <table class="min-w-full bg-white border-separate table-fixed text-dream-black border-spacing-0">
-        <thead>
-            <EntryHeader BallIds="@BallIds" />
-        </thead>
-
-        <tbody>
-            @foreach (var column in Table.Columns)
-            {
-                <EntryColumn Column="@column" />
-            }
-        </tbody>
-    </table> *@
 }
 
 @code {
@@ -84,9 +71,9 @@ else
         await Entries.EnsureLoadedAsync();
         Logger?.LogInformation("Filling table.");
 
+        // ASSUMPTION: Legalities and Entries are sorted
         var startTime = DateTime.Now;
-        var legalities = Data.Legalities.OrderBy(entry => entry.SpeciesId).ToList();
-        var entries = Entries.OrderBy(entry => entry.SpeciesId).ToList();
+        var (legalities, entries) = (Data.Legalities.ToList(), Entries.ToList());
 
         var speciesIds = legalities
             .Select(entry => entry.SpeciesId)
@@ -115,33 +102,6 @@ else
 
             await Task.Delay(1);
         }
-
-        @* Int32 i = 0, k = 0;
-        var speciesId = legalities[0].SpeciesId;
-        for (; i < legalities.Count; i ++)
-        {
-            var legality = legalities[i];
-            if (speciesId != legality.SpeciesId)
-            {
-                for (; k < entries.Count; k ++)
-                {
-                    var entry = entries[k];
-                    if (entry.SpeciesId > speciesId) break;
-
-                    Table.Entries.Add(entry);
-                }
-                await Task.Delay(1);
-                speciesId = legality.SpeciesId;
-            }
-
-            Table.Legalities.Add(legalities[i]);
-        }
-
-        for (; k < entries.Count; k ++)
-        {
-            var entry = entries[k];
-            if (entry.SpeciesId <= entry.SpeciesId) Table.Entries.Add(entry);
-        } *@
 
         Logger?.LogInformation($"Table filled after {DateTime.Now - startTime}.");
         await Data.PokemonSpecies.EnsureLoadedAsync();

@@ -1,10 +1,9 @@
 @inherits HomeBallsComponentBase
+@inject IJSRuntime JSRuntime
 
 <div class="w-full mt-3 text-center lg:text-xl">
     <div class="flex justify-center w-full">
-        <img src="https://www.serebii.net/itemdex/sprites/pgl/dreamball.png"
-            id="app-loading-icon"
-            class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial"/>
+        <img src="@IconUrl" class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial" id="app-icon-loading" />
     </div>
 
     @Message
@@ -13,4 +12,12 @@
 @code {
     [Parameter]
     public RenderFragment? Message { get; init; }
+
+    String? IconUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        IconUrl = await JSRuntime.InvokeAsync<String>("getIconUrl");
+    }
 }

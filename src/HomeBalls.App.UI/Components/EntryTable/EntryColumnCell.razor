@@ -6,7 +6,7 @@
 {
     @if (Cell.LegalityStatus == NotObtainable)
     {
-        <td class="bg-theme-secondary bg-opacity-30 hover:bg-opacity-50">
+        <td class="bg-theme-secondary bg-opacity-40 hover:bg-opacity-60">
             <EntryColumnCellBallSprite
                 Ball="@Ball"
                 IsObtained="@IsObtained"
@@ -17,7 +17,7 @@
 
     else if (Cell.LegalityStatus == ObtainableWithoutHiddenAbility)
     {
-        <td class="bg-theme-primary bg-opacity-30 hover:bg-opacity-50">
+        <td class="bg-theme-primary bg-opacity-40 hover:bg-opacity-60">
             <EntryColumnCellBallSprite
                 Ball="@Ball"
                 IsObtained="@IsObtained"
@@ -28,7 +28,7 @@
 
     else if (Cell.LegalityStatus == ObtainableWithHiddenAbility)
     {
-        <td class="hover:bg-theme-primary hover:bg-opacity-50">
+        <td class="hover:bg-theme-primary hover:bg-opacity-60">
             <EntryColumnCellBallSprite
                 Ball="@Ball"
                 IsObtained="@IsObtained"

@@ -1,12 +1,31 @@
 const colors = require('tailwindcss/colors')
 
-function addOpacity(variable) {
+function computeColor(key, value, blackKey = '--color-black', whiteKey = '--color-white') {
+  var alphas = computeAlphas(value);
+  var [r, g, b] = [
+    computeChannel(key, alphas, 'r', blackKey, whiteKey),
+    computeChannel(key, alphas, 'g', blackKey, whiteKey),
+    computeChannel(key, alphas, 'b', blackKey, whiteKey)
+  ];
+  var color = `${r} ${g} ${b}`;
+
   return ({ opacityValue }) => {
-    if (opacityValue === undefined) {
-      return `rgb(var(${variable}))`
-    }
-    return `rgb(var(${variable}) / ${opacityValue})`
+    return (opacityValue === undefined ?
+      `rgb(${color})` :
+      `rgb(${color} / ${opacityValue})`);
   }
+}
+
+function computeAlphas(value) {
+  if (value === 500) return [0, 0, 1];
+
+  var alpha = Math.abs((500 - value) / 100 * 0.2);
+  return (value < 500 ? [alpha, 0, 1 - alpha] : [0, alpha, 1 - alpha]);
+}
+
+function computeChannel(key, alphas, channel, blackKey = '--color-black', whiteKey = '--color-white') {
+  var [w, k, c] = [`var(${whiteKey}-${channel})`, `var(${blackKey}-${channel})`, `var(${key}-${channel})`]
+  return `calc(${w} * ${alphas[0]} + ${k} * ${alphas[1]} + ${c} * ${alphas[2]})`;
 }
 
 module.exports = {
@@ -14,6 +33,9 @@ module.exports = {
   purge: {
     enabled: true,
     content: ['./**/*.html', './**/*.razor'],
+    safelist: [
+      'theme-dream', 'theme-moon', 'theme-lure' // add theming to loading component
+    ]
   },
   darkMode: 'media', // false or 'media' or 'class'
   theme: {
@@ -23,11 +45,44 @@ module.exports = {
       },
       colors: {
         theme: {
-          primary: addOpacity('--color-primary'),
-          secondary: addOpacity('--color-secondary'),
-          accent: addOpacity('--color-accent'),
-          black: addOpacity('--color-black'),
-          white: addOpacity('--color-white')
+          primary: {
+            DEFAULT: computeColor('--color-primary', 500),
+            100: computeColor('--color-primary', 100),
+            200: computeColor('--color-primary', 200),
+            300: computeColor('--color-primary', 300),
+            400: computeColor('--color-primary', 400),
+            500: computeColor('--color-primary', 500),
+            600: computeColor('--color-primary', 600),
+            700: computeColor('--color-primary', 700),
+            800: computeColor('--color-primary', 800),
+            900: computeColor('--color-primary', 900),
+          },
+          secondary: {
+            DEFAULT: computeColor('--color-secondary', 500),
+            100: computeColor('--color-secondary', 100),
+            200: computeColor('--color-secondary', 200),
+            300: computeColor('--color-secondary', 300),
+            400: computeColor('--color-secondary', 400),
+            500: computeColor('--color-secondary', 500),
+            600: computeColor('--color-secondary', 600),
+            700: computeColor('--color-secondary', 700),
+            800: computeColor('--color-secondary', 800),
+            900: computeColor('--color-secondary', 900),
+          },
+          accent: {
+            DEFAULT: computeColor('--color-accent', 500),
+            100: computeColor('--color-accent', 100),
+            200: computeColor('--color-accent', 200),
+            300: computeColor('--color-accent', 300),
+            400: computeColor('--color-accent', 400),
+            500: computeColor('--color-accent', 500),
+            600: computeColor('--color-accent', 600),
+            700: computeColor('--color-accent', 700),
+            800: computeColor('--color-accent', 800),
+            900: computeColor('--color-accent', 900),
+          },
+          black: computeColor('--color-black', 500),
+          white: computeColor('--color-white', 500)
         }
       },
       keyframes: {

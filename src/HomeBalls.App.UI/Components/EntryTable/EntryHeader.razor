@@ -1,15 +1,15 @@
 <tr>
-    <td class="h-6.5 border-b text-0 bg-theme-secondary bg-opacity-30 border-theme-secondary" />
-    <th class="w-0 min-w-0 sm:w-14 sm:min-w-[56px] bg-theme-secondary bg-opacity-30 border-b border-theme-secondary" />
-    <th class="w-8 min-w-[32px] bg-theme-secondary bg-opacity-30 border-b border-theme-secondary" />
-    <th class="w-36 min-w-[144px] bg-theme-secondary bg-opacity-30 border-b border-theme-secondary" />
+    <td class="sticky top-0 left-0 z-10 h-6.5 border-b text-0 bg-theme-secondary bg-opacity-40 border-theme-secondary" />
+    <th class="sticky top-0 left-0.5 z-10 w-0 min-w-0 sm:w-14 sm:min-w-[56px] bg-theme-secondary bg-opacity-40 border-b border-theme-secondary" />
+    <th class="sticky top-0 left-1 sm:left-[58px] z-10 w-8 min-w-[32px] bg-theme-secondary bg-opacity-40 border-b border-theme-secondary" />
+    <th class="sticky top-0 left-9 sm:left-[88px] z-10 w-36 min-w-[144px] bg-theme-secondary bg-opacity-40 border-b border-theme-secondary" />
 
     @foreach (var id in BallIds)
     {
         <EntryHeaderCell BallId="@id" />
     }
 
-    <th class="border-b bg-theme-secondary bg-opacity-30 text-0 border-theme-secondary"/>
+    <th class="sticky top-0 border-b bg-theme-secondary bg-opacity-40 text-0 border-theme-secondary"/>
 
     @* <th class="sticky top-0 left-0 z-10 bg-white border-b border-opacity-50 border-dream-purple text-0" />
     <th class="sticky top-0 left-0 z-10 w-0 min-w-0 bg-white border-b border-opacity-50 border-dream-purple sm:w-14 sm:min-w-14" />

@@ -13,21 +13,19 @@
 </head>
 
 <body>
-    <div class="theme-moon" id="theme-root">
-        <div class="flex flex-col w-screen h-screen overflow-hidden text-theme-black">
+    <div id="theme-root">
+        <div class="flex flex-col w-screen h-screen overflow-hidden text-theme-black dark:text-theme-white dark:bg-theme-black">
 
             <header class="flex-grow-0 border-b border-theme-primary pt-1.5 px-3 pb-1 lg:pt-3 lg:px-4 lg:pb-1.5">
                 <div class="inline-block align-middle">
                     <div class="w-8 h-8 overflow-hidden lg:w-12 lg:h-12">
-                        <img src="https://www.serebii.net/itemdex/sprites/pgl/dreamball.png"
-                            id="app-header-icon"
-                            class="object-cover w-10 h-10 -mt-1 ml-px lg:w-15 lg:h-15 lg:-mt-1.5 lg:ml-0.5 transition-transform duration-200 cursor-pointer hover:rotate-12"/>
+                        <img class="object-cover w-10 h-10 -mt-1 ml-px lg:w-15 lg:h-15 lg:-mt-1.5 lg:ml-0.5 transition-transform duration-200 cursor-pointer hover:rotate-12" id="app-icon-header" />
                     </div>
                 </div>
     
                 <div class="inline-block align-middle text-[4px] lg:pl-0.5">
                     <div class="pt-1">
-                        <span class="text-xl font-semibold lowercase text-theme-black lg:text-3xl">Home</span>
+                        <span class="text-xl font-semibold lowercase text-theme-black dark:text-theme-white lg:text-3xl">Home</span>
                         <span class="uppercase text-theme-primary font-bold text-[15.5px] lg:text-[23.25px]">Balls</span>
                     </div>
                 </div>
@@ -37,9 +35,7 @@
 
                 <div class="w-full mt-3 text-center lg:text-xl">
                     <div class="flex justify-center w-full">
-                        <img src="https://www.serebii.net/itemdex/sprites/pgl/dreamball.png"
-                            id="app-loading-icon"
-                            class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial"/>
+                        <img class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial" id="app-icon-loading" />
                     </div>
                 
                     <span>Loading app...</span>
@@ -55,6 +51,8 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+    <script src="theming.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
 
