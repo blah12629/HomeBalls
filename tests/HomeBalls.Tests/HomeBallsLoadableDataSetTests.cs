@@ -3,7 +3,7 @@ namespace CEo.Pokemon.HomeBalls.Tests;
 public class HomeBallsLoadableDataSetTests :
     HomeBallsLoadableDataSetTests<HomeBallsPokemonFormKey, IHomeBallsPokemonForm>
 {
-    public HomeBallsLoadableDataSetTests() : base(default, default) { }
+    public HomeBallsLoadableDataSetTests() : base() { }
 }
 
 public abstract class HomeBallsLoadableDataSetTests<TKey, TRecord>
@@ -15,12 +15,10 @@ public abstract class HomeBallsLoadableDataSetTests<TKey, TRecord>
         Task MockMethodAsync(CancellationToken cancellationToken);
     }
 
-    protected HomeBallsLoadableDataSetTests(
-        IHomeBallsDataSet<TKey, TRecord>? dataSet,
-        IMockInterface? mockInterface)
+    protected HomeBallsLoadableDataSetTests()
     {
-        DataSet = dataSet ?? Substitute.For<IHomeBallsDataSet<TKey, TRecord>>();
-        MockInterface = mockInterface ?? Substitute.For<IMockInterface>();
+        DataSet = new HomeBallsDataSet<TKey, TRecord> { };
+        MockInterface = Substitute.For<IMockInterface>();
         Sut = new HomeBallsLoadableDataSet<TKey, TRecord>(
             DataSet,
             (dataSet, cancellationToken) =>
@@ -35,16 +33,27 @@ public abstract class HomeBallsLoadableDataSetTests<TKey, TRecord>
 
     [
         Theory,
-        InlineData(nameof(INotifyDataLoaded.DataLoaded)),
-        InlineData(nameof(INotifyDataLoading.DataLoading))
+        InlineData(nameof(INotifyDataLoaded.DataLoaded), 1),
+        InlineData(nameof(INotifyDataLoading.DataLoading), 1),
+        InlineData(nameof(INotifyDataLoaded.DataLoaded), 5),
+        InlineData(nameof(INotifyDataLoading.DataLoading), 5)
     ]
-    public async Task EnsureLoadedAsync_ShouldRaiseDataLoadEvent_WhenIsLoadedFalse(
-        String eventName)
+    public async Task EnsureLoadedAsync_ShouldRaiseDataLoadEventOnce_WhenCalledNTimes(
+        String eventName,
+        Int32 callCount)
     {
-        var monitor = Sut.Monitor();
+        var raisingMonitor = Sut.Monitor();
         Sut.IsLoaded.Should().BeFalse();
         await Sut.EnsureLoadedAsync();
-        monitor.Should().Raise(eventName);
+        raisingMonitor.Should().Raise(eventName);
+
+        callCount -= 1;
+        var nonRaisingMonitor = Sut.Monitor();
+        for (var i = 0; i < callCount; i ++)
+        {
+            await Sut.EnsureLoadedAsync();
+            nonRaisingMonitor.Should().NotRaise(eventName);
+        }
     }
 
     [Fact]

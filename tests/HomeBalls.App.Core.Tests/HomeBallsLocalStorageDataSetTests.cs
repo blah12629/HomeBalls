@@ -1,13 +1,20 @@
 namespace CEo.Pokemon.HomeBalls.App.Core.DataAccess.Tests;
 
-public class HomeBallsLocalStorageDataSetTests
+public class HomeBallsLocalStorageDataSetTests :
+    HomeBallsLocalStorageDataSetTests<HomeBallsEntryKey, IHomeBallsEntryLegality> { }
+
+public abstract class HomeBallsLocalStorageDataSetTests<TKey, TRecord> :
+    HomeBallsLoadableDataSetTests<TKey, TRecord>
+    where TKey : notnull, IEquatable<TKey>
+    where TRecord : notnull, IKeyed<TKey>, IIdentifiable
 {
-    public HomeBallsLocalStorageDataSetTests()
+    public HomeBallsLocalStorageDataSetTests() : base()
     {
         FileSystem = new FileSystem();
         LocalStorage = Substitute.For<ILocalStorageService>();
         TypeMap = new HomeBallsProtobufTypeMap();
         Downloader = Substitute.For<IHomeBallsLocalStorageDownloader>();
+        Sut = new(LocalStorage, TypeMap, Downloader, DataSet, default);
     }
 
     protected IFileSystem FileSystem { get; }
@@ -18,16 +25,13 @@ public class HomeBallsLocalStorageDataSetTests
 
     protected IHomeBallsLocalStorageDownloader Downloader { get; }
 
+    new protected HomeBallsLocalStorageDataSet<TKey, TRecord> Sut { get; }
+
     [Fact]
     public async Task EnsureLoadedAsync_ShouldDeserializeToDataSet()
     {
-        var sut = new HomeBallsLocalStorageDataSet<HomeBallsEntryKey, IHomeBallsEntryLegality>(
-            LocalStorage,
-            TypeMap,
-            Downloader);
-
-        var identifier = sut.ElementType.GetFullNameNonNull();
-        var fileName = identifier.AddFileExtension(_Values.DefaultProtobufExtension);
+        var identifier = Sut.ElementType.GetFullNameNonNull();
+        var fileName = identifier.AddFileExtension(DefaultProtobufExtension);
         var filePath = FileSystem.Path.Join(ProtobufDataRoot, fileName);
         var returnValue = Convert.ToBase64String(await FileSystem.File
             .ReadAllBytesAsync(filePath));
@@ -40,7 +44,7 @@ public class HomeBallsLocalStorageDataSetTests
             .GetItemAsync<String>(identifier, Arg.Any<CancellationToken>())
             .Returns(ValueTask.FromResult(returnValue));
 
-        await sut.EnsureLoadedAsync();
-        sut.Should().NotBeEmpty();
+        await Sut.EnsureLoadedAsync();
+        Sut.Should().NotBeEmpty();
     }
 }

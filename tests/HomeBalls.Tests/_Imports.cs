@@ -6,6 +6,7 @@ global using FluentAssertions;
 global using Mapster;
 
 global using NSubstitute;
+global using NSubstitute.Extensions;
 
 global using System;
 global using System.Collections.Generic;
