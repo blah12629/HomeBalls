@@ -1,83 +1,65 @@
 namespace CEo.Pokemon.HomeBalls.App.Core;
 
 public interface IHomeBallsEntryCell :
-    IHomeBallsNotifyPropertyChanged,
-    ICloneable
+    IKeyed<HomeBallsEntryKey>,
+    IIdentifiable,
+    IHomeBallsNotifyPropertyChanged
 {
-    UInt16 BallId { get; }
+    Boolean IsObtained { get; set; }
 
-    HomeBallsEntryObtainedStatus ObtainedStatus { get; set; }
+    Boolean IsObtainedWithHiddenAbility { get; set; }
 
-    HomeBallsEntryLegalityStatus LegalityStatus { get; set; }
+    Boolean IsLegal { get; set; }
 
-    new IHomeBallsEntryCell Clone();
-}
-
-public enum HomeBallsEntryObtainedStatus
-{
-    NotObtained = 0,
-
-    ObtainedWithoutHiddenAbility = 1,
-
-    ObtainedWithHiddenAbility = 2
-}
-
-public enum HomeBallsEntryLegalityStatus
-{
-    NotObtainable = 0,
-
-    ObtainableWithoutHiddenAbility = 1,
-
-    ObtainableWithHiddenAbility = 2
+    Boolean IsLegalWithHiddenAbility { get; set; }
 }
 
 public class HomeBallsEntryCell :
     IHomeBallsEntryCell
 {
-    HomeBallsEntryObtainedStatus _obtainedStatus;
-    HomeBallsEntryLegalityStatus _legalityStatus;
+    Boolean _isObtained, _isObtainedWithHiddenAbility;
+    Boolean _isLegal, _isLegalWithHiddenAbility;
 
-    public HomeBallsEntryCell()
+    public HomeBallsEntryCell(
+        HomeBallsEntryKey id,
+        String identifier,
+        ILogger? logger = default)
     {
-        EventRaiser = new EventRaiser().RaisedBy(this);
+        (Id, Identifier) = (id, identifier);
+        (EventRaiser, Logger) = (new EventRaiser().RaisedBy(this), logger);
+    }
+
+    public HomeBallsEntryKey Id { get; init; }
+
+    public String Identifier { get; init; }
+
+    public Boolean IsObtained
+    {
+        get => _isObtained;
+        set => EventRaiser.SetField(ref _isObtained, value, PropertyChanged);
+    }
+
+    public Boolean IsObtainedWithHiddenAbility
+    {
+        get => _isObtainedWithHiddenAbility;
+        set => EventRaiser.SetField(ref _isObtainedWithHiddenAbility, value, PropertyChanged);
+    }
+
+    public Boolean IsLegal
+    {
+        get => _isLegal;
+        set => EventRaiser.SetField(ref _isLegal, value, PropertyChanged);
+    }
+
+    public Boolean IsLegalWithHiddenAbility
+    {
+        get => _isLegalWithHiddenAbility;
+        set => EventRaiser.SetField(ref _isLegalWithHiddenAbility, value, PropertyChanged);
     }
 
     protected internal IEventRaiser EventRaiser { get; }
 
-    public UInt16 BallId { get; init; }
-
-    public virtual HomeBallsEntryObtainedStatus ObtainedStatus
-    {
-        get => _obtainedStatus;
-        set
-        {
-            var (oldValue, newValue) = (_obtainedStatus, value);
-            _obtainedStatus = value;
-            EventRaiser.Raise(PropertyChanged, oldValue, newValue);
-        }
-    }
-
-    public virtual HomeBallsEntryLegalityStatus LegalityStatus
-    {
-        get => _legalityStatus;
-        set
-        {
-            var (oldValue, newValue) = (_legalityStatus, value);
-            _legalityStatus = value;
-            EventRaiser.Raise(PropertyChanged, oldValue, newValue);
-        }
-    }
+    protected internal ILogger? Logger { get; }
 
     public event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged;
-
-    public virtual HomeBallsEntryCell Clone() => new HomeBallsEntryCell
-    {
-        BallId = BallId,
-        ObtainedStatus = ObtainedStatus,
-        LegalityStatus = LegalityStatus
-    };
-
-    IHomeBallsEntryCell IHomeBallsEntryCell.Clone() => Clone();
-
-    Object ICloneable.Clone() => Clone();
 }

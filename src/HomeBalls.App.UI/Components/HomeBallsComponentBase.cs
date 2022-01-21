@@ -2,7 +2,7 @@ namespace CEo.Pokemon.HomeBalls.App.UI.Components;
 
 public abstract class HomeBallsComponentBase : OwningComponentBase
 {
-    protected ILogger? Logger { get; set; }
+    protected internal ILogger? Logger { get; private set; }
 
     protected override async Task OnInitializedAsync()
     {

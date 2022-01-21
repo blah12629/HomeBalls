@@ -1,0 +1,20 @@
+@inherits HomeBallsComponentBase
+@inject IHomeBallsStateContainer State
+
+@if (State.LoadingMessage != default)
+{
+    <span>@State.LoadingMessage.Value</span>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        State.LoadingMessage.PropertyChanged += OnLoadingMessageChanged;
+    }
+
+    protected virtual void OnLoadingMessageChanged(
+        Object? sender,
+        HomeBallsPropertyChangedEventArgs e) =>
+        StateHasChanged();
+}

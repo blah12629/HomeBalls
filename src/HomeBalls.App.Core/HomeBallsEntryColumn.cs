@@ -1,50 +1,54 @@
 namespace CEo.Pokemon.HomeBalls.App.Core;
 
 public interface IHomeBallsEntryColumn :
-    IHomeBallsReadOnlyCollection<IHomeBallsEntryCell>,
-    IKeyed<HomeBallsPokemonFormKey>
+    IKeyed<HomeBallsPokemonFormKey>,
+    IIdentifiable
 {
-    IHomeBallsEntryCell this[UInt16 ballId] { get; }
+    IReadOnlyCollection<IHomeBallsEntryCell> Cells { get; }
+
+    IHomeBallsEntryCell GetCell(UInt16 ballId);
 }
 
 public class HomeBallsEntryColumn :
     IHomeBallsEntryColumn
 {
+    static IReadOnlyDictionary<UInt16, Int32> CreateCellsIndexMap(
+        IReadOnlyList<IHomeBallsEntryCell> cells) =>
+        cells.Select((cell, index) => (Cell: cell, Index: index))
+            .ToDictionary(pair => pair.Cell.Id.BallId, pair => pair.Index)
+            .AsReadOnly();
+
     public HomeBallsEntryColumn(
+        HomeBallsPokemonFormKey id,
+        String identifier,
         IReadOnlyList<IHomeBallsEntryCell> cells,
+        ILogger? logger = default) :
+        this(id, identifier, cells, CreateCellsIndexMap(cells), logger) { }
+
+    public HomeBallsEntryColumn(
+        HomeBallsPokemonFormKey id,
+        String identifier,
+        IReadOnlyList<IHomeBallsEntryCell> cells,
+        IReadOnlyDictionary<UInt16, Int32> cellsIndexMap,
         ILogger? logger = default)
     {
-        Cells = cells;
-        IndexMap = cells
-            .Select((cell, index) => (Id: cell.BallId, Index: index))
-            .ToDictionary(pair => pair.Id, pair => pair.Index);
+        (Id, Identifier) = (id, identifier);
+        (Cells, CellsIndexable, CellsIndexMap) = (cells, cells, cellsIndexMap);
         Logger = logger;
     }
 
-    public HomeBallsEntryColumn(
-        IReadOnlyList<IHomeBallsEntryCell> cells,
-        IReadOnlyDictionary<UInt16, Int32> indexMap,
-        ILogger? logger = default)
-    {
-        (Cells, IndexMap) = (cells, indexMap);
-        Logger = logger;
-    }
+    public HomeBallsPokemonFormKey Id { get; }
 
-    protected internal IReadOnlyList<IHomeBallsEntryCell> Cells { get; }
+    public String Identifier { get; }
 
-    protected internal IReadOnlyDictionary<UInt16, Int32> IndexMap { get; }
+    public IReadOnlyCollection<IHomeBallsEntryCell> Cells { get; }
 
     protected internal ILogger? Logger { get; }
 
-    public HomeBallsPokemonFormKey Id { get; init; }
+    protected internal IReadOnlyList<IHomeBallsEntryCell> CellsIndexable { get; }
 
-    public Type ElementType => typeof(IHomeBallsEntryCell);
+    protected internal IReadOnlyDictionary<UInt16, Int32> CellsIndexMap { get; }
 
-    public virtual Int32 Count => Cells.Count;
-
-    public virtual IHomeBallsEntryCell this[UInt16 ballId] => Cells[IndexMap[ballId]];
-
-    public virtual IEnumerator<IHomeBallsEntryCell> GetEnumerator() => Cells.GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public virtual IHomeBallsEntryCell GetCell(UInt16 ballId) =>
+        CellsIndexable[CellsIndexMap[ballId]];
 }

@@ -1,0 +1,31 @@
+@inherits HomeBallsComponentBase
+@inject IHomeBallsSettings Settings
+@inject IHomeBallsBreedablesSpriteService Sprites
+
+@if ((Cell.IsLegal || Settings.IsIllegalEntryShown.Value) && Cell.IsObtained)
+{
+    <BallSprite Ball="@Ball" />
+}
+
+@code {
+    IHomeBallsEntryCell? _cell;
+    IHomeBallsItem? _ball;
+    String? _spriteUrl;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsEntryCell Cell { get => _cell!; init => _cell = value; }
+
+    [Parameter, EditorRequired]
+    public IHomeBallsItem Ball { get => _ball!; init => _ball = value; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.IsIllegalEntryShown.PropertyChanged += OnIsIllegalEntryShownChanged;
+    }
+
+    protected virtual void OnIsIllegalEntryShownChanged(
+        Object? sender,
+        HomeBallsPropertyChangedEventArgs e) =>
+        StateHasChanged();
+}

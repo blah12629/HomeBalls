@@ -2,6 +2,13 @@ namespace CEo.Pokemon.HomeBalls;
 
 public interface IEventRaiser
 {
+    HomeBallsPropertyChangedEventArgs SetField<T>(
+        ref T field,
+        T value,
+        EventHandler<HomeBallsPropertyChangedEventArgs>? eventHandler,
+        [CallerMemberName] String? propertyName = default,
+        IEqualityComparer? comparer = default);
+
     IEventRaiser RaisedBy(Object sender);
 
     TEventArgs Raise<TEventArgs>(
@@ -88,6 +95,18 @@ public class EventRaiser : IEventRaiser
     {
         Sender = sender;
         return this;
+    }
+
+    public virtual HomeBallsPropertyChangedEventArgs SetField<T>(
+        ref T field,
+        T value,
+        EventHandler<HomeBallsPropertyChangedEventArgs>? eventHandler,
+        [CallerMemberName] String? propertyName = default,
+        IEqualityComparer? comparer = default)
+    {
+        var (oldValue, newValue) = (field, value);
+        field = newValue;
+        return Raise(eventHandler, oldValue, newValue, propertyName, comparer);
     }
 
     IEventRaiser IEventRaiser.RaisedBy(Object sender) => RaisedBy(sender);

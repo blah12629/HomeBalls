@@ -1,0 +1,64 @@
+@using static System.Collections.Specialized.NotifyCollectionChangedAction
+@inherits HomeBallsComponentBase
+@inject IHomeBallsDataSource Data
+@inject IHomeBallsSettings Settings
+
+@if (IsBallShown)
+{
+    @if (!Cell.IsLegal)
+    {
+        <td class="bg-theme-secondary-200 hover:bg-theme-secondary-300 dark:bg-theme-secondary-800 dark:hover:bg-theme-secondary-700">
+            <EntryColumnSprite Cell="@Cell" Ball="@Ball" />
+        </td>
+    }
+
+    @* @if (Cell.IsLegal && !Cell.IsLegalWithHiddenAbility) *@
+    else if (!Cell.IsLegalWithHiddenAbility)
+    {
+        <td class="bg-theme-primary-200 hover:bg-theme-primary-300 dark:bg-theme-primary-800 dark:hover:bg-theme-primary-700">
+            <EntryColumnSprite Cell="@Cell" Ball="@Ball" />
+        </td>
+    }
+
+    @* @if (Cell.IsLegal && Cell.IsLegalWithHiddenAbility) *@
+    else
+    {
+        <td class="hover:bg-theme-primary-300 dark:hover:bg-theme-primary-700">
+            <EntryColumnSprite Cell="@Cell" Ball="@Ball" />
+        </td>
+    }
+}
+
+@code {
+    IHomeBallsEntryCell? _cell;
+    IHomeBallsItem? _ball;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsEntryCell Cell { get => _cell!; init => _cell = value; }
+
+    protected virtual IHomeBallsItem Ball => _ball ??= Data.Items[Cell.Id.BallId];
+
+    protected virtual Boolean IsBallShown => Settings.BallIdsShown.Contains(Ball.Id);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Cell.PropertyChanged += OnCellPropertyChanged;
+        Settings.BallIdsShown.CollectionChanged += OnBallIdsShownChanged;
+    }
+
+    protected virtual void OnCellPropertyChanged(
+        Object? sender,
+        HomeBallsPropertyChangedEventArgs e) =>
+        StateHasChanged();
+
+    protected virtual void OnBallIdsShownChanged(
+        Object? sender,
+        NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == Add || e.Action == Remove || e.Action == Reset)
+            StateHasChanged();
+
+        else throw new NotSupportedException();
+    }
+}

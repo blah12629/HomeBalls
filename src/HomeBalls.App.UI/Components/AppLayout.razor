@@ -1,7 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="flex flex-col flex-grow-0 overflow-scroll border-b border-theme-primary lg:border-b-0 lg:border-r lg:w-1/2">
+<div class="flex flex-col flex-grow-0 border-b min-h-min border-theme-primary lg:border-b-0 lg:border-r lg:w-1/2">
     <div class="flex-grow">
+        <MainLoading />
+
         Navigation / Settings
     </div>
 
@@ -10,7 +12,7 @@
     </footer>
 </div>
 
-<div class="flex flex-col flex-grow overflow-scroll">
+<div class="flex flex-col flex-grow overflow-auto">
     <div class="flex-grow">
         @Body
     </div>

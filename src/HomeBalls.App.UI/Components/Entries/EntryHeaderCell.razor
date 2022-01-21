@@ -1,0 +1,38 @@
+@using static System.Collections.Specialized.NotifyCollectionChangedAction
+@inherits HomeBallsComponentBase
+@inject IHomeBallsDataSource Data
+@inject IHomeBallsSettings Settings
+
+@if (IsBallShown)
+{
+    <td class="sticky top-0 w-8 min-w-[32px] bg-theme-secondary-200 dark:bg-theme-secondary-800 border-b border-theme-secondary">
+        <BallSprite Ball="@Ball" />
+    </td>
+}
+
+@code {
+    IHomeBallsItem? _ball;
+
+    [Parameter, EditorRequired]
+    public UInt16 BallId { get; init; }
+
+    protected virtual IHomeBallsItem Ball => _ball ??= Data.Items[BallId];
+
+    protected virtual Boolean IsBallShown => Settings.BallIdsShown.Contains(Ball.Id);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.BallIdsShown.CollectionChanged += OnBallIdsShownChanged;
+    }
+
+    protected virtual void OnBallIdsShownChanged(
+        Object? sender,
+        NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == Add || e.Action == Remove || e.Action == Reset)
+            StateHasChanged();
+
+        else throw new NotSupportedException();
+    }
+}

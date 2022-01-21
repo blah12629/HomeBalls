@@ -14,7 +14,6 @@ function getTheme() {
 
 function getIconUrl() {
     var iconUrl = `https://www.serebii.net/itemdex/sprites/pgl/${getTheme()}ball.png`;
-    console.log(iconUrl);
     return iconUrl;
 }
 
@@ -27,6 +26,4 @@ function setTheme(themeId) {
     for (var i = 0; i < icons.length; i ++) {
         icons[i].src = iconUrl;
     }
-
-    console.log(`Theme set to \`${themeId}\`.`);
 }

@@ -8,6 +8,7 @@ global using static CEo.Pokemon.HomeBalls.App.Core.Tests._Values;
 global using FluentAssertions;
 global using FluentAssertions.Events;
 
+global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 
 global using NSubstitute;

@@ -4,16 +4,18 @@ public class HomeBallsEntryTableTests
 {
     public HomeBallsEntryTableTests()
     {
-        SutCell = new HomeBallsEntryCell
+        SutCell = new HomeBallsEntryCell(new(1, 1, 1), String.Empty)
         {
-            BallId = 1,
-            ObtainedStatus = HomeBallsEntryObtainedStatus.NotObtained,
-            LegalityStatus = HomeBallsEntryLegalityStatus.ObtainableWithoutHiddenAbility
+            IsObtained = false,
+            IsLegal = true,
+            IsLegalWithHiddenAbility = false
         };
-        SutColumn = new HomeBallsEntryColumn(new List<IHomeBallsEntryCell> { SutCell }) { Id = new(1, 1) };
-        Sut = new HomeBallsEntryTable(
-            new List<IHomeBallsEntryColumn> { SutColumn },
-            new Dictionary<HomeBallsPokemonFormKey, Int32> { [new(1, 1)] = 0 }.AsReadOnly());
+
+        var cells = new List<IHomeBallsEntryCell> { SutCell }.AsReadOnly();
+        SutColumn = new HomeBallsEntryColumn(new(1, 1), String.Empty, cells);
+
+        Sut = new HomeBallsEntryTable();
+        Sut.Columns.Add(SutColumn);
     }
 
     protected IHomeBallsEntryCell SutCell { get; }

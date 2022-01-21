@@ -6,9 +6,11 @@
 
 @code {
     IHomeBallsItem? _ball;
+    String? _spriteUrl;
 
     [Parameter, EditorRequired]
     public IHomeBallsItem Ball { get => _ball!; init => _ball = value; }
 
-    String SpriteUrl => SpriteService.GetSpriteUri(Ball).ToString();
+    protected virtual String SpriteUrl => _spriteUrl ??=
+        SpriteService.GetSpriteUri(Ball).ToString();
 }
