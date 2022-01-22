@@ -5,7 +5,7 @@ function getTheme() {
     var themeId = localStorage.getItem(themeKey);
 
     if (themeId === null) {
-        themeId = "moon";
+        themeId = "dream";
         localStorage.setItem(themeKey, themeId);
     }
 

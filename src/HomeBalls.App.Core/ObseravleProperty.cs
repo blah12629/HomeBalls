@@ -1,10 +1,15 @@
 namespace CEo.Pokemon.HomeBalls.App.Core;
 
-public interface IObservableProperty<T>
+public interface IObservableProperty :
+    IIdentifiable
+{
+    event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged;
+}
+
+public interface IObservableProperty<T> :
+    IObservableProperty
 {
     T Value { get; set; }
-
-    event EventHandler<HomeBallsPropertyChangedEventArgs>? PropertyChanged;
 }
 
 public class ObservableProperty<T> : IObservableProperty<T>
@@ -13,17 +18,19 @@ public class ObservableProperty<T> : IObservableProperty<T>
 
     public ObservableProperty(
         T defaultValue,
+        String propertyName,
         IEventRaiser eventRaiser,
-        ILogger? logger) :
-        this(defaultValue, default, eventRaiser, logger) { }
+        ILogger? logger = default) :
+        this(defaultValue, propertyName, propertyName.ToCamelCase(), eventRaiser, logger) { }
 
     public ObservableProperty(
         T defaultValue,
-        String? propertyName,
+        String propertyName,
+        String identifier,
         IEventRaiser eventRaiser,
-        ILogger? logger)
+        ILogger? logger = default)
     {
-        (_value, PropertyName) = (defaultValue, propertyName);
+        (_value, PropertyName, Identifier) = (defaultValue, propertyName, identifier);
         (EventRaiser, Logger) = (eventRaiser, logger);
     }
 
@@ -33,7 +40,9 @@ public class ObservableProperty<T> : IObservableProperty<T>
         set => EventRaiser.SetField(ref _value, value, PropertyChanged, PropertyName);
     }
 
-    protected internal String? PropertyName { get; }
+    public String Identifier { get; }
+
+    protected internal String PropertyName { get; }
 
     protected internal IEventRaiser EventRaiser { get; }
 

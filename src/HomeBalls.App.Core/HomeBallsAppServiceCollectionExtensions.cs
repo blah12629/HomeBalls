@@ -28,22 +28,22 @@ public static class HomeBallsAppServiceCollectionExtensions
 
     internal static IServiceCollection AddStateContainer(
         this IServiceCollection services) =>
-        services.AddSingleton<IHomeBallsStateContainer, HomeBallsStateContainer>();
+        services.AddScoped<IHomeBallsStateContainer, HomeBallsStateContainer>();
 
     internal static IServiceCollection AddCategories(
         this IServiceCollection services) =>
         services
-            .AddSingleton<IHomeBallsAppNavigation>(services =>
+            .AddScoped<IHomeBallsAppNavigation>(services =>
                 new HomeBallsAppNavigation(
                     services.GetRequiredService<ILogger<HomeBallsAppNavigation>>()))
-            .AddSingleton<IHomeBallsAppSettings, HomeBallsAppSettings>()
-            .AddSingleton<IReadOnlyList<IHomeBallsAppCateogry>>(services =>
+            .AddScoped<IHomeBallsAppSettings, HomeBallsAppSettings>()
+            .AddScoped<IReadOnlyList<IHomeBallsAppCateogry>>(services =>
                 new List<IHomeBallsAppCateogry>
                 {
                     services.GetRequiredService<IHomeBallsAppNavigation>(),
                     services.GetRequiredService<IHomeBallsAppSettings>(),
                 }.AsReadOnly())
-            .AddSingleton<IReadOnlyCollection<IHomeBallsAppCateogry>>(services =>
+            .AddScoped<IReadOnlyCollection<IHomeBallsAppCateogry>>(services =>
                 services.GetRequiredService<IReadOnlyList<IHomeBallsAppCateogry>>());
 
     internal static IServiceCollection AddHttpClients(

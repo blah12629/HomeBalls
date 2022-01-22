@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inherits HomeBallsComponentBase
+@inject IConfiguration Configuration
 @inject IComparer<IHomeBallsItem> PokeballComparer
 @inject IComparer<HomeBallsPokemonFormKey> PokemonFormKeyComparer
 @inject IHomeBallsEntryColumnFactory ColumnFactory
@@ -12,7 +13,10 @@
 @if (GeneratedColumnsCount > 0) { <EntryTable /> }
 
 @code {
-    UInt32 GeneratedColumnsCount = 0;
+    UInt32? _generatedColumnsCount;
+
+    protected UInt32 GeneratedColumnsCount => _generatedColumnsCount ??=
+        Convert.ToUInt32(Configuration.GetSection(nameof(GeneratedColumnsCount)).Value);
 
     protected virtual Int32 LoadingDelay => 50;
 

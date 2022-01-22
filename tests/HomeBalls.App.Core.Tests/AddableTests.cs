@@ -1,6 +1,6 @@
 namespace CEo.Pokemon.HomeBalls.App.Core.Tests;
 
-public class AddableTests : AddableTests<String> { }
+public class AddableTests : AddableTests<IHomeBallsEntity> { }
 
 public abstract class AddableTests<T>
     where T : class
