@@ -1,21 +1,22 @@
-namespace CEo.Pokemon.HomeBalls.App.Core;
+namespace CEo.Pokemon.HomeBalls.App.Core.Categories;
 
-public interface IHomeBallsSettings
+public interface IHomeBallsAppSettings :
+    IHomeBallsAppCateogry
 {
     IHomeBallsObservableCollection<UInt16> BallIdsShown { get; }
 
     IObservableProperty<Boolean> IsIllegalEntryShown { get; }
 }
 
-public class HomeBallsSettings :
-    IHomeBallsSettings
+public class HomeBallsAppSettings :
+    HomeBallsAppCategory,
+    IHomeBallsAppSettings
 {
-    public HomeBallsSettings(
-        ILoggerFactory? loggerFactory = default)
+    public HomeBallsAppSettings(
+        ILoggerFactory? loggerFactory = default) :
+        base(default, loggerFactory?.CreateLogger(typeof(HomeBallsAppSettings)))
     {
         LoggerFactory = loggerFactory;
-        EventRaiser = new EventRaiser(createLogger<EventRaiser>()).RaisedBy(this);
-        Logger = createLogger<HomeBallsSettings>();
 
         BallIdsShown = new HomeBallsObservableSet<UInt16>(createLogger<HomeBallsObservableSet<UInt16>>());
         IsIllegalEntryShown = createObservable<Boolean>(false, nameof(IsIllegalEntryShown));
@@ -31,9 +32,7 @@ public class HomeBallsSettings :
 
     public IObservableProperty<Boolean> IsIllegalEntryShown { get; }
 
-    protected internal IEventRaiser EventRaiser { get; }
-
-    protected internal ILogger? Logger { get; }
-
     protected internal ILoggerFactory? LoggerFactory { get; }
+
+    protected internal override void GenerateIconSvgPaths(List<String> paths) { }
 }

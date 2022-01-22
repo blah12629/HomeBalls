@@ -1,0 +1,10 @@
+<span class="inline-block px-1 py-0.5 lg:py-1 mx-0.5 lg:mx-1 -mb-px border-b-2 border-transparent cursor-pointer hover:border-theme-primary hover:text-theme-primary focus:border-theme-accent focus:text-theme-accent active:border-theme-accent active:text-theme-accent">
+    @Category.Names.Single(name => name.LanguageId == EnglishLanguageId).Value
+</span>
+
+@code {
+    IHomeBallsAppCateogry? _category;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsAppCateogry Category { get => _category!; init => _category = value; }
+}

@@ -7,7 +7,7 @@ public static class HomeBallsAppServiceCollectionExtensions
         String baseAddress) =>
         services.AddHomeBallsComparers()
             .AddStateContainer()
-            .AddSettings()
+            .AddCategories()
             .AddHttpClients(baseAddress)
             .AddDataAccessServices()
             .AddEntryTableServices()
@@ -30,9 +30,21 @@ public static class HomeBallsAppServiceCollectionExtensions
         this IServiceCollection services) =>
         services.AddSingleton<IHomeBallsStateContainer, HomeBallsStateContainer>();
 
-    internal static IServiceCollection AddSettings(
+    internal static IServiceCollection AddCategories(
         this IServiceCollection services) =>
-        services.AddSingleton<IHomeBallsSettings, HomeBallsSettings>();
+        services
+            .AddSingleton<IHomeBallsAppNavigation>(services =>
+                new HomeBallsAppNavigation(
+                    services.GetRequiredService<ILogger<HomeBallsAppNavigation>>()))
+            .AddSingleton<IHomeBallsAppSettings, HomeBallsAppSettings>()
+            .AddSingleton<IReadOnlyList<IHomeBallsAppCateogry>>(services =>
+                new List<IHomeBallsAppCateogry>
+                {
+                    services.GetRequiredService<IHomeBallsAppNavigation>(),
+                    services.GetRequiredService<IHomeBallsAppSettings>(),
+                }.AsReadOnly())
+            .AddSingleton<IReadOnlyCollection<IHomeBallsAppCateogry>>(services =>
+                services.GetRequiredService<IReadOnlyList<IHomeBallsAppCateogry>>());
 
     internal static IServiceCollection AddHttpClients(
         this IServiceCollection services,

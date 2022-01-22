@@ -27,7 +27,7 @@ else
     protected virtual IHomeBallsPokemonSpecies? Species { get; set; }
 
     protected virtual String? SpeciesName => _speciesName ??=
-        Species?.Names.Single(name => name.LanguageId == 9).Value;
+        Species?.Names.Single(name => name.LanguageId == EnglishLanguageId).Value;
 
     protected virtual String? FormIdentifier => _formIdentifier ??=
         IdentifierService.GetIdentifier(Form);

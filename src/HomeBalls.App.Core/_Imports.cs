@@ -1,5 +1,6 @@
 ﻿global using Blazored.LocalStorage;
 
+global using CEo.Pokemon.HomeBalls.App.Core.Categories;
 global using CEo.Pokemon.HomeBalls.App.Core.DataAccess;
 global using CEo.Pokemon.HomeBalls.ProtocolBuffers;
 
