@@ -9,9 +9,11 @@
 @inject IHomeBallsStateContainer State
 @inject IHomeBallsSettings Settings
 
-<EntryTable />
+@if (GeneratedColumnsCount > 0) { <EntryTable /> }
 
 @code {
+    UInt32 GeneratedColumnsCount = 0;
+
     protected virtual Int32 LoadingDelay => 50;
 
     protected override async Task OnInitializedAsync()
@@ -24,6 +26,8 @@
     protected override async Task OnAfterRenderAsync(Boolean firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
+        State.LoadingMessage.Value = "Loading something...";
+        if (GeneratedColumnsCount == 0) return;
 
         var balls = await EnsureSettingsBallsShownPopulated();
         await LoadTableDataAsync();
@@ -56,7 +60,6 @@
             if (isSettingsEmpty && isDefaultBall(ball))
                 Settings.BallIdsShown.Add(ball.Id);
         }
-
         return balls;
 
         static Boolean isDefaultBall(IHomeBallsItem ball) =>
@@ -81,17 +84,21 @@
         State.LoadingMessage.Value = $"Generating table...";
         var legalities = ensureSorted(Data.Legalities, isLegalitiesSorted);
         var entries = ensureSorted(Entries, isEntriesSorted);
-        var (i, j) = (0, 0);
+        var (i, j, k) = (0, 0, 0);
 
         foreach (var column in ColumnFactory
             .UsingItems(balls, true, true)
             .UsingPokemonForms(Data.PokemonForms, false, false)
             .CreateColumns())
         {
+            if (i == GeneratedColumnsCount) break;
+
             var key = column.Id;
             await doAsync(() => Table.Columns.Add(column));
-            await doAsync(() => add(legalities, Table.Legalities, ref i, key));
-            await doAsync(() => add(entries, Table.Entries, ref j, key));
+            await doAsync(() => add(legalities, Table.Legalities, ref j, key));
+            await doAsync(() => add(entries, Table.Entries, ref k, key));
+
+            i += 1;
         }
 
         Logger?.LogInformation(
