@@ -531,6 +531,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-10 {
   height: 2.5rem;
 }
+.h-full {
+  height: 100%;
+}
 .h-6\.5 {
   height: 1.625rem/* 26px */;
 }
@@ -653,9 +656,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-transparent {
   border-color: transparent;
 }
+.border-theme-accent {
+  --tw-border-opacity: 1;
+  border-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-accent-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-accent-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-accent-b) * 1) / var(--tw-border-opacity));
+}
 .border-theme-primary-300 {
   --tw-border-opacity: 1;
   border-color: rgb(calc(var(--color-white-r) * 0.4 + var(--color-black-r) * 0 + var(--color-primary-r) * 0.6) calc(var(--color-white-g) * 0.4 + var(--color-black-g) * 0 + var(--color-primary-g) * 0.6) calc(var(--color-white-b) * 0.4 + var(--color-black-b) * 0 + var(--color-primary-b) * 0.6) / var(--tw-border-opacity));
+}
+.bg-theme-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-secondary-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-secondary-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-secondary-b) * 1) / var(--tw-bg-opacity));
 }
 .bg-theme-secondary-200 {
   --tw-bg-opacity: 1;
@@ -756,6 +767,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-theme-primary {
   --tw-text-opacity: 1;
   color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-primary-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-primary-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-primary-b) * 1) / var(--tw-text-opacity));
+}
+.text-theme-accent {
+  --tw-text-opacity: 1;
+  color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-accent-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-accent-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-accent-b) * 1) / var(--tw-text-opacity));
 }
 .transition-transform {
   transition-property: transform;
