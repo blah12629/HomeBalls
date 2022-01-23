@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@inject IHomeBallsAppNavigation Navigation
+@inject IHomeBallsAppSettings Settings
 
 <div class="flex flex-col flex-grow-0 overflow-hidden border-theme-primary lg:border-r lg:w-1/2">
     <div class="flex-grow-0 overflow-x-auto overflow-y-hidden whitespace-nowrap">
@@ -8,7 +10,17 @@
     <div class="flex-grow-1">
         <MainLoading />
 
-        Left content
+        <CategoryBody Category="@Navigation">
+            <Body>
+                <span>Navigation content.</span>
+            </Body>
+        </CategoryBody>
+
+        <CategoryBody Category="@Settings">
+            <Body>
+                <span>Settings content.</span>
+            </Body>
+        </CategoryBody>
     </div>
 
     <footer class="flex-grow-0 hidden border-t lg:block border-theme-secondary">

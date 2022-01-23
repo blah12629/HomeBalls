@@ -1,5 +1,4 @@
-@inherits HomeBallsComponentBase
-@inject IHomeBallsStateContainer State
+@inherits HomeBallsCategoryComponentBase
 @inject ILocalStorageService LocalStorage
 
 @if (IsActive)
@@ -16,34 +15,6 @@ else
 }
 
 @code {
-    IHomeBallsAppCateogry? _category;
-
-    [Parameter, EditorRequired]
-    public IHomeBallsAppCateogry Category { get => _category!; init => _category = value; }
-
-    protected Boolean IsActive { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        State.ActiveCategoryId.PropertyChanged += OnActiveCategoryIdChanged;
-        await State.EnsurePresetsLoaded();
-    }
-
-    protected virtual void OnActiveCategoryIdChanged(
-        Object? sender,
-        HomeBallsPropertyChangedEventArgs e)
-    {
-        if (isCategory(e.OldValue) || isCategory(e.NewValue))
-        {
-            IsActive = isCategory(e.NewValue);
-            StateHasChanged();
-        }
-
-        Boolean isCategory(Object? value) => value as String == Category.Identifier;
-    }
-
     protected virtual async Task OnCategoryClicked(MouseEventArgs e)
     {
         var id = State.ActiveCategoryId.Identifier;
