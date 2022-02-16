@@ -453,11 +453,8 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-src/HomeBalls.Data/data*
+src/HomeBalls.Data/data/
+src/HomeBalls.App.Components/wwwroot/app.tailwind.min.css
 src/HomeBalls.App.UI/wwwroot/css/app.tailwind.min.css
 src/HomeBalls.App.UI/wwwroot/icons/
 ToDo.md
-
-main_layout.html
-loading.html
-logo.html

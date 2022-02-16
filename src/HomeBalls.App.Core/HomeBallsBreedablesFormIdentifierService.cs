@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Core;
+namespace CEo.Pokemon.HomeBalls.App;
 
 public interface IHomeBallsBreedablesFormIdentifierService
 {
@@ -13,16 +13,16 @@ public class HomeBallsBreedablesFormIdentifierService :
     {
         Logger = logger;
 
-        IdentifierLookup = new Dictionary<(UInt16, Byte), String> { };
+        IdentifierLookup = new Dictionary<HomeBallsPokemonFormKey, String> { };
     }
 
     protected internal ILogger? Logger { get; }
 
-    protected internal IDictionary<(UInt16 SpeciesId, Byte FormId), String> IdentifierLookup { get; }
+    protected internal IDictionary<HomeBallsPokemonFormKey, String> IdentifierLookup { get; }
 
     public virtual String GetIdentifier(IHomeBallsPokemonForm pokemon)
     {
-        var key = (pokemon.SpeciesId, pokemon.FormId);
+        var key = pokemon.Id;
         if (IdentifierLookup.TryGetValue(key, out var existingValue))
             return existingValue;
 

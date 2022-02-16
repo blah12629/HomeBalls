@@ -1,11 +1,39 @@
-namespace CEo.Pokemon.HomeBalls;
+namespace CEo.Pokemon.HomeBalls.Collections;
 
 public static class HomeBallsEnumerableExtensions
 {
-    // public static Type GetElementType<T>(this IEnumerable<T> enumerable) =>
-    //     enumerable is IHomeBallsEnumerable<T> homeBallsEnumerable ?
-    //         homeBallsEnumerable.ElementType :
-    //         typeof(T);
+    internal static MethodInfo EnumerableCastMethod { get; } =
+        typeof(Enumerable).GetMethod(
+            nameof(Enumerable.Cast),
+            BindingFlags.Static | BindingFlags.Public) ??
+            throw new MissingMethodException();
+
+    internal static MethodInfo EnumerableToListMethod { get; } =
+        typeof(Enumerable).GetMethod(
+            nameof(Enumerable.ToList),
+            BindingFlags.Static | BindingFlags.Public) ??
+            throw new MissingMethodException();
+
+    public static Type GetElementType<T>(this IEnumerable<T> enumerable) =>
+        enumerable is IHomeBallsEnumerable<T> homeBallsEnumerable ?
+            homeBallsEnumerable.ElementType :
+            typeof(T);
+
+    public static IEnumerable<Object> Cast(
+        this IEnumerable elements,
+        Type targetType) =>
+        EnumerableCastMethod
+            .MakeGenericMethod(targetType)
+            .Invoke(default, new Object?[] { elements }) as dynamic ??
+            throw new InvalidCastException();
+
+    public static IEnumerable<Object> ToList(
+        this IEnumerable elements,
+        Type targetType) =>
+        EnumerableToListMethod
+            .MakeGenericMethod(targetType)
+            .Invoke(default, new Object?[] { elements }) as dynamic ??
+            throw new InvalidCastException();
 }
 
 public static class HomeBallsCollectionExtensions
@@ -19,26 +47,7 @@ public static class HomeBallsCollectionExtensions
         return collection;
     }
 
-    public static async Task<TCollection> AddRangeByBatchAsync<TCollection, TElement>(
-        this TCollection collection,
-        IEnumerable<TElement> elements,
-        UInt32 batchSize,
-        Task? postBatchTask = default,
-        CancellationToken cancellationToken = default)
-        where TCollection : notnull, ICollection<TElement>
-    {
-        var task = postBatchTask ?? Task.CompletedTask;
-
-        foreach (var chunk in elements.Chunk((Int32)batchSize))
-        {
-            foreach (var element in chunk) collection.Add(element);
-            await task;
-        }
-
-        return collection;
-    }
-
-    public static IReadOnlyCollection<T> AsReadOnly<T>(
+    public static IHomeBallsReadOnlyCollection<T> AsReadOnly<T>(
         this ICollection<T> collection) =>
         new HomeBallsReadOnlyCollection<T>(collection);
 }
@@ -54,4 +63,11 @@ public static class HomeBallsDictionaryExtensions
         this IReadOnlyDictionary<TKey, TValue> dictionary,
         TKey key) =>
         dictionary.TryGetValue(key, out var value) ? value : default(TValue);
+}
+
+public static class HomeBallsListExtensions
+{
+    public static IHomeBallsReadOnlyList<T> AsReadOnly<T>(
+        this IList<T> collection) =>
+        new HomeBallsReadOnlyList<T>(collection);
 }

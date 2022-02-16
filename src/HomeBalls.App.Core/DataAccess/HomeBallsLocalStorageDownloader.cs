@@ -1,96 +1,88 @@
-namespace CEo.Pokemon.HomeBalls.App.Core.DataAccess;
+namespace CEo.Pokemon.HomeBalls.App.DataAccess;
 
 public interface IHomeBallsLocalStorageDownloader :
-    INotifyDataDownloading
-{
-    Task<IHomeBallsLocalStorageDownloader> DownloadAsync(
-        String identifier,
-        String? fileName = default,
-        CancellationToken cancellationToken = default);
-
-    Task<IHomeBallsLocalStorageDownloader> DownloadAsync(
-        IEnumerable<String> identifiers,
-        CancellationToken cancellationToken = default);
-
-    Task<IHomeBallsLocalStorageDownloader> DownloadAsync(
-        IEnumerable<(String Identifier, String FileName)> identifiers,
-        CancellationToken cancellationToken = default);
-}
+    IHomeBallsDataDownloader<IHomeBallsLocalStorageDownloader> { }
 
 public class HomeBallsLocalStorageDownloader :
-    IHomeBallsLocalStorageDownloader
+    HomeBallsDataDownloader<Byte[]>,
+    IHomeBallsLocalStorageDownloader,
+    IHomeBallsDataDownloader<HomeBallsLocalStorageDownloader>
 {
     public HomeBallsLocalStorageDownloader(
-        HttpClient rawDataClient,
+        HttpClient dataClient,
         ILocalStorageService localStorage,
-        ILogger? logger = default)
+        ILogger? logger = default) :
+        base(logger)
     {
-        RawDataClient = rawDataClient;
+        DataClient = dataClient;
         LocalStorage = localStorage;
-        EventRaiser = new EventRaiser().RaisedBy(this);
-        Logger = logger;
     }
 
-    protected internal HttpClient RawDataClient { get; }
+    protected internal HttpClient DataClient { get; }
 
     protected internal ILocalStorageService LocalStorage { get; }
 
-    protected internal IEventRaiser EventRaiser { get; }
-
-    protected internal ILogger? Logger { get; }
-
-    public event EventHandler<TimedActionStartingEventArgs>? DataDownloading;
-
-    public event EventHandler<TimedActionEndedEventArgs>? DataDownloaded;
-
-    public virtual Task<HomeBallsLocalStorageDownloader> DownloadAsync(
-        IEnumerable<String> identifiers,
-        CancellationToken cancellationToken = default) =>
-        DownloadAsync(
-            identifiers.Select(id => (id, id.AddFileExtension(_Values.DefaultProtobufExtension))),
-            cancellationToken);
-
-    public virtual async Task<HomeBallsLocalStorageDownloader> DownloadAsync(
-        IEnumerable<(String Identifier, String FileName)> identifiers,
-        CancellationToken cancellationToken = default)
-    {
-        var downloadTasks = identifiers.Select(pair =>
-            DownloadAsync(pair.Identifier, pair.FileName , cancellationToken)); 
-
-        await Task.WhenAll(downloadTasks);
-        return this;
-    }
-
-    public virtual async Task<HomeBallsLocalStorageDownloader> DownloadAsync(
-        String identifier,
+    new public async Task<HomeBallsLocalStorageDownloader> DownloadAsync(
+        IIdentifiable identifiable,
         String? fileName = default,
         CancellationToken cancellationToken = default)
     {
-        fileName = fileName ?? identifier.AddFileExtension(_Values.DefaultProtobufExtension);
-        var start = EventRaiser.Raise(DataDownloading, fileName);
-
-        var data = await RawDataClient.GetByteArrayAsync(fileName, cancellationToken);
-        var dataString = Convert.ToBase64String(data);
-        await LocalStorage.SetItemAsync(identifier, dataString, cancellationToken);
-
-        EventRaiser.Raise(DataDownloaded, start.StartTime, fileName);
+        await base.DownloadAsync(identifiable, fileName, cancellationToken);
         return this;
     }
 
-    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsLocalStorageDownloader.DownloadAsync(
-        IEnumerable<String> identifiers,
-        CancellationToken cancellationToken) =>
-        await DownloadAsync(identifiers, cancellationToken);
+    new public async Task<HomeBallsLocalStorageDownloader> DownloadAsync(
+        IEnumerable<IIdentifiable> identifiables,
+        String? fileExtension = default,
+        CancellationToken cancellationToken = default)
+    {
+        await base.DownloadAsync(identifiables, fileExtension, cancellationToken);
+        return this;
+    }
 
-    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsLocalStorageDownloader.DownloadAsync(
-        IEnumerable<(String Identifier, String FileName)> identifiers,
-        CancellationToken cancellationToken) =>
-        await DownloadAsync(identifiers, cancellationToken);
+    new public async Task<HomeBallsLocalStorageDownloader> DownloadAsync(
+        IEnumerable<(IIdentifiable Identifiable, String FileName)> identifiables,
+        CancellationToken cancellationToken = default)
+    {
+        await base.DownloadAsync(identifiables, cancellationToken);
+        return this;
+    }
 
-    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsLocalStorageDownloader
+    protected override Task<Byte[]> DownloadCoreAsync(
+        String fileName,
+        CancellationToken cancellationToken = default) =>
+        DataClient.GetByteArrayAsync(fileName, cancellationToken);
+
+    protected override String GetFileName(IIdentifiable identifiable) =>
+        identifiable.Identifier.AddFileExtension(DefaultProtobufExtension);
+
+    protected override async Task SaveDataAsync(
+        IIdentifiable identifiable,
+        String fileName,
+        Byte[] data,
+        CancellationToken cancellationToken = default) =>
+        await LocalStorage.SetItemAsync(
+            identifiable.Identifier,
+            data,
+            cancellationToken);
+
+    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsDataDownloader<IHomeBallsLocalStorageDownloader>
         .DownloadAsync(
-            String identifier,
+            IIdentifiable identifiable,
             String? fileName,
             CancellationToken cancellationToken) =>
-        await DownloadAsync(identifier, fileName, cancellationToken);
+        await DownloadAsync(identifiable, fileName, cancellationToken);
+
+    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsDataDownloader<IHomeBallsLocalStorageDownloader>
+        .DownloadAsync(
+            IEnumerable<IIdentifiable> identifiables,
+            String? fileExtension,
+            CancellationToken cancellationToken) =>
+        await DownloadAsync(identifiables, fileExtension, cancellationToken);
+
+    async Task<IHomeBallsLocalStorageDownloader> IHomeBallsDataDownloader<IHomeBallsLocalStorageDownloader>
+        .DownloadAsync(
+            IEnumerable<(IIdentifiable Identifiable, String FileName)> identifiables,
+            CancellationToken cancellationToken) =>
+        await DownloadAsync(identifiables, cancellationToken);
 }

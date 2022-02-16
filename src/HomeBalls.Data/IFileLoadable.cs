@@ -5,7 +5,7 @@ public interface IFileLoadable
     void InDirectory(String directory);
 }
 
-public interface IFileLoadable<T> : IFileLoadable
+public interface IFileLoadable<out T> : IFileLoadable
 {
     new T InDirectory(String directory);
 }

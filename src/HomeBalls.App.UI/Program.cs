@@ -1,21 +1,23 @@
 using Blazored.LocalStorage;
+using CEo.Pokemon.HomeBalls.App;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
-builder.Services.AddHomeBallsServices(builder.HostEnvironment.BaseAddress);
+builder.Services.AddHomeBallsAppServices(builder.HostEnvironment.BaseAddress);
 
 var host = builder.Build();
-await preconfigureHost();
+await PreconfigureHost();
 await host.RunAsync();
 
-async Task preconfigureHost(CancellationToken cancellationToken = default)
+async Task PreconfigureHost(CancellationToken cancellationToken = default)
 {
     var configuration = host.Configuration;
 
     if (Convert.ToBoolean(configuration.GetSection("ClearLocalStorage").Value))
     {
         Console.WriteLine("Clearing `localStorage`.");
-        await host.Services.GetRequiredService<ILocalStorageService>()
-            .ClearAsync(cancellationToken);
+        await GetRequiredService<ILocalStorageService>().ClearAsync(cancellationToken);
     }
 }
+
+T GetRequiredService<T>() where T : notnull => host.Services.GetRequiredService<T>();

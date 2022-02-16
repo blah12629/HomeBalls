@@ -1,0 +1,65 @@
+@inject IHomeBallsDataSource Data
+@inject IHomeBallsAppSettings Settings
+
+@if (IsBallShown)
+{
+    @if (!Cell.IsLegal.Value)
+    {
+        <td class="bg-theme-secondary-200 hover:bg-theme-secondary-300 dark:bg-theme-secondary-800 dark:hover:bg-theme-secondary-700">
+            <HomeBallsEntryColumnSprite Cell="@Cell" Ball="@Ball" />
+        </td>
+    }
+
+    else if (!Cell.IsLegalWithHiddenAbility.Value)
+    {
+        <td class="bg-theme-primary-200 hover:bg-theme-primary-300 dark:bg-theme-primary-800 dark:hover:bg-theme-primary-700">
+            <HomeBallsEntryColumnSprite Cell="@Cell" Ball="@Ball" />
+        </td>
+    }
+
+    else
+    {
+        <td class="hover:bg-theme-primary-300 dark:hover:bg-theme-primary-700">
+            <HomeBallsEntryColumnSprite Cell="@Cell" Ball="@Ball" />
+        </td>
+    }
+}
+
+@code {
+    IHomeBallsEntryCell? _cell;
+    IHomeBallsItem? _ball;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsEntryCell Cell { get => _cell!; init => _cell = value; }
+
+    protected virtual IHomeBallsItem Ball => _ball ??= Data.Pokeballs[Cell.Id.BallId];
+
+    protected virtual Boolean IsBallShown => Settings.BallIdsShown.Contains(Ball.Id);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Cell.IsObtained.ValueChanged += OnCellPropertyChanged;
+        Cell.IsObtainedWithHiddenAbility.ValueChanged += OnCellPropertyChanged;
+        Cell.IsLegal.ValueChanged += OnCellPropertyChanged;
+        Cell.IsLegalWithHiddenAbility.ValueChanged += OnCellPropertyChanged;
+        Settings.BallIdsShown.CollectionChanged += OnBallIdsShownChanged;
+    }
+
+    protected virtual void OnCellPropertyChanged(
+        Object? sender,
+        PropertyChangedEventArgs<Boolean> e) =>
+        StateHasChanged();
+
+    protected virtual void OnBallIdsShownChanged(
+        Object? sender,
+        NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Add ||
+            e.Action == NotifyCollectionChangedAction.Remove ||
+            e.Action == NotifyCollectionChangedAction.Reset)
+            StateHasChanged();
+
+        else throw new NotSupportedException();
+    }
+}

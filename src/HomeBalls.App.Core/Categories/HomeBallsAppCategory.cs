@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Core.Categories;
+namespace CEo.Pokemon.HomeBalls.App.Categories;
 
 public interface IHomeBallsAppCateogry :
     IIdentifiable,
@@ -29,7 +29,7 @@ public abstract class HomeBallsAppCategory :
 
     public IReadOnlyList<String> IconSvgPaths { get; }
 
-    protected internal IReadOnlyList<ProtobufString> Names { get; }
+    protected internal IReadOnlyList<IHomeBallsString> Names { get; }
 
     protected internal IEventRaiser EventRaiser { get; }
 
@@ -39,12 +39,12 @@ public abstract class HomeBallsAppCategory :
 
     protected internal abstract void GenerateIconSvgPaths(List<String> paths);
 
-    protected internal virtual ProtobufString GenerateEnglishName()
+    protected internal virtual IHomeBallsString GenerateEnglishName()
     {
         var name = GetType().Name;
         var nameLower = name.ToLower();
         foreach (var @string in new[] { "homeballs", "app" }) trimStart(@string);
-        return new ProtobufString { LanguageId = 9, Value = name };
+        return new HomeBallsString { LanguageId = EnglishLanguageId, Value = name };
 
         void trimStart(String @string)
         {

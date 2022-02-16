@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Core;
+namespace CEo.Pokemon.HomeBalls.App;
 
 public interface IAddable<in T>
 {

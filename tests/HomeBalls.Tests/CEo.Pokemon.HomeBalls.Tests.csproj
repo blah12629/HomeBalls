@@ -11,9 +11,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\HomeBalls\CEo.Pokemon.HomeBalls.csproj" />
+    <ProjectReference Include="..\HomeBalls.Tests.Core\CEo.Pokemon.HomeBalls.Tests.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoBogus" Version="2.13.1" />
     <PackageReference Include="FluentAssertions" Version="6.3.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />

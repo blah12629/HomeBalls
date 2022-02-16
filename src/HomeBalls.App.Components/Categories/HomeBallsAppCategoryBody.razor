@@ -1,0 +1,15 @@
+@inherits HomeBallsAppCategoryComponentBase
+
+@if (IsActive)
+{
+    <div class="w-full h-full bg-theme-secondary">
+        @Body
+    </div>
+}
+
+@code {
+    RenderFragment? _body;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Body { get => _body!; init => _body = value; }
+}

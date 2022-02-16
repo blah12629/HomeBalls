@@ -1,4 +1,4 @@
-const themeKey = "themeId";
+const themeKey = "ThemeId";
 setTheme(getTheme());
 
 function getTheme() {

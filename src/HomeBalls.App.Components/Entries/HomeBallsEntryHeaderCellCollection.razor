@@ -1,0 +1,26 @@
+@inject IHomeBallsAppSettings Settings
+@inject IHomeBallsLoadableDataSource Data
+
+@foreach (var id in BallIds)
+{
+    <HomeBallsEntryHeaderCell BallId="@id"></HomeBallsEntryHeaderCell>
+}
+
+@code {
+    protected IReadOnlyCollection<UInt16> BallIds { get; set; } =
+        new List<UInt16> { }.AsReadOnly();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Data.Pokeballs.DataLoaded += OnBallsLoaded;
+    }
+
+    protected virtual void OnBallsLoaded(
+        Object? sender,
+        TimedActionEndedEventArgs e)
+    {
+        BallIds = Data.Pokeballs.Select(ball => ball.Id).ToList().AsReadOnly();
+        StateHasChanged();
+    }
+}

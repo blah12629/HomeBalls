@@ -2,12 +2,12 @@ namespace CEo.Pokemon.HomeBalls;
 
 public interface IEventRaiser
 {
-    HomeBallsPropertyChangedEventArgs SetField<T>(
+    PropertyChangedEventArgs<T> SetField<T>(
         ref T field,
         T value,
-        EventHandler<HomeBallsPropertyChangedEventArgs>? eventHandler,
+        EventHandler<PropertyChangedEventArgs<T>>? eventHandler,
         [CallerMemberName] String? propertyName = default,
-        IEqualityComparer? comparer = default);
+        IEqualityComparer<T>? comparer = default);
 
     IEventRaiser RaisedBy(Object sender);
 
@@ -20,12 +20,12 @@ public interface IEventRaiser
         NotifyCollectionChangedEventHandler? handler,
         NotifyCollectionChangedEventArgs eventArgs);
 
-    HomeBallsPropertyChangedEventArgs Raise(
-        EventHandler<HomeBallsPropertyChangedEventArgs>? handler,
-        Object? oldValue,
-        Object? newValue,
+    PropertyChangedEventArgs<T> Raise<T>(
+        EventHandler<PropertyChangedEventArgs<T>>? handler,
+        T oldValue,
+        T newValue,
         [CallerMemberName] String? propertyName = default,
-        IEqualityComparer? comparer = default);
+        IEqualityComparer<T>? comparer = default);
 
     TimedActionStartingEventArgs Raise(
         EventHandler<TimedActionStartingEventArgs>? handler,
@@ -66,14 +66,14 @@ public class EventRaiser : IEventRaiser
         return eventArgs;
     }
 
-    public virtual HomeBallsPropertyChangedEventArgs Raise(
-        EventHandler<HomeBallsPropertyChangedEventArgs>? handler,
-        Object? oldValue,
-        Object? newValue,
+    public virtual PropertyChangedEventArgs<T> Raise<T>(
+        EventHandler<PropertyChangedEventArgs<T>>? handler,
+        T oldValue,
+        T newValue,
         [CallerMemberName] String? propertyName = default,
-        IEqualityComparer? comparer = default)
+        IEqualityComparer<T>? comparer = default)
     {
-        var args = new HomeBallsPropertyChangedEventArgs(oldValue, newValue, propertyName);
+        var args = new PropertyChangedEventArgs<T>(oldValue, newValue, propertyName);
         if (comparer != default && comparer.Equals(oldValue, newValue)) return args;
         if (oldValue?.Equals(newValue) ?? newValue?.Equals(default) ?? true) return args;
 
@@ -97,12 +97,12 @@ public class EventRaiser : IEventRaiser
         return this;
     }
 
-    public virtual HomeBallsPropertyChangedEventArgs SetField<T>(
+    public virtual PropertyChangedEventArgs<T> SetField<T>(
         ref T field,
         T value,
-        EventHandler<HomeBallsPropertyChangedEventArgs>? eventHandler,
+        EventHandler<PropertyChangedEventArgs<T>>? eventHandler,
         [CallerMemberName] String? propertyName = default,
-        IEqualityComparer? comparer = default)
+        IEqualityComparer<T>? comparer = default)
     {
         var (oldValue, newValue) = (field, value);
         field = newValue;

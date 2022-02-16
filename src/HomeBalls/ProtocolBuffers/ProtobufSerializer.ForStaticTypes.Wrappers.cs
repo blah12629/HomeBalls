@@ -1,6 +1,6 @@
 namespace CEo.Pokemon.HomeBalls.ProtocolBuffers;
 
-public partial interface IProtobufStaticSerializer
+public partial interface IProtoBufStaticSerializer
 {
     Boolean CanSerialize(Type type);
 
@@ -20,62 +20,62 @@ public partial interface IProtobufStaticSerializer
     [EditorBrowsable(EditorBrowsableState.Never)]
     Object Merge(Stream source, Object instance);
 
-    IProtobufStaticSerializer PrepareSerializer([DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] Type type);
+    IProtoBufStaticSerializer PrepareSerializer([DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] Type type);
 
-    IProtobufStaticSerializer Serialize(Stream dest, Object instance);
+    IProtoBufStaticSerializer Serialize(Stream dest, Object instance);
 
-    IProtobufStaticSerializer SerializeWithLengthPrefix(Stream destination, Object instance, PrefixStyle style, Int32 fieldNumber);
+    IProtoBufStaticSerializer SerializeWithLengthPrefix(Stream destination, Object instance, PrefixStyle style, Int32 fieldNumber);
 
     Boolean TryDeserializeWithLengthPrefix(Stream source, PrefixStyle style, ProtoBuf.TypeResolver resolver, out Object value);
 }
 
-public partial class ProtobufSerializer :
-    IProtobufSerializer,
-    IProtobufGenericSerializer,
-    IProtobufStaticSerializer
+public partial class ProtoBufSerializer :
+    IProtoBufSerializer,
+    IProtoBufGenericSerializer,
+    IProtoBufStaticSerializer
 {
-    Boolean IProtobufStaticSerializer.CanSerialize(Type type) =>
+    Boolean IProtoBufStaticSerializer.CanSerialize(Type type) =>
         Serializer.NonGeneric.CanSerialize(type);
 
-    Object IProtobufStaticSerializer.DeepClone(Object instance) =>
+    Object IProtoBufStaticSerializer.DeepClone(Object instance) =>
         Serializer.NonGeneric.DeepClone(instance);
 
-    Object IProtobufStaticSerializer.Deserialize(Type type, Stream source) =>
+    Object IProtoBufStaticSerializer.Deserialize(Type type, Stream source) =>
         Serializer.NonGeneric.Deserialize(type, source);
 
-    Object IProtobufStaticSerializer.Deserialize(Type type, Stream source, Object? instance, Object? userState, Int64 length) =>
+    Object IProtoBufStaticSerializer.Deserialize(Type type, Stream source, Object? instance, Object? userState, Int64 length) =>
         Serializer.NonGeneric.Deserialize(type, source, instance, userState, length);
 
-    Object IProtobufStaticSerializer.Deserialize(Type type, ReadOnlyMemory<Byte> source, Object? instance, Object? userState) =>
+    Object IProtoBufStaticSerializer.Deserialize(Type type, ReadOnlyMemory<Byte> source, Object? instance, Object? userState) =>
         Serializer.NonGeneric.Deserialize(type, source, instance, userState);
 
-    Object IProtobufStaticSerializer.Deserialize(Type type, ReadOnlySequence<Byte> source, Object? instance, Object? userState) =>
+    Object IProtoBufStaticSerializer.Deserialize(Type type, ReadOnlySequence<Byte> source, Object? instance, Object? userState) =>
         Serializer.NonGeneric.Deserialize(type, source, instance, userState);
 
-    Object IProtobufStaticSerializer.Deserialize(Type type, ReadOnlySpan<Byte> source, Object? instance, Object? userState) =>
+    Object IProtoBufStaticSerializer.Deserialize(Type type, ReadOnlySpan<Byte> source, Object? instance, Object? userState) =>
         Serializer.NonGeneric.Deserialize(type, source, instance, userState);
 
-    Object IProtobufStaticSerializer.Merge(Stream source, Object instance) =>
+    Object IProtoBufStaticSerializer.Merge(Stream source, Object instance) =>
         Serializer.NonGeneric.Merge(source, instance);
 
-    IProtobufStaticSerializer IProtobufStaticSerializer.PrepareSerializer(Type type)
+    IProtoBufStaticSerializer IProtoBufStaticSerializer.PrepareSerializer(Type type)
     {
         Serializer.NonGeneric.PrepareSerializer(type);
         return this;
     }
 
-    IProtobufStaticSerializer IProtobufStaticSerializer.Serialize(Stream dest, Object instance)
+    IProtoBufStaticSerializer IProtoBufStaticSerializer.Serialize(Stream dest, Object instance)
     {
         Serializer.NonGeneric.Serialize(dest, instance);
         return this;
     }
 
-    IProtobufStaticSerializer IProtobufStaticSerializer.SerializeWithLengthPrefix(Stream destination, Object instance, PrefixStyle style, Int32 fieldNumber)
+    IProtoBufStaticSerializer IProtoBufStaticSerializer.SerializeWithLengthPrefix(Stream destination, Object instance, PrefixStyle style, Int32 fieldNumber)
     {
         Serializer.NonGeneric.SerializeWithLengthPrefix(destination, instance, style, fieldNumber);
         return this;
     }
 
-    Boolean IProtobufStaticSerializer.TryDeserializeWithLengthPrefix(Stream source, PrefixStyle style, TypeResolver resolver, out Object value) =>
+    Boolean IProtoBufStaticSerializer.TryDeserializeWithLengthPrefix(Stream source, PrefixStyle style, TypeResolver resolver, out Object value) =>
         Serializer.NonGeneric.TryDeserializeWithLengthPrefix(source, style, resolver, out value);
 }

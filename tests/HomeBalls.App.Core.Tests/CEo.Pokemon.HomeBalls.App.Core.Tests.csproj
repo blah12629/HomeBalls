@@ -13,6 +13,7 @@
     <ProjectReference Include="..\..\src\HomeBalls\CEo.Pokemon.HomeBalls.csproj" />
     <ProjectReference Include="..\..\src\HomeBalls.App.Core\CEo.Pokemon.HomeBalls.App.Core.csproj" />
     <ProjectReference Include="..\HomeBalls.Tests\CEo.Pokemon.HomeBalls.Tests.csproj" />
+    <ProjectReference Include="..\HomeBalls.Tests.Core\CEo.Pokemon.HomeBalls.Tests.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

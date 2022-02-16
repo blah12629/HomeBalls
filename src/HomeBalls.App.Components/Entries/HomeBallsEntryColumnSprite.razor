@@ -1,0 +1,29 @@
+@inject IHomeBallsAppSettings Settings
+@inject IHomeBallsBreedablesSpriteService Sprites
+
+@if ((Cell.IsLegal.Value || Settings.IsIllegalEntryShown.Value) && Cell.IsObtained.Value)
+{
+    <HomeBallsBallSprite Ball="@Ball" />
+}
+
+@code {
+    IHomeBallsEntryCell? _cell;
+    IHomeBallsItem? _ball;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsEntryCell Cell { get => _cell!; init => _cell = value; }
+
+    [Parameter, EditorRequired]
+    public IHomeBallsItem Ball { get => _ball!; init => _ball = value; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.IsIllegalEntryShown.ValueChanged += OnIsIllegalEntryShownChanged;
+    }
+
+    protected virtual void OnIsIllegalEntryShownChanged(
+        Object? sender,
+        PropertyChangedEventArgs<Boolean> e) =>
+        StateHasChanged();
+}

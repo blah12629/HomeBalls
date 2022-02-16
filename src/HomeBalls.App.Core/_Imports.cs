@@ -1,10 +1,13 @@
 ﻿global using Blazored.LocalStorage;
 
-global using CaseExtensions;
-
-global using CEo.Pokemon.HomeBalls.App.Core.Categories;
-global using CEo.Pokemon.HomeBalls.App.Core.DataAccess;
+global using CEo.Pokemon.HomeBalls.Collections;
+global using CEo.Pokemon.HomeBalls.Comparers;
+global using CEo.Pokemon.HomeBalls.Entities;
+global using CEo.Pokemon.HomeBalls.App.Categories;
+global using CEo.Pokemon.HomeBalls.App.DataAccess;
+global using CEo.Pokemon.HomeBalls.App.Entries;
 global using CEo.Pokemon.HomeBalls.ProtocolBuffers;
+global using static CEo.Pokemon.HomeBalls.App._Values;
 
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

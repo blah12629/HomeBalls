@@ -1,32 +1,40 @@
 namespace CEo.Pokemon.HomeBalls.ProtocolBuffers;
 
-public interface IProtobufSerializer
+public interface IProtoBufSerializer
 {
-    IProtobufGenericSerializer ForGenericTypes { get; }
+    IProtoBufGenericSerializer ForGenericTypes { get; }
 
-    IProtobufStaticSerializer ForStaticTypes { get; }
+    IProtoBufStaticSerializer ForStaticTypes { get; }
 }
 
-public partial class ProtobufSerializer :
-    IProtobufSerializer,
-    IProtobufGenericSerializer,
-    IProtobufStaticSerializer
+public partial class ProtoBufSerializer :
+    IProtoBufSerializer,
+    IProtoBufGenericSerializer,
+    IProtoBufStaticSerializer
 {
-    public ProtobufSerializer(ILogger? logger = default) =>
+    public ProtoBufSerializer(ILogger? logger = default) =>
         Logger = logger;
 
-    public virtual IProtobufGenericSerializer ForGenericTypes => this;
+    public virtual IProtoBufGenericSerializer ForGenericTypes => this;
 
-    public virtual IProtobufStaticSerializer ForStaticTypes => this;
+    public virtual IProtoBufStaticSerializer ForStaticTypes => this;
 
     protected internal ILogger? Logger { get; }
+
+    protected internal virtual Byte[] ExecuteSerialize(
+        Action<Stream> serializeAction)
+    {
+        using var stream = new MemoryStream();
+        serializeAction(stream);
+        return stream.ToArray();;
+    }
 
     protected internal virtual async Task<Byte[]> ExecuteSerializeAsync(
         Action<Stream> serializeAction,
         CancellationToken cancellationToken = default)
     {
         var bytes = new Memory<Byte> { };
-        using (var stream = new MemoryStream())
+        await using (var stream = new MemoryStream())
         {
             serializeAction(stream);
             await stream.ReadAsync(bytes, cancellationToken);

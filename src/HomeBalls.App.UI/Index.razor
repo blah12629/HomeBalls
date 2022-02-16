@@ -1,0 +1,23 @@
+@page "/"
+@inject IHomeBallsAppSettings Settings
+@inject IHomeBallsAppStateContainer State
+@inject IHomeBallsLocalStorageDataSource Data
+@inject IHomeBallsLocalStorageEntryCollection Entries
+@inject IHomeBallsAppSettingsLoader SettingsLoader
+@inject IHomeBallsTableGenerator TableGenerator
+@inject IHomeBallsEntryColumnFactory ColumnFactory
+@inject IHomeBallsEntryTable Table
+
+<CEo.Pokemon.HomeBalls.App.Components.Entries.HomeBallsEntryTable />
+
+@code {
+    protected override async Task OnAfterRenderAsync(Boolean firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender) return;
+        await Task.Run(() => SettingsLoader.LoadSettingsAsync(Settings));
+        await Task.Run(() => TableGenerator.LoadTableDataAsync(State, Data, Entries));
+        await Task.Run(() => TableGenerator.GenerateColumnsAsync(State, Settings, Data, Entries, ColumnFactory, Table));
+    }
+}

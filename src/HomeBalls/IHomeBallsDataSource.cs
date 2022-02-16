@@ -2,33 +2,39 @@ namespace CEo.Pokemon.HomeBalls;
 
 public interface IHomeBallsDataSource
 {
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGameVersion> GameVersions { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsGameVersion> GameVersions { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsGeneration> Generations { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsGeneration> Generations { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsItem> Items { get; }
+    IHomeBallsDataSourceReadOnlyProperty<UInt16, IHomeBallsItem> Items { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsItemCategory> ItemCategories { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsItemCategory> ItemCategories { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsLanguage> Languages { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsLanguage> Languages { get; }
 
-    IHomeBallsReadOnlyDataSet<HomeBallsEntryKey, IHomeBallsEntryLegality> Legalities { get; }
+    IHomeBallsDataSourceReadOnlyProperty<HomeBallsEntryKey, IHomeBallsEntryLegality> Legalities { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsMove> Moves { get; }
+    IHomeBallsDataSourceReadOnlyProperty<UInt16, IHomeBallsMove> Moves { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsMoveDamageCategory> MoveDamageCategories { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsMoveDamageCategory> MoveDamageCategories { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsNature> Natures { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsNature> Natures { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsPokemonAbility> PokemonAbilities { get; }
+    IHomeBallsDataSourceReadOnlyProperty<UInt16, IHomeBallsPokemonAbility> PokemonAbilities { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsPokemonEggGroup> PokemonEggGroups { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsPokemonEggGroup> PokemonEggGroups { get; }
 
-    IHomeBallsReadOnlyDataSet<HomeBallsPokemonFormKey, IHomeBallsPokemonForm> PokemonForms { get; }
+    IHomeBallsDataSourceReadOnlyProperty<HomeBallsPokemonFormKey, IHomeBallsPokemonForm> PokemonForms { get; }
 
-    IHomeBallsReadOnlyDataSet<UInt16, IHomeBallsPokemonSpecies> PokemonSpecies { get; }
+    IHomeBallsDataSourceReadOnlyProperty<UInt16, IHomeBallsPokemonSpecies> PokemonSpecies { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsStat> Stats { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsStat> Stats { get; }
 
-    IHomeBallsReadOnlyDataSet<Byte, IHomeBallsType> Types { get; }
+    IHomeBallsDataSourceReadOnlyProperty<Byte, IHomeBallsType> Types { get; }
+
+    IHomeBallsDataSourceReadOnlyProperty<HomeBallsPokemonFormKey, IHomeBallsPokemonForm> BreedablePokemonForms { get; }
+
+    IHomeBallsDataSourceReadOnlyProperty<UInt16, IHomeBallsPokemonSpecies> BreedablePokemonSpecies { get; }
+
+    IHomeBallsDataSourceReadOnlyProperty<UInt16, IHomeBallsItem> Pokeballs { get; }
 }

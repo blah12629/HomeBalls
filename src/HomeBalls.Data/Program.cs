@@ -1,125 +1,175 @@
-﻿var githubKey = "raw.github/pokeapi";
-var serviceCollection = new ServiceCollection()
-    .AddScoped<IFileSystem, FileSystem>()
-    .AddDbContextFactory<HomeBallsDataDbContext>(
-        options => options
-            .UseSqlite(@"Data Source=.\data\homeballs.data.db;")
-            .EnableSensitiveDataLogging(),
-        ServiceLifetime.Transient)
-    .AddSingleton<CsvConfiguration>(services =>
-        new CsvConfiguration(CultureInfo.InvariantCulture)
+﻿namespace CEo.Pokemon.HomeBalls.Data;
+
+public class Program
+{
+    static Program DefaultInstance { get; } = new();
+
+    public static async Task Main(params String[] arguments)
+    {
+        var program = DefaultInstance;
+        var services = program.Services;
+        var start = DateTime.Now;
+
+        var ensureSprites = arguments.Contains("ensure-sprites");
+
+        try
         {
-            PrepareHeaderForMatch = args => args.Header.ToSnakeCase()
-        })
-    .AddScoped<ICsvHelperFactory, CsvHelperFactory>(services =>
-        new CsvHelperFactory().UseConfiguration(
-            services.GetRequiredService<CsvConfiguration>()))
-    .AddSingleton<IPluralize>(services => _Values.Pluralizer)
-    .AddScoped<IRawPokeApiFileNameService>(services =>
-        new RawPokeApiFileNameService(
-            services.GetRequiredService<IPluralize>(),
-            services.GetRequiredService<ILogger<RawPokeApiFileNameService>>()))
-    .AddScoped<IRawPokeApiHomeBallsConverter>(services =>
-        new RawPokeApiHomeBallsConverter(
-            logger: services.GetRequiredService<ILogger<RawPokeApiHomeBallsConverter>>()))
-    .AddLogging(builder => builder
-        .AddFilter(nameof(CEo), LogLevel.Information)
-        .AddFilter(nameof(Microsoft), LogLevel.Warning)
-        .AddFilter(nameof(System), LogLevel.Warning)
-        .AddConsole());
-serviceCollection.AddHttpClient(githubKey, client =>
-    client.BaseAddress = new Uri(@"https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/"));
+            await program.MigratePokeApiDataAsync();
+            await program.SeedEntryLegalitiesAsync();
+            if (ensureSprites) await program.EnsureSpriteIdsExistAsync();
+            await program.CommitCacheAsync();
+            await program.ExportDataAsProtoBufAsync();
+            await program.ExportEntryCollectionAsProtoBufAsync();
+        }
+        catch(Exception exception)
+        {
+            program.Logger.LogError(exception, default);
+        }
 
-var services = serviceCollection.BuildServiceProvider();
-var fileSystem = services.GetRequiredService<IFileSystem>();
-var httpClient = services.GetRequiredService<IHttpClientFactory>().CreateClient(githubKey);
-var fileNameService = services.GetRequiredService<IRawPokeApiFileNameService>();
-var csvFactory = services.GetRequiredService<ICsvHelperFactory>();
-var converter = services.GetRequiredService<IRawPokeApiHomeBallsConverter>();
-// var pluralizer = services.GetRequiredService<IPluralize>();
-var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-var logger = loggerFactory.CreateLogger("_Program");
-
-HomeBallsDataDbContext createDataContext()
-{
-    fileSystem.Directory.CreateDirectory(@".\data\");
-    return services.GetRequiredService<HomeBallsDataDbContext>();
-}
-
-async Task initializeDataContextAsync(
-    IHomeBallsDataInitializer dataInitializer,
-    IHomeBallsEntryLegalityInitializer legalityInitializer,
-    CancellationToken cancellationToken = default)
-{
-    await dataInitializer.StartConversionAsync(cancellationToken);
-    await dataInitializer.PostProcessDataAsync(cancellationToken);
-
-    await using (var context = createDataContext())
-    {
-        await context.Database.EnsureDeletedAsync(cancellationToken);
-        await context.Database.EnsureCreatedAsync(cancellationToken);
+        program.Logger?.LogInformation($"Application ended in {DateTime.Now - start}.");
+        await program.Services.DisposeAsync();
+        Console.ReadKey();
     }
 
-    await using (var context = createDataContext())
-    try { await dataInitializer.SaveToDataDbContextAsync(context, cancellationToken); }
-    catch(Exception exception) { logger.LogError(exception, default); }
-
-    await using (var context = createDataContext())
-    try { await legalityInitializer.SaveToDataDbContextAsync(context, cancellationToken); }
-    catch(Exception exception) { logger.LogError(exception, default); }
-}
-
-async Task exportDataContextAsync(
-    IHomeBallsDataProtobufExporter exporter,
-    CancellationToken cancellationToken = default)
-{
-    await using (var data = createDataContext())
+    public Program()
     {
-        await data.EnsureLoadedAsync(cancellationToken);
-        await exporter.ExportDataAsync(data, cancellationToken);
+        Services = new ServiceCollection()
+            .AddHomeBallsDataServices()
+            .BuildServiceProvider();
+    }
+
+    protected internal ServiceProvider Services { get; }
+
+    protected internal ILogger Logger => Services.GetRequiredService<ILogger<Program>>();
+
+    protected internal virtual async Task MigratePokeApiDataAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var converter = new RawPokeApiConverter(Logger);
+        var spriteIds = new ProjectPokemonHomeSpriteIdService(Logger);
+        var getCache = Services.GetRequiredService<HomeBallsDataDbContextCache>;
+        var getData = Services.GetRequiredService<IRawPokeApiDataSource>;
+
+        await using (var cache = getCache())
+        {
+            await cache.Database.EnsureDeletedAsync(cancellationToken);
+            await cache.Database.EnsureCreatedAsync(cancellationToken);
+        }
+
+        var rawMigrator = new RawPokeApiDataDbContextMigrator(getData(), converter, Logger);
+        var migrator = new PokeApiDataDbContextMigrator(rawMigrator, getData(), converter, spriteIds, Logger);
+        await migrator.MigratePokeApiDataAsync(getCache, cancellationToken);
+    }
+
+    protected internal virtual async Task SeedEntryLegalitiesAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var legalities = new HomeBallsEntryLegalityCollectionFactory(
+            Services.GetRequiredService<ILoggerFactory>());
+        var seeder = new HomeBallsEntryLegalitySeeder(
+            legalities,
+            Services.GetRequiredService<ILogger<HomeBallsEntryLegalitySeeder>>());
+
+        await legalities.EnsureBallsLoadedAsync(
+            () => Services.GetRequiredService<HomeBallsDataDbContextCache>(),
+            cancellationToken);
+        await seeder.SeedEntriesAsync(
+            Services.GetRequiredService<HomeBallsDataDbContextCache>,
+            cancellationToken);
+    }
+
+    protected internal virtual async Task EnsureSpriteIdsExistAsync(
+        Byte chunkSize = 100,
+        CancellationToken cancellationToken = default)
+    {
+        var getData = Services.GetRequiredService<HomeBallsDataDbContextCache>;
+        var getClient = () => Services
+            .GetRequiredService<IHttpClientFactory>()
+            .CreateClient(ProjectPokemonHomeSpriteClientKey);
+        var fileSystem = Services.GetRequiredService<IFileSystem>();
+        var errorForms = new List<HomeBallsPokemonForm> { };
+        await using var data = getData();
+
+        var ensureTaskChunks = (await data.PokemonForms.ToListAsync(cancellationToken))
+            .Select(form => EnsureSpriteIdExistsAsync(
+                form,
+                getClient,
+                errorForms,
+                fileSystem,
+                cancellationToken))
+            .Chunk(chunkSize);
+        foreach (var chunk in ensureTaskChunks)
+        {
+            if (cancellationToken.IsCancellationRequested) break;
+            await Task.WhenAll(chunk);
+            await Task.Delay(1_500);
+        }
+
+        if (errorForms.Count == 0) return;
+        Logger.LogWarning(
+            $"The following `{nameof(HomeBallsPokemonForm)}` " +
+            "have no valid sprite IDs:\n\t" +
+            String.Join("\n\t", errorForms
+                .OrderBy(form => form.SpeciesId)
+                .ThenBy(form => form.FormId)
+                .Select(form => $"{form.Identifier}\t{form.Id}")));
+    }
+
+    protected internal virtual async Task EnsureSpriteIdExistsAsync(
+        HomeBallsPokemonForm form,
+        Func<HttpClient> getClient,
+        ICollection<HomeBallsPokemonForm> errorForms,
+        IFileSystem fileSystem,
+        CancellationToken cancellationToken = default)
+    {
+        using var client = getClient();
+        var header = await client.HeadAsync(
+            $"poke_capture_{form.ProjectPokemonHomeSpriteId}.png",
+            cancellationToken);
+
+        if (header.IsSuccessStatusCode) return;
+        errorForms.Add(form);
+    }
+
+    protected internal virtual async Task CommitCacheAsync(
+        Boolean overwriteData = true,
+        CancellationToken cancellationToken = default)
+    {
+        var committer = new HomeBallsDataCacheCommiter(
+            Services.GetService<ILogger<HomeBallsDataCacheCommiter>>());
+        await committer.CommitEntitiesAsync(
+            Services.GetRequiredService<HomeBallsDataDbContext>,
+            Services.GetRequiredService<HomeBallsDataDbContextCache>,
+            overwriteData,
+            cancellationToken);
+    }
+
+    protected internal virtual async Task ExportDataAsProtoBufAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var dataGenerator = new HomeBallsDataSourceGenerator(
+            Services.GetRequiredService<IHomeBallsPokemonFormKeyComparer>(),
+            Services.GetRequiredService<IHomeBallsItemIdComparer>(),
+            Services.GetService<ILogger<HomeBallsDataSourceGenerator>>());
+        var data = await dataGenerator.GenerateDataSourceAsync(
+            Services.GetRequiredService<HomeBallsDataDbContext>,
+            cancellationToken);
+        var exporter = Services.GetRequiredService<IHomeBallsDataSourceExporter>();
+        await exporter.ExportAsync(data, cancellationToken);
+    }
+
+    protected internal virtual async Task ExportEntryCollectionAsProtoBufAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var exporter = Services.GetRequiredService<IHomeBallsDataSourceExporter>();
+        var initializer = new HomeBallsEntryCollectionInitializer(Logger);
+        var entries = await initializer.InitializeAsync(
+            Services.GetRequiredService<HomeBallsDataDbContext>,
+            cancellationToken);
+
+        await exporter.ExportAsync<HomeBalls.Entities.HomeBallsEntryKey, HomeBallsEntry>(
+            entries.AsReadOnly(),
+            "Entries",
+            cancellationToken);
     }
 }
-
-async Task exportEntriesAsync(
-    IFileSystem fileSystem,
-    IHomeBallsProtobufConverter converter,
-    CancellationToken cancellationToken = default)
-{
-    ICollection<IHomeBallsEntry> entries;
-    var initializer = new HomeBallsEntryCollectionInitializer(logger);
-    await using (var dataContext = await createDataContext()
-        .EnsureLoadedAsync(cancellationToken))
-        entries = await initializer.InitializeAsync(dataContext, cancellationToken);
-        
-    var exporter = new HomeBallsEntriesProtobufExporter(fileSystem, converter, logger);
-    await exporter.ExportEntriesAsync(entries, cancellationToken);
-}
-
-var startTime = DateTime.UtcNow;
-var dataSource = new RawPokeApiDataSource(fileSystem, httpClient, fileNameService, csvFactory, logger);
-var initializer = new PokeApiDataInitializer(dataSource, converter, logger);
-var protobufConverter = new HomeBallsProtobufConverter();
-var exporter = new HomeBallsDataProtobufExporter(
-    fileSystem,
-    protobufConverter,
-    loggerFactory.CreateLogger<HomeBallsDataProtobufExporter>());
-var legalityInitializer = new HomeBallsEntryLegalityInitializer(logger);
-
-await initializeDataContextAsync(initializer, legalityInitializer);
-await exportDataContextAsync(exporter);
-await exportEntriesAsync(fileSystem, protobufConverter);
-
-// await using (var dataContext = await createDataContext().EnsureLoadedAsync())
-// {
-//     // foreach (var breedable in await dataContext.PokemonFormsLoadable.EnsureLoadedAsync())
-//     foreach (var breedable in ((IHomeBallsDataSource)dataContext).PokemonForms)
-//     {
-//         if (!breedable.IsBreedable) continue;
-//         if (breedable.SpeciesId < 809) continue;
-//         Console.WriteLine($"/* {breedable.Identifier.PadRight(15)} */ legalities.AddRange(factory.Pokemon({breedable.SpeciesId}, {breedable.FormId}).CreateLegalities());");
-//     }
-// }
-
-var runTime = DateTime.UtcNow - startTime;
-logger.LogInformation($"Application completed after `{runTime}`.");
-Console.ReadLine();

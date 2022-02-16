@@ -1,0 +1,8 @@
+@inject IReadOnlyList<IHomeBallsAppCateogry> Categories
+
+<div class="px-2.5 border-b border-theme-primary-300 dark:border-theme-primary-700 mb-px">
+    @foreach (var category in Categories)
+    {
+        <HomeBallsAppCategoryTab Category="@category" />
+    }
+</div>

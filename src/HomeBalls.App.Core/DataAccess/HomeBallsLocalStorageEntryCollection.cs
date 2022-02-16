@@ -1,7 +1,8 @@
-namespace CEo.Pokemon.HomeBalls.App.Core.DataAccess;
+namespace CEo.Pokemon.HomeBalls.App.DataAccess;
 
 public interface IHomeBallsLocalStorageEntryCollection :
     IHomeBallsReadOnlyCollection<IHomeBallsEntry>,
+    IIdentifiable,
     IAsyncLoadable<IHomeBallsLocalStorageEntryCollection>,
     INotifyDataDownloading,
     INotifyDataLoading
@@ -14,21 +15,27 @@ public class HomeBallsLocalStorageEntryCollection :
     IHomeBallsLocalStorageEntryCollection,
     IAsyncLoadable<HomeBallsLocalStorageEntryCollection>
 {
+    String? _identifier;
+
     public HomeBallsLocalStorageEntryCollection(
         ILocalStorageService localStorage,
         IHomeBallsLocalStorageDownloader downloader,
+        IProtoBufSerializer serializer,
         ILogger? logger = default) :
-        this(localStorage, new List<IHomeBallsEntry>(), downloader, logger) { }
+        this(
+            localStorage, new List<IHomeBallsEntry>(),
+            downloader, serializer, logger) { }
 
     public HomeBallsLocalStorageEntryCollection(
         ILocalStorageService localStorage,
         ICollection<IHomeBallsEntry> entries,
         IHomeBallsLocalStorageDownloader downloader,
+        IProtoBufSerializer serializer,
         ILogger? logger = default)
     {
         ElementType = typeof(IHomeBallsEntry);
 
-        (LocalStorage, Downloader) = (localStorage, downloader);
+        (LocalStorage, Downloader, Serializer) = (localStorage, downloader, serializer);
         (Entries, EntriesMutable) = (entries.AsReadOnly(), entries);
         (EventRaiser, Logger) = (new EventRaiser().RaisedBy(this), logger);
     }
@@ -37,9 +44,13 @@ public class HomeBallsLocalStorageEntryCollection :
 
     public virtual Int32 Count => Entries.Count;
 
+    protected internal virtual String Identifier => "Entries";
+
     protected internal ILocalStorageService LocalStorage { get; }
 
     protected internal IHomeBallsLocalStorageDownloader Downloader { get; }
+
+    protected internal IProtoBufSerializer Serializer { get; }
 
     protected internal IReadOnlyCollection<IHomeBallsEntry> Entries { get; }
 
@@ -50,6 +61,8 @@ public class HomeBallsLocalStorageEntryCollection :
     protected internal ILogger? Logger { get; }
 
     protected internal Boolean IsLoaded { get; set; }
+
+    String IIdentifiable.Identifier => Identifier;
 
     public event EventHandler<TimedActionStartingEventArgs>? DataDownloading
     {
@@ -72,23 +85,20 @@ public class HomeBallsLocalStorageEntryCollection :
     {
         if (IsLoaded) return this;
 
-        var identifier = typeof(IHomeBallsEntry).GetFullNameNonNull();
-        await EnsureDownloadedAsync(identifier, cancellationToken);
+        await EnsureDownloadedAsync(Identifier, cancellationToken);
         var start = EventRaiser.Raise(DataLoading);
 
-        ICollection<ProtobufEntry> entries;
-        var data = await LocalStorage.GetItemAsync<String>(identifier, cancellationToken);
+        ICollection<HomeBallsEntry> entries;
+        var data = await LocalStorage.GetItemAsync<String>(Identifier, cancellationToken);
         await using (var memory = new MemoryStream(Convert.FromBase64String(data)))
-            entries = ProtoBuf.Serializer.Deserialize<ICollection<ProtobufEntry>>(memory);
+            entries = Serializer.ForGenericTypes.Deserialize<ICollection<HomeBallsEntry>>(memory);
 
         EntriesMutable.Clear();
-        foreach (var entry in entries.Select(convert)) EntriesMutable.Add(entry);
+        EntriesMutable.AddRange<ICollection<IHomeBallsEntry>, IHomeBallsEntry>(entries);
 
         IsLoaded = true;
         EventRaiser.Raise(DataLoaded, start.StartTime);
         return this;
-
-        static IHomeBallsEntry convert(ProtobufEntry entry) => entry.ToHomeBallsEntry();
     }
 
     protected internal virtual async Task<HomeBallsLocalStorageEntryCollection> EnsureDownloadedAsync(
@@ -98,8 +108,8 @@ public class HomeBallsLocalStorageEntryCollection :
         if (await LocalStorage.ContainKeyAsync(identifier, cancellationToken)) return this;
 
         await Downloader.DownloadAsync(
-            identifier,
-            identifier.AddFileExtension(_Values.DefaultProtobufExtension),
+            this,
+            identifier.AddFileExtension(DefaultProtobufExtension),
             cancellationToken);
         return this;
     }
@@ -177,7 +187,7 @@ public class HomeBallsLocalStorageEntryCollection :
 
     //     await Downloader.DownloadAsync(
     //         identifier,
-    //         identifier.AddFileExtension(_Values.DefaultProtobufExtension),
+    //         identifier.AddFileExtension(DefaultProtobufExtension),
     //         cancellationToken);
     //     return this;
     // }

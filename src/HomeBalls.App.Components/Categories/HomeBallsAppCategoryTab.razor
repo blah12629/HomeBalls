@@ -1,0 +1,27 @@
+@inherits HomeBallsAppCategoryComponentBase
+@inject ILocalStorageService LocalStorage
+
+@if (IsActive)
+{
+    <span @onclick="@OnCategoryClicked" class="inline-block px-1 py-0.5 lg:py-1 mx-0.5 lg:mx-1 -mb-px border-b-2 border-transparent cursor-pointer border-theme-accent text-theme-accent">
+        @Category.Names.Single(name => name.LanguageId == EnglishLanguageId).Value
+    </span>
+}
+else
+{
+    <span @onclick="@OnCategoryClicked" class="inline-block px-1 py-0.5 lg:py-1 mx-0.5 lg:mx-1 -mb-px border-b-2 border-transparent cursor-pointer hover:border-theme-primary hover:text-theme-primary focus:border-theme-accent focus:text-theme-accent active:border-theme-accent active:text-theme-accent">
+        @Category.Names.Single(name => name.LanguageId == EnglishLanguageId).Value
+    </span>
+}
+
+@code {
+    protected virtual async Task OnCategoryClicked(MouseEventArgs e)
+    {
+        var id = State.ActiveCategoryId.Identifier;
+        var newValue = IsActive ? default(String) : Category.Identifier;
+
+        if (newValue == default) await LocalStorage.RemoveItemAsync(id);
+        else await LocalStorage.SetItemAsStringAsync(id, newValue);
+        State.ActiveCategoryId.Value = newValue;
+    }
+}

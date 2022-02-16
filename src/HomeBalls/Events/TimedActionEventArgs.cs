@@ -10,9 +10,9 @@ public abstract record TimedActionEventArgs : RecordEventArgs
         PropertyName = propertyName;
     }
 
-    public virtual DateTime StartTime { get; }
+    public virtual DateTime StartTime { get; init; }
 
-    public virtual String? PropertyName { get; }
+    public virtual String? PropertyName { get; init; }
 }
 
 
@@ -52,7 +52,7 @@ public record TimedActionEndedEventArgs : TimedActionEventArgs
         base(startTime, propertyName) =>
         (EndTime, ElapsedTime) = (endTime, elapsedTime);
 
-    public virtual DateTime EndTime { get; }
+    public virtual DateTime EndTime { get; init; }
 
-    public virtual TimeSpan ElapsedTime { get; }
+    public virtual TimeSpan ElapsedTime { get; init; }
 }

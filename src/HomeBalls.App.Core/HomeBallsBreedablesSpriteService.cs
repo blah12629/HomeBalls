@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Core;
+namespace CEo.Pokemon.HomeBalls.App;
 
 public interface IHomeBallsBreedablesSpriteService
 {
@@ -15,12 +15,12 @@ public class HomeBallsBreedablesSpriteService :
     {
         Logger = logger;
 
-        SerebiiIdLookup = new Dictionary<(UInt16, Byte), String> { };
+        SerebiiIdLookup = new Dictionary<HomeBallsPokemonFormKey, String> { };
     }
 
     protected internal ILogger? Logger { get; }
 
-    protected internal IDictionary<(UInt16 SpeciesId, Byte FormId), String> SerebiiIdLookup { get; }
+    protected internal IDictionary<HomeBallsPokemonFormKey, String> SerebiiIdLookup { get; }
 
     public virtual Uri GetSerebiiSpriteUri(IHomeBallsPokemonForm pokemon)
     {
@@ -36,11 +36,11 @@ public class HomeBallsBreedablesSpriteService :
     {
         if (!pokemon.IsBreedable) throw new NotSupportedException();
 
-        var key = (pokemon.SpeciesId, pokemon.FormId);
+        var key = pokemon.Id;
         if (SerebiiIdLookup.TryGetValue(key, out var value)) return value;
 
-        var idPadded = pokemon.SpeciesId.ToString().PadLeft(3, '0');
-        if (pokemon.FormId == 1)
+        var idPadded = pokemon.Id.SpeciesId.ToString().PadLeft(3, '0');
+        if (pokemon.Id.FormId == 1)
         {
             SerebiiIdLookup.Add(key, idPadded);
             return idPadded;
@@ -48,21 +48,21 @@ public class HomeBallsBreedablesSpriteService :
 
         if (pokemon.Identifier.Contains("-alola")) idPadded += "-a";
         else if (pokemon.Identifier.Contains("-galar")) idPadded += "-g";
-        else if (pokemon.SpeciesId == 422) idPadded += "-e";
-        else if (pokemon.SpeciesId == 550) idPadded += "-b";
-        else if (pokemon.SpeciesId == 669) idPadded += $@"-{pokemon.FormId switch
+        else if (pokemon.Id.SpeciesId == 422) idPadded += "-e";
+        else if (pokemon.Id.SpeciesId == 550) idPadded += "-b";
+        else if (pokemon.Id.SpeciesId == 669) idPadded += $@"-{pokemon.Id.FormId switch
         {
             2 => 'y', 3 => 'o', 4 => 'b', 5 => 'w',
             _ => throw new ArgumentException()
         }}";
-        else if (pokemon.SpeciesId == 710) idPadded += String.Empty;
-        else if (pokemon.SpeciesId == 744) idPadded += String.Empty;
-        else if (pokemon.SpeciesId == 774) idPadded += $@"-{pokemon.FormId switch
+        else if (pokemon.Id.SpeciesId == 710) idPadded += String.Empty;
+        else if (pokemon.Id.SpeciesId == 744) idPadded += String.Empty;
+        else if (pokemon.Id.SpeciesId == 774) idPadded += $@"-{pokemon.Id.FormId switch
         {
             8 => 'r', 9 => 'o', 10 => 'y', 11 => 'g', 12 => 'b', 13 => 'i', 14 => 'v',
             _ => throw new ArgumentException()
         }}";
-        else if (pokemon.SpeciesId == 876) idPadded += "-f";
+        else if (pokemon.Id.SpeciesId == 876) idPadded += "-f";
         else Logger?.LogWarning($"No `SerebiiId` found for `{(key)}`.");
 
         SerebiiIdLookup.Add(key, idPadded);

@@ -1,6 +1,6 @@
 namespace CEo.Pokemon.HomeBalls.ProtocolBuffers;
 
-public partial interface IProtobufGenericSerializer
+public partial interface IProtoBufGenericSerializer
 {
     // Task<Byte[]> SerializeAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(SerializationInfo info, StreamingContext context, T instance, CancellationToken cancellationToken = default) where T : class, ISerializable;
 
@@ -17,21 +17,28 @@ public partial interface IProtobufGenericSerializer
     Task<Byte[]> SerializeWithLengthPrefixAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(T instance, PrefixStyle style, CancellationToken cancellationToken = default);
 
     Task<Byte[]> SerializeWithLengthPrefixAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(T instance, PrefixStyle style, Int32 fieldNumber, CancellationToken cancellationToken = default);
+
+    Byte[] Serialize<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(T instance);
+
+    Byte[] Serialize<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(T instance, Object userState);
+    Byte[] SerializeWithLengthPrefix<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(T instance, PrefixStyle style);
+
+    Byte[] SerializeWithLengthPrefix<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(T instance, PrefixStyle style, Int32 fieldNumber);
 }
 
-public partial class ProtobufSerializer :
-    IProtobufSerializer,
-    IProtobufGenericSerializer,
-    IProtobufStaticSerializer
+public partial class ProtoBufSerializer :
+    IProtoBufSerializer,
+    IProtoBufGenericSerializer,
+    IProtoBufStaticSerializer
 {
-    Task<Byte[]> IProtobufGenericSerializer.SerializeAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+    Task<Byte[]> IProtoBufGenericSerializer.SerializeAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
         T instance,
         CancellationToken cancellationToken) =>
         ExecuteSerializeAsync(
             stream => ForGenericTypes.Serialize(stream, instance),
             cancellationToken);
 
-    Task<Byte[]> IProtobufGenericSerializer.SerializeAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+    Task<Byte[]> IProtoBufGenericSerializer.SerializeAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
         T instance,
         Object userState,
         CancellationToken cancellationToken) =>
@@ -39,7 +46,7 @@ public partial class ProtobufSerializer :
             stream => ForGenericTypes.Serialize(stream, instance, userState),
             cancellationToken);
 
-    Task<Byte[]> IProtobufGenericSerializer.SerializeWithLengthPrefixAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+    Task<Byte[]> IProtoBufGenericSerializer.SerializeWithLengthPrefixAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
         T instance,
         PrefixStyle style,
         CancellationToken cancellationToken) =>
@@ -47,7 +54,7 @@ public partial class ProtobufSerializer :
             stream => ForGenericTypes.SerializeWithLengthPrefix(stream, instance, style),
             cancellationToken);
 
-    Task<Byte[]> IProtobufGenericSerializer.SerializeWithLengthPrefixAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+    Task<Byte[]> IProtoBufGenericSerializer.SerializeWithLengthPrefixAsync<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
         T instance,
         PrefixStyle style,
         Int32 fieldNumber,
@@ -55,4 +62,25 @@ public partial class ProtobufSerializer :
         ExecuteSerializeAsync(
             stream => ForGenericTypes.SerializeWithLengthPrefix(stream, instance, style, fieldNumber),
             cancellationToken);
+
+
+    Byte[] IProtoBufGenericSerializer.Serialize<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+        T instance) =>
+        ExecuteSerialize(stream => ForGenericTypes.Serialize(stream, instance));
+
+    Byte[] IProtoBufGenericSerializer.Serialize<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+        T instance,
+        Object userState) =>
+        ExecuteSerialize(stream => ForGenericTypes.Serialize(stream, instance, userState));
+
+    Byte[] IProtoBufGenericSerializer.SerializeWithLengthPrefix<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+        T instance,
+        PrefixStyle style) =>
+        ExecuteSerialize(stream => ForGenericTypes.SerializeWithLengthPrefix(stream, instance, style));
+
+    Byte[] IProtoBufGenericSerializer.SerializeWithLengthPrefix<[DynamicallyAccessedMembers(DefaultDynamicallyAccessedMemberTypes)] T>(
+        T instance,
+        PrefixStyle style,
+        Int32 fieldNumber)  =>
+        ExecuteSerialize(stream => ForGenericTypes.SerializeWithLengthPrefix(stream, instance, style, fieldNumber));
 }

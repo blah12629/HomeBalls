@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Core.Categories;
+namespace CEo.Pokemon.HomeBalls.App.Categories;
 
 public interface IHomeBallsAppNavigation :
     IHomeBallsAppCateogry { }

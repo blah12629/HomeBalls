@@ -1,16 +1,23 @@
 global using CaseExtensions;
 
-global using CEo.Pokemon.HomeBalls;
+global using CEo.Pokemon.HomeBalls.Collections;
+global using CEo.Pokemon.HomeBalls.Comparers;
 global using CEo.Pokemon.HomeBalls.Data;
-global using CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore;
-global using CEo.Pokemon.HomeBalls.Data.EntityFrameworkCore.Configurations;
+global using CEo.Pokemon.HomeBalls.Data.Entities;
+global using CEo.Pokemon.HomeBalls.Data.Entities.Configuration;
+global using CEo.Pokemon.HomeBalls.Data.Initialization;
 global using CEo.Pokemon.HomeBalls.Data.PokeApi;
+global using CEo.Pokemon.HomeBalls.Data.PokeApi.Converters;
 global using CEo.Pokemon.HomeBalls.ProtocolBuffers;
+global using static CEo.Pokemon.HomeBalls.Data._Values;
 
 global using CsvHelper;
 global using CsvHelper.Configuration;
 
+global using Mapster;
+
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Infrastructure;
 global using Microsoft.EntityFrameworkCore.Metadata;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.DependencyInjection;

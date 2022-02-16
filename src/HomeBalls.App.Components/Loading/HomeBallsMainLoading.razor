@@ -1,0 +1,31 @@
+@inject IHomeBallsAppStateContainer State
+@inject IJSRuntime JSRuntime
+
+@if (State.LoadingMessage.Value != default)
+{
+    <div class="w-full py-1.5 text-center lg:text-xl border-b lg:border-b-0 border-theme-primary">
+        <div class="flex justify-center w-full">
+            <img src="@IconUrl" class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial" id="app-icon-loading" />
+        </div>
+
+        <HomeBallsMainLoadingMessage />
+    </div>
+}
+
+@code {
+    protected String? IconUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        State.LoadingMessage.ValueChanged += OnLoadingMessageChanged;
+        IconUrl = await JSRuntime.InvokeAsync<String>("getIconUrl", new Object?[] { });
+    }
+
+    protected virtual void OnLoadingMessageChanged(
+        Object? sender,
+        PropertyChangedEventArgs<String?> e)
+    {
+        if (e.OldValue == default || e.NewValue == default) StateHasChanged();
+    }
+}
