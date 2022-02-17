@@ -24,13 +24,13 @@ jobs:
 
     - name: Generate App CSS
       run: |
-        cd '.\src\HomeBalls.App.Components\'
+        cd ./src/HomeBalls.App.Components
         npm run buildcss
         cd '..\..\'
 
     - name: Publish HomeBalls.App.UI
       run: |
-        cd '.\src\HomeBalls.App.UI\'
+        cd ./src/HomeBalls.App.UI
         dotnet publish -c Release -o '.\release' --nologo
         cd '..\..\'
 
