@@ -20,7 +20,7 @@ jobs:
       run: npm install tailwindcss postcss autoprefixer postcss-cli
 
     - name: Publish HomeBalls.App.UI
-      run: dotnet publish '.\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj' -c Release -o '.\release' --nologo
+      run: dotnet publish '.\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj' -c Release -o '.\release' --nologo --verbosity n
       
     - name: List files
       run: ls -R
