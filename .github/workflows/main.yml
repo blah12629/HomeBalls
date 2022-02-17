@@ -28,7 +28,7 @@ jobs:
     - name: Publish HomeBalls.App.UI
       run: |
         cd ./src/HomeBalls.App.UI
-        dotnet publish -c Release -o '.\release' --nologo
+        dotnet publish -c Release -o '../../release' --nologo
         cd ../../
 
     - name: List files
