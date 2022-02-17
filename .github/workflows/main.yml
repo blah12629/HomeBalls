@@ -19,20 +19,20 @@ jobs:
     - name: Setup Tailwind
       run: npm install tailwindcss postcss autoprefixer postcss-cli
 
-    - name: List files
-      run: ls -R
-
     - name: Generate App CSS
       run: |
         cd ./src/HomeBalls.App.Components
         npm run buildcss
-        cd '..\..\'
+        cd ../../
 
     - name: Publish HomeBalls.App.UI
       run: |
         cd ./src/HomeBalls.App.UI
         dotnet publish -c Release -o '.\release' --nologo
-        cd '..\..\'
+        cd ../../
+
+    - name: List files
+      run: ls -R
 
     - name: Change base-tag in index.html from / to /HomeBalls
       run: sed -i 's/<base href="\/" \/>/<base href="\/HomeBalls\/" \/>/g' 'release/wwwroot/index.html'
