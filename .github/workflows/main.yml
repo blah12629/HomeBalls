@@ -21,6 +21,9 @@ jobs:
 
     - name: Publish HomeBalls.App.UI
       run: dotnet publish '.\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj' -c Release -o '.\release' --nologo
+      
+    - name: List files
+      run: ls -R
 
     - name: Change base-tag in index.html from / to /HomeBalls
       run: sed -i 's/<base href="\/" \/>/<base href="\/HomeBalls\/" \/>/g' 'release/wwwroot/index.html'
