@@ -18,9 +18,18 @@ jobs:
         
     - name: Setup Tailwind
       run: npm install tailwindcss postcss autoprefixer postcss-cli
+      
+    - name: Generate App CSS
+      run: |
+        cd '.\src\HomeBalls.App.Components\'
+        npm run buildcss
+        cd '..\..\'
 
     - name: Publish HomeBalls.App.UI
-      run: dotnet publish '.\src\HomeBalls.App.UI\CEo.Pokemon.HomeBalls.App.UI.csproj' -c Release -o '.\release' --nologo --verbosity n
+      run: |
+        cd '.\src\HomeBalls.App.UI\'
+        dotnet publish -c Release -o '.\release' --nologo
+        cd '..\..\'
       
     - name: List files
       run: ls -R
