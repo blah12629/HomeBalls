@@ -1,7 +1,8 @@
 namespace CEo.Pokemon.HomeBalls.App.Components;
 
 public abstract class HomeBallsBaseComponent :
-    ComponentBase
+    ComponentBase,
+    IHomeBallsComponent
 {
     IHomeBallsComponentIdService? _componentIds;
 

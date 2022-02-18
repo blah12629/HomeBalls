@@ -18,6 +18,12 @@ public interface IHomeBallsTableGenerator
         IHomeBallsLocalStorageEntryCollection entries,
         Int32 postLoadDelay = 50,
         CancellationToken cancellationToken = default);
+
+    Task PostGenerationAsync(
+        IHomeBallsAppStateContainer state,
+        IHomeBallsLocalStorageDataSource data,
+        Int32 postLoadDelay = 50,
+        CancellationToken cancellationToken = default);
 }
 
 public class HomeBallsTableGenerator : IHomeBallsTableGenerator
@@ -88,6 +94,7 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
             .UsingPokemonForms(data.BreedablePokemonForms, true, true)
             .CreateColumns())
         {
+            if (i == 20) break;
             var key = column.Id;
             await InvokeDelayedAsync(() => table.Columns.Add(column), millisecondsDelay, cancellationToken);
             await InvokeDelayedAsync(() => AddToTable(legalityList, table.Legalities, ref j, key), millisecondsDelay, cancellationToken);
@@ -98,7 +105,6 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
         Logger?.LogInformation(
             $"`{nameof(IHomeBallsEntryTable)}` generated after " +
             $"{DateTime.Now - start}.");
-        state.LoadingMessage.Value = default;
     }
 
     protected internal virtual void AddToTable<TEntity>(
@@ -127,5 +133,15 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
         await EnsureLoadedLoggedAsync(state, data.BreedablePokemonForms, "Pokémon", () => data.BreedablePokemonForms.Count, postLoadDelay, cancellationToken);
         await EnsureLoadedLoggedAsync(state, data.Legalities, "legality", () => data.Legalities.Count, postLoadDelay, cancellationToken);
         await EnsureLoadedLoggedAsync(state, entries, "entry", () => entries.Count,  postLoadDelay, cancellationToken);
+    }
+
+    public virtual async Task PostGenerationAsync(
+        IHomeBallsAppStateContainer state,
+        IHomeBallsLocalStorageDataSource data,
+        Int32 postLoadDelay = 50,
+        CancellationToken cancellationToken = default)
+    {
+        await EnsureLoadedLoggedAsync(state, data.BreedablePokemonSpecies, "more Pokémon", () => data.BreedablePokemonSpecies.Count, postLoadDelay, cancellationToken);
+        state.LoadingMessage.Value = default;
     }
 }

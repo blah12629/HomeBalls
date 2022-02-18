@@ -19,5 +19,6 @@
         await Task.Run(() => SettingsLoader.LoadSettingsAsync(Settings));
         await Task.Run(() => TableGenerator.LoadTableDataAsync(State, Data, Entries));
         await Task.Run(() => TableGenerator.GenerateColumnsAsync(State, Settings, Data, Entries, ColumnFactory, Table));
+        await Task.Run(() => TableGenerator.PostGenerationAsync(State, Data));
     }
 }

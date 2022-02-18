@@ -1,3 +1,4 @@
+@inherits HomeBallsLoggingComponent
 @inject IHomeBallsAppSettings Settings
 @inject IHomeBallsLoadableDataSource Data
 
@@ -13,6 +14,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        Data.Items.DataLoaded += OnBallsLoaded;
         Data.Pokeballs.DataLoaded += OnBallsLoaded;
     }
 
@@ -20,7 +22,12 @@
         Object? sender,
         TimedActionEndedEventArgs e)
     {
-        BallIds = Data.Pokeballs.Select(ball => ball.Id).ToList().AsReadOnly();
+        var data = Data.Items.IsLoaded ? Data.Items :
+            Data.Pokeballs.IsLoaded ? Data.Pokeballs :
+            default;
+
+        if (data == default) return;
+        BallIds = data.Select(ball => ball.Id).ToList().AsReadOnly();
         StateHasChanged();
     }
 }

@@ -1,0 +1,26 @@
+@inject IHomeBallsAppNavigation Navigation
+@inject IHomeBallsAppSettings Settings
+
+<div class="flex-grow-0 overflow-x-auto overflow-y-hidden whitespace-nowrap">
+    <HomeBallsAppCategoryTabCollection />
+</div>
+
+<div class="flex-grow-1">
+    <HomeBallsMainLoading />
+
+    <HomeBallsAppCategoryBody Category="@Navigation">
+        <Body>
+            <span>Navigation content.</span>
+        </Body>
+    </HomeBallsAppCategoryBody>
+
+    <HomeBallsAppCategoryBody Category="@Settings">
+        <Body>
+            <span>Settings content.</span>
+        </Body>
+    </HomeBallsAppCategoryBody>
+</div>
+
+<div class="flex-grow-0 hidden border-t lg:block border-theme-secondary">
+    <HomeBallsFooter />
+</div>

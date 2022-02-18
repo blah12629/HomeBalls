@@ -73,7 +73,7 @@ public class HomeBallsLoadableDataSet<TKey, TRecord> :
         CancellationToken cancellationToken = default)
     {
         if (IsLoaded) return this;
-        IsLoaded = false;
+        IsLoaded = true;
 
         var start = RaiseDataLoading(DataLoading);
 

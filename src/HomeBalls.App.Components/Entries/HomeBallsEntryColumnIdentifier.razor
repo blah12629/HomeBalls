@@ -1,3 +1,4 @@
+@inherits HomeBallsLoggingComponent
 @inject IHomeBallsLoadableDataSource Data
 @inject IHomeBallsBreedablesFormIdentifierService IdentifierService
 
@@ -35,16 +36,19 @@ else
     {
         await base.OnInitializedAsync();
         Data.PokemonSpecies.DataLoaded += OnSpeciesLoaded;
+        Data.BreedablePokemonSpecies.DataLoaded += OnSpeciesLoaded;
     }
 
     protected virtual void OnSpeciesLoaded(
         Object? sender,
         TimedActionEndedEventArgs e)
     {
-        Species = Data.PokemonSpecies.ContainsKey(Form.Id.SpeciesId) ?
-            Data.PokemonSpecies[Form.Id.SpeciesId] :
+        var data = Data.PokemonSpecies.IsLoaded ? Data.PokemonSpecies :
+            Data.BreedablePokemonSpecies.IsLoaded ? Data.BreedablePokemonSpecies :
             default;
 
+        if (data == default) return;
+        Species = data.ContainsKey(Form.Id.SpeciesId) ? data[Form.Id.SpeciesId] : default;
         StateHasChanged();
     }
 }

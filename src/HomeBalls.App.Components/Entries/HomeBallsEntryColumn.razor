@@ -5,10 +5,10 @@
 
 @if (Index < Table.Columns.Count)
 {
-    <tr class="cursor-pointer group" id="@Identifier">
-        <td class="sticky left-0 h-6.5 bg-theme-secondary-200 dark:bg-theme-secondary-800 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700" />
+    <tr class="cursor-pointer h-[34px] group" id="@Identifier">
+        <td class="sticky left-0 h-6.5 bg-theme-white dark:bg-theme-black group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700" />
 
-        <td class="sticky left-0.5 bg-theme-secondary-200 dark:bg-theme-secondary-800 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700">
+        <td class="sticky left-0.5 bg-theme-white dark:bg-theme-black group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700">
             <center>
                 <span class="hidden sm:table-cell">
                     <img src="@SpriteUrl" class="object-contain w-4/5">
@@ -16,11 +16,11 @@
             </center>
         </td>
 
-        <td class="sticky left-1 sm:left-[58px] text-right bg-theme-secondary-200 dark:bg-theme-secondary-800 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700 overflow-ellipsis whitespace-nowrap">
+        <td class="sticky left-1 sm:left-[58px] text-right bg-theme-white dark:bg-theme-black group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700 overflow-ellipsis whitespace-nowrap">
             <span class="text-xs">@Column.Id.SpeciesId &nbsp;</span>
         </td>
 
-        <td class="sticky left-9 sm:left-[88px] bg-theme-secondary-200 dark:bg-theme-secondary-800 text-0 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700">
+        <td class="sticky left-9 sm:left-[88px] bg-theme-white dark:bg-theme-black text-0 group-hover:bg-theme-accent-300 dark:group-hover:bg-theme-accent-700">
             <HomeBallsEntryColumnIdentifier Form="@Form" />
         </td>
 

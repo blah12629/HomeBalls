@@ -1,6 +1,7 @@
 namespace CEo.Pokemon.HomeBalls.App.Components.Categories;
 
-public abstract class HomeBallsAppCategoryComponentBase : ComponentBase
+public abstract class HomeBallsAppCategoryComponentBase :
+    HomeBallsLoggingComponent
 {
     IHomeBallsAppCateogry? _category;
     IHomeBallsAppStateContainer? _state;
