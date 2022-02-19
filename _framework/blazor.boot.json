@@ -11,9 +11,9 @@
   "resources": {
     "assembly": {
       "Blazored.LocalStorage.dll": "sha256-6RRoYeDP3d0xabXmcCMF66wXeJlXVPem28Trs8sQiis=",
-      "CEo.Pokemon.HomeBalls.App.Components.dll": "sha256-1xRTLJh3aDgXuKI00L7i6v1ZbQ9Pxvv77wcsDU4yKgM=",
-      "CEo.Pokemon.HomeBalls.App.Core.dll": "sha256-n03klJDyoU0W0feVV0xW6Og5bbRTorJJ0a2+9T+z2xk=",
-      "CEo.Pokemon.HomeBalls.App.UI.dll": "sha256-J\/xHOWR7QNhVYDh79EO9SlHunvUPxxFcX9UFh1251Yg=",
+      "CEo.Pokemon.HomeBalls.App.Components.dll": "sha256-j1ZRDMzU9gKb7zslWSa6D\/+9xprMZUe0XM6v+4ibUWU=",
+      "CEo.Pokemon.HomeBalls.App.Core.dll": "sha256-0XTtBn7S1Wgeaj6ESWQ8TJiNMY7hrgNLQILPSQ6Jn4o=",
+      "CEo.Pokemon.HomeBalls.App.UI.dll": "sha256-\/PTt9JEAoKao8OfSQFELGb5Pw3MZPSeCN8YJRXL2THE=",
       "CEo.Pokemon.HomeBalls.dll": "sha256-OtiQP0dJ3sYSzo1l8k2t1KdwjSDLmJBQtV8ocOoYcls=",
       "Mapster.Core.dll": "sha256-t4scC57orK9Pzk+stzDyapVp1P7RjVmaEkumPBlVL5c=",
       "Mapster.dll": "sha256-+lPyy3ceV5DvNOOuNjSSZF+ayNUIfFHpllnjpIQfTMA=",
