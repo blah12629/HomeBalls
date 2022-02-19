@@ -1,0 +1,23 @@
+@inherits HomeBallsBaseComponent
+
+<svg xmlns="http://www.w3.org/2000/svg" class="@Class" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    @foreach (var path in Paths)
+    {
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="@StrokeWidth" d="@path" />
+    }
+</svg>
+
+@code {
+    IEnumerable<String>? _paths;
+    String? _class;
+    Byte _strokeWidth = 2;
+
+    [Parameter, EditorRequired]
+    public IEnumerable<String> Paths { get => _paths!; init => _paths = value; }
+
+    [Parameter]
+    public String Class { get => _class!; init => _class = value; }
+
+    [Parameter]
+    public Byte StrokeWidth { get => _strokeWidth; init => _strokeWidth = value; }
+}

@@ -1,13 +1,9 @@
 @inherits HomeBallsLayoutComponentBase
 
-<div class="flex-grow">
-    @* @Body *@
-
-    <div class="h-screen">
-        Body
-    </div>
+<div class="flex-grow overflow-auto">
+    @Body
 </div>
 
-<div class="sticky left-0 flex-grow-0 border-t lg:hidden border-theme-secondary">
+<footer class="flex-grow-0 border-t lg:hidden border-theme-secondary-500">
     <HomeBallsFooter />
-</div>
+</footer>

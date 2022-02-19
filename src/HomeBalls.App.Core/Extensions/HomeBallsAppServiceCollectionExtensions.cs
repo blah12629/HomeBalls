@@ -33,6 +33,10 @@ public static class HomeBallsAppServiceCollectionExtensions
                 services => new HomeBallsAppNavigation(
                     services.GetService<ILogger<HomeBallsAppNavigation>>()),
                 lifetime)
+            .Add<IHomeBallsAppEdit>(
+                services => new HomeBallsAppEdit(
+                    services.GetService<ILogger<HomeBallsAppEdit>>()),
+                lifetime)
             .Add<IHomeBallsAppSettings>(
                 services => new HomeBallsAppSettings(
                     services.GetRequiredService<ILocalStorageService>(),
@@ -42,6 +46,7 @@ public static class HomeBallsAppServiceCollectionExtensions
                 new List<IHomeBallsAppCateogry>
                 {
                     services.GetRequiredService<IHomeBallsAppNavigation>(),
+                    services.GetRequiredService<IHomeBallsAppEdit>(),
                     services.GetRequiredService<IHomeBallsAppSettings>(),
                 }.AsReadOnly(),
                 lifetime)

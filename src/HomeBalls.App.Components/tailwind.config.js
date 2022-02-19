@@ -31,7 +31,7 @@ function computeChannel(key, alphas, channel, blackKey = '--color-black', whiteK
 module.exports = {
   content: [ '../HomeBalls.App*/**/*.{html,razor}' ],
   safelist: [ 'theme-dream', 'theme-moon', 'theme-lure' ],
-  darkMode: 'media', // false or 'media' or 'class'
+  darkMode: 'class', // false or 'media' or 'class'
   theme: {
     extend: {
       animation: {
@@ -75,8 +75,21 @@ module.exports = {
             800: computeColor('--color-accent', 800),
             900: computeColor('--color-accent', 900),
           },
-          black: computeColor('--color-black', 500),
-          white: computeColor('--color-white', 500)
+          black: {
+            DEFAULT: computeColor('--color-black', 500),
+            100: computeColor('--color-black', 100),
+            200: computeColor('--color-black', 200),
+            300: computeColor('--color-black', 300),
+            400: computeColor('--color-black', 400),
+            500: computeColor('--color-black', 500),
+          },
+          white: {
+            DEFAULT: computeColor('--color-white', 500),
+            600: computeColor('--color-black', 600),
+            700: computeColor('--color-black', 700),
+            800: computeColor('--color-black', 800),
+            900: computeColor('--color-black', 900),
+          }
         }
       },
       keyframes: {
