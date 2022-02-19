@@ -20,7 +20,9 @@
     {
         await base.OnInitializedAsync();
         State.LoadingMessage.ValueChanged += OnLoadingMessageChanged;
-        IconUrl = await JSRuntime.InvokeAsync<String>("getIconUrl", new Object?[] { });
+        IconUrl = await JSRuntime.InvokeAsync<String>(
+            "getIconUrl",
+            new Object?[] { default, default });
     }
 
     protected virtual void OnLoadingMessageChanged(

@@ -4,7 +4,13 @@ internal static class _Values
 {
     public const Byte EnglishLanguageId = 9;
 
-    public const String DefaultThemeId = "dream";
+    public const String DreamThemeId = "dream";
+
+    public const String MoonThemeId = "moon";
+
+    public const String LureThemeId = "lure";
+
+    public const String UpdateThemeFunctionId = "updateTheme";
 
     public const String LocalStorageSettingsKey = "settings";
 

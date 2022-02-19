@@ -40,6 +40,7 @@ public static class HomeBallsAppServiceCollectionExtensions
             .Add<IHomeBallsAppSettings>(
                 services => new HomeBallsAppSettings(
                     services.GetRequiredService<ILocalStorageService>(),
+                    services.GetRequiredService<IJSRuntime>(),
                     services.GetService<ILoggerFactory>()),
                 lifetime)
             .Add<IReadOnlyList<IHomeBallsAppCateogry>>(services =>

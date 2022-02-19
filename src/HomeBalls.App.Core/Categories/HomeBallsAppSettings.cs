@@ -10,7 +10,7 @@ public interface IHomeBallsAppSettings :
 
     IHomeBallsAppSettingsValueProperty<String> ThemeId { get; }
 
-    // IHomeBallsAppSettingsValueProperty<Boolean> IsDarkMode { get; }
+    IHomeBallsAppSettingsValueProperty<Boolean> IsDarkMode { get; }
 }
 
 public class HomeBallsAppSettings :
@@ -20,10 +20,12 @@ public class HomeBallsAppSettings :
 {
     public HomeBallsAppSettings(
         ILocalStorageService localStorage,
+        IJSRuntime jsRuntime,
         ILoggerFactory? loggerFactory = default) :
         base(default, loggerFactory?.CreateLogger(typeof(HomeBallsAppSettings)))
     {
         LocalStorage = localStorage;
+        JSRuntime = jsRuntime;
         LoggerFactory = loggerFactory;
 
         var ballIdsShownSilent = new List<UInt16>
@@ -44,16 +46,22 @@ public class HomeBallsAppSettings :
             nameof(IsIllegalEntryShown),
             LocalStorage, EventRaiser, Logger);
 
-        ThemeId = new HomeBallsAppSettingsValueProperty<String>(
-            DefaultThemeId,
+        ThemeId = new HomeBallsAppThemeProperty<String>(
+            DreamThemeId,
             nameof(ThemeId),
-            LocalStorage, EventRaiser, Logger);
+            LocalStorage, JSRuntime, EventRaiser, Logger);
+
+        IsDarkMode = new HomeBallsAppThemeProperty<Boolean>(
+            false,
+            nameof(IsDarkMode),
+            LocalStorage, JSRuntime, EventRaiser, Logger);
 
         Loadables = new List<IAsyncLoadable>
         {
             BallIdsShown,
             IsIllegalEntryShown,
-            ThemeId
+            ThemeId,
+            IsDarkMode
         }.AsReadOnly();
     }
 
@@ -63,9 +71,13 @@ public class HomeBallsAppSettings :
 
     public IHomeBallsAppSettingsValueProperty<String> ThemeId { get; }
 
+    public IHomeBallsAppSettingsValueProperty<Boolean> IsDarkMode { get; }
+
     protected internal IReadOnlyCollection<IAsyncLoadable> Loadables { get; }
 
     protected internal ILocalStorageService LocalStorage { get; }
+
+    protected internal IJSRuntime JSRuntime { get; }
 
     protected internal ILoggerFactory? LoggerFactory { get; }
 

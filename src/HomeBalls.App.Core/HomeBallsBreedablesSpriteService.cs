@@ -4,7 +4,9 @@ public interface IHomeBallsBreedablesSpriteService
 {
     Uri GetSerebiiSpriteUri(IHomeBallsPokemonForm pokemon);
 
-    Uri GetSpriteUri(IHomeBallsItem item);
+    Uri GetBallSpriteUri(IHomeBallsItem item);
+
+    Uri GetBallSpriteUri(String ballName);
 }
 
 public class HomeBallsBreedablesSpriteService :
@@ -28,9 +30,12 @@ public class HomeBallsBreedablesSpriteService :
         return new Uri($"https://www.serebii.net/pokedex-swsh/icon/{id}.png");
     }
 
-    public virtual Uri GetSpriteUri(IHomeBallsItem item) => new Uri(
+    public virtual Uri GetBallSpriteUri(IHomeBallsItem item) => new Uri(
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/" +
         $"{item.Identifier}.png");
+
+    public virtual Uri GetBallSpriteUri(String ballName) =>
+        GetBallSpriteUri(new HomeBallsItem { Identifier = $"{ballName}-ball" });
 
     protected virtual String GetSerebiiId(IHomeBallsPokemonForm pokemon)
     {

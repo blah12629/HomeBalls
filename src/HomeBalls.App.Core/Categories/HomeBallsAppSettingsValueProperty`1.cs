@@ -48,18 +48,19 @@ public class HomeBallsAppSettingsValueProperty<T> :
         return this;
     }
 
-    protected override void OnValueChanged(
+    protected override async void OnValueChanged(
         Object? sender,
         PropertyChangedEventArgs<T> e)
     {
         base.OnValueChanged(sender, e);
-        SaveAsync().Start();
+        Console.WriteLine($"{GetType().GetFullNameNonNull()}.{PropertyName}");
+        await SaveAsync();
     }
 
     public virtual Task SaveAsync(CancellationToken cancellationToken = default)
     {
         var valueTask = typeof(T) == typeof(String) ?
-            LocalStorage.SetItemAsync<String>(Identifier, (String)(Object)ValueSilent!) :
+            LocalStorage.SetItemAsStringAsync(Identifier, (String)(Object)ValueSilent!) :
             LocalStorage.SetItemAsync(Identifier, ValueSilent);
 
         return valueTask.AsTask();

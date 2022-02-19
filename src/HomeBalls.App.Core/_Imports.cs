@@ -11,6 +11,7 @@ global using static CEo.Pokemon.HomeBalls.App._Values;
 
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
+global using Microsoft.JSInterop;
 
 global using System;
 global using System.Collections;

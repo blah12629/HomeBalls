@@ -1,0 +1,20 @@
+@inherits HomeBallsLoggingComponent
+@inject IHomeBallsAppSettings Settings
+@inject IHomeBallsBreedablesSpriteService Sprites
+
+<div @onclick="OnThemeClickedAsync" class="inline-block cursor-pointer">
+    <HomeBallsBallSprite BallName="@Value" />
+</div>
+
+@code {
+    String? _value;
+
+    [Parameter, EditorRequired]
+    public String Value { get => _value!; init => _value = value; }
+
+    protected internal virtual Task OnThemeClickedAsync(MouseEventArgs e)
+    {
+        Settings.ThemeId.Value = Value;
+        return Task.CompletedTask;
+    }
+}
