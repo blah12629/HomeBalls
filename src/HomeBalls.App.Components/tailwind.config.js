@@ -85,10 +85,11 @@ module.exports = {
           },
           white: {
             DEFAULT: computeColor('--color-white', 500),
-            600: computeColor('--color-black', 600),
-            700: computeColor('--color-black', 700),
-            800: computeColor('--color-black', 800),
-            900: computeColor('--color-black', 900),
+            500: computeColor('--color-white', 500),
+            600: computeColor('--color-white', 600),
+            700: computeColor('--color-white', 700),
+            800: computeColor('--color-white', 800),
+            900: computeColor('--color-white', 900),
           }
         }
       },
