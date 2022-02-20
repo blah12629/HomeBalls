@@ -713,6 +713,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(calc(var(--color-white-r) * 0.6000000000000001 + var(--color-black-r) * 0 + var(--color-primary-r) * 0.3999999999999999) calc(var(--color-white-g) * 0.6000000000000001 + var(--color-black-g) * 0 + var(--color-primary-g) * 0.3999999999999999) calc(var(--color-white-b) * 0.6000000000000001 + var(--color-black-b) * 0 + var(--color-primary-b) * 0.3999999999999999) / var(--tw-bg-opacity));
 }
+.bg-theme-white-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-white-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-white-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-white-b) * 1) / var(--tw-bg-opacity));
+}
 .fill-theme-black-500 {
   fill: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-black-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-black-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-black-b) * 1));
 }
@@ -881,6 +885,25 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.6000000000000001 + var(--color-primary-r) * 0.3999999999999999) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.6000000000000001 + var(--color-primary-g) * 0.3999999999999999) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.6000000000000001 + var(--color-primary-b) * 0.3999999999999999) / var(--tw-bg-opacity));
 }
+.dark .dark\:bg-theme-black-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-black-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-black-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-black-b) * 1) / var(--tw-bg-opacity));
+}
+.dark .dark\:fill-theme-white-500 {
+  fill: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-white-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-white-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-white-b) * 1));
+}
+.dark .dark\:text-theme-white-600 {
+  --tw-text-opacity: 1;
+  color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.2 + var(--color-white-r) * 0.8) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.2 + var(--color-white-g) * 0.8) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.2 + var(--color-white-b) * 0.8) / var(--tw-text-opacity));
+}
+.dark .dark\:text-theme-white-500 {
+  --tw-text-opacity: 1;
+  color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-white-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-white-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-white-b) * 1) / var(--tw-text-opacity));
+}
+.dark .dark\:hover\:bg-theme-primary-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.6000000000000001 + var(--color-primary-r) * 0.3999999999999999) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.6000000000000001 + var(--color-primary-g) * 0.3999999999999999) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.6000000000000001 + var(--color-primary-b) * 0.3999999999999999) / var(--tw-bg-opacity));
+}
 .dark .dark\:hover\:bg-theme-secondary-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.4 + var(--color-secondary-r) * 0.6) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.4 + var(--color-secondary-g) * 0.6) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.4 + var(--color-secondary-b) * 0.6) / var(--tw-bg-opacity));
@@ -888,6 +911,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .dark .dark\:hover\:bg-theme-primary-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0.4 + var(--color-primary-r) * 0.6) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0.4 + var(--color-primary-g) * 0.6) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0.4 + var(--color-primary-b) * 0.6) / var(--tw-bg-opacity));
+}
+.dark .dark\:hover\:text-theme-white-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-white-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-white-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-white-b) * 1) / var(--tw-text-opacity));
 }
 .dark .group:hover .dark\:group-hover\:bg-theme-accent-700 {
   --tw-bg-opacity: 1;

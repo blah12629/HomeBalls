@@ -31,7 +31,6 @@ function getThemeValues(theme = null, isDarkMode = null) {
 
 function updateTheme(theme = null, isDarkMode = null) {
     let themeValues = getThemeValues(theme, isDarkMode);
-    console.log(themeValues);
     updateThemeRoot(themeValues.theme, themeValues.isDarkMode);
     updateAppIcons(themeValues.theme, themeValues.isDarkMode);
 }

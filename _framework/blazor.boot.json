@@ -11,7 +11,7 @@
   "resources": {
     "assembly": {
       "Blazored.LocalStorage.dll": "sha256-6RRoYeDP3d0xabXmcCMF66wXeJlXVPem28Trs8sQiis=",
-      "CEo.Pokemon.HomeBalls.App.Components.dll": "sha256-ZCzBs0yebLsXS9ChJlQnuHea78S13yvq+X+GdTvNKJ8=",
+      "CEo.Pokemon.HomeBalls.App.Components.dll": "sha256-KUB2EfrAff7xoxEqqtTRg9Hpudz6cETmWicxVMVEjLU=",
       "CEo.Pokemon.HomeBalls.App.Core.dll": "sha256-zfp1HtQMLUJoclacgfsuLFPwKl6bFwU4xnNQIPqM7zM=",
       "CEo.Pokemon.HomeBalls.App.UI.dll": "sha256-cNvC1azPI94rqMLgy7qN9DfRFzMc5q0POhZ2HnXbsYo=",
       "CEo.Pokemon.HomeBalls.dll": "sha256-OtiQP0dJ3sYSzo1l8k2t1KdwjSDLmJBQtV8ocOoYcls=",
