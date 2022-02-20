@@ -94,7 +94,6 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
             .UsingPokemonForms(data.BreedablePokemonForms, true, true)
             .CreateColumns())
         {
-            if (i == 20) break;
             var key = column.Id;
             await InvokeDelayedAsync(() => table.Columns.Add(column), millisecondsDelay, cancellationToken);
             await InvokeDelayedAsync(() => AddToTable(legalityList, table.Legalities, ref j, key), millisecondsDelay, cancellationToken);
