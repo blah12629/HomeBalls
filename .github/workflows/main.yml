@@ -17,7 +17,7 @@ jobs:
         include-prerelease: true
         
     - name: Setup Tailwind
-      run: npm install tailwindcss postcss autoprefixer postcss-cli
+      run: npm install tailwindcss postcss autoprefixer postcss-cli cssnano
 
     - name: Generate App CSS
       run: |
