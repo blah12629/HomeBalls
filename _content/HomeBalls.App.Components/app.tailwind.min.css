@@ -666,8 +666,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rounded-lg {
   border-radius: 0.5rem;
 }
-.border {
-  border-width: 1px;
+.border-2 {
+  border-width: 2px;
 }
 .border-b {
   border-bottom-width: 1px;
@@ -830,6 +830,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(calc(var(--color-white-r) * 0 + var(--color-black-r) * 0 + var(--color-black-r) * 1) calc(var(--color-white-g) * 0 + var(--color-black-g) * 0 + var(--color-black-g) * 1) calc(var(--color-white-b) * 0 + var(--color-black-b) * 0 + var(--color-black-b) * 1) / var(--tw-text-opacity));
 }
+.grayscale {
+  --tw-grayscale: grayscale(100%);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
 .transition-transform {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -872,6 +876,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 .group:hover .group-hover\:bg-theme-accent-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(calc(var(--color-white-r) * 0.4 + var(--color-black-r) * 0 + var(--color-accent-r) * 0.6) calc(var(--color-white-g) * 0.4 + var(--color-black-g) * 0 + var(--color-accent-g) * 0.6) calc(var(--color-white-b) * 0.4 + var(--color-black-b) * 0 + var(--color-accent-b) * 0.6) / var(--tw-bg-opacity));
+}
+.dark .dark\:border-0 {
+  border-width: 0px;
+}
+.dark .dark\:bg-theme-black-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(calc(var(--color-white-r) * 0.2 + var(--color-black-r) * 0 + var(--color-black-r) * 0.8) calc(var(--color-white-g) * 0.2 + var(--color-black-g) * 0 + var(--color-black-g) * 0.8) calc(var(--color-white-b) * 0.2 + var(--color-black-b) * 0 + var(--color-black-b) * 0.8) / var(--tw-bg-opacity));
 }
 .dark .dark\:bg-theme-black {
   --tw-bg-opacity: 1;
