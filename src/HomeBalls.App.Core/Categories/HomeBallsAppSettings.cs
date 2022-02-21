@@ -1,16 +1,14 @@
+using CEo.Pokemon.HomeBalls.App.Categories.Settings;
+
 namespace CEo.Pokemon.HomeBalls.App.Categories;
 
 public interface IHomeBallsAppSettings :
     IHomeBallsAppCateogry,
     IAsyncLoadable<IHomeBallsAppSettings>
 {
-    IHomeBallsAppSettingsCollectionProperty<UInt16> BallIdsShown { get; }
+    IHomeBallsAppThemeSettings Theme { get; }
 
-    IHomeBallsAppSettingsValueProperty<Boolean> IsIllegalEntryShown { get; }
-
-    IHomeBallsAppSettingsValueProperty<String> ThemeId { get; }
-
-    IHomeBallsAppSettingsValueProperty<Boolean> IsDarkMode { get; }
+    IHomeBallsEntryTableSettings EntryTable { get; }
 }
 
 public class HomeBallsAppSettings :
@@ -28,50 +26,14 @@ public class HomeBallsAppSettings :
         JSRuntime = jsRuntime;
         LoggerFactory = loggerFactory;
 
-        var ballIdsShownSilent = new List<UInt16>
-        {
-            453, 454, 449, 450, 452, 455, 451,
-            617, 457, 5, 887
-        };
-        var ballIdsShown = new HomeBallsObservableSet<UInt16>(
-            ballIdsShownSilent,
-            logger: LoggerFactory?.CreateLogger<HomeBallsObservableSet<UInt16>>());
-        BallIdsShown = new HomeBallsAppSettingsCollectionProperty<UInt16>(
-            ballIdsShown, ballIdsShownSilent,
-            nameof(BallIdsShown),
-            LocalStorage, EventRaiser, Logger);
-
-        IsIllegalEntryShown = new HomeBallsAppSettingsValueProperty<Boolean>(
-            false,
-            nameof(IsIllegalEntryShown),
-            LocalStorage, EventRaiser, Logger);
-
-        ThemeId = new HomeBallsAppThemeProperty<String>(
-            DreamThemeId,
-            nameof(ThemeId),
-            LocalStorage, JSRuntime, EventRaiser, Logger);
-
-        IsDarkMode = new HomeBallsAppThemeProperty<Boolean>(
-            false,
-            nameof(IsDarkMode),
-            LocalStorage, JSRuntime, EventRaiser, Logger);
-
-        Loadables = new List<IAsyncLoadable>
-        {
-            BallIdsShown,
-            IsIllegalEntryShown,
-            ThemeId,
-            IsDarkMode
-        }.AsReadOnly();
+        Theme = new HomeBallsAppThemeSettings(nameof(Theme), LocalStorage, JSRuntime, EventRaiser, LoggerFactory);
+        EntryTable = new HomeBallsEntryTableSettings(nameof(EntryTable), LocalStorage, JSRuntime, EventRaiser, LoggerFactory);
+        Loadables = new List<IAsyncLoadable> { Theme, EntryTable }.AsReadOnly();
     }
 
-    public IHomeBallsAppSettingsCollectionProperty<UInt16> BallIdsShown { get; }
+    public IHomeBallsAppThemeSettings Theme { get; }
 
-    public IHomeBallsAppSettingsValueProperty<Boolean> IsIllegalEntryShown { get; }
-
-    public IHomeBallsAppSettingsValueProperty<String> ThemeId { get; }
-
-    public IHomeBallsAppSettingsValueProperty<Boolean> IsDarkMode { get; }
+    public IHomeBallsEntryTableSettings EntryTable { get; }
 
     protected internal IReadOnlyCollection<IAsyncLoadable> Loadables { get; }
 

@@ -2,7 +2,7 @@
 @inject IHomeBallsAppSettings Settings
 @inject IHomeBallsBreedablesSpriteService Sprites
 
-@if ((Cell.IsLegal.Value || Settings.IsIllegalEntryShown.Value) && Cell.IsObtained.Value)
+@if ((Cell.IsLegal.Value || Settings.EntryTable.IsShowingIllegalEntries.Value) && Cell.IsObtained.Value)
 {
     <HomeBallsBallSprite Ball="@Ball" />
 }
@@ -20,7 +20,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Settings.IsIllegalEntryShown.ValueChanged += OnIsIllegalEntryShownChanged;
+        Settings.EntryTable.IsShowingIllegalEntries.ValueChanged += OnIsIllegalEntryShownChanged;
     }
 
     protected virtual void OnIsIllegalEntryShownChanged(

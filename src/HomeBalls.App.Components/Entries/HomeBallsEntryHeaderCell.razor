@@ -17,12 +17,12 @@
 
     protected virtual IHomeBallsItem Ball => _ball ??= Data.Pokeballs[BallId];
 
-    protected virtual Boolean IsBallShown => Settings.BallIdsShown.Contains(Ball.Id);
+    protected virtual Boolean IsBallShown => Settings.EntryTable.BallIdsShown.Contains(Ball.Id);
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Settings.BallIdsShown.CollectionChanged += OnBallIdsShownChanged;
+        Settings.EntryTable.BallIdsShown.CollectionChanged += OnBallIdsShownChanged;
     }
 
     protected virtual void OnBallIdsShownChanged(

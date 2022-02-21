@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Categories;
+namespace CEo.Pokemon.HomeBalls.App.Categories.Settings;
 
 public interface IHomeBallsAppSettingsCollectionProperty<T> :
     IHomeBallsAppSettingsProperty,

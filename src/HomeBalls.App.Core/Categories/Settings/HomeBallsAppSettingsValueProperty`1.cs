@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Categories;
+namespace CEo.Pokemon.HomeBalls.App.Categories.Settings;
 
 public interface IHomeBallsAppSettingsProperty
 {
@@ -53,7 +53,6 @@ public class HomeBallsAppSettingsValueProperty<T> :
         PropertyChangedEventArgs<T> e)
     {
         base.OnValueChanged(sender, e);
-        Console.WriteLine($"{GetType().GetFullNameNonNull()}.{PropertyName}");
         await SaveAsync();
     }
 

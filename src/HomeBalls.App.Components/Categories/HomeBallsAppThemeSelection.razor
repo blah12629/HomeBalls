@@ -21,12 +21,12 @@ else
     [Parameter, EditorRequired]
     public String Value { get => _value!; init => _value = value; }
 
-    public Boolean IsSelected => Settings.ThemeId.Value == Value;
+    public Boolean IsSelected => Settings.Theme.Id.Value == Value;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Settings.ThemeId.ValueChanged += OnThemeChanged;
+        Settings.Theme.Id.ValueChanged += OnThemeChanged;
     }
 
     protected virtual void OnThemeChanged(
@@ -38,7 +38,7 @@ else
 
     protected virtual Task OnThemeClickedAsync(MouseEventArgs e)
     {
-        Settings.ThemeId.Value = Value;
+        Settings.Theme.Id.Value = Value;
         return Task.CompletedTask;
     }
 }
