@@ -38,7 +38,11 @@ public static class HomeBallsDataServiceCollectionExtensions
         this IServiceCollection services,
         ServiceLifetime lifetime) =>
         services.AddDataDbContext<HomeBallsDataDbContext>(DataConnectionString, lifetime)
-            .AddDataDbContext<HomeBallsDataDbContextCache>(DataCacheConnectionString, lifetime);
+            .AddDataDbContext<HomeBallsDataDbContextCache>(DataCacheConnectionString, lifetime)
+            .Add<IHomeBallsDataRepository>(
+                services => new HomeBallsDataRepository(
+                    services.GetService<ILogger<HomeBallsDataRepository>>()),
+                    lifetime);
 
     internal static IServiceCollection AddDataDbContext<TDbContext>(
         this IServiceCollection services,

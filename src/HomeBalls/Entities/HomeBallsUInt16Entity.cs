@@ -45,6 +45,12 @@ public record HomeBallsItem :
 {
     [ProtoMember(1)]
     public virtual Byte CategoryId { get; init; }
+
+    [ProtoMember(2)]
+    public virtual Boolean IsPokeBall { get; init; }
+
+    [ProtoMember(3)]
+    public virtual Boolean IsDefaultBreedableBall { get; init; }
 }
 
 [ProtoContract]

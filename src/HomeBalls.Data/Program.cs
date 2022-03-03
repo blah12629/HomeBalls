@@ -45,10 +45,12 @@ public class Program
     protected internal virtual async Task MigratePokeApiDataAsync(
         CancellationToken cancellationToken = default)
     {
+        var rawData = Services.GetRequiredService<IRawPokeApiDataSource>();
+        var repository = Services.GetRequiredService<IHomeBallsDataRepository>();
+        var getCache = Services.GetRequiredService<HomeBallsDataDbContextCache>;
         var converter = new RawPokeApiConverter(Logger);
         var spriteIds = new ProjectPokemonHomeSpriteIdService(Logger);
-        var getCache = Services.GetRequiredService<HomeBallsDataDbContextCache>;
-        var getData = Services.GetRequiredService<IRawPokeApiDataSource>;
+        var pokeBalls = new HomeBallsPokeBallService(Logger);
 
         await using (var cache = getCache())
         {
@@ -56,8 +58,8 @@ public class Program
             await cache.Database.EnsureCreatedAsync(cancellationToken);
         }
 
-        var rawMigrator = new RawPokeApiDataDbContextMigrator(getData(), converter, Logger);
-        var migrator = new PokeApiDataDbContextMigrator(rawMigrator, getData(), converter, spriteIds, Logger);
+        var rawMigrator = new RawPokeApiDataDbContextMigrator(rawData, converter, Logger);
+        var migrator = new PokeApiDataDbContextMigrator(rawMigrator, converter, repository, spriteIds, pokeBalls, Logger);
         await migrator.MigratePokeApiDataAsync(getCache, cancellationToken);
     }
 

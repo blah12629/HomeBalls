@@ -12,23 +12,26 @@ public class PokeApiDataDbContextMigrator :
 {
     public PokeApiDataDbContextMigrator(
         IRawPokeApiDataDbContextMigrator rawMigrator,
-        IRawPokeApiDataSource data,
         IRawPokeApiConverter converter,
+        IHomeBallsDataRepository repository,
         IProjectPokemonHomeSpriteIdService spriteIdService,
+        IHomeBallsPokeBallService pokeBallService,
         ILogger? logger = default)
     {
-        (RawMigrator, Data) = (rawMigrator, data);
-        (Converter, SpriteIdService) = (converter, spriteIdService);
+        (RawMigrator, Repository, Converter) = (rawMigrator, repository, converter);
+        (SpriteIdService, PokeBallService) = (spriteIdService, pokeBallService);
         Logger = logger;
     }
 
     protected internal IPokeApiDataDbContextMigrator RawMigrator { get; }
 
-    protected internal IRawPokeApiDataSource Data { get; }
-
     protected internal IRawPokeApiConverter Converter { get; }
 
+    protected internal IHomeBallsDataRepository Repository { get; }
+
     protected internal IProjectPokemonHomeSpriteIdService SpriteIdService { get; }
+
+    protected internal IHomeBallsPokeBallService PokeBallService { get; }
 
     protected internal ILogger? Logger { get; }
 
@@ -42,32 +45,8 @@ public class PokeApiDataDbContextMigrator :
         await FixFormIdentifiersAsync(getDataContext, cancellationToken);
         await LabelBreedablesAsync(getDataContext, cancellationToken);
         await AddSpriteIdsAsync(getDataContext, cancellationToken);
+        await MarkPokeBallsAsync(getDataContext, cancellationToken);
         await VacuumAsync(getDataContext, cancellationToken);
-        return this;
-    }
-
-    protected internal virtual Task<PokeApiDataDbContextMigrator> RemoveEntitiesAsync<TEntity>(
-        DbSet<TEntity> dbSet,
-        Expression<Func<TEntity, Boolean>> condition,
-        Func<CancellationToken, Task<Int32>> saveTask,
-        CancellationToken cancellationToken = default)
-        where TEntity : class =>
-        RemoveEntitiesAsync(dbSet, dbSet, condition, saveTask, cancellationToken);
-
-    protected internal virtual async Task<PokeApiDataDbContextMigrator> RemoveEntitiesAsync<TEntity>(
-        DbSet<TEntity> dbSet,
-        IQueryable<TEntity> entities,
-        Expression<Func<TEntity, Boolean>> condition,
-        Func<CancellationToken, Task<Int32>> saveTask,
-        CancellationToken cancellationToken = default)
-        where TEntity : class
-    {
-        var removed = await entities.AsNoTracking().Where(condition).ToListAsync();
-        dbSet.AttachRange(removed);
-        dbSet.RemoveRange(removed);
-
-        var count = await saveTask(cancellationToken);
-        Logger?.LogInformation($"{count} `{typeof(TEntity).Name}` removed.");
         return this;
     }
 
@@ -92,11 +71,12 @@ public class PokeApiDataDbContextMigrator :
             $"is not within the set of [ {String.Join(", ", keptLanguageIds)} ] " +
             $"from `{dbContext.GetType()}`");
 
-        return await RemoveEntitiesAsync(
+        await Repository.RemoveEntitiesAsync(
             dbContext.Strings,
             @string => !keptLanguageIds.Contains(@string.LanguageId),
             dbContext.SaveChangesAsync,
             cancellationToken);
+        return this;
     }
 
     protected internal virtual async Task<PokeApiDataDbContextMigrator> TrimItemsAsync(
@@ -112,7 +92,7 @@ public class PokeApiDataDbContextMigrator :
             "or whose identifier does not contain `incense` " +
             $"from `{dbContext.GetType()}`.");
 
-        return await RemoveEntitiesAsync(
+        await Repository.RemoveEntitiesAsync(
             dbContext.Items,
             dbContext.Items.Include(item => item.Names),
             item =>
@@ -120,6 +100,7 @@ public class PokeApiDataDbContextMigrator :
                 !item.Identifier.Contains("incense"),
             dbContext.SaveChangesAsync,
             cancellationToken);
+        return this;
     }
 
     protected internal virtual async Task<PokeApiDataDbContextMigrator> FixFormIdentifiersAsync(
@@ -226,7 +207,7 @@ public class PokeApiDataDbContextMigrator :
             $"Setting the `{nameof(HomeBallsPokemonForm.IsBreedable)}` property of " +
             $"{breedableIdsImmutable.Count} entities to `true`.");
 
-        var forms = await GetFormsAsync(getDataContext, false, cancellationToken);
+        var forms = await Repository.GetPokemonFormsAsync(getDataContext, false, cancellationToken);
         var breedables = forms
             .Where(pokemon => breedableIds.Remove(pokemon.Id))
             .ToList().AsReadOnly();
@@ -249,23 +230,11 @@ public class PokeApiDataDbContextMigrator :
         return this;
     }
 
-    protected internal virtual async Task<IReadOnlyList<HomeBallsPokemonForm>> GetFormsAsync(
-        Func<IHomeBallsBaseDataDbContext> getDataContext,
-        Boolean includeSpecies = false,
-        CancellationToken cancellationToken = default)
-    {
-        await using var data = getDataContext();
-        IQueryable<HomeBallsPokemonForm> queryable = data.PokemonForms;
-        if (includeSpecies) queryable = queryable.Include(form => form.Species);
-        var forms = await queryable.AsNoTracking().ToListAsync(cancellationToken);
-        return forms.AsReadOnly();
-    }
-
     protected internal virtual async Task<PokeApiDataDbContextMigrator> AddSpriteIdsAsync(
         Func<IHomeBallsBaseDataDbContext> getDataContext,
         CancellationToken cancellationToken = default)
     {
-        var forms = await GetFormsAsync(getDataContext, true, cancellationToken);
+        var forms = await Repository.GetPokemonFormsAsync(getDataContext, true, cancellationToken);
         await using var dbContext = getDataContext();
 
         dbContext.PokemonForms.UpdateRange(forms.Select(form =>
@@ -276,6 +245,17 @@ public class PokeApiDataDbContextMigrator :
         }));
 
         await dbContext.SaveChangesAsync(cancellationToken);
+        return this;
+    }
+
+    protected internal virtual async Task<PokeApiDataDbContextMigrator> MarkPokeBallsAsync(
+        Func<IHomeBallsBaseDataDbContext> getDataContext,
+        CancellationToken cancellationToken = default)
+    {
+        var items = await Repository.GetItemsAsync(getDataContext, cancellationToken);
+        await using var data = getDataContext();
+        data.Items.UpdateRange(items.Select(item => PokeBallService.MarkItem(item)));
+        await data.SaveChangesAsync(cancellationToken);
         return this;
     }
 

@@ -27,6 +27,10 @@ public interface IHomeBallsItem :
     INamed
 {
     Byte CategoryId { get; }
+
+    Boolean IsPokeBall { get; }
+
+    Boolean IsDefaultBreedableBall { get; }
 }
 
 public interface IHomeBallsItemCategory :
