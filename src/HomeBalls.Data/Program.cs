@@ -14,6 +14,7 @@ public class Program
 
         try
         {
+            await program.StartupAsync(arguments);
             await program.MigratePokeApiDataAsync();
             await program.SeedEntryLegalitiesAsync();
             if (ensureSprites) await program.EnsureSpriteIdsExistAsync();
@@ -36,11 +37,32 @@ public class Program
         Services = new ServiceCollection()
             .AddHomeBallsDataServices()
             .BuildServiceProvider();
+
+        Options = new ProgramOptions();
     }
 
     protected internal ServiceProvider Services { get; }
 
+    protected internal IProgramOptions Options { get; set; }
+
     protected internal ILogger Logger => Services.GetRequiredService<ILogger<Program>>();
+
+    protected internal virtual Task StartupAsync(
+        String[] arguments,
+        CancellationToken cancellationToken = default)
+    {
+        Parser.Default
+            .ParseArguments<ProgramOptions>(arguments)
+            .WithParsed<ProgramOptions>(setOptions);
+
+        return Task.CompletedTask;
+
+        void setOptions(ProgramOptions options)
+        {
+            Options = options;
+            Logger.LogDebug($"Running with `{Options.ToString()}`.");
+        }
+    }
 
     protected internal virtual async Task MigratePokeApiDataAsync(
         CancellationToken cancellationToken = default)
@@ -157,6 +179,10 @@ public class Program
             Services.GetRequiredService<HomeBallsDataDbContext>,
             cancellationToken);
         var exporter = Services.GetRequiredService<IHomeBallsDataSourceExporter>();
+
+        if (!String.IsNullOrWhiteSpace(Options.ExportRoot))
+            exporter.InDirectory(Options.ExportRoot);
+
         await exporter.ExportAsync(data, cancellationToken);
     }
 

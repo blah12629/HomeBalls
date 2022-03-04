@@ -11,6 +11,8 @@ global using CEo.Pokemon.HomeBalls.Data.PokeApi.Converters;
 global using CEo.Pokemon.HomeBalls.ProtocolBuffers;
 global using static CEo.Pokemon.HomeBalls.Data._Values;
 
+global using CommandLine;
+
 global using CsvHelper;
 global using CsvHelper.Configuration;
 

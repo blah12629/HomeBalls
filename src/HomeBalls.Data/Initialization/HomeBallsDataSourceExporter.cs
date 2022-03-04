@@ -1,12 +1,7 @@
-using CEo.Pokemon.HomeBalls.Entities;
-
 namespace CEo.Pokemon.HomeBalls.Data.Initialization;
 
-// STOPPED HERE: 
-// - something wrong with exporting
-// - `Items` and `PokeBalls` have the same identifiers
-
-public interface IHomeBallsDataSourceExporter
+public interface IHomeBallsDataSourceExporter :
+    IFileLoadable<IHomeBallsDataSourceExporter>
 {
     Task<IHomeBallsDataSourceExporter> ExportAsync(
         IHomeBallsDataDataSource data,
@@ -204,4 +199,8 @@ public class HomeBallsDataSourceExporter :
         await ExportAsync<TKey, TEntity>(data, identifier, cancellationToken);
 
     void IFileLoadable.InDirectory(String directory) => InDirectory(directory);
+
+    IHomeBallsDataSourceExporter IFileLoadable<IHomeBallsDataSourceExporter>
+        .InDirectory(String directory) =>
+        InDirectory(directory);
 }
