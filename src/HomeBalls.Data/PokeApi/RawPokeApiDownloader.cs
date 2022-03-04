@@ -64,11 +64,14 @@ public class RawPokeApiDownloader :
         IIdentifiable identifiable,
         String fileName,
         String data,
-        CancellationToken cancellationToken = default) =>
-        FileSystem.File.WriteAllTextAsync(
+        CancellationToken cancellationToken = default)
+    {
+        FileSystem.Directory.CreateDirectory(DataRoot);
+        return FileSystem.File.WriteAllTextAsync(
             FileSystem.Path.Join(DataRoot, fileName),
             data,
             cancellationToken);
+    }
 
     async Task<IRawPokeApiDownloader> IHomeBallsDataDownloader<IRawPokeApiDownloader>
         .DownloadAsync(
