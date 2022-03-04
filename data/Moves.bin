@@ -1,0 +1,3761 @@
+
+" 
+
+*
+		Poundpound
+.,
+(
+*
+	Karate Chopkarate-chop
+.,
+(
+*
+	Double Slapdouble-slap
+.,
+(
+*
+	Comet Punchcomet-punch
+,*
+&
+*
+	
+Mega Punch
+mega-punch
+&$
+ 
+*
+	Pay Daypay-day
+,*
+&
+
+*
+	
+Fire Punch
+fire-punch
+*(
+$
+*
+		Ice Punch	ice-punch
+20
+,
+*
+	Thunder Punchthunder-punch	
+&$
+ 
+*
+	Scratchscratch
+
+*(
+$
+*
+		Vise Grip	vice-grip
+,*
+&
+*
+	
+Guillotine
+guillotine
+,*
+&
+*
+	
+Razor Wind
+razor-wind
+0.
+*
+*
+	Swords Danceswords-dance
+
+
+*	
+	Cutcut
+ 
+
+*
+
+	Gustgust
+.,
+(
+*
+	Wing Attackwing-attack
+*(
+$
+*
+		Whirlwind	whirlwind
+
+
+*	
+	Flyfly
+ 
+
+*
+
+	Bindbind
+ 
+
+*
+
+	Slamslam
+*(
+$
+*
+		Vine Whip	vine-whip
+" 
+
+*
+		Stompstomp
+.,
+(
+*
+	Double Kickdouble-kick
+*(
+$
+*
+		Mega Kick	mega-kick
+*(
+$
+*
+		Jump Kick	jump-kick
+0.
+*
+*
+	Rolling Kickrolling-kick
+.,
+(
+*
+	Sand Attacksand-attack
+(&
+"
+*
+	Headbuttheadbutt
+.,
+(
+*
+	Horn Attackhorn-attack
+.,
+(
+*
+	Fury Attackfury-attack
+,*
+&
+*
+	
+Horn Drill
+horn-drill 
+$"
+
+*
+
+	Tackletackle!
+*(
+$
+*
+		Body Slam	body-slam"
+ 
+
+*
+
+	Wrapwrap#
+*(
+$
+*
+		Take Down	take-down$
+$"
+
+*
+
+	Thrashthrash%
+.,
+(
+*
+	Double-Edgedouble-edge&
+*(
+$
+*
+		Tail Whip	tail-whip'
+0.
+*
+*
+	Poison Stingpoison-sting(
+*(
+$
+*
+		Twineedle	twineedle)
+.,
+(
+*
+	Pin Missilepin-missile*
+ 
+
+*
+
+	Leerleer+
+ 
+
+*
+
+	Bitebite,
+" 
+
+*
+		Growlgrowl-
+ 
+
+*
+
+	Roarroar.
+ 
+
+*
+
+	Singsing/
+,*
+&
+*
+	
+Supersonic
+supersonic0
+,*
+&
+*
+	
+Sonic Boom
+sonic-boom1
+&$
+ 
+*
+	Disabledisable2
+ 
+
+*
+
+	Acidacid3
+" 
+
+
+*
+		Emberember4
+0.
+*
+
+*
+	Flamethrowerflamethrower5
+ 
+
+*
+
+	Mistmist6
+*(
+$
+*
+		Water Gun	water-gun7
+,*
+&
+*
+	
+Hydro Pump
+hydro-pump8
+ 
+
+*
+
+	Surfsurf9
+(&
+"
+*
+	Ice Beamice-beam:
+(&
+"
+*
+	Blizzardblizzard;
+&$
+ 
+*
+	Psybeampsybeam<
+.,
+(
+*
+	Bubble Beambubble-beam=
+.,
+(
+*
+	Aurora Beamaurora-beam>
+,*
+&
+*
+	
+Hyper Beam
+hyper-beam?
+ 
+
+*
+
+	Peckpeck@
+,*
+&
+*
+	
+Drill Peck
+drill-peckA
+,*
+&
+*
+	
+Submission
+submissionB
+(&
+"
+*
+	Low Kicklow-kickC
+&$
+ 
+*
+	CountercounterD
+0.
+*
+*
+	Seismic Tossseismic-tossE
+(&
+"
+*
+	StrengthstrengthF
+$"
+
+*
+
+	AbsorbabsorbG
+,*
+&
+*
+	
+Mega Drain
+mega-drainH
+,*
+&
+*
+	
+Leech Seed
+leech-seedI
+$"
+
+*
+
+	GrowthgrowthJ
+,*
+&
+*
+	
+Razor Leaf
+razor-leafK
+,*
+&
+*
+	
+Solar Beam
+solar-beamL
+20
+,
+*
+	Poison Powderpoison-powderM
+,*
+&
+*
+	
+Stun Spore
+stun-sporeN
+0.
+*
+*
+	Sleep Powdersleep-powderO
+.,
+(
+*
+	Petal Dancepetal-danceP
+.,
+(
+*
+	String Shotstring-shotQ
+.,
+(
+*
+	Dragon Ragedragon-rageR
+*(
+$
+
+*
+		Fire Spin	fire-spinS
+20
+,
+*
+	Thunder Shockthunder-shockT
+.,
+(
+*
+	ThunderboltthunderboltU
+0.
+*
+*
+	Thunder Wavethunder-waveV
+&$
+ 
+*
+	ThunderthunderW
+,*
+&
+*
+	
+Rock Throw
+rock-throwX
+,*
+&
+*
+	
+Earthquake
+earthquakeY
+&$
+ 
+*
+	FissurefissureZ
+
+
+*	
+	Digdig[
+" 
+
+*
+		Toxictoxic\
+*(
+$
+*
+		Confusion	confusion]
+&$
+ 
+*
+	Psychicpsychic^
+(&
+"
+*
+	Hypnosishypnosis_
+(&
+"
+*
+	Meditatemeditate`
+&$
+ 
+*
+	Agilityagilitya
+0.
+*
+*
+	Quick Attackquick-attackb
+ 
+
+*
+
+	Rageragec
+(&
+"
+*
+	Teleportteleportd
+.,
+(
+*
+	Night Shadenight-shadee
+" 
+
+*
+		Mimicmimicf
+&$
+ 
+*
+	Screechscreechg
+.,
+(
+*
+	Double Teamdouble-teamh
+&$
+ 
+*
+	Recoverrecoveri
+$"
+
+*
+
+	Hardenhardenj
+(&
+"
+*
+	Minimizeminimizek
+.,
+(
+*
+	Smokescreensmokescreenl
+.,
+(
+*
+	Confuse Rayconfuse-raym
+(&
+"
+*
+	Withdrawwithdrawn
+0.
+*
+*
+	Defense Curldefense-curlo
+&$
+ 
+*
+	Barrierbarrierp
+0.
+*
+*
+	Light Screenlight-screenq
+ 
+
+*
+
+	Hazehazer
+&$
+ 
+*
+	Reflectreflects
+0.
+*
+*
+	Focus Energyfocus-energyt
+ 
+
+*
+
+	Bidebideu
+*(
+$
+*
+		Metronome	metronomev
+.,
+(
+*
+	Mirror Movemirror-movew
+20
+,
+*
+	Self-Destructself-destructx
+(&
+"
+*
+	Egg Bombegg-bomby
+ 
+
+*
+
+	Licklickz
+ 
+
+*
+
+	Smogsmog{
+$"
+
+*
+
+	Sludgesludge|
+*(
+$
+*
+		Bone Club	bone-club}
+,*
+&
+
+*
+	
+Fire Blast
+fire-blast~
+*(
+$
+*
+		Waterfall	waterfall
+#!
+
+*
+		ClampclampÄ
+#!
+
+*
+		SwiftswiftÅ
+-+
+&
+*
+	
+Skull Bash
+skull-bashÇ
+1/
+*
+*
+	Spike Cannonspike-cannonÉ
++)
+$
+*
+		Constrict	constrictÑ
+'%
+ 
+*
+	AmnesiaamnesiaÖ
+'%
+ 
+*
+	KinesiskinesisÜ
+/-
+(
+*
+	Soft-Boiledsoft-boiledá
+53
+.
+*
+	High Jump Kickhigh-jump-kickà
+#!
+
+*
+		Glareglareâ
+/-
+(
+*
+	Dream Eaterdream-eaterä
+-+
+&
+*
+	
+Poison Gas
+poison-gasã
+'%
+ 
+*
+	Barragebarrageå
+-+
+&
+*
+	
+Leech Life
+leech-lifeç
+/-
+(
+*
+	Lovely Kisslovely-kissé
+-+
+&
+*
+	
+Sky Attack
+sky-attackè
++)
+$
+*
+		Transform	transformê
+%#
+
+*
+
+	Bubblebubbleë
+/-
+(
+*
+	Dizzy Punchdizzy-punchí
+#!
+
+*
+		Sporesporeì
+#!
+
+*
+		Flashflashî
+'%
+ 
+*
+	Psywavepsywaveï
+%#
+
+*
+
+	Splashsplashñ
+-+
+&
+*
+	
+Acid Armor
+acid-armoró
+-+
+&
+*
+	
+Crabhammer
+crabhammerò
++)
+$
+*
+		Explosion	explosionô
+/-
+(
+*
+	Fury Swipesfury-swipesö
+-+
+&
+*
+	
+Bonemerang
+bonemerangõ
+!
+
+*
+
+	Restrestú
+-+
+&
+*
+	
+Rock Slide
+rock-slideù
+-+
+&
+*
+	
+Hyper Fang
+hyper-fangû
+'%
+ 
+*
+	Sharpensharpenü
+-+
+&
+*
+	
+Conversion
+conversion†
+-+
+&
+*
+	
+Tri Attack
+tri-attack°
+-+
+&
+*
+	
+Super Fang
+super-fang¢
+#!
+
+*
+		Slashslash£
+-+
+&
+*
+	
+Substitute
+substitute§
+)'
+"
+*
+	Strugglestruggle•
+%#
+
+*
+
+	Sketchsketch¶
+/-
+(
+*
+	Triple Kicktriple-kickß
+#!
+
+*
+		Thiefthief®
+-+
+&
+*
+	
+Spider Web
+spider-web©
+/-
+(
+*
+	Mind Readermind-reader™
++)
+$
+*
+		Nightmare	nightmare´
+/-
+(
+
+*
+	Flame Wheelflame-wheel¨
+#!
+
+*
+		Snoresnore≠
+#!
+
+*
+		CursecurseÆ
+#!
+
+*
+		FlailflailØ
+1/
+*
+*
+	Conversion 2conversion-2∞
++)
+$
+*
+		Aeroblast	aeroblast±
+1/
+*
+*
+	Cotton Sporecotton-spore≤
+)'
+"
+*
+	Reversalreversal≥
+#!
+
+*
+		Spitespite¥
+/-
+(
+*
+	Powder Snowpowder-snowµ
+'%
+ 
+*
+	Protectprotect∂
+-+
+&
+*
+	
+Mach Punch
+mach-punch∑
+-+
+&
+*
+	
+Scary Face
+scary-face∏
+1/
+*
+*
+	Feint Attackfeint-attackπ
+-+
+&
+*
+	
+Sweet Kiss
+sweet-kiss∫
+-+
+&
+*
+	
+Belly Drum
+belly-drumª
+/-
+(
+*
+	Sludge Bombsludge-bombº
+)'
+"
+*
+	Mud-Slapmud-slapΩ
++)
+$
+*
+		Octazooka	octazookaæ
+%#
+
+*
+
+	Spikesspikesø
+-+
+&
+*
+	
+Zap Cannon
+zap-cannon¿
++)
+$
+*
+		Foresight	foresight¡
+1/
+*
+*
+	Destiny Bonddestiny-bond¬
+/-
+(
+*
+	Perish Songperish-song√
+)'
+"
+*
+	Icy Windicy-windƒ
+%#
+
+*
+
+	Detectdetect≈
++)
+$
+*
+		Bone Rush	bone-rush∆
+'%
+ 
+*
+	Lock-Onlock-on«
+'%
+ 
+*
+	Outrageoutrage»
++)
+$
+*
+		Sandstorm	sandstorm…
+-+
+&
+*
+	
+Giga Drain
+giga-drain 
+%#
+
+*
+
+	EndureendureÀ
+#!
+
+*
+		CharmcharmÃ
+'%
+ 
+*
+	RolloutrolloutÕ
+/-
+(
+*
+	False Swipefalse-swipeŒ
+'%
+ 
+*
+	Swaggerswaggerœ
+-+
+&
+*
+	
+Milk Drink
+milk-drink–
+#!
+
+*
+		Sparkspark—
+/-
+(
+*
+	Fury Cutterfury-cutter“
+-+
+&
+	*
+	
+Steel Wing
+steel-wing”
++)
+$
+*
+		Mean Look	mean-look‘
+'%
+ 
+*
+	Attractattract’
+-+
+&
+*
+	
+Sleep Talk
+sleep-talk÷
++)
+$
+*
+		Heal Bell	heal-bell◊
+%#
+
+*
+
+	Returnreturnÿ
+'%
+ 
+*
+	PresentpresentŸ
+/-
+(
+*
+	Frustrationfrustration⁄
++)
+$
+*
+		Safeguard	safeguard€
+-+
+&
+*
+	
+Pain Split
+pain-split‹
+/-
+(
+
+*
+	Sacred Firesacred-fire›
++)
+$
+*
+		Magnitude	magnitudeﬁ
+31
+,
+*
+	Dynamic Punchdynamic-punchﬂ
+)'
+"
+*
+	Megahornmegahorn‡
+31
+,
+*
+	Dragon Breathdragon-breath·
+-+
+&
+*
+	
+Baton Pass
+baton-pass‚
+%#
+
+*
+
+	Encoreencore„
+'%
+ 
+*
+	Pursuitpursuit‰
+-+
+&
+*
+	
+Rapid Spin
+rapid-spinÂ
+/-
+(
+*
+	Sweet Scentsweet-scentÊ
++)
+$
+	*
+		Iron Tail	iron-tailÁ
+-+
+&
+	*
+	
+Metal Claw
+metal-clawË
+/-
+(
+*
+	Vital Throwvital-throwÈ
+/-
+(
+*
+	Morning Sunmorning-sunÍ
++)
+$
+*
+		Synthesis	synthesisÎ
++)
+$
+*
+		Moonlight	moonlightÏ
+1/
+*
+*
+	Hidden Powerhidden-powerÌ
+-+
+&
+*
+	
+Cross Chop
+cross-chopÓ
+'%
+ 
+*
+	TwistertwisterÔ
+-+
+&
+*
+	
+Rain Dance
+rain-dance
++)
+$
+
+*
+		Sunny Day	sunny-dayÒ
+%#
+
+*
+
+	CrunchcrunchÚ
+/-
+(
+*
+	Mirror Coatmirror-coatÛ
+)'
+"
+*
+	Psych Uppsych-upÙ
+31
+,
+*
+	Extreme Speedextreme-speedı
+31
+,
+*
+	Ancient Powerancient-powerˆ
+/-
+(
+*
+	Shadow Ballshadow-ball˜
+1/
+*
+*
+	Future Sightfuture-sight¯
+-+
+&
+*
+	
+Rock Smash
+rock-smash˘
++)
+$
+*
+		Whirlpool	whirlpool˙
+'%
+ 
+*
+	Beat Upbeat-up˚
+)'
+"
+*
+	Fake Outfake-out¸
+%#
+
+*
+
+	Uproaruproar˝
++)
+$
+*
+		Stockpile	stockpile˛
+'%
+ 
+*
+	Spit Upspit-upˇ
+'%
+ 
+*
+	SwallowswallowÄ
++)
+$
+
+*
+		Heat Wave	heat-waveÅ
+!
+
+*
+
+	HailhailÇ
+'%
+ 
+*
+	TormenttormentÉ
+'%
+ 
+*
+	FlatterflatterÑ
+/-
+(
+
+*
+	Will-O-Wispwill-o-wispÖ
+'%
+ 
+*
+	MementomementoÜ
+%#
+
+*
+
+	Facadefacadeá
+/-
+(
+*
+	Focus Punchfocus-punchà
+53
+.
+*
+	Smelling Saltssmelling-saltsâ
++)
+$
+*
+		Follow Me	follow-meä
+1/
+*
+*
+	Nature Powernature-powerã
+%#
+
+*
+
+	Chargechargeå
+#!
+
+*
+		Taunttauntç
+1/
+*
+*
+	Helping Handhelping-handé
+#!
+
+*
+		Tricktrickè
++)
+$
+*
+		Role Play	role-playê
+!
+
+*
+
+	Wishwishë
+%#
+
+*
+
+	Assistassistí
+'%
+ 
+*
+	Ingrainingrainì
+-+
+&
+*
+	
+Superpower
+superpowerî
+-+
+&
+*
+	
+Magic Coat
+magic-coatï
+'%
+ 
+*
+	Recyclerecycleñ
+'%
+ 
+*
+	Revengerevengeó
+/-
+(
+*
+	Brick Breakbrick-breakò
+!
+
+*
+
+	Yawnyawnô
++)
+$
+*
+		Knock Off	knock-offö
+)'
+"
+*
+	Endeavorendeavorõ
+)'
+"
+
+*
+	Eruptioneruptionú
+-+
+&
+*
+	
+Skill Swap
+skill-swapù
+)'
+"
+*
+	Imprisonimprisonû
+'%
+ 
+*
+	Refreshrefreshü
+%#
+
+*
+
+	Grudgegrudge†
+%#
+
+*
+
+	Snatchsnatch°
+1/
+*
+*
+	Secret Powersecret-power¢
+!
+
+*
+
+	Divedive£
+-+
+&
+*
+	
+Arm Thrust
+arm-thrust§
+-+
+&
+*
+	
+Camouflage
+camouflage•
++)
+$
+*
+		Tail Glow	tail-glow¶
+1/
+*
+*
+	Luster Purgeluster-purgeß
++)
+$
+*
+		Mist Ball	mist-ball®
+31
+,
+*
+	Feather Dancefeather-dance©
+1/
+*
+*
+	Teeter Danceteeter-dance™
+-+
+&
+
+*
+	
+Blaze Kick
+blaze-kick´
++)
+$
+*
+		Mud Sport	mud-sport¨
+)'
+"
+*
+	Ice Ballice-ball≠
+-+
+&
+*
+	
+Needle Arm
+needle-armÆ
++)
+$
+*
+		Slack Off	slack-offØ
+/-
+(
+*
+	Hyper Voicehyper-voice∞
+/-
+(
+*
+	Poison Fangpoison-fang±
+-+
+&
+*
+	
+Crush Claw
+crush-claw≤
+-+
+&
+
+*
+	
+Blast Burn
+blast-burn≥
+1/
+*
+*
+	Hydro Cannonhydro-cannon¥
+/-
+(
+	*
+	Meteor Mashmeteor-mashµ
+)'
+"
+*
+	Astonishastonish∂
+1/
+*
+*
+	Weather Ballweather-ball∑
+1/
+*
+*
+	Aromatherapyaromatherapy∏
+-+
+&
+*
+	
+Fake Tears
+fake-tearsπ
+-+
+&
+*
+	
+Air Cutter
+air-cutter∫
+)'
+"
+
+*
+	Overheatoverheatª
+/-
+(
+*
+	Odor Sleuthodor-sleuthº
++)
+$
+*
+		Rock Tomb	rock-tombΩ
+/-
+(
+*
+	Silver Windsilver-windæ
+/-
+(
+	*
+	Metal Soundmetal-soundø
+31
+,
+*
+	Grass Whistlegrass-whistle¿
+%#
+
+*
+
+	Tickletickle¡
+1/
+*
+*
+	Cosmic Powercosmic-power¬
+/-
+(
+*
+	Water Spoutwater-spout√
+/-
+(
+*
+	Signal Beamsignal-beamƒ
+1/
+*
+*
+	Shadow Punchshadow-punch≈
+1/
+*
+*
+	Extrasensoryextrasensory∆
+1/
+*
+*
+	Sky Uppercutsky-uppercut«
++)
+$
+*
+		Sand Tomb	sand-tomb»
+-+
+&
+*
+	
+Sheer Cold
+sheer-cold…
+/-
+(
+*
+	Muddy Watermuddy-water 
+/-
+(
+*
+	Bullet Seedbullet-seedÀ
+-+
+&
+*
+	
+Aerial Ace
+aerial-aceÃ
+1/
+*
+*
+	Icicle Spearicicle-spearÕ
+1/
+*
+	*
+	Iron Defenseiron-defenseŒ
+#!
+
+*
+		Blockblockœ
+!
+
+*
+
+	Howlhowl–
+/-
+(
+*
+	Dragon Clawdragon-claw—
+1/
+*
+*
+	Frenzy Plantfrenzy-plant“
+'%
+ 
+*
+	Bulk Upbulk-up”
+%#
+
+*
+
+	Bouncebounce‘
+)'
+"
+*
+	Mud Shotmud-shot’
+/-
+(
+*
+	Poison Tailpoison-tail÷
+#!
+
+*
+		Covetcovet◊
+/-
+(
+*
+	Volt Tacklevolt-tackleÿ
+1/
+*
+*
+	Magical Leafmagical-leafŸ
+/-
+(
+*
+	Water Sportwater-sport⁄
++)
+$
+*
+		Calm Mind	calm-mind€
+-+
+&
+*
+	
+Leaf Blade
+leaf-blade‹
+1/
+*
+*
+	Dragon Dancedragon-dance›
+-+
+&
+*
+	
+Rock Blast
+rock-blastﬁ
+-+
+&
+*
+	
+Shock Wave
+shock-waveﬂ
+/-
+(
+*
+	Water Pulsewater-pulse‡
+/-
+(
+	*
+	Doom Desiredoom-desire·
+1/
+*
+*
+	Psycho Boostpsycho-boost‚
+#!
+
+*
+		Roostroost„
+'%
+ 
+*
+	Gravitygravity‰
+/-
+(
+*
+	Miracle Eyemiracle-eyeÂ
+1/
+*
+*
+	Wake-Up Slapwake-up-slapÊ
+-+
+&
+*
+	
+Hammer Arm
+hammer-armÁ
++)
+$
+	*
+		Gyro Ball	gyro-ballË
+1/
+*
+*
+	Healing Wishhealing-wishÈ
+#!
+
+*
+		BrinebrineÍ
+1/
+*
+*
+	Natural Giftnatural-giftÎ
+#!
+
+*
+		FeintfeintÏ
+#!
+
+*
+		PluckpluckÌ
+)'
+"
+*
+	TailwindtailwindÓ
+/-
+(
+*
+	AcupressureacupressureÔ
+/-
+(
+	*
+	Metal Burstmetal-burst
+%#
+
+*
+
+	U-turnu-turnÒ
+1/
+*
+*
+	Close Combatclose-combatÚ
+'%
+ 
+*
+	PaybackpaybackÛ
++)
+$
+*
+		Assurance	assuranceÙ
+'%
+ 
+*
+	Embargoembargoı
+#!
+
+*
+		Flingflingˆ
+1/
+*
+*
+	Psycho Shiftpsycho-shift˜
+-+
+&
+*
+	
+Trump Card
+trump-card¯
+-+
+&
+*
+	
+Heal Block
+heal-block˘
++)
+$
+*
+		Wring Out	wring-out˙
+/-
+(
+*
+	Power Trickpower-trick˚
+/-
+(
+*
+	Gastro Acidgastro-acid¸
+/-
+(
+*
+	Lucky Chantlucky-chant˝
+)'
+"
+*
+	Me Firstme-first˛
+'%
+ 
+*
+	Copycatcopycatˇ
+-+
+&
+*
+	
+Power Swap
+power-swapÄ
+-+
+&
+*
+	
+Guard Swap
+guard-swapÅ
+-+
+&
+*
+	
+Punishment
+punishmentÇ
+/-
+(
+*
+	Last Resortlast-resortÉ
+-+
+&
+*
+	
+Worry Seed
+worry-seedÑ
+1/
+*
+*
+	Sucker Punchsucker-punchÖ
+1/
+*
+*
+	Toxic Spikestoxic-spikesÜ
+-+
+&
+*
+	
+Heart Swap
+heart-swapá
++)
+$
+*
+		Aqua Ring	aqua-ringà
+/-
+(
+*
+	Magnet Risemagnet-riseâ
+/-
+(
+
+*
+	Flare Blitzflare-blitzä
+-+
+&
+*
+	
+Force Palm
+force-palmã
+/-
+(
+*
+	Aura Sphereaura-sphereå
+/-
+(
+*
+	Rock Polishrock-polishç
+-+
+&
+*
+	
+Poison Jab
+poison-jabé
+-+
+&
+*
+	
+Dark Pulse
+dark-pulseè
+/-
+(
+*
+	Night Slashnight-slashê
++)
+$
+*
+		Aqua Tail	aqua-tailë
++)
+$
+*
+		Seed Bomb	seed-bombí
++)
+$
+*
+		Air Slash	air-slashì
++)
+$
+*
+		X-Scissor	x-scissorî
+)'
+"
+*
+	Bug Buzzbug-buzzï
+1/
+*
+*
+	Dragon Pulsedragon-pulseñ
+/-
+(
+*
+	Dragon Rushdragon-rushó
++)
+$
+*
+		Power Gem	power-gemò
+/-
+(
+*
+	Drain Punchdrain-punchô
+/-
+(
+*
+	Vacuum Wavevacuum-waveö
+/-
+(
+*
+	Focus Blastfocus-blastõ
+/-
+(
+*
+	Energy Ballenergy-ballú
+-+
+&
+*
+	
+Brave Bird
+brave-birdù
+/-
+(
+*
+	Earth Powerearth-powerû
+-+
+&
+*
+	
+Switcheroo
+switcherooü
+/-
+(
+*
+	Giga Impactgiga-impact†
+-+
+&
+*
+	
+Nasty Plot
+nasty-plot°
+1/
+*
+	*
+	Bullet Punchbullet-punch¢
++)
+$
+*
+		Avalanche	avalanche£
++)
+$
+*
+		Ice Shard	ice-shard§
+/-
+(
+*
+	Shadow Clawshadow-claw•
+1/
+*
+*
+	Thunder Fangthunder-fang¶
+)'
+"
+*
+	Ice Fangice-fangß
++)
+$
+
+*
+		Fire Fang	fire-fang®
+1/
+*
+*
+	Shadow Sneakshadow-sneak©
+)'
+"
+*
+	Mud Bombmud-bomb™
+-+
+&
+*
+	
+Psycho Cut
+psycho-cut´
+1/
+*
+*
+	Zen Headbuttzen-headbutt¨
+/-
+(
+	*
+	Mirror Shotmirror-shot≠
+1/
+*
+	*
+	Flash Cannonflash-cannonÆ
+-+
+&
+*
+	
+Rock Climb
+rock-climbØ
+#!
+
+*
+		Defogdefog∞
+-+
+&
+*
+	
+Trick Room
+trick-room±
+1/
+*
+*
+	Draco Meteordraco-meteor≤
++)
+$
+*
+		Discharge	discharge≥
+-+
+&
+
+*
+	
+Lava Plume
+lava-plume¥
+-+
+&
+*
+	
+Leaf Storm
+leaf-stormµ
+-+
+&
+*
+	
+Power Whip
+power-whip∂
+1/
+*
+*
+	Rock Wreckerrock-wrecker∑
+1/
+*
+*
+	Cross Poisoncross-poison∏
++)
+$
+*
+		Gunk Shot	gunk-shotπ
++)
+$
+	*
+		Iron Head	iron-head∫
+/-
+(
+	*
+	Magnet Bombmagnet-bombª
+-+
+&
+*
+	
+Stone Edge
+stone-edgeº
++)
+$
+*
+		Captivate	captivateΩ
+1/
+*
+*
+	Stealth Rockstealth-rockæ
+-+
+&
+*
+	
+Grass Knot
+grass-knotø
+'%
+ 
+*
+	Chatterchatter¿
+)'
+"
+*
+	Judgmentjudgment¡
+)'
+"
+*
+	Bug Bitebug-bite¬
+/-
+(
+*
+	Charge Beamcharge-beam√
+/-
+(
+*
+	Wood Hammerwood-hammerƒ
+)'
+"
+*
+	Aqua Jetaqua-jet≈
+1/
+*
+*
+	Attack Orderattack-order∆
+1/
+*
+*
+	Defend Orderdefend-order«
+-+
+&
+*
+	
+Heal Order
+heal-order»
+-+
+&
+*
+	
+Head Smash
+head-smash…
+-+
+&
+*
+	
+Double Hit
+double-hit 
+1/
+*
+*
+	Roar of Timeroar-of-timeÀ
+1/
+*
+*
+	Spacial Rendspacial-rendÃ
+/-
+(
+*
+	Lunar Dancelunar-danceÕ
+-+
+&
+*
+	
+Crush Grip
+crush-gripŒ
+/-
+(
+
+*
+	Magma Stormmagma-stormœ
++)
+$
+*
+		Dark Void	dark-void–
+-+
+&
+*
+	
+Seed Flare
+seed-flare—
+1/
+*
+*
+	Ominous Windominous-wind“
+1/
+*
+*
+	Shadow Forceshadow-force”
+-+
+&
+*
+	
+Hone Claws
+hone-claws‘
+-+
+&
+*
+	
+Wide Guard
+wide-guard’
+/-
+(
+*
+	Guard Splitguard-split÷
+/-
+(
+*
+	Power Splitpower-split◊
+/-
+(
+*
+	Wonder Roomwonder-roomÿ
+)'
+"
+*
+	PsyshockpsyshockŸ
++)
+$
+*
+		Venoshock	venoshock⁄
+-+
+&
+	*
+	
+Autotomize
+autotomize€
+/-
+(
+*
+	Rage Powderrage-powder‹
+/-
+(
+*
+	Telekinesistelekinesis›
+-+
+&
+*
+	
+Magic Room
+magic-roomﬁ
+-+
+&
+*
+	
+Smack Down
+smack-downﬂ
+/-
+(
+*
+	Storm Throwstorm-throw‡
+/-
+(
+
+*
+	Flame Burstflame-burst·
+/-
+(
+*
+	Sludge Wavesludge-wave‚
+1/
+*
+*
+	Quiver Dancequiver-dance„
+-+
+&
+	*
+	
+Heavy Slam
+heavy-slam‰
+1/
+*
+*
+	SynchronoisesynchronoiseÂ
+1/
+*
+*
+	Electro Ballelectro-ballÊ
+!
+
+*
+
+	SoaksoakÁ
+1/
+*
+
+*
+	Flame Chargeflame-chargeË
+!
+
+*
+
+	CoilcoilÈ
++)
+$
+*
+		Low Sweep	low-sweepÍ
+-+
+&
+*
+	
+Acid Spray
+acid-sprayÎ
++)
+$
+*
+		Foul Play	foul-playÏ
+/-
+(
+*
+	Simple Beamsimple-beamÌ
+/-
+(
+*
+	EntrainmententrainmentÓ
++)
+$
+*
+		After You	after-youÔ
+#!
+
+*
+		Roundround
+1/
+*
+*
+	Echoed Voiceechoed-voiceÒ
++)
+$
+*
+		Chip Away	chip-awayÚ
+-+
+&
+*
+	
+Clear Smog
+clear-smogÛ
+1/
+*
+*
+	Stored Powerstored-powerÙ
+/-
+(
+*
+	Quick Guardquick-guardı
+/-
+(
+*
+	Ally Switchally-switchˆ
+#!
+
+*
+		Scaldscald˜
+/-
+(
+*
+	Shell Smashshell-smash¯
+-+
+&
+*
+	
+Heal Pulse
+heal-pulse˘
+
+
+*	
+	Hexhex˙
+)'
+"
+*
+	Sky Dropsky-drop˚
+-+
+&
+	*
+	
+Shift Gear
+shift-gear¸
+1/
+*
+*
+	Circle Throwcircle-throw˝
+-+
+&
+
+*
+	
+Incinerate
+incinerate˛
+#!
+
+*
+		Quashquashˇ
+-+
+&
+*
+	
+Acrobatics
+acrobaticsÄ
+1/
+*
+*
+	Reflect Typereflect-typeÅ
++)
+$
+*
+		Retaliate	retaliateÇ
+1/
+*
+*
+	Final Gambitfinal-gambitÉ
+%#
+
+*
+
+	BestowbestowÑ
+'%
+ 
+
+*
+	InfernoinfernoÖ
+1/
+*
+*
+	Water Pledgewater-pledgeÜ
+/-
+(
+
+*
+	Fire Pledgefire-pledgeá
+1/
+*
+*
+	Grass Pledgegrass-pledgeà
+/-
+(
+*
+	Volt Switchvolt-switchâ
+1/
+*
+*
+	Struggle Bugstruggle-bugä
+)'
+"
+*
+	Bulldozebulldozeã
+1/
+*
+*
+	Frost Breathfrost-breathå
+/-
+(
+*
+	Dragon Taildragon-tailç
+'%
+ 
+*
+	Work Upwork-upé
+-+
+&
+*
+	
+Electroweb
+electrowebè
+/-
+(
+*
+	Wild Chargewild-chargeê
++)
+$
+*
+		Drill Run	drill-runë
++)
+$
+*
+		Dual Chop	dual-chopí
+/-
+(
+*
+	Heart Stampheart-stampì
+-+
+&
+*
+	
+Horn Leech
+horn-leechî
+1/
+*
+*
+	Sacred Swordsacred-swordï
+/-
+(
+*
+	Razor Shellrazor-shellñ
+-+
+&
+
+*
+	
+Heat Crash
+heat-crashó
+1/
+*
+*
+	Leaf Tornadoleaf-tornadoò
+/-
+(
+*
+	Steamrollersteamrollerô
+1/
+*
+*
+	Cotton Guardcotton-guardö
+-+
+&
+*
+	
+Night Daze
+night-dazeõ
++)
+$
+*
+		Psystrike	psystrikeú
++)
+$
+*
+		Tail Slap	tail-slapù
++)
+$
+*
+		Hurricane	hurricaneû
+/-
+(
+*
+	Head Chargehead-chargeü
+-+
+&
+	*
+	
+Gear Grind
+gear-grind†
+1/
+*
+
+*
+	Searing Shotsearing-shot°
+1/
+*
+*
+	Techno Blasttechno-blast¢
+-+
+&
+*
+	
+Relic Song
+relic-song£
+1/
+*
+*
+	Secret Swordsecret-sword§
+)'
+"
+*
+	Glaciateglaciate•
+/-
+(
+*
+	Bolt Strikebolt-strike¶
+-+
+&
+
+*
+	
+Blue Flare
+blue-flareß
+/-
+(
+
+*
+	Fiery Dancefiery-dance®
+1/
+*
+*
+	Freeze Shockfreeze-shock©
+)'
+"
+*
+	Ice Burnice-burn™
+#!
+
+*
+		Snarlsnarl´
+1/
+*
+*
+	Icicle Crashicicle-crash¨
+)'
+"
+
+*
+	V-createv-create≠
+1/
+*
+
+*
+	Fusion Flarefusion-flareÆ
+/-
+(
+*
+	Fusion Boltfusion-boltØ
+1/
+*
+*
+	Flying Pressflying-press∞
++)
+$
+*
+		Mat Block	mat-block±
+#!
+
+*
+		Belchbelch≤
+-+
+&
+*
+	
+Rototiller
+rototiller≥
+-+
+&
+*
+	
+Sticky Web
+sticky-web¥
+1/
+*
+*
+	Fell Stingerfell-stingerµ
+31
+,
+*
+	Phantom Forcephantom-force∂
+53
+.
+*
+	Trick-or-Treattrick-or-treat∑
+-+
+&
+*
+	
+Noble Roar
+noble-roar∏
+-+
+&
+*
+	
+Ion Deluge
+ion-delugeπ
+97
+2
+*
+	Parabolic Chargeparabolic-charge∫
+64
+/
+*
+	Forest‚Äôs Curseforests-curseª
+53
+.
+*
+	Petal Blizzardpetal-blizzardº
+-+
+&
+*
+	
+Freeze-Dry
+freeze-dryΩ
+75
+0
+*
+	Disarming Voicedisarming-voiceæ
+1/
+*
+*
+	Parting Shotparting-shotø
+/-
+(
+*
+	Topsy-Turvytopsy-turvy¿
+31
+,
+*
+	Draining Kissdraining-kiss¡
+31
+,
+*
+	Crafty Shieldcrafty-shield¬
+31
+,
+*
+	Flower Shieldflower-shield√
+53
+.
+*
+	Grassy Terraingrassy-terrainƒ
+31
+,
+*
+	Misty Terrainmisty-terrain≈
++)
+$
+*
+		Electrify	electrify∆
+-+
+&
+*
+	
+Play Rough
+play-rough«
+-+
+&
+*
+	
+Fairy Wind
+fairy-wind»
++)
+$
+*
+		Moonblast	moonblast…
++)
+$
+*
+		Boomburst	boomburst 
+-+
+&
+*
+	
+Fairy Lock
+fairy-lockÀ
+42
+-
+	*
+	King‚Äôs Shieldkings-shieldÃ
++)
+$
+*
+		Play Nice	play-niceÕ
+'%
+ 
+*
+	ConfideconfideŒ
+31
+,
+*
+	Diamond Stormdiamond-stormœ
+53
+.
+*
+	Steam Eruptionsteam-eruption–
+75
+0
+*
+	Hyperspace Holehyperspace-hole—
+53
+.
+*
+	Water Shurikenwater-shuriken“
+31
+,
+
+*
+	Mystical Firemystical-fire”
+1/
+*
+*
+	Spiky Shieldspiky-shield‘
+31
+,
+*
+	Aromatic Mistaromatic-mist’
+31
+,
+*
+	Eerie Impulseeerie-impulse÷
+1/
+*
+*
+	Venom Drenchvenom-drench◊
+%#
+
+*
+
+	Powderpowderÿ
+)'
+"
+*
+	GeomancygeomancyŸ
+31
+,
+*
+	Magnetic Fluxmagnetic-flux⁄
+-+
+&
+*
+	
+Happy Hour
+happy-hour€
+97
+2
+*
+	Electric Terrainelectric-terrain‹
+53
+.
+*
+	Dazzling Gleamdazzling-gleam›
++)
+$
+*
+		Celebrate	celebrateﬁ
+-+
+&
+*
+	
+Hold Hands
+hold-handsﬂ
+53
+.
+*
+	Baby-Doll Eyesbaby-doll-eyes‡
+%#
+
+*
+
+	Nuzzlenuzzle·
++)
+$
+*
+		Hold Back	hold-back‚
+/-
+(
+*
+	Infestationinfestation„
+53
+.
+*
+	Power-Up Punchpower-up-punch‰
+31
+,
+*
+	Oblivion Wingoblivion-wingÂ
+75
+0
+*
+	Thousand Arrowsthousand-arrowsÊ
+53
+.
+*
+	Thousand Wavesthousand-wavesÁ
+20
++
+*
+	Land‚Äôs Wrathlands-wrathË
+31
+,
+*
+	Light of Ruinlight-of-ruinÈ
+1/
+*
+*
+	Origin Pulseorigin-pulseÍ
+97
+2
+*
+	Precipice Bladesprecipice-bladesÎ
+31
+,
+*
+	Dragon Ascentdragon-ascentÏ
+75
+0
+*
+	Hyperspace Furyhyperspace-furyÌ
+A?
+:
+*
+	Breakneck Blitzbreakneck-blitz--physicalÓ
+@>
+9
+*
+	Breakneck Blitzbreakneck-blitz--specialÔ
+EC
+>
+*
+	All-Out Pummelingall-out-pummeling--physical
+DB
+=
+*
+	All-Out Pummelingall-out-pummeling--specialÒ
+KI
+D
+"*
+	Supersonic Skystrikesupersonic-skystrike--physicalÚ
+JH
+C
+"*
+	Supersonic Skystrikesupersonic-skystrike--specialÛ
+=;
+6
+*
+	Acid Downpouracid-downpour--physicalÙ
+<:
+5
+*
+	Acid Downpouracid-downpour--specialı
+=;
+6
+*
+	Tectonic Ragetectonic-rage--physicalˆ
+<:
+5
+*
+	Tectonic Ragetectonic-rage--special˜
+EC
+>
+*
+	Continental Crushcontinental-crush--physical¯
+DB
+=
+*
+	Continental Crushcontinental-crush--special˘
+A?
+:
+*
+	Savage Spin-Outsavage-spin-out--physical˙
+@>
+9
+*
+	Savage Spin-Outsavage-spin-out--special˚
+OM
+H
+$*
+	Never-Ending Nightmare never-ending-nightmare--physical¸
+NL
+G
+$*
+	Never-Ending Nightmarenever-ending-nightmare--special˝
+A?
+:
+	*
+	Corkscrew Crashcorkscrew-crash--physical˛
+@>
+9
+	*
+	Corkscrew Crashcorkscrew-crash--specialˇ
+EC
+>
+
+*
+	Inferno Overdriveinferno-overdrive--physicalÄ
+DB
+=
+
+*
+	Inferno Overdriveinferno-overdrive--specialÅ
+;9
+4
+*
+	Hydro Vortexhydro-vortex--physicalÇ
+:8
+3
+*
+	Hydro Vortexhydro-vortex--specialÉ
+75
+0
+*
+	
+Bloom Doombloom-doom--physicalÑ
+64
+/
+*
+	
+Bloom Doombloom-doom--specialÖ
+?=
+8
+*
+	Gigavolt Havocgigavolt-havoc--physicalÜ
+><
+7
+*
+	Gigavolt Havocgigavolt-havoc--specialá
+CA
+<
+*
+	Shattered Psycheshattered-psyche--physicalà
+B@
+;
+*
+	Shattered Psycheshattered-psyche--specialâ
+A?
+:
+*
+	Subzero Slammersubzero-slammer--physicalä
+@>
+9
+*
+	Subzero Slammersubzero-slammer--specialã
+EC
+>
+*
+	Devastating Drakedevastating-drake--physicalå
+DB
+=
+*
+	Devastating Drakedevastating-drake--specialç
+GE
+@
+ *
+	Black Hole Eclipseblack-hole-eclipse--physicalé
+FD
+?
+ *
+	Black Hole Eclipseblack-hole-eclipse--specialè
+?=
+8
+*
+	Twinkle Tackletwinkle-tackle--physicalê
+><
+7
+*
+	Twinkle Tackletwinkle-tackle--specialë
+1/
+*
+*
+	Catastropikacatastropikaí
+)'
+"
+*
+	Shore Upshore-upì
+97
+2
+*
+	First Impressionfirst-impressionî
+53
+.
+*
+	Baneful Bunkerbaneful-bunkerï
+53
+.
+*
+	Spirit Shacklespirit-shackleñ
+53
+.
+*
+	Darkest Lariatdarkest-lariató
+53
+.
+*
+	Sparkling Ariasparkling-ariaò
+-+
+&
+*
+	
+Ice Hammer
+ice-hammerô
+53
+.
+*
+	Floral Healingfloral-healingö
+75
+0
+*
+	High Horsepowerhigh-horsepowerõ
+1/
+*
+*
+	Strength Sapstrength-sapú
+/-
+(
+*
+	Solar Bladesolar-bladeù
+'%
+ 
+*
+	Leafageleafageû
++)
+$
+*
+		Spotlight	spotlightü
+1/
+*
+*
+	Toxic Threadtoxic-thread†
+/-
+(
+*
+	Laser Focuslaser-focus°
+'%
+ 
+	*
+	Gear Upgear-up¢
+/-
+(
+*
+	Throat Chopthroat-chop£
+/-
+(
+*
+	Pollen Puffpollen-puff§
+/-
+(
+	*
+	Anchor Shotanchor-shot•
+75
+0
+*
+	Psychic Terrainpsychic-terrain¶
+#!
+
+*
+		Lungelungeß
++)
+$
+
+*
+		Fire Lash	fire-lash®
+-+
+&
+*
+	
+Power Trip
+power-trip©
+'%
+ 
+
+*
+	Burn Upburn-up™
+-+
+&
+*
+	
+Speed Swap
+speed-swap´
+1/
+*
+	*
+	Smart Strikesmart-strike¨
+%#
+
+*
+
+	Purifypurify≠
+97
+2
+*
+	Revelation Dancerevelation-danceÆ
+31
+,
+*
+	Core Enforcercore-enforcerØ
++)
+$
+*
+		Trop Kick	trop-kick∞
+)'
+"
+*
+	Instructinstruct±
+-+
+&
+*
+	
+Beak Blast
+beak-blast≤
+75
+0
+*
+	Clanging Scalesclanging-scales≥
+31
+,
+*
+	Dragon Hammerdragon-hammer¥
+1/
+*
+*
+	Brutal Swingbrutal-swingµ
+/-
+(
+*
+	Aurora Veilaurora-veil∂
+?=
+8
+!*
+	Sinister Arrow Raidsinister-arrow-raid∑
+?=
+8
+!*
+	Malicious Moonsaultmalicious-moonsault∏
+97
+2
+*
+	Oceanic Operettaoceanic-operettaπ
+;9
+4
+*
+	Guardian of Alolaguardian-of-alola∫
+OM
+H
+)*!
+	Soul-Stealing 7-Star Strikesoul-stealing-7-star-strikeª
+=;
+6
+ *
+	Stoked Sparksurferstoked-sparksurferº
+?=
+8
+!*
+	Pulverizing Pancakepulverizing-pancakeΩ
+97
+2
+*
+	Extreme Evoboostextreme-evoboostæ
+;9
+4
+*
+	Genesis Supernovagenesis-supernovaø
+-+
+&
+
+*
+	
+Shell Trap
+shell-trap¿
+1/
+*
+*
+	Fleur Cannonfleur-cannon¡
+31
+,
+*
+	Psychic Fangspsychic-fangs¬
+97
+2
+*
+	Stomping Tantrumstomping-tantrum√
+/-
+(
+*
+	Shadow Boneshadow-boneƒ
+-+
+&
+*
+	
+Accelerock
+accelerock≈
+/-
+(
+*
+	Liquidationliquidation∆
+75
+0
+*
+	Prismatic Laserprismatic-laser«
+53
+.
+*
+	Spectral Thiefspectral-thief»
+75
+0
+	*
+	Sunsteel Strikesunsteel-strike…
+53
+.
+*
+	Moongeist Beammoongeist-beam 
+1/
+*
+*
+	Tearful Looktearful-lookÀ
+)'
+"
+*
+	Zing Zapzing-zapÃ
+:8
+3
+ *
+	Nature‚Äôs Madnessnatures-madnessÕ
+1/
+*
+*
+	Multi-Attackmulti-attackŒ
+OM
+H
+)*!
+	10,000,000 Volt Thunderbolt10-000-000-volt-thunderboltœ
+-+
+&
+
+*
+	
+Mind Blown
+mind-blown–
+1/
+*
+*
+	Plasma Fistsplasma-fists—
+31
+,
+*
+	Photon Geyserphoton-geyser“
+IG
+B
+&*
+	Light That Burns the Skylight-that-burns-the-sky”
+CA
+<
+#	*
+	Searing Sunraze Smashsearing-sunraze-smash‘
+OM
+H
+)*!
+	Menacing Moonraze Maelstrommenacing-moonraze-maelstrom’
+DB
+=
+%*
+	Let‚Äôs Snuggle Foreverlets-snuggle-forever÷
+EC
+>
+$*
+	Splintered Stormshardssplintered-stormshards◊
+A?
+:
+"*
+	Clangorous Soulblazeclangorous-soulblazeÿ
++)
+$
+*
+		Zippy Zap	zippy-zapŸ
+53
+.
+*
+	Splishy Splashsplishy-splash⁄
+/-
+(
+*
+	Floaty Fallfloaty-fall€
+-+
+&
+*
+	
+Pika Papow
+pika-papow‹
+31
+,
+*
+	Bouncy Bubblebouncy-bubble›
+-+
+&
+*
+	
+Buzzy Buzz
+buzzy-buzzﬁ
+1/
+*
+
+*
+	Sizzly Slidesizzly-slideﬂ
+/-
+(
+*
+	Glitzy Glowglitzy-glow‡
++)
+$
+*
+		Baddy Bad	baddy-bad·
+-+
+&
+*
+	
+Sappy Seed
+sappy-seed‚
+1/
+*
+*
+	Freezy Frostfreezy-frost„
+31
+,
+*
+	Sparkly Swirlsparkly-swirl‰
+31
+,
+*
+	Veevee Volleyveevee-volleyÂ
+97
+2
+	*
+	Double Iron Bashdouble-iron-bashÊ
++)
+$
+*
+		Max Guard	max-guardÁ
+53
+.
+*
+	Dynamax Cannondynamax-cannonË
+-+
+&
+*
+	
+Snipe Shot
+snipe-shotÈ
+)'
+"
+*
+	Jaw Lockjaw-lockÍ
+1/
+*
+*
+	Stuff Cheeksstuff-cheeksÎ
+-+
+&
+*
+	
+No Retreat
+no-retreatÏ
+)'
+"
+*
+	Tar Shottar-shotÌ
+1/
+*
+*
+	Magic Powdermagic-powderÓ
+1/
+*
+*
+	Dragon Dartsdragon-dartsÔ
+'%
+ 
+*
+	Teatimeteatime
+)'
+"
+*
+	OctolockoctolockÒ
++)
+$
+*
+		Bolt Beak	bolt-beakÚ
+31
+,
+*
+	Fishious Rendfishious-rendÛ
+1/
+*
+*
+	Court Changecourt-changeÙ
++)
+$
+
+*
+		Max Flare	max-flareı
+31
+,
+*
+	Max Flutterbymax-flutterbyˆ
+31
+,
+*
+	Max Lightningmax-lightning˜
+-+
+&
+*
+	
+Max Strike
+max-strike¯
+/-
+(
+*
+	Max Knucklemax-knuckle˘
+1/
+*
+*
+	Max Phantasmmax-phantasm˙
+31
+,
+*
+	Max Hailstormmax-hailstorm˚
+)'
+"
+*
+	Max Oozemax-ooze¸
+-+
+&
+*
+	
+Max Geyser
+max-geyser˝
+31
+,
+*
+	Max Airstreammax-airstream˛
+1/
+*
+*
+	Max Starfallmax-starfallˇ
+1/
+*
+*
+	Max Wyrmwindmax-wyrmwindÄ
+31
+,
+*
+	Max Mindstormmax-mindstormÅ
+1/
+*
+*
+	Max Rockfallmax-rockfallÇ
++)
+$
+*
+		Max Quake	max-quakeÉ
+1/
+*
+*
+	Max Darknessmax-darknessÑ
+53
+.
+*
+	Max Overgrowthmax-overgrowthÖ
+53
+.
+	*
+	Max Steelspikemax-steelspikeÜ
+75
+0
+*
+	Clangorous Soulclangorous-soulá
+-+
+&
+*
+	
+Body Press
+body-pressà
+)'
+"
+*
+	Decoratedecorateâ
+1/
+*
+*
+	Drum Beatingdrum-beatingä
++)
+$
+*
+		Snap Trap	snap-trapã
++)
+$
+
+*
+		Pyro Ball	pyro-ballå
+53
+.
+	*
+	Behemoth Bladebehemoth-bladeç
+31
+,
+	*
+	Behemoth Bashbehemoth-bashé
+-+
+&
+*
+	
+Aura Wheel
+aura-wheelè
+53
+.
+*
+	Breaking Swipebreaking-swipeê
+/-
+(
+*
+	Branch Pokebranch-pokeë
++)
+$
+*
+		Overdrive	overdriveí
+-+
+&
+*
+	
+Apple Acid
+apple-acidì
+-+
+&
+*
+	
+Grav Apple
+grav-appleî
+1/
+*
+*
+	Spirit Breakspirit-breakï
+31
+,
+*
+	Strange Steamstrange-steamñ
+)'
+"
+*
+	Life Dewlife-dewó
+)'
+"
+*
+	Obstructobstructò
+75
+0
+*
+	False Surrenderfalse-surrenderô
+53
+.
+*
+	Meteor Assaultmeteor-assaultö
+-+
+&
+*
+	
+Eternabeam
+eternabeamõ
+-+
+&
+	*
+	
+Steel Beam
+steel-beamú
+75
+0
+*
+	Expanding Forceexpanding-forceù
+1/
+*
+	*
+	Steel Rollersteel-rollerû
+-+
+&
+*
+	
+Scale Shot
+scale-shotü
+/-
+(
+*
+	Meteor Beammeteor-beam†
+53
+.
+*
+	Shell Side Armshell-side-arm°
+75
+0
+*
+	Misty Explosionmisty-explosion¢
+1/
+*
+*
+	Grassy Glidegrassy-glide£
+53
+.
+*
+	Rising Voltagerising-voltage§
+31
+,
+*
+	Terrain Pulseterrain-pulse•
+31
+,
+*
+	Skitter Smackskitter-smack¶
+97
+2
+
+*
+	Burning Jealousyburning-jealousyß
+)'
+"
+*
+	Lash Outlash-out®
+/-
+(
+*
+	Poltergeistpoltergeist©
+31
+,
+*
+	Corrosive Gascorrosive-gas™
+)'
+"
+*
+	Coachingcoaching´
++)
+$
+*
+		Flip Turn	flip-turn¨
+/-
+(
+*
+	Triple Axeltriple-axel≠
+31
+,
+*
+	Dual Wingbeatdual-wingbeatÆ
+75
+0
+*
+	Scorching Sandsscorching-sandsØ
+53
+.
+*
+	Jungle Healingjungle-healing∞
+/-
+(
+*
+	Wicked Blowwicked-blow±
+75
+0
+*
+	Surging Strikessurging-strikes≤
+1/
+*
+*
+	Thunder Cagethunder-cage≥
+31
+,
+*
+	Dragon Energydragon-energy¥
+53
+.
+*
+	Freezing Glarefreezing-glareµ
+/-
+(
+*
+	Fiery Wrathfiery-wrath∂
+75
+0
+*
+	Thunderous Kickthunderous-kick∑
+31
+,
+*
+	Glacial Lanceglacial-lance∏
+53
+.
+*
+	Astral Barrageastral-barrageπ
+/-
+(
+*
+	Eerie Spelleerie-spell∫
+0.
+)
+˝*
+	Shadow Rushshadow-rushëN
+20
++
+˝*
+	Shadow Blastshadow-blastíN
+20
++
+˝*
+	Shadow Blitzshadow-blitzìN
+0.
+)
+˝*
+	Shadow Boltshadow-boltîN
+20
++
+˝*
+	Shadow Breakshadow-breakïN
+20
++
+˝*
+	Shadow Chillshadow-chillñN
+.,
+'
+˝*
+	
+Shadow End
+shadow-endóN
+0.
+)
+˝*
+	Shadow Fireshadow-fireòN
+0.
+)
+˝*
+	Shadow Raveshadow-raveôN
+20
++
+˝*
+	Shadow Stormshadow-stormöN
+0.
+)
+˝*
+	Shadow Waveshadow-waveõN
+0.
+)
+˝*
+	Shadow Downshadow-downúN
+0.
+)
+˝*
+	Shadow Halfshadow-halfùN
+0.
+)
+˝*
+	Shadow Holdshadow-holdûN
+0.
+)
+˝*
+	Shadow Mistshadow-mistüN
+20
++
+˝*
+	Shadow Panicshadow-panic†N
+0.
+)
+˝*
+	Shadow Shedshadow-shed°N
+.,
+'
+˝*
+	
+Shadow Sky
+shadow-sky¢N
