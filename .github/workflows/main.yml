@@ -19,12 +19,6 @@ jobs:
     - name: Setup Tailwind
       run: npm install tailwindcss postcss autoprefixer postcss-cli cssnano
 
-    - name: Generate required data
-      run: |
-        cd ./src/HomeBalls.Data
-        dotnet run --export '../HomeBalls.App.UI/wwwroot/data/'
-        cd ../../
-
     - name: Generate App CSS
       run: |
         cd ./src/HomeBalls.App.Components

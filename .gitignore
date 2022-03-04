@@ -454,6 +454,5 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 src/HomeBalls.App.Components/wwwroot/app.tailwind.min.css
-src/HomeBalls.App.UI/wwwroot/data/
 src/HomeBalls.Data/data/
 ToDo.md
