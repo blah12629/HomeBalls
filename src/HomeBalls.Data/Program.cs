@@ -60,7 +60,7 @@ public class Program
         void setOptions(ProgramOptions options)
         {
             Options = options;
-            Logger.LogDebug($"Running with `{Options.ToString()}`.");
+            Logger.LogInformation($"Running with `{Options.ToString()}`.");
         }
     }
 
@@ -171,6 +171,7 @@ public class Program
     protected internal virtual async Task ExportDataAsProtoBufAsync(
         CancellationToken cancellationToken = default)
     {
+        var fileSystem = Services.GetRequiredService<IFileSystem>();
         var dataGenerator = new HomeBallsDataSourceGenerator(
             Services.GetRequiredService<IHomeBallsPokemonFormKeyComparer>(),
             Services.GetRequiredService<IHomeBallsItemIdComparer>(),
@@ -180,10 +181,35 @@ public class Program
             cancellationToken);
         var exporter = Services.GetRequiredService<IHomeBallsDataSourceExporter>();
 
-        if (!String.IsNullOrWhiteSpace(Options.ExportRoot))
-            exporter.InDirectory(Options.ExportRoot);
-
+        await SetExportRootAsync(exporter, fileSystem, cancellationToken);
         await exporter.ExportAsync(data, cancellationToken);
+    }
+
+    protected internal virtual Task SetExportRootAsync(
+        IHomeBallsDataSourceExporter exporter,
+        IFileSystem fileSystem,
+        CancellationToken cancellationToken)
+    {
+        var hasExportRoot = !String.IsNullOrWhiteSpace(Options.ExportRoot);
+        var root = Options.ExportRoot!;
+        var returnValue = Task.CompletedTask;
+
+        if (hasExportRoot) exporter.InDirectory(root);
+        if (!Options.IsClearingExportRoot) return returnValue;
+
+        foreach (var file in fileSystem.Directory.EnumerateFiles(root, "*"))
+        {
+            Logger.LogDebug($"Deleting file `{file}`.");
+            fileSystem.File.Delete(file);
+        }
+
+        foreach (var directory in fileSystem.Directory.EnumerateDirectories(root, "*"))
+        {
+            Logger.LogDebug($"Deleting directory `{directory}`.");
+            fileSystem.File.Delete(directory);
+        }
+
+        return returnValue;
     }
 
     protected internal virtual async Task ExportEntryCollectionAsProtoBufAsync(
