@@ -11,18 +11,44 @@
 </head>
 
 <body>
+  <!-- Current progress: https://play.tailwindcss.com/d4oNwracTy?size=360x640 -->
+  <!-- Current progress: https://play.tailwindcss.com/O09TzLuXG9?size=360x640 -->
+  <!-- 20220304 1948 https://play.tailwindcss.com/2VPDN9W9MP?size=360x640 -->
+  <!-- 20220305 1428 Desktop layout https://play.tailwindcss.com/CELsc4myD0 -->
+  <!-- 20220305 2139 Mobile layout https://play.tailwindcss.com/LDDvI4nAqL?size=360x640 -->
+  <!-- 20220305 2203 Desktop layout (unfinished) https://play.tailwindcss.com/hZPf36uGSj -->
+  <!-- 20220305 2227 Desktop layout https://play.tailwindcss.com/y50UF0UmPN -->
+  <!-- 20220306 1154 Mixed layout https://play.tailwindcss.com/my6FYOm3BH -->
+  <!-- 20220306 1235 Mobile tabs layout https://play.tailwindcss.com/ro6OMdZoxu?size=360x640 -->
+  <!-- 20220306 1250 Desktop tabs layout https://play.tailwindcss.com/dmt4usJYQm?layout=horizontal -->
+  <!-- 20220306 1400 Header https://play.tailwindcss.com/Igiz6ztzKZ?size=320x620 -->
+  <!-- 20220306 0454 Loading https://play.tailwindcss.com/9Bgerxvf2i -->
+  <!-- 20220306 0654 Loading was not sticky https://play.tailwindcss.com/vlhTmPWOEN?layout=horizontal -->
+  <!-- 20220306 1859 Isolated menu divs https://play.tailwindcss.com/dlI7KNBIsf?layout=horizontal -->
+  <!-- 20220306 1944 Border was on the bottom of the scrollable div on mobile https://play.tailwindcss.com/tgOJY9uQPQ?size=320x640 -->
+  <!-- 20220307 1604 Mobile settings https://play.tailwindcss.com/DTk12hibK8?size=320x640 -->
+  <!-- 20220307 1604 Desktop settings prelimary https://play.tailwindcss.com/hjc1zmPbEo?layout=horizontal -->
+  <!-- 20220307 1744 Bug found:
+    - select a non-dream theme.
+    - refresh page
+    - go back to settings
+    - dream is the selected despite theme being different
+  -->
+  <!-- 20220311 1559 Preliminary entry table https://play.tailwindcss.com/15x2GSQqDB?size=320x640 -->
+  <!-- 20220317 1657 Sticky readjust proof of concept https://jsfiddle.net/s79ey06L/2/ -->
+  <!-- Do: Ball selector class -->
   <!-- https://play.tailwindcss.com/FdcAKfIe8c?size=540x720 -->
-  <div id="theme-root">
-    <div class="flex flex-col w-screen h-screen overflow-hidden text-base text-theme-black-500 dark:text-theme-white-500 bg-theme-white-500 dark:bg-theme-black-500 lg:text-lg">
 
-      <header class="flex-grow-0 border-b border-theme-primary pt-1.5 px-3 pb-1 lg:pt-3 lg:px-4 lg:pb-1.5">
+  <div id="theme-root">
+    <div class="flex flex-col w-screen h-screen overflow-auto text-sm text-theme-black-500 lg:grid lg:grid-cols-10 lg:overflow-hidden lg:text-lg" style="grid-template-rows: auto 1fr;">
+      <header class="flex-grow-0 col-span-10 sticky left-0 h-fit bg-theme-white-500 border-b border-theme-black-200 px-2.5 pt-[5px] pb-[3px] lg:px-4 lg:pt-3 lg:pb-2">
         <div class="inline-block align-middle">
           <div class="w-8 h-8 overflow-hidden lg:w-12 lg:h-12">
             <img class="object-cover w-10 h-10 -mt-1 ml-px lg:w-15 lg:h-15 lg:-mt-1.5 lg:ml-0.5 transition-transform duration-200 cursor-pointer hover:rotate-12" id="app-icon-header" />
           </div>
         </div>
 
-        <div class="inline-block scale-[.6] -mb-[4px] -ml-[31px] lg:scale-90 lg:-mb-1.5 lg:-ml-1 align-middle">
+        <div class="inline-block scale-[.5454] -ml-[38px] mt-[6.2px] lg:-ml-3.5 lg:mt-[8px] lg:scale-[.8181] align-middle">
           <svg class="inline-block align-bottom" width="89.578" height="27.071" viewBox="0 0 89.578 27.071" xmlns="http://www.w3.org/2000/svg">
             <g class="fill-theme-black-500 dark:fill-theme-white-500" fill-rule="evenodd">
               <path d="M 15.996 15.557 L 15.996 26.648 L 11.918 26.648 L 11.918 16.805 A 11.839 11.839 0 0 0 11.782 14.921 Q 11.244 11.604 8.583 11.467 A 4.536 4.536 0 0 0 8.35 11.461 A 3.636 3.636 0 0 0 5.612 12.677 A 5.181 5.181 0 0 0 5.326 13.008 A 5.517 5.517 0 0 0 4.255 15.343 A 7.85 7.85 0 0 0 4.096 16.963 L 4.096 26.648 L 0 26.648 L 0 0 L 4.096 0 L 4.096 11.637 L 4.166 11.637 A 7.608 7.608 0 0 1 5.848 9.635 Q 7.481 8.293 9.772 8.23 A 8.28 8.28 0 0 1 10.002 8.227 A 6.923 6.923 0 0 1 12.616 8.681 Q 15.617 9.898 15.954 14.374 A 15.786 15.786 0 0 1 15.996 15.557 Z" vector-effect="non-scaling-stroke" />
@@ -44,20 +70,63 @@
         </div>
       </header>
 
-      <div class="flex flex-col flex-grow overflow-auto lg:flex-row" id="app">
-        <div class="w-full mt-3 text-center lg:text-xl">
-          <div class="flex justify-center w-full">
-            <img class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial" id="app-icon-loading" />
+      <div id="top-container" class="z-30 flex-grow-0 sticky left-0 top-0 border-theme-black-200 lg:col-span-4 lg:static lg:left-auto lg:top-auto lg:flex lg:flex-col lg:border-r lg:overflow-auto">
+        <div class="sticky left-0 top-0 ">
+          <nav id="tabs" class="sticky left-0 top-0 h-fit flex flex-row bg-theme-white-500 border-b border-theme-black-200 px-2 text-0 lg:pl-4 lg:pr-1.5">
+            <div class="flex-grow">
+              <button disabled title="Waiting for the app to load..." class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-200 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">
+                <span>About</span>
+              </button>
+              <button disabled title="Waiting for the app to load..." class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-200 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">
+                <span>Trade</span>
+              </button>
+              <button disabled title="Waiting for the app to load..." class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-200 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">
+                <span>Edit</span>
+              </button>
+              <button disabled title="Waiting for the app to load..." class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-200 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">
+                <span>Settings</span>
+              </button>
+            </div>
+          </nav>
+
+          <div id="loading" class="bg-theme-white-500">
+            <div class="border-b border-theme-black-200 text-center py-1.5 lg:py-2">
+              <div class="flex justify-center w-full">
+                <img class="w-10 h-10 lg:w-15 lg:h-15 animate-spin-partial" id="app-icon-loading" />
+              </div>
+    
+              <div class="-mt-1 lg:-mt-1.5">
+                <span>Loading app...</span>
+              </div>
+            </div>
           </div>
-        
-          <span>Loading app...</span>
         </div>
+
+        <div id="menu" class="bg-theme-white-500 lg:flex-grow"></div>
+
+        <footer class="hidden sticky left-0 bottom-0 bg-theme-white-500 border-t border-theme-black-200 lg:block">
+          footer
+        </footer>
+
+        <footer class="hidden sticky left-0 bg-theme-white-500 lg:block">
+          disclaimer
+        </footer>
       </div>
 
+      <div id="entries" class="flex-grow bg-theme-white-500 lg:col-span-6 lg:overflow-auto"></div>
+
+      <footer class="flex-grow-0 sticky left-0 bottom-0 bg-theme-white border-t border-theme-black-200 lg:hidden">
+        footer
+      </footer>
+
+      <footer class="flex-grow-0 sticky left-0 bg-theme-white lg:hidden">
+        disclaimer
+      </footer>
     </div>
   </div>
 
   <script src="_content/HomeBalls.App.Components/theming.js"></script>
+  <script src="_content/HomeBalls.App.Components/entriesSticking.js"></script>
   <script src="_framework/blazor.webassembly.js"></script>
 </body>
 
