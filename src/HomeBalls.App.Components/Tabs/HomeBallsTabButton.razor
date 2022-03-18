@@ -1,0 +1,45 @@
+@inherits HomeBallsTabComponentBase
+@inject IHomeBallsStringService Strings
+
+@if (Tab.IsSelected.Value)
+{
+    <button onclick="@OnTabClicked" class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-theme-primary-500 px-px text-sm font-semibold text-theme-primary-500 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">@Name</button>
+}
+
+else
+{
+    <button onclick="@OnTabClicked" class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-400 hover:text-theme-black-500 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">@Name</button>
+}
+
+@code
+{
+    IHomeBallsAppTab? _tab;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsAppTab Tab { get => _tab!; init => _tab = value; }
+
+    protected RenderFragment Name => builder =>
+    {
+        builder.OpenElement(0, "span");
+        builder.AddContent(1, Strings.GetInCurrentLanguage(Tab));
+        builder.CloseElement();
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Tab.IsSelected.ValueChanged += OnSelectionChanged;
+    }
+
+    protected virtual void OnTabClicked(MouseEventArgs e)
+    {
+        var isSelected = Tab.IsSelected.Value;
+        Tabs.DeselectAll();
+        Tab.IsSelected.Value = !isSelected;
+    }
+
+    protected virtual void OnSelectionChanged(
+        Object? sender,
+        ValueChangedEventArgs<Boolean> e) =>
+        StateHasChanged();
+}

@@ -1,0 +1,35 @@
+@inherits HomeBallsSettingsToggleBase
+
+<button onclick="@OnToggleClicked" class="group w-full h-6 table rounded-md bg-theme-white-500 hover:bg-theme-primary-100 active:bg-theme-primary-100 lg:h-[30px]">
+    @if (Settings.EntryTable.ColumnIdentifier.IsUsingDefault.Value) { @Content }
+    else if (IsToggled.Value) { @SelectedContent }
+    else { @Content }
+</button>
+
+@code
+{
+    protected virtual RenderFragment Content => throw new NotImplementedException();
+
+    protected virtual RenderFragment SelectedContent => Content;
+
+    protected virtual IMutableNotifyingProperty<Boolean> IsToggled => throw new NotImplementedException();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.EntryTable.ColumnIdentifier.IsUsingDefault.ValueChanged += OnDefaultSettingsToggled;
+        IsToggled.ValueChanged += OnToggleChanged;
+    }
+
+    protected virtual void OnDefaultSettingsToggled(
+        Object? sender,
+        PropertyChangedEventArgs<Boolean> e) =>
+        StateHasChanged();
+
+    protected virtual void OnToggleChanged(
+        Object? sender,
+        PropertyChangedEventArgs<Boolean> e) =>
+        StateHasChanged();
+
+    protected virtual void OnToggleClicked() => IsToggled.Value = !IsToggled.Value;
+}

@@ -1,0 +1,14 @@
+@inherits HomeBallsLoadingComponentBase
+
+@if (HasMessage) { <span>@Message</span> }
+
+@code
+{
+    protected internal override void OnMessageChanged(
+        Object? sender,
+        ValueChangedEventArgs<String?> e)
+    {
+        base.OnMessageChanged(sender, e);
+        StateHasChanged();
+    }
+}

@@ -161,6 +161,8 @@ public partial class HomeBallsLocalStorageDataSource :
 
     protected internal IHomeBallsLocalStorageDataSourceProperty<UInt16, IHomeBallsItem> Pokeballs { get; }
 
+    public virtual Boolean IsLoaded => Loadables.IsAllLoaded();
+
     public event EventHandler<TimedActionStartingEventArgs>? DataDownloading
     {
         add => Downloader.DataDownloading += value;

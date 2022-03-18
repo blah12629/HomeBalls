@@ -1,15 +1,20 @@
 using Blazored.LocalStorage;
 using CEo.Pokemon.HomeBalls.App;
+using CEo.Pokemon.HomeBalls.App.Components;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
+// builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HomeBallsTabsComponent>("#tabs");
+builder.RootComponents.Add<HomeBallsLoadingComponent>("#loading");
+builder.RootComponents.Add<HomeBallsMenuComponent>("#menu");
+builder.RootComponents.Add<HomeBallsEntriesComponent>("#entries");
 builder.Services.AddHomeBallsAppServices(builder.HostEnvironment.BaseAddress);
 
 var host = builder.Build();
-await PreconfigureHost();
+await PreconfigureHostAsync();
 await host.RunAsync();
 
-async Task PreconfigureHost(CancellationToken cancellationToken = default)
+async Task PreconfigureHostAsync(CancellationToken cancellationToken = default)
 {
     var configuration = host.Configuration;
 

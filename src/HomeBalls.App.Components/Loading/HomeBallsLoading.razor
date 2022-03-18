@@ -1,0 +1,28 @@
+@inherits HomeBallsLoadingComponentBase
+
+@if (HasMessage)
+{
+    <div class="border-b border-theme-black-200 text-center py-1.5 lg:py-2">
+        <div class="flex justify-center w-full">
+            <HomeBallsLoadingImage />
+        </div>
+  
+        <div class="-mt-1 lg:-mt-1.5">
+            <HomeBallsLoadingMessage />
+        </div>
+    </div>
+}
+
+@code
+{
+    protected internal override void OnMessageChanged(
+        Object? sender,
+        ValueChangedEventArgs<String?> e)
+    {
+        base.OnMessageChanged(sender, e);
+        if (!String.IsNullOrWhiteSpace(e.OldValue) == !String.IsNullOrWhiteSpace(e.NewValue)) return;
+        StateHasChanged();
+    }
+}
+
+

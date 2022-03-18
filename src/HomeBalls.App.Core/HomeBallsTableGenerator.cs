@@ -2,26 +2,26 @@ namespace CEo.Pokemon.HomeBalls.App;
 
 public interface IHomeBallsTableGenerator
 {
-    Task GenerateColumnsAsync(
+    Task GenerateRowsAsync(
         IHomeBallsAppStateContainer state,
         IHomeBallsAppSettings settings,
-        IHomeBallsDataSource data,
+        IHomeBallsLoadableDataSource data,
         IHomeBallsLocalStorageEntryCollection entries,
-        IHomeBallsEntryColumnFactory columnFactory,
+        IHomeBallsEntryRowFactory columnFactory,
         IHomeBallsEntryTable table,
         Int32 millisecondsDelay = 1,
         CancellationToken cancellationToken = default);
 
     Task LoadTableDataAsync(
         IHomeBallsAppStateContainer state,
-        IHomeBallsLocalStorageDataSource data,
+        IHomeBallsLoadableDataSource data,
         IHomeBallsLocalStorageEntryCollection entries,
         Int32 postLoadDelay = 50,
         CancellationToken cancellationToken = default);
 
     Task PostGenerationAsync(
         IHomeBallsAppStateContainer state,
-        IHomeBallsLocalStorageDataSource data,
+        IHomeBallsLoadableDataSource data,
         Int32 postLoadDelay = 50,
         CancellationToken cancellationToken = default);
 }
@@ -72,12 +72,12 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
         await Task.Delay(millisecondsDelay);
     }
 
-    public virtual async Task GenerateColumnsAsync(
+    public virtual async Task GenerateRowsAsync(
         IHomeBallsAppStateContainer state,
         IHomeBallsAppSettings settings,
-        IHomeBallsDataSource data,
+        IHomeBallsLoadableDataSource data,
         IHomeBallsLocalStorageEntryCollection entries,
-        IHomeBallsEntryColumnFactory columnFactory,
+        IHomeBallsEntryRowFactory rowFactory,
         IHomeBallsEntryTable table,
         Int32 millisecondsDelay = 1,
         CancellationToken cancellationToken = default)
@@ -89,13 +89,12 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
         var entryList = entries.ToList().AsReadOnly();
         var (i, j, k) = (0, 0, 0);
 
-        foreach (var column in columnFactory
-            .UsingItems(data.Pokeballs, true, true)
-            .UsingPokemonForms(data.BreedablePokemonForms, true, true)
-            .CreateColumns())
+        rowFactory.UsingData(data);
+        table.Header.Value = rowFactory.CreateHeader();
+        foreach (var row in rowFactory.CreateRows())
         {
-            var key = column.Id;
-            await InvokeDelayedAsync(() => table.Columns.Add(column), millisecondsDelay, cancellationToken);
+            var key = row.Id;
+            await InvokeDelayedAsync(() => table.Rows.Add(row), millisecondsDelay, cancellationToken);
             await InvokeDelayedAsync(() => AddToTable(legalityList, table.Legalities, ref j, key), millisecondsDelay, cancellationToken);
             await InvokeDelayedAsync(() => AddToTable(entryList, table.Entries, ref k, key), millisecondsDelay, cancellationToken);
             i += 1;
@@ -123,7 +122,7 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
 
     public virtual async Task LoadTableDataAsync(
         IHomeBallsAppStateContainer state,
-        IHomeBallsLocalStorageDataSource data,
+        IHomeBallsLoadableDataSource data,
         IHomeBallsLocalStorageEntryCollection entries,
         Int32 postLoadDelay = 50,
         CancellationToken cancellationToken = default)
@@ -136,7 +135,7 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
 
     public virtual async Task PostGenerationAsync(
         IHomeBallsAppStateContainer state,
-        IHomeBallsLocalStorageDataSource data,
+        IHomeBallsLoadableDataSource data,
         Int32 postLoadDelay = 50,
         CancellationToken cancellationToken = default)
     {

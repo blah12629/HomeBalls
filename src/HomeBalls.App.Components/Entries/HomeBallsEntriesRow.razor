@@ -1,0 +1,57 @@
+@inherits HomeBallsEntriesRowComponentBase<IHomeBallsEntryBodyRow, IHomeBallsEntryBodyCell>
+@inject IHomeBallsBreedablesSpriteService Sprites
+
+<tr class="group">
+    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky left-0 h-6 bg-theme-white-500 p-0 group-hover:bg-theme-primary-100" />
+
+    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky bg-theme-white-500 whitespace-nowrap p-0 group-hover:bg-theme-primary-100">
+        <Body>
+            <center>
+                <img class="scale-[.8]" src="@Sprites.GetSerebiiSpriteUri(Form).ToString()" loading="lazy" />
+            </center>
+        </Body>
+    </HomeBallsEntriesCell>
+
+    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky bg-theme-white-500 whitespace-nowrap pl-0 pr-1.5 py-0 group-hover:bg-theme-primary-100">
+        <Body>
+            <span>@Form.Id.SpeciesId</span>
+        </Body>
+    </HomeBallsEntriesCell>
+
+    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky bg-theme-white-500 whitespace-nowrap pl-0 pr-1.5 py-0 group-hover:bg-theme-primary-100">
+        <Body>
+            <span>@Form.Identifier</span>
+        </Body>
+    </HomeBallsEntriesCell>
+
+    @foreach (var cell in Row)
+    {
+        <HomeBallsEntriesCell
+            IsRenderedWhen="@(() => IsCellRenderedWhen(cell))"
+            OnInitializedTask="@(rerenderCell => OnCellInitializedAsync(rerenderCell, cell))"
+            Class="cursor-pointer w-8 p-0">
+            <Body>
+                <HomeBallsEntriesRowBall Cell="@cell" />
+            </Body>
+        </HomeBallsEntriesCell>
+    }
+
+    <HomeBallsEntriesCell Class="p-0" />
+</tr>
+
+@code
+{
+    IHomeBallsEntryBodyRow? _row;
+
+    [Parameter, EditorRequired]
+    public Int32 Index { get; init; }
+
+    public IHomeBallsEntryBodyRow Row => _row ??= Table.Rows[Index];
+
+    public IHomeBallsPokemonForm Form =>
+        Data.PokemonForms.IsLoaded ? Data.PokemonForms[Row.Id] :
+        Data.BreedablePokemonForms.IsLoaded ? Data.BreedablePokemonForms[Row.Id] :
+        throw new NullReferenceException();
+
+    protected override String ElementIdPrefix => $"entries";
+}

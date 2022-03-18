@@ -5,19 +5,18 @@ public abstract class HomeBallsBaseComponent :
     IHomeBallsComponent
 {
     IHomeBallsComponentIdService? _componentIds;
+    Int32 _id;
 
     [Inject]
     protected internal IHomeBallsComponentIdService ComponentIds
     {
         get => _componentIds ?? throw new NullReferenceException();
-        init => _componentIds = value;
+        init
+        {
+            _componentIds = value;
+            _id = ComponentIds.CreateNew();
+        }
     }
 
-    public virtual Int32 Id { get; protected internal set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        Id = ComponentIds.CreateNew();
-    }
+    public virtual Int32 Id => _id;
 }

@@ -1,0 +1,72 @@
+@inherits HomeBallsEntriesRowComponentBase<IHomeBallsEntryHeadRow, IHomeBallsEntryHeadCell>
+@inject IJSRuntime JSRuntime
+
+@if (Table.Header.Value != default)
+{
+    <tr>
+        <HomeBallsEntriesCell
+            CreateElementId="@CreateLeftElementId"
+            OnAfterRenderTask="@OnCellAfterRenderAsync"
+            Class="sticky z-20 bg-theme-white-500 border-b border-theme-black-200" />
+
+        <HomeBallsEntriesCell
+            CreateElementId="@CreateLeftElementId"
+            OnAfterRenderTask="@OnCellAfterRenderAsync"
+            Class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200 whitespace-nowrap" />
+
+        <HomeBallsEntriesCell
+            CreateElementId="@CreateLeftElementId"
+            OnAfterRenderTask="@OnCellAfterRenderAsync"
+            Class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200 whitespace-nowrap" />
+
+        <HomeBallsEntriesCell
+            CreateElementId="@CreateLeftElementId"
+            OnAfterRenderTask="@OnCellAfterRenderAsync"
+            Class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200 whitespace-nowrap" />
+
+        @foreach (var cell in Table.Header.Value)
+        {
+            <HomeBallsEntriesCell
+                CreateElementId="@CreateElementId"
+                IsRenderedWhen="@(() => IsCellRenderedWhen(cell))"
+                OnInitializedTask="@(rerenderCell => OnCellInitializedAsync(rerenderCell, cell))"
+                OnAfterRenderTask="@OnCellAfterRenderAsync"
+                class="sticky z-10 w-8 bg-theme-white-500 border-b border-theme-black-200 p-0">
+                <Body>
+                    <HomeBallsEntriesHeaderBall Cell="@cell" />
+                </Body>
+            </HomeBallsEntriesCell>
+        }
+
+        <HomeBallsEntriesCell
+            CreateElementId="@CreateElementId"
+            OnAfterRenderTask="@OnCellAfterRenderAsync"
+            Class="sticky z-10 bg-theme-white-500 border-b border-theme-black-200" />
+    </tr>
+}
+
+@code
+{
+    protected override string ElementIdPrefix => "entries-head";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Table.Header.ValueChanged += OnHeaderChanged;
+    }
+
+    protected virtual void OnHeaderChanged(
+        Object? sender,
+        PropertyChangedEventArgs<IHomeBallsEntryHeadRow?> e) =>
+        StateHasChanged();
+
+    protected virtual async Task OnCellAfterRenderAsync(
+        Boolean isFirstRender,
+        String elementId)
+    {
+        if (!String.IsNullOrWhiteSpace(elementId))
+            await JSRuntime.InvokeVoidAsync(
+                "updateEntriesElementPositionById",
+                new Object?[] { elementId });
+    }
+}

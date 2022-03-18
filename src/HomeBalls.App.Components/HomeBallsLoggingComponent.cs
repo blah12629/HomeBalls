@@ -16,15 +16,13 @@ public abstract class HomeBallsLoggingComponent :
     protected internal ILogger Logger => _logger ??=
         LoggerFactory.CreateLogger(GetType());
 
-    new public virtual Int32 Id
-    {
-        get => base.Id;
-        protected internal set
-        {
-            base.Id = value;
-            EventId = new(base.Id);
-        }
-    }
-
     public EventId EventId { get; private set; }
+
+    protected internal virtual void LogInformation(EventId eventId, Exception? exception, String? message, params Object?[] args) => Logger.LogInformation(eventId, exception, message, args);
+
+    protected internal virtual void LogInformation(EventId eventId, String? message, params Object?[] args) => Logger.LogInformation(eventId, message, args);
+
+    protected internal virtual void LogInformation(Exception? exception, String? message, params Object?[] args) => LogInformation(EventId, exception, message, args);
+
+    protected internal virtual void LogInformation(String? message, params Object?[] args) => LogInformation(EventId, message, args);
 }

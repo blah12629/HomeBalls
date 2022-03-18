@@ -1,9 +1,0 @@
-@inherits HomeBallsLoggingComponent
-@inject IReadOnlyList<IHomeBallsAppCateogry> Categories
-
-<div class="border-b border-theme-primary-500 min-w-full w-max text-sm lg:text-base font-semibold px-2 lg:px-3.5">
-    @foreach (var category in Categories)
-    {
-        <HomeBallsAppCategoryTab Category="@category" />
-    }
-</div>

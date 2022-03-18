@@ -1,0 +1,11 @@
+@inherits HomeBallsMenuLayout
+@inject IHomeBallsEdit Edit
+
+@{ base.BuildRenderTree(__builder); }
+
+@code
+{
+    protected override RenderFragment Body => @<div>edit</div>;
+
+    protected override IHomeBallsAppTab Tab => Edit;
+}

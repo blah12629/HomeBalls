@@ -1,0 +1,19 @@
+@inherits HomeBallsLoggingComponent
+@inject IHomeBallsAppSettings Settings
+
+<div class="table h-full col-span-10">
+    <div class="table-cell align-middle">
+        <HomeBallsSettingsHeader>
+            <Label>
+                <span class="align-sub">Balls</span>
+            </Label>
+            <Toggle>
+                <HomeBallsSettingsCheckbox IsToggled="@Settings.EntryTable.BallIdsShown.IsUsingDefault" />
+            </Toggle>
+        </HomeBallsSettingsHeader>
+
+        <hr class="mx-3 my-1 border-t border-theme-black-200" />
+
+        <HomeBallsBallSettingsBody />
+    </div>
+</div>

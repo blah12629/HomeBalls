@@ -1,0 +1,64 @@
+@inherits HomeBallsEntriesComponentBase
+ 
+@if (IsRenderedWhen())
+{
+    @if (String.IsNullOrWhiteSpace(Class))
+    {
+        if (String.IsNullOrWhiteSpace(ElementId)) { <td>@Body</td> }
+        else { <td id="@ElementId">@Body</td> }
+    }
+
+    else
+    {
+        if (String.IsNullOrWhiteSpace(ElementId)) { <td class="@Class">@Body</td> }
+        else { <td id="@ElementId" class="@Class">@Body</td> }
+    }
+}
+
+
+@code
+{
+    public delegate Task OnInitializedDelegate(Action rerenderAction);
+
+    Func<Int32, String>? _createElementId;
+
+    [Parameter]
+    public String? Class { get; init; }
+
+    [Parameter]
+    public RenderFragment? Body { get; init; }
+
+    [Parameter]
+    public Func<Int32, String>? CreateElementId
+    {
+        get => _createElementId;
+        init
+        {
+            _createElementId = value;
+            ElementId = CreateElementId?.Invoke(Id);
+        }
+    }
+
+    [Parameter]
+    public Func<Boolean> IsRenderedWhen { get; init; } = () => true;
+
+    [Parameter]
+    public OnInitializedDelegate? OnInitializedTask { get; init; }
+
+    [Parameter]
+    public Func<Boolean, String?, Task>? OnAfterRenderTask { get; init; }
+
+    protected String? ElementId { get; init; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (OnInitializedTask != default) await OnInitializedTask(StateHasChanged);
+    }
+
+    protected override async Task OnAfterRenderAsync(Boolean firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (OnAfterRenderTask != default) await OnAfterRenderTask(firstRender, ElementId);
+    }
+}

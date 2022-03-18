@@ -93,11 +93,14 @@ module.exports = {
           }
         }
       },
+      fontSize: {
+        '0': [ '0rem/* 0px */', '0rem/* 0px */' ]
+      },
       keyframes: {
         'spin-partial': {
           '0%, 75%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
-        },
+        }
       },
       minWidth: {
         8: '2rem/* 32px */;',
@@ -105,6 +108,9 @@ module.exports = {
         20: '5rem/* 80px */;',
         24: '6rem/* 96px */;',
         36: 'rem/* 32px */;',
+      },
+      maxHeight: {
+        'none': 'none'
       },
       spacing: {
         0.75: '0.1875rem/* 3px */;',
@@ -115,6 +121,10 @@ module.exports = {
         128: '32rem/* 512px */;',
         160: '40rem/* 640px */;',
       },
+      transitionProperty: {
+        'height': 'height',
+        'width': 'width'
+      }
     },
   },
   variants: {

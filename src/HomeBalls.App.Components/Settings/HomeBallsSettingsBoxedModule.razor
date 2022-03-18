@@ -1,0 +1,31 @@
+@inherits HomeBallsLoggingComponent
+
+<div class="@Class">
+    <div class="w-full h-full table rounded-lg box-border border-2 border-theme-black-100 px-1.5 py-1">
+        <div class="table-cell align-middle">
+            @if (Header != default) { @Header }
+
+            <hr class="mx-3 my-1 border-t-2 border-theme-black-100" />
+
+            @if (Body != default) { @Body }
+        </div>
+    </div>
+</div>
+
+@code
+{
+    String? _class;
+
+    [Parameter]
+    public RenderFragment? Header { get; init; }
+
+    [Parameter]
+    public RenderFragment? Body { get; init; }
+
+    [Parameter]
+    public String Class
+    {
+        get => _class ?? throw new NullReferenceException();
+        init => _class = value;
+    }
+}

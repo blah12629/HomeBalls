@@ -1,0 +1,11 @@
+@using CEo.Pokemon.HomeBalls.App.Components.Loading
+@inherits HomeBallsRootComponent
+
+@{ base.BuildRenderTree(__builder); }
+
+@code
+{
+    IReadOnlyList<Type> _componentTypes = new[] { typeof(HomeBallsLoading) };
+
+    protected override IReadOnlyList<Type> ComponentTypes => _componentTypes;
+}

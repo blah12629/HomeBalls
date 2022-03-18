@@ -1,0 +1,16 @@
+@using CEo.Pokemon.HomeBalls.App.Components.Settings
+@inherits HomeBallsMenuLayout
+@inject IHomeBallsAppSettings Settings
+
+@{ base.BuildRenderTree(__builder); }
+
+@code
+{
+    protected override RenderFragment Body => builder =>
+    {
+        builder.OpenComponent<HomeBallsSettings>(0);
+        builder.CloseComponent();
+    };
+
+    protected override IHomeBallsAppTab Tab => Settings;
+}

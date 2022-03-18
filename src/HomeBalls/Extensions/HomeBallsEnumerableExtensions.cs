@@ -27,6 +27,28 @@ public static class HomeBallsEnumerableExtensions
             .Invoke(default, new Object?[] { elements }) as dynamic ??
             throw new InvalidCastException();
 
+    public static IEnumerable<IEnumerable<T>> SplitWhen<T>(
+        this IEnumerable<T> elements,
+        Func<T, Boolean> predicate)
+    {
+        var chunk = new List<T> { };
+
+        foreach (var element in elements)
+        {
+            chunk.Add(element);
+            if (predicate(element)) yield return chunkAsReadOnly();
+        }
+
+        if (chunk.Count > 0) yield return chunkAsReadOnly();
+
+        IReadOnlyList<T> chunkAsReadOnly()
+        {
+            var readOnly = chunk.AsReadOnly();
+            chunk = new List<T> { };
+            return readOnly;
+        }
+    }
+
     public static IEnumerable<Object> ToList(
         this IEnumerable elements,
         Type targetType) =>

@@ -1,0 +1,36 @@
+@inherits HomeBallsEntriesCellComponentBase<IHomeBallsEntryHeadCell>
+
+@if (State.HoveredBallId.Value == Ball.Id)
+{
+    <center class="w-8 min-h-[24px] h-full mt-px -mb-px border-b-2 border-theme-primary-500 pt-px">
+        @BallFragment
+    </center>
+}
+
+else
+{
+    <center class="w-8 min-h-[24px] h-full mt-px -mb-px border-b-2 border-transparent pt-px">
+        @BallFragment
+    </center>
+}
+
+@code
+{
+    protected internal override RenderFragment BallFragment => __builder =>
+    {
+        <HomeBallsEntriesBallSprite Ball="@Ball" />
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        State.HoveredBallId.ValueChanged += OnHoveredBallIdChanged;
+    }
+
+    protected virtual void OnHoveredBallIdChanged(
+        Object? sender,
+        PropertyChangedEventArgs<UInt16?> e)
+    {
+        if (e.OldValue == Ball.Id || e.NewValue == Ball.Id) StateHasChanged();
+    }
+}

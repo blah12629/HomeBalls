@@ -1,0 +1,20 @@
+@inherits HomeBallsEntriesComponentBase
+@inject IHomeBallsBreedablesSpriteService Sprites
+
+<img class="inline-block object-contain w-6 h-6" src="@SpriteUrl" />
+
+@code
+{
+    IHomeBallsItem? _ball;
+    String? _spriteUrl;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsItem Ball
+    {
+        get => _ball ?? throw new NullReferenceException();
+        init => (_ball, _spriteUrl) = (value, default);
+    }
+
+    protected virtual String SpriteUrl => _spriteUrl ??=
+        Sprites.GetBallSpriteUri(Ball).ToString();
+}

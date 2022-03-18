@@ -10,6 +10,9 @@ internal static class _Values
 
     public const String LureThemeId = "lure";
 
+    public static IReadOnlyList<String> ThemeIds { get; } =
+        new List<String> { DreamThemeId, MoonThemeId, LureThemeId }.AsReadOnly();
+
     public const String UpdateThemeFunctionId = "updateTheme";
 
     public const String LocalStorageSettingsKey = "settings";
@@ -22,4 +25,12 @@ internal static class _Values
 
     public const String HomeSpriteBaseAddress =
         "https://projectpokemon.org/images/sprites-models/homeimg/";
+
+    public const String AboutTabEnglishName = "About";
+
+    public const String TradeTabEnglishName = "Trade";
+
+    public const String EditTabEnglishName = "Edit";
+
+    public const String SettingsTabEnglishName = "Settings";
 }

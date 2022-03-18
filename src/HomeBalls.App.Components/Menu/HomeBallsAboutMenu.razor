@@ -1,0 +1,11 @@
+@inherits HomeBallsMenuLayout
+@inject IHomeBallsAppAbout About
+
+@{ base.BuildRenderTree(__builder); }
+
+@code
+{
+    protected override RenderFragment Body => @<div>about</div>;
+
+    protected override IHomeBallsAppTab Tab => About;
+}

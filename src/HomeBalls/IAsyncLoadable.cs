@@ -2,6 +2,8 @@ namespace CEo.Pokemon.HomeBalls;
 
 public interface IAsyncLoadable
 {
+    Boolean IsLoaded { get; }
+
     ValueTask EnsureLoadedAsync(CancellationToken cancellationToken = default);
 }
 

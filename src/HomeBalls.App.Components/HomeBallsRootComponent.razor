@@ -1,0 +1,49 @@
+@inherits HomeBallsLoggingComponent
+@inject IHomeBallsAppStateContainer State
+@inject IHomeBallsAppSettings Settings
+@inject IHomeBallsLoadableDataSource Data
+@inject IHomeBallsLocalStorageEntryCollection Entries
+@inject IHomeBallsEntryTable Table
+@inject IHomeBallsAppSettingsLoader SettingsLoader
+@inject IHomeBallsTableGenerator TableGenerator
+@inject IHomeBallsEntryRowFactory ColumnFactory
+
+<Router AppAssembly="@GetType().Assembly">
+    <Found Context="routeData"><LayoutView>@FoundLayout</LayoutView></Found>
+    <NotFound><LayoutView>@NotFoundLayout</LayoutView></NotFound>
+</Router>
+
+@code
+{
+    protected virtual Byte ExpectedRootComponentsCount => 4;
+
+    protected virtual IReadOnlyList<Type> ComponentTypes =>
+        throw new NotImplementedException();
+
+    protected virtual RenderFragment DefaultLayout => builder =>
+    {
+        for (var i = 0; i < ComponentTypes.Count; i ++)
+        {
+            builder.OpenComponent(i, ComponentTypes[i]);
+            builder.CloseComponent();
+        }
+    };
+
+    protected virtual RenderFragment FoundLayout => DefaultLayout;
+
+    protected virtual RenderFragment NotFoundLayout => DefaultLayout;
+
+    protected override async Task OnAfterRenderAsync(Boolean firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (!firstRender) return;
+
+        State.RootComponentsRendered.Add(GetType());
+        if (State.RootComponentsRendered.Count < ExpectedRootComponentsCount) return;
+
+        await Task.Run(() => SettingsLoader.LoadSettingsAsync(Settings));
+        await Task.Run(() => TableGenerator.LoadTableDataAsync(State, Data, Entries));
+        await Task.Run(() => TableGenerator.GenerateRowsAsync(State, Settings, Data, Entries, ColumnFactory, Table));
+        await Task.Run(() => TableGenerator.PostGenerationAsync(State, Data));
+    }
+}

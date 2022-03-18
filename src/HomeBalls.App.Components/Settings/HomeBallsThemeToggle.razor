@@ -1,0 +1,46 @@
+@inherits HomeBallsSettingsToggleBase
+@inject IHomeBallsBreedablesSpriteService Sprites
+
+<button onclick="@OnSelectionClicked" class="group w-6 h-6 overflow-hidden mx-0.5 rounded-md bg-theme-white-500 hover:bg-theme-primary-100 active:bg-theme-primary-100 lg:w-7 lg:h-7">
+    @if (IsSelected)
+    {
+        <img src="@SpriteUrl" class="inline-block object-contain w-6 h-6 lg:-mt-1" />
+    }
+
+    else
+    {
+        <img src="@SpriteUrl" class="grayscale inline-block object-contain w-6 h-6 opacity-60 group-hover:opacity-100 group-active:opacity-100 lg:-mt-1" />
+    }
+</button>
+
+@code
+{
+    String? _themeId;
+
+    [Parameter, EditorRequired]
+    public String ThemeId
+    {
+        get => _themeId ?? throw new NotImplementedException();
+        init => _themeId = value;
+    }
+
+    protected virtual Uri SpriteUrl => Sprites.GetBallSpriteUri(ThemeId);
+
+    protected virtual Boolean IsSelected => Settings.Theme.Id.Value == ThemeId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.Theme.Id.ValueChanged += OnThemeIdChanged;
+    }
+
+    protected virtual void OnSelectionClicked(MouseEventArgs e) =>
+        Settings.Theme.Id.Value = ThemeId;
+
+    protected virtual void OnThemeIdChanged(
+        Object? sender,
+        PropertyChangedEventArgs<String> e)
+    {
+        if (e.OldValue == ThemeId || e.NewValue == ThemeId) StateHasChanged();
+    }
+}

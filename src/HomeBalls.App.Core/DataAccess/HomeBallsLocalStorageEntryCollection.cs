@@ -58,7 +58,7 @@ public class HomeBallsLocalStorageEntryCollection :
 
     protected internal ILogger? Logger { get; }
 
-    protected internal Boolean IsLoaded { get; set; }
+    public virtual Boolean IsLoaded { get; protected internal set; }
 
     String IIdentifiable.Identifier => Identifier;
 

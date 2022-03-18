@@ -3,9 +3,10 @@
 global using CEo.Pokemon.HomeBalls.Collections;
 global using CEo.Pokemon.HomeBalls.Comparers;
 global using CEo.Pokemon.HomeBalls.Entities;
-global using CEo.Pokemon.HomeBalls.App.Categories;
 global using CEo.Pokemon.HomeBalls.App.DataAccess;
 global using CEo.Pokemon.HomeBalls.App.Entries;
+global using CEo.Pokemon.HomeBalls.App.Settings;
+global using CEo.Pokemon.HomeBalls.App.Views;
 global using CEo.Pokemon.HomeBalls.ProtocolBuffers;
 global using static CEo.Pokemon.HomeBalls.App._Values;
 

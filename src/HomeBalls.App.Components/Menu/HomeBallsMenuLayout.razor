@@ -1,0 +1,26 @@
+@inherits HomeBallsLoggingComponent
+
+@if (Tab.IsSelected.Value)
+{
+    <div class="max-h-[50vh] overflow-auto border-b border-theme-black-200 lg:max-h-none lg:border-b-0 lg:overflow-visible">
+        @Body
+    </div>
+}
+
+@code
+{
+    protected virtual RenderFragment Body => throw new NotImplementedException();
+
+    protected virtual IHomeBallsAppTab Tab => throw new NotImplementedException();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Tab.IsSelected.ValueChanged += OnSelectionChanged;
+    }
+
+    protected virtual void OnSelectionChanged(
+        Object? sender,
+        PropertyChangedEventArgs<Boolean> e) =>
+        StateHasChanged();
+}

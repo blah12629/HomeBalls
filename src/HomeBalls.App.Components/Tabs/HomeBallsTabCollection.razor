@@ -1,0 +1,12 @@
+@inherits HomeBallsTabComponentBase
+
+<div class="flex-grow">
+    @for (var i = 0; i < Tabs.Count; i ++)
+    {
+        <HomeBallsTabButton Tab="@Tabs[i]" />
+    }
+</div>
+
+<div class="flex-grow-0">
+    <HomeBallsTabClose />
+</div>

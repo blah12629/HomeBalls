@@ -1,0 +1,40 @@
+@inherits HomeBallsEntriesComponentBase
+
+<table class="min-w-full border-separate table-fixed border-spacing-0 text-xs">
+    <thead>
+        <HomeBallsEntriesHeader />
+    </thead>
+
+    <tbody>
+        @for (var index = 0; index < Table.Rows.Count; index ++)
+        {
+            <HomeBallsEntriesRow Index="@index" />
+        }
+    </tbody>
+</table>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Table.Header.ValueChanged += OnHeaderChanged;
+        Table.Rows.CollectionChanged += OnRowsChanged;
+    }
+
+    protected virtual void OnHeaderChanged(
+        Object? sender,
+        PropertyChangedEventArgs<IHomeBallsEntryHeadRow?> e) =>
+        StateHasChanged();
+
+    protected virtual void OnRowsChanged(
+        Object? sender,
+        NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action != NotifyCollectionChangedAction.Add)
+            throw new NotSupportedException();
+
+        StateHasChanged();
+    }
+}
+

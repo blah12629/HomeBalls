@@ -1,0 +1,11 @@
+@inherits HomeBallsMenuLayout
+@inject IHomeBallsTrade Trade
+
+@{ base.BuildRenderTree(__builder); }
+
+@code
+{
+    protected override RenderFragment Body => @<div>trade</div>;
+
+    protected override IHomeBallsAppTab Tab => Trade;
+}

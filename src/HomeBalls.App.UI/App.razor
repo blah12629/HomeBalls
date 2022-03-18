@@ -4,25 +4,26 @@
 @inject IHomeBallsLocalStorageEntryCollection Entries
 @inject IHomeBallsAppSettingsLoader SettingsLoader
 @inject IHomeBallsTableGenerator TableGenerator
-@inject IHomeBallsEntryColumnFactory ColumnFactory
+@inject IHomeBallsEntryRowFactory ColumnFactory
 @inject IHomeBallsEntryTable Table
 
 <Router AppAssembly="@typeof(App).Assembly">
 
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(HomeBallsAppLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        @* <RouteView RouteData="@routeData" DefaultLayout="@typeof(HomeBallsMainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" /> *@
     </Found>
 
     <NotFound>
-        <LayoutView Layout="@typeof(HomeBallsAppLayout)">
+        @* <LayoutView Layout="@typeof(HomeBallsMainLayout)">
             <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
+        </LayoutView> *@
     </NotFound>
 
 </Router>
 
-@code {
+@code
+{
     protected override async Task OnAfterRenderAsync(Boolean firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -30,7 +31,7 @@
         if (!firstRender) return;
         await Task.Run(() => SettingsLoader.LoadSettingsAsync(Settings));
         await Task.Run(() => TableGenerator.LoadTableDataAsync(State, Data, Entries));
-        await Task.Run(() => TableGenerator.GenerateColumnsAsync(State, Settings, Data, Entries, ColumnFactory, Table));
+        await Task.Run(() => TableGenerator.GenerateRowsAsync(State, Settings, Data, Entries, ColumnFactory, Table));
         await Task.Run(() => TableGenerator.PostGenerationAsync(State, Data));
     }
 }

@@ -7,8 +7,6 @@ public interface IHomeBallsLoadableDataSet<TKey, out TRecord> :
     where TKey : notnull, IEquatable<TKey>
     where TRecord : notnull, IKeyed<TKey>, IIdentifiable
 {
-    Boolean IsLoaded { get; }
-
     IHomeBallsLoadableDataSet<TKey, TRecord> Clear();
 }
 

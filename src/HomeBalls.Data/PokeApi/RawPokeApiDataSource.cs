@@ -247,6 +247,8 @@ public partial class RawPokeApiDataSource :
 
     protected internal String DataRoot { get; set; }
 
+    public virtual Boolean IsLoaded => Loadables.IsAllLoaded();
+
     public event EventHandler<TimedActionStartingEventArgs>? DataLoading;
 
     public event EventHandler<TimedActionEndedEventArgs>? DataLoaded;

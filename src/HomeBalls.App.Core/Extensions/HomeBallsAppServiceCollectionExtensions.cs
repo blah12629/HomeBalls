@@ -8,7 +8,7 @@ public static class HomeBallsAppServiceCollectionExtensions
         ServiceLifetime lifetime = ServiceLifetime.Scoped) =>
         services.AddHomeBallsServices(lifetime)
             .AddStateContainer(lifetime)
-            .AddCategories(lifetime)
+            .AddTabs(lifetime)
             .AddHttpClients(baseAddress, lifetime)
             .AddDataAccessServices(lifetime)
             .AddEntryTableServices(lifetime)
@@ -25,17 +25,21 @@ public static class HomeBallsAppServiceCollectionExtensions
                     services.GetService<ILogger<HomeBallsAppStateContainer>>()),
                 lifetime);
 
-    public static IServiceCollection AddCategories(
+    public static IServiceCollection AddTabs(
         this IServiceCollection services,
         ServiceLifetime lifetime) =>
         services
-            .Add<IHomeBallsAppNavigation>(
-                services => new HomeBallsAppNavigation(
-                    services.GetService<ILogger<HomeBallsAppNavigation>>()),
+            .Add<IHomeBallsAppAbout>(
+                services => new HomeBallsAppAbout(
+                    services.GetService<ILogger<HomeBallsAppAbout>>()),
                 lifetime)
-            .Add<IHomeBallsAppEdit>(
-                services => new HomeBallsAppEdit(
-                    services.GetService<ILogger<HomeBallsAppEdit>>()),
+            .Add<IHomeBallsTrade>(
+                services => new HomeBallsTrade(
+                    services.GetService<ILogger<HomeBallsTrade>>()),
+                lifetime)
+            .Add<IHomeBallsEdit>(
+                services => new HomeBallsEdit(
+                    services.GetService<ILogger<HomeBallsEdit>>()),
                 lifetime)
             .Add<IHomeBallsAppSettings>(
                 services => new HomeBallsAppSettings(
@@ -43,17 +47,19 @@ public static class HomeBallsAppServiceCollectionExtensions
                     services.GetRequiredService<IJSRuntime>(),
                     services.GetService<ILoggerFactory>()),
                 lifetime)
-            .Add<IReadOnlyList<IHomeBallsAppCateogry>>(services =>
-                new List<IHomeBallsAppCateogry>
-                {
-                    services.GetRequiredService<IHomeBallsAppNavigation>(),
-                    services.GetRequiredService<IHomeBallsAppEdit>(),
+            .Add<IHomeBallsAppTabList>(
+                services => new HomeBallsAppTabList(
+                    services.GetRequiredService<IHomeBallsAppAbout>(),
+                    services.GetRequiredService<IHomeBallsTrade>(),
+                    services.GetRequiredService<IHomeBallsEdit>(),
                     services.GetRequiredService<IHomeBallsAppSettings>(),
-                }.AsReadOnly(),
+                    services.GetService<ILogger<HomeBallsAppTabList>>()),
                 lifetime)
-            .Add<IReadOnlyCollection<IHomeBallsAppCateogry>>(
-                services => services
-                    .GetRequiredService<IReadOnlyList<IHomeBallsAppCateogry>>(),
+            .Add<IReadOnlyList<IHomeBallsAppTab>>(
+                services => services.GetRequiredService<IHomeBallsAppTabList>(),
+                lifetime)
+            .Add<IReadOnlyCollection<IHomeBallsAppTab>>(
+                services => services.GetRequiredService<IHomeBallsAppTabList>(),
                 lifetime);
 
     public static IServiceCollection AddHttpClients(
@@ -144,12 +150,12 @@ public static class HomeBallsAppServiceCollectionExtensions
         services
             .Add<IHomeBallsEntryTable>(
                 services => new HomeBallsEntryTable(
-                    services.GetService<ILoggerFactory>()),
+                    services.GetService<ILogger<HomeBallsEntryTable>>()),
                 lifetime)
-            .Add<IHomeBallsEntryColumnFactory>(
-                services => new HomeBallsEntryColumnFactory(
-                    services.GetRequiredService<IComparer<IHomeBallsItem>>(),
-                    services.GetRequiredService<IComparer<IHomeBallsPokemonForm>>(),
+            .Add<IHomeBallsEntryRowFactory>(
+                services => new HomeBallsEntryRowFactory(
+                    services.GetRequiredService<IHomeBallsPokemonFormKeyComparer>(),
+                    services.GetRequiredService<IHomeBallsItemIdComparer>(),
                     services.GetService<ILoggerFactory>()),
                 lifetime);
 
@@ -164,6 +170,11 @@ public static class HomeBallsAppServiceCollectionExtensions
             .Add<IHomeBallsBreedablesFormIdentifierService>(
                 services => new HomeBallsBreedablesFormIdentifierService(
                     services.GetService<ILogger<HomeBallsBreedablesFormIdentifierService>>()),
+                lifetime)
+            .Add<IHomeBallsStringService>(
+                services => new HomeBallsStringService(
+                    services.GetRequiredService<IHomeBallsAppSettings>(),
+                    services.GetService<ILogger<HomeBallsStringService>>()),
                 lifetime);
 
     public static IServiceCollection AddAppStartupServices(
@@ -184,7 +195,7 @@ public static class HomeBallsAppServiceCollectionExtensions
         ServiceLifetime lifetime) =>
         services
             .Add<IHomeBallsComponentIdService>(
-                services => new HomeBallsComponentIdServices(
-                    services.GetService<ILogger<HomeBallsComponentIdServices>>()),
+                services => new HomeBallsComponentIdService(
+                    services.GetService<ILogger<HomeBallsComponentIdService>>()),
                 lifetime);
 }

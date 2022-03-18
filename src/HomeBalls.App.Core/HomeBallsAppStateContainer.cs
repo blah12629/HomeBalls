@@ -2,13 +2,14 @@ namespace CEo.Pokemon.HomeBalls.App;
 
 public interface IHomeBallsAppStateContainer
 {
-    IMutableNotifyingProperty<String?> ActiveCategoryId { get; }
+    ICollection<Type> RootComponentsRendered {get; }
 
     IMutableNotifyingProperty<String?> LoadingMessage { get; }
+
+    IMutableNotifyingProperty<UInt16?> HoveredBallId { get; }
 }
 
-public class HomeBallsAppStateContainer :
-    IHomeBallsAppStateContainer
+public class HomeBallsAppStateContainer : IHomeBallsAppStateContainer
 {
     public HomeBallsAppStateContainer(
         ILogger? logger = default)
@@ -16,76 +17,18 @@ public class HomeBallsAppStateContainer :
         EventRaiser = new EventRaiser().RaisedBy(this);
         Logger = logger;
 
-        ActiveCategoryId = new MutableNotifyingProperty<String?>(default, nameof(ActiveCategoryId), EventRaiser, Logger);
         LoadingMessage = new MutableNotifyingProperty<String?>(default, nameof(LoadingMessage), EventRaiser, Logger);
+        HoveredBallId = new MutableNotifyingProperty<UInt16?>(default, nameof(HoveredBallId), EventRaiser, Logger);
+        RootComponentsRendered = new HashSet<Type> { };
     }
 
-    public IMutableNotifyingProperty<String?> ActiveCategoryId { get; }
+    public ICollection<Type> RootComponentsRendered { get; }
 
     public IMutableNotifyingProperty<String?> LoadingMessage { get; }
+
+    public IMutableNotifyingProperty<UInt16?> HoveredBallId { get; }
 
     protected internal IEventRaiser EventRaiser { get; }
 
     protected internal ILogger? Logger { get; }
 }
-
-// public class HomeBallsAppStateContainer :
-//     IHomeBallsAppStateContainer
-// {
-//     public HomeBallsAppStateContainer(
-//         ILocalStorageService localStorage,
-//         ILoggerFactory? loggerFactory = default)
-//     {
-//         LocalStorage = localStorage;
-
-//         LoggerFactory = loggerFactory;
-//         Logger = createLogger<HomeBallsAppStateContainer>();
-//         EventRaiser = new EventRaiser(createLogger<EventRaiser>()).RaisedBy(this);
-
-//         ActiveCategoryId = createObservable<String?>(default, nameof(ActiveCategoryId));
-//         LoadingMessage = createObservable<String?>(default, nameof(LoadingMessage));
-
-//         ILogger<T>? createLogger<T>() => LoggerFactory?.CreateLogger<T>();
-//         IObservableProperty<T> createObservable<T>(
-//             T defaultValue,
-//             String propertyName) =>
-//             new ObservableProperty<T>(
-//                 defaultValue,
-//                 propertyName,
-//                 $"appSettings.{propertyName.ToCamelCase()}",
-//                 EventRaiser,
-//                 Logger);
-//     }
-
-//     public IObservableProperty<String?> ActiveCategoryId { get; }
-
-//     public IObservableProperty<String?> LoadingMessage { get; }
-
-//     protected internal ILocalStorageService LocalStorage { get; }
-
-//     protected internal IEventRaiser EventRaiser { get; }
-
-//     protected internal ILogger? Logger { get; }
-
-//     protected internal ILoggerFactory? LoggerFactory { get; }
-
-//     public virtual async Task<HomeBallsAppStateContainer> EnsureLoadedAsync(
-//         CancellationToken cancellationToken = default)
-//     {
-//         await EnsureLoadedAsync(ActiveCategoryId, cancellationToken);
-//         return this;
-//     }
-
-//     public virtual async Task<HomeBallsAppStateContainer> EnsureLoadedAsync<T>(
-//         IObservableProperty<T> property,
-//         CancellationToken cancellationToken = default)
-//     {
-//         property.Value = typeof(T) == typeof(String) ?
-//             await LocalStorage.GetItemAsync<T>(property.Identifier, cancellationToken) :
-//             (T)(Object)await LocalStorage.GetItemAsStringAsync(
-//                 property.Identifier,
-//                 cancellationToken);
-
-//         return this;
-//     }
-// }

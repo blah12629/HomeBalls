@@ -1,5 +1,4 @@
 global using CEo.Pokemon.HomeBalls.App;
-global using CEo.Pokemon.HomeBalls.App.Categories;
 global using CEo.Pokemon.HomeBalls.App.DataAccess;
 global using CEo.Pokemon.HomeBalls.App.UI;
 global using static CEo.Pokemon.HomeBalls.App.UI._Values;

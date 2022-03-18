@@ -40,4 +40,9 @@
   .border-spacing-0 {
     border-spacing: 0;
   }
+
+  .shadow-entry-td {
+    box-shadow: 2px 0px 4px rgba(0,0,0,0.05);
+    clip-path: inset(0px -15px 0px 0px);
+  }
 }
