@@ -1,4 +1,5 @@
 window.elementIds = {
+    appRoot: "app-root",
     topContainer: "top-container",
     entries: {
         header: {
@@ -11,9 +12,15 @@ window.elementIds = {
         rows: []
     }
 }
-window.elements = { topContainer: null, entries: { header: { number: null, sprite: null, name: null } } };
+
+window.elements = {
+    appRoot: null,
+    topContainer: null,
+    entries: { header: { number: null, sprite: null, name: null } }
+};
 window.styles = { topContainer: null, entries: { header: { number: null, sprite: null, name: null } } };
 window.rectangles = { topContainer: null, entries: { header: { number: null, sprite: null, name: null } } }
+window.scrollPosition = { appRoot: { x: 0, y: 0 } }
 
 window.resizes = {
     topContainer: new ResizeObserver((entries, observer) => {
@@ -43,8 +50,29 @@ window.resizes = {
 }
 
 updateTopContainerElement();
+updateAppRootElement();
+window.elements.appRoot.onscroll = element => {
+    let previousPosition = window.scrollPosition.appRoot;
+    let currentPosition = { x: element.target.scrollLeft, y: element.target.scrollTop };
+    window.scrollPosition.appRoot = currentPosition;
+
+    let isLeftFlushed = { before: previousPosition.x <= 0, now: currentPosition.x <= 0 };
+    if (isLeftFlushed.before == isLeftFlushed.now) return;
+
+    console.log(`Scrolled by x. ${previousPosition.x}\t${currentPosition.x}`);
+    getEntriesShadowedIds().forEach(id => tryUpdateEntriesShadow(id));
+    // if name is not null and has width: add shadow, return
+    // else if sprite is not null and has width: add shadow, return
+    // else if number is not null and has width: add shadow, return;
+    //
+    // do for header then all rows
+    // also add shadow to newly registered header and row
+};
 window.resizes.topContainer.observe(document.getElementById(window.elementIds.topContainer));
 
+function updateAppRootElement() {
+    window.elements.appRoot = document.getElementById(window.elementIds.appRoot);
+}
 function updateTopContainerElement() {
     window.elements.topContainer = document.getElementById(window.elementIds.topContainer);
     window.styles.topContainer = window.getComputedStyle(window.elements.topContainer);
@@ -80,6 +108,13 @@ function getEntriesNameIds() {
 function getEntriesColumnIds(headerId, rowMap) {
     return [headerId].concat(window.elementIds.entries.rows.map(rowMap)).filter(id => id !== null);
 }
+function getEntriesShadowedIds() {
+    let headerIds = window.elementIds.entries.header;
+    return [headerIds.number, headerIds.sprite, headerIds.name]
+        .concat(window.elementIds.entries.rows.flatMap(row =>
+            [ row.number, row.sprite, row.name ]))
+        .filter(id => id !== null);
+}
 
 function registerHeaderLeftPaddingId(id) {
     window.elementIds.entries.header.padding.left = id;
@@ -93,6 +128,7 @@ function registerHeaderNumberId(id) {
     window.elementIds.entries.header.number = id;
     updateEntryHeaderNumberElement();
     tryUpdateHeaderTop(id);
+    tryUpdateEntriesShadow(id);
     window.resizes.entries.number.observe(document.getElementById(id));
 }
 function registerHeaderSpriteId(id) {
@@ -100,12 +136,14 @@ function registerHeaderSpriteId(id) {
     updateEntryHeaderSpriteElement();
     tryUpdateHeaderTop(id);
     tryUpdateEntriesSpriteLeft(id);
+    tryUpdateEntriesShadow(id);
     window.resizes.entries.sprite.observe(document.getElementById(id));
 }
 function registerHeaderNameId(id) {
     window.elementIds.entries.header.name = id;
     tryUpdateHeaderTop(id);
     tryUpdateEntriesNameLeft(id);
+    tryUpdateEntriesShadow(id);
 }
 function registerHeaderBallId(id) {
     window.elementIds.entries.header.balls.push(id);
@@ -113,15 +151,22 @@ function registerHeaderBallId(id) {
 }
 
 function registerRowIndex(index) {
-    window.elementIds.entries.rows[index] = { sprite: null, name: null };
+    window.elementIds.entries.rows[index] = { number: null, sprite: null, name: null };
+}
+function registerRowNumberId(index, id) {
+    window.elementIds.entries.rows[index].number = id;
+    tryUpdateEntriesSpriteLeft(id);
+    tryUpdateEntriesShadow(id);
 }
 function registerRowSpriteId(index, id) {
     window.elementIds.entries.rows[index].sprite = id;
     tryUpdateEntriesSpriteLeft(id);
+    tryUpdateEntriesShadow(id);
 }
 function registerRowNameId(index, id) {
     window.elementIds.entries.rows[index].name = id;
     tryUpdateEntriesNameLeft(id);
+    tryUpdateEntriesShadow(id);
 }
 
 function tryUpdateHeaderTop(id) {
@@ -149,4 +194,11 @@ function tryUpdateEntriesNameLeft(id) {
         parseFloat(window.styles.entries.header.number.left) +
         window.rectangles.entries.header.sprite.width;
     element.style.left = `${left}px`;
+}
+
+function tryUpdateEntriesShadow(id) {
+    let element = document.getElementById(id);
+    if (element === null) return;
+
+    element.classList.toggle("shadow-entry-td", window.scrollPosition.appRoot.x > 0);
 }

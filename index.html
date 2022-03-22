@@ -40,7 +40,7 @@
   <!-- https://play.tailwindcss.com/FdcAKfIe8c?size=540x720 -->
 
   <div id="theme-root">
-    <div class="flex flex-col w-screen h-screen overflow-auto text-sm text-theme-black-500 lg:grid lg:grid-cols-10 lg:overflow-hidden lg:text-lg" style="grid-template-rows: auto 1fr;">
+    <div id="app-root" class="flex flex-col w-screen h-screen overflow-auto text-sm text-theme-black-500 lg:grid lg:grid-cols-10 lg:overflow-hidden lg:text-lg" style="grid-template-rows: auto 1fr;">
       <header class="flex-grow-0 col-span-10 sticky left-0 h-fit bg-theme-white-500 border-b border-theme-black-200 px-2.5 pt-[5px] pb-[3px] lg:px-4 lg:pt-3 lg:pb-2">
         <div class="inline-block align-middle">
           <div class="w-8 h-8 overflow-hidden lg:w-12 lg:h-12">
@@ -70,7 +70,7 @@
         </div>
       </header>
 
-      <div id="top-container" class="flex-grow-0 sticky left-0 top-0 z-30 border-theme-black-200 lg:col-span-4 lg:static lg:left-auto lg:top-auto lg:flex lg:flex-col lg:border-r lg:overflow-auto">
+      <div id="top-container" class="flex-grow-0 sticky left-0 top-0 z-80 border-theme-black-200 lg:col-span-4 lg:static lg:left-auto lg:top-auto lg:flex lg:flex-col lg:border-r lg:overflow-auto">
         <div class="sticky left-0 top-0 ">
           <nav id="tabs" class="sticky left-0 top-0 h-fit flex flex-row bg-theme-white-500 border-b border-theme-black-200 px-2 text-0 lg:pl-4 lg:pr-1.5">
             <div class="flex-grow">
@@ -115,11 +115,11 @@
 
       <div id="entries" class="flex-grow bg-theme-white-500 lg:col-span-6 lg:overflow-auto"></div>
 
-      <footer class="flex-grow-0 sticky left-0 bottom-0 z-30 bg-theme-white border-t border-theme-black-200 lg:hidden">
+      <footer class="flex-grow-0 sticky left-0 bottom-0 z-80 bg-theme-white border-t border-theme-black-200 lg:hidden">
         footer
       </footer>
 
-      <footer class="flex-grow-0 sticky left-0 z-30 bg-theme-white lg:hidden">
+      <footer class="flex-grow-0 sticky left-0 z-80 bg-theme-white lg:hidden">
         disclaimer
       </footer>
     </div>
