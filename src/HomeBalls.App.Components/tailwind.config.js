@@ -30,7 +30,7 @@ function computeChannel(key, alphas, channel, blackKey = '--color-black', whiteK
 
 module.exports = {
   content: [ '../HomeBalls.App*/**/*.{html,razor}' ],
-  safelist: [ 'theme-dream', 'theme-moon', 'theme-lure' ],
+  safelist: [ 'theme-dream', 'theme-moon', 'theme-lure', 'shadow-entry-td' ],
   darkMode: 'class', // false or 'media' or 'class'
   theme: {
     extend: {
@@ -124,7 +124,8 @@ module.exports = {
       transitionProperty: {
         'height': 'height',
         'width': 'width'
-      }
+      },
+      zIndex: { '60': '60', '70': '70', '80': '80' }
     },
   },
   variants: {

@@ -6,7 +6,7 @@
         <HomeBallsEntriesCell
             OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerHeaderLeftPaddingId"))">
             <Container>
-                <td id="@context.ContainerId" class="sticky left-0 z-20 min-w-[9px] min-h-[29px] h-[29px] bg-theme-white-500 border-b border-theme-black-200 md:min-w-[0px]" />
+                <td id="@context.ContainerId" class="sticky left-0 z-50 min-w-[9px] min-h-[29px] h-[29px] bg-theme-white-500 border-b border-theme-black-200 md:min-w-[0px]" />
             </Container>
         </HomeBallsEntriesCell>
 
@@ -16,7 +16,7 @@
             <Container>
                 @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingNumber.Value)
                 {
-                    <td id="@context.ContainerId" class="sticky left-[9px] z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200" />
+                    <td id="@context.ContainerId" class="sticky left-[9px] z-50 w-[1%] bg-theme-white-500 border-b border-theme-black-200" />
                 }
 
                 else { @context.HiddenContainer }
@@ -29,12 +29,12 @@
             <Container>
                 @if (ColumnIdentifierSettings.IsUsingDefault.Value)
                 {
-                    <td id="@context.ContainerId" class="sticky z-20 min-w-[0px] max-w-[0px] w-0 bg-theme-white-500 border-b border-theme-black-200 md:min-w-[68px] md:max-w-[68px] md:w-[68px]" />
+                    <td id="@context.ContainerId" class="sticky z-60 min-w-[0px] max-w-[0px] w-0 bg-theme-white-500 border-b border-theme-black-200 md:min-w-[68px] md:max-w-[68px] md:w-[68px]" />
                 }
 
                 else if(ColumnIdentifierSettings.IsShowingSprite.Value)
                 {
-                    <td id="@context.ContainerId" class="sticky z-20 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 border-b border-theme-black-200" />
+                    <td id="@context.ContainerId" class="sticky z-60 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 border-b border-theme-black-200" />
                 }
 
                 else { @context.HiddenContainer }
@@ -47,7 +47,7 @@
             <Container>
                 @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingName.Value)
                 {
-                    <td id="@context.ContainerId" class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200" />
+                    <td id="@context.ContainerId" class="sticky z-70 w-[1%] bg-theme-white-500 border-b border-theme-black-200" />
                 }
 
                 else { @context.HiddenContainer }
@@ -62,7 +62,7 @@
                 <Container>
                     @if (context.Content != default && IsBallCellShown(cell))
                     {
-                        <td id="@context.ContainerId" class="sticky z-10 w-9 bg-theme-white-500 border-b border-theme-black-200 px-1 py-0">
+                        <td id="@context.ContainerId" class="sticky z-40 w-9 bg-theme-white-500 border-b border-theme-black-200 px-1 py-0">
                             @context.Content
                         </td>
                     }

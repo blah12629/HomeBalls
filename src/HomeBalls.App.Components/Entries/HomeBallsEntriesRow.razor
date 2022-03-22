@@ -2,7 +2,8 @@
 @inject IHomeBallsBreedablesSpriteService Sprites
 
 <tr class="group">
-    <HomeBallsEntriesCell>
+    <HomeBallsEntriesCell
+        OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerRowNumberId"))">
         <Container>
             <td id="@context.ContainerId" class="sticky left-0 z-10 min-h-[29px] h-[29px] bg-theme-white-500 group-hover:bg-theme-primary-100" />
         </Container>
@@ -31,14 +32,14 @@
         <Container>
             @if (ColumnIdentifierSettings.IsUsingDefault.Value)
             {
-                <td id="@context.ContainerId" class="sticky z-10 min-w-[0px] max-w-[0px] w-[0px] bg-theme-white-500 p-0 group-hover:bg-theme-primary-100 md:min-w-[68px] md:max-w-[68px] md:w-[68px]">
+                <td id="@context.ContainerId" class="sticky z-20 min-w-[0px] max-w-[0px] w-[0px] bg-theme-white-500 p-0 group-hover:bg-theme-primary-100 md:min-w-[68px] md:max-w-[68px] md:w-[68px]">
                     @context.Content
                 </td>
             }
 
             else if (ColumnIdentifierSettings.IsShowingSprite.Value)
             {
-                <td id="@context.ContainerId" class="sticky z-10 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 p-0 group-hover:bg-theme-primary-100">
+                <td id="@context.ContainerId" class="sticky z-20 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 p-0 group-hover:bg-theme-primary-100">
                     @context.Content
                 </td>
             }
@@ -58,7 +59,7 @@
         <Container>
             @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingName.Value)
             {
-                <td id="@context.ContainerId" class="sticky z-10 bg-theme-white-500 px-1 py-0 whitespace-nowrap group-hover:bg-theme-primary-100">
+                <td id="@context.ContainerId" class="sticky z-30 bg-theme-white-500 px-1 py-0 whitespace-nowrap group-hover:bg-theme-primary-100">
                     @context.Content
                 </td>
             }
