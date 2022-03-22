@@ -7,49 +7,36 @@ public abstract class HomeBallsEntriesRowComponentBase<TRow, TCell> :
     where TRow : notnull, IHomeBallsEntryRow<TCell>
     where TCell : notnull, IHomeBallsEntryCell
 {
-    protected abstract String ElementIdPrefix { get; }
+    protected virtual IHomeBallsEntryColumnIdentifierSettings ColumnIdentifierSettings => Settings.EntryTable.ColumnIdentifier;
 
-    protected virtual String ElementIdLeftPrefix => $"{ElementIdPrefix}-left";
+    protected virtual IHomeBallsEntryBallIdsSettings BallIdsSettings => Settings.EntryTable.BallIdsShown;
 
-    protected virtual Boolean IsCellRenderedWhen(TCell cell) =>
-        Settings.EntryTable.BallIdsShown.IsUsingDefault.Value ?
-            Settings.EntryTable.BallIdsShown.DefaultValues.Contains(cell.Id) :
-            Settings.EntryTable.BallIdsShown.Collection.Contains(cell.Id);
-
-    protected virtual Task OnCellInitializedAsync(Action rerenderCell, TCell cell)
+    protected virtual Task OnColumnIdentifierInitializedAsync(
+        Action rerenderAction,
+        INotifyingProperty<Boolean> identifierToggle)
     {
-        Settings.EntryTable.BallIdsShown.IsUsingDefault.ValueChanged +=
-            (sender, e) => OnUsingDefaultBallIdsShownChanged(sender, e, rerenderCell);
-        Settings.EntryTable.BallIdsShown.Collection.CollectionChanged +=
-            (sender, e) => OnBallIdsShownChanged(sender, e, rerenderCell, cell);
-
+        ColumnIdentifierSettings.IsUsingDefault.ValueChanged += (sender, e) => rerenderAction();
+        identifierToggle.ValueChanged += (sender, e) => rerenderAction();
         return Task.CompletedTask;
     }
 
-    protected virtual void OnUsingDefaultBallIdsShownChanged(
-        Object? sender,
-        PropertyChangedEventArgs<Boolean> e,
-        Action rerenderCell) =>
-        rerenderCell();
+    protected abstract Task OnCellRenderedAsync(String containerId, String functionKey);
 
-    protected virtual void OnBallIdsShownChanged(
-        Object? sender,
-        NotifyCollectionChangedEventArgs e,
-        Action rerenderCell,
-        TCell cell)
+    protected virtual Task OnBallCellInitializedAsync(Action rerenderAction, TCell cell)
     {
-        if (IsIdInGenericList(e.OldItems, cell) ||
-            IsIdInGenericList(e.NewItems, cell))
-            rerenderCell();
+        BallIdsSettings.IsUsingDefault.ValueChanged += (sender, e) => rerenderAction();
+        BallIdsSettings.Collection.CollectionChanged += (sender, e) =>
+        {
+            if ((e.OldItems?.Contains(cell.Id) ?? false) ||
+                (e.NewItems?.Contains(cell.Id) ?? false))
+                rerenderAction();
+        };
+        return Task.CompletedTask;
     }
 
-    protected virtual Boolean IsIdInGenericList(IList? list, TCell cell) =>
-        IsInGenericList(list, cell.Id);
-
-    protected virtual Boolean IsInGenericList<T>(IList? list, T value) =>
-        list?.Cast<T>().Contains(value) ?? false;
-
-    protected virtual String CreateElementId(Int32 id) => $"{ElementIdPrefix}-{id}";
-
-    protected virtual String CreateLeftElementId(Int32 id) => $"{ElementIdLeftPrefix}-{id}";
+    protected virtual Boolean IsBallCellShown(TCell cell) =>
+        (BallIdsSettings.IsUsingDefault.Value ? (IEnumerable<UInt16>)
+            BallIdsSettings.DefaultValues :
+            BallIdsSettings.Collection)
+            .Contains(cell.Id);
 }

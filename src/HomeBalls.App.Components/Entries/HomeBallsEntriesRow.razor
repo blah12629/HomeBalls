@@ -1,57 +1,167 @@
 @inherits HomeBallsEntriesRowComponentBase<IHomeBallsEntryBodyRow, IHomeBallsEntryBodyCell>
 @inject IHomeBallsBreedablesSpriteService Sprites
 
-<tr class="group">
-    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky left-0 h-6 bg-theme-white-500 p-0 group-hover:bg-theme-primary-100" />
+<tr>
+    <HomeBallsEntriesCell>
+        <Container>
+            <td id="@context.ContainerId" class="sticky left-0 z-10 min-h-[29px] h-[29px] bg-theme-white-500" />
+        </Container>
+    </HomeBallsEntriesCell>
 
-    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky bg-theme-white-500 whitespace-nowrap p-0 group-hover:bg-theme-primary-100">
-        <Body>
+    <HomeBallsEntriesCell
+        OnInitializedTask="@(rerenderAction => OnColumnIdentifierInitializedAsync(rerenderAction, ColumnIdentifierSettings.IsShowingNumber))">
+        <Container>
+            @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingNumber.Value)
+            {
+                <td id="@context.ContainerId" class="sticky left-[9px] z-10 bg-theme-white-500 px-0.5 py-0 whitespace-nowrap">
+                    @context.Content
+                </td>
+            }
+
+            else { @context.HiddenContainer }
+        </Container>
+        <Content>
+            <span class="font-semibold">@Row.Id.SpeciesId</span>
+        </Content>
+    </HomeBallsEntriesCell>
+
+    <HomeBallsEntriesCell
+        OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerRowSpriteId"))"
+        OnInitializedTask="@(rerenderAction => OnColumnIdentifierInitializedAsync(rerenderAction, ColumnIdentifierSettings.IsShowingSprite))">
+        <Container>
+            @if (ColumnIdentifierSettings.IsUsingDefault.Value)
+            {
+                <td id="@context.ContainerId" class="sticky z-10 min-w-[0px] max-w-[0px] w-[0px] bg-theme-white-500 p-0 md:min-w-[68px] md:max-w-[68px] md:w-[68px]">
+                    @context.Content
+                </td>
+            }
+
+            else if (ColumnIdentifierSettings.IsShowingSprite.Value)
+            {
+                <td id="@context.ContainerId" class="sticky z-10 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 p-0">
+                    @context.Content
+                </td>
+            }
+
+            else { @context.HiddenContainer }
+        </Container>
+        <Content>
             <center>
-                <img class="scale-[.8]" src="@Sprites.GetSerebiiSpriteUri(Form).ToString()" loading="lazy" />
+                <img src="@SpriteUrl" class="object-contain scale-[.8]" />
             </center>
-        </Body>
+        </Content>
     </HomeBallsEntriesCell>
 
-    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky bg-theme-white-500 whitespace-nowrap pl-0 pr-1.5 py-0 group-hover:bg-theme-primary-100">
-        <Body>
-            <span>@Form.Id.SpeciesId</span>
-        </Body>
-    </HomeBallsEntriesCell>
+    <HomeBallsEntriesCell
+        OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerRowNameId"))"
+        OnInitializedTask="@(rerenderAction => OnColumnIdentifierInitializedAsync(rerenderAction, ColumnIdentifierSettings.IsShowingName))">
+        <Container>
+            @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingName.Value)
+            {
+                <td id="@context.ContainerId" class="sticky z-10 bg-theme-white-500 px-0.5 py-0 whitespace-nowrap">
+                    @context.Content
+                </td>
+            }
 
-    <HomeBallsEntriesCell CreateElementId="@CreateLeftElementId" Class="sticky bg-theme-white-500 whitespace-nowrap pl-0 pr-1.5 py-0 group-hover:bg-theme-primary-100">
-        <Body>
-            <span>@Form.Identifier</span>
-        </Body>
+            else { @context.HiddenContainer }
+        </Container>
+        <Content>
+            <HomeBallsEntriesRowName Form="@Form" />
+        </Content>
     </HomeBallsEntriesCell>
 
     @foreach (var cell in Row)
     {
         <HomeBallsEntriesCell
-            IsRenderedWhen="@(() => IsCellRenderedWhen(cell))"
-            OnInitializedTask="@(rerenderCell => OnCellInitializedAsync(rerenderCell, cell))"
-            Class="cursor-pointer w-8 p-0">
-            <Body>
-                <HomeBallsEntriesRowBall Cell="@cell" />
-            </Body>
+            OnInitializedTask="@(rerenderAction => OnBallCellInitializedAsync(rerenderAction, cell))">
+            <Container>
+                @if (!IsBallCellShown(cell)) { @context.HiddenContainer }
+
+                else if (cell.IsLegal.Value)
+                {
+                    <td id="@context.ContainerId" class="w-9 bg-theme-white-500 px-1 py-0">
+                        @context.Content
+                    </td>
+                }
+
+                else
+                {
+                    <td id="@context.ContainerId" class="w-9 bg-theme-primary-100 px-1 py-0">
+                        @context.Content
+                    </td>
+                }
+            </Container>
+            <Content>
+                @if (cell.IsObtained.Value &&
+                    (cell.IsLegal.Value || Settings.EntryTable.IsShowingIllegalEntries.Value))
+                {
+                    <center>
+                        <HomeBallsEntriesBallSprite BallId="@cell.Id.BallId" />
+                    </center>
+                }
+            </Content>
         </HomeBallsEntriesCell>
     }
 
-    <HomeBallsEntriesCell Class="p-0" />
+    <HomeBallsEntriesCell>
+        <Container>
+            <td id="@context.ContainerId" class="bg-theme-white-500" />
+        </Container>
+    </HomeBallsEntriesCell>
 </tr>
 
 @code
 {
+    Int32 _index;
     IHomeBallsEntryBodyRow? _row;
+    IHomeBallsPokemonForm? _form;
+    String? _spriteUrl;
 
     [Parameter, EditorRequired]
-    public Int32 Index { get; init; }
+    public Int32 Index
+    {
+        get => _index;
+        init
+        {
+            _index = value;
+            _row = Table.Rows[Index];
+            _form = Data.PokemonForms.IsLoaded ? Data.PokemonForms[Row.Id] :
+                Data.BreedablePokemonForms.IsLoaded ? Data.BreedablePokemonForms[Row.Id] :
+                throw new NullReferenceException();
+            _spriteUrl = Sprites.GetSerebiiSpriteUri(Form).ToString();
+        }
+    }
 
-    public IHomeBallsEntryBodyRow Row => _row ??= Table.Rows[Index];
+    protected virtual IHomeBallsEntryBodyRow Row => _row ?? throw new NullReferenceException();
 
-    public IHomeBallsPokemonForm Form =>
-        Data.PokemonForms.IsLoaded ? Data.PokemonForms[Row.Id] :
-        Data.BreedablePokemonForms.IsLoaded ? Data.BreedablePokemonForms[Row.Id] :
-        throw new NullReferenceException();
+    protected virtual IHomeBallsPokemonForm Form => _form ?? throw new NullReferenceException();
 
-    protected override String ElementIdPrefix => $"entries";
+    protected virtual String SpriteUrl => _spriteUrl ?? throw new NullReferenceException();
+
+    protected override async Task OnAfterRenderAsync(Boolean firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await JSRuntime.InvokeVoidAsync("registerRowIndex", new Object?[] { Index });
+    }
+
+    protected override Task OnCellRenderedAsync(String containerId, String functionKey) =>
+        JSRuntime.InvokeVoidAsync(functionKey, new Object[] { Index, containerId }).AsTask();
+
+    protected override async Task OnBallCellInitializedAsync(
+        Action rerenderAction,
+        IHomeBallsEntryBodyCell cell)
+    {
+        await base.OnBallCellInitializedAsync(rerenderAction, cell);
+        cell.IsLegal.ValueChanged += (sender, e) => rerenderAction();
+        cell.IsLegalWithHiddenAbility.ValueChanged += (sender, e) => rerenderAction();
+        cell.IsObtained.ValueChanged += (sender, e) => rerenderAction();
+        cell.IsObtainedWithHiddenAbility.ValueChanged += (sender, e) => rerenderAction();
+    }
+
+    protected virtual Boolean IsBallCellShown(IHomeBallsEntryCell cell) =>
+        (BallIdsSettings.IsUsingDefault.Value ? (IEnumerable<UInt16>)
+            BallIdsSettings.DefaultValues :
+            BallIdsSettings.Collection)
+            .Contains(cell.Id);
 }
+

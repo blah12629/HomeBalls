@@ -6,6 +6,7 @@ global using CEo.Pokemon.HomeBalls.Entities;
 
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.Extensions.Logging;
+global using Microsoft.JSInterop;
 
 global using System;
 global using System.Collections;

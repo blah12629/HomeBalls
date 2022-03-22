@@ -1,0 +1,54 @@
+@inherits HomeBallsEntriesComponentBase
+@inject IHomeBallsStringService Strings
+@inject IHomeBallsBreedablesFormIdentifierService FormIdentifiers
+
+@if (Species == default) { <span>@Form.Identifier</span> }
+
+else
+{
+    <span class="font-semibold">@Strings.GetInCurrentLanguage(Species)</span>
+    @if (!String.IsNullOrWhiteSpace(FormIdentifier)) { <span>&ensp;@FormIdentifier</span> }
+}
+
+
+@code
+{
+    IHomeBallsPokemonForm? _form;
+    IHomeBallsPokemonSpecies? _species;
+
+    [Parameter, EditorRequired]
+    public IHomeBallsPokemonForm Form
+    {
+        get => _form ?? throw new NullReferenceException();
+        init => _form = value;
+    }
+
+    protected virtual IHomeBallsPokemonSpecies? Species
+    {
+        get => _species;
+        set
+        {
+            _species = value;
+            FormIdentifier = FormIdentifiers.GetIdentifier(Form);
+        }
+    }
+
+    protected virtual String FormIdentifier { get; set; } = String.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Data.PokemonSpecies.DataLoaded += OnSpeciesLoaded;
+        Data.BreedablePokemonSpecies.DataLoaded += OnSpeciesLoaded;
+    }
+
+    protected virtual void OnSpeciesLoaded(
+        Object? sender,
+        TimedActionEndedEventArgs e)
+    {
+        Species = Data.PokemonSpecies.IsLoaded ? Data.PokemonSpecies[Form.Id.SpeciesId] :
+            Data.BreedablePokemonSpecies.IsLoaded ? Data.BreedablePokemonSpecies[Form.Id.SpeciesId] :
+            throw new NullReferenceException();
+        StateHasChanged();
+    }
+}

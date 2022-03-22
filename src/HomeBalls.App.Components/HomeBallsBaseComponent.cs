@@ -8,7 +8,7 @@ public abstract class HomeBallsBaseComponent :
     Int32 _id;
 
     [Inject]
-    protected internal IHomeBallsComponentIdService ComponentIds
+    protected internal virtual IHomeBallsComponentIdService ComponentIds
     {
         get => _componentIds ?? throw new NullReferenceException();
         init

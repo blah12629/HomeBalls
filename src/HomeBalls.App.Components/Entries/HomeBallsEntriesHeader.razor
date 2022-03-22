@@ -1,72 +1,123 @@
 @inherits HomeBallsEntriesRowComponentBase<IHomeBallsEntryHeadRow, IHomeBallsEntryHeadCell>
-@inject IJSRuntime JSRuntime
 
-@if (Table.Header.Value != default)
+@if (Header.Value != default)
 {
     <tr>
         <HomeBallsEntriesCell
-            CreateElementId="@CreateLeftElementId"
-            OnAfterRenderTask="@OnCellAfterRenderAsync"
-            Class="sticky z-20 bg-theme-white-500 border-b border-theme-black-200" />
+            OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerHeaderLeftPaddingId"))">
+            <Container>
+                <td id="@context.ContainerId" class="sticky left-0 z-20 min-w-[9px] min-h-[29px] h-[29px] bg-theme-white-500 border-b border-theme-black-200" />
+            </Container>
+        </HomeBallsEntriesCell>
 
         <HomeBallsEntriesCell
-            CreateElementId="@CreateLeftElementId"
-            OnAfterRenderTask="@OnCellAfterRenderAsync"
-            Class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200 whitespace-nowrap" />
+            OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerHeaderNumberId"))"
+            OnInitializedTask="@(rerenderAction => OnColumnIdentifierInitializedAsync(rerenderAction, ColumnIdentifierSettings.IsShowingNumber))">
+            <Container>
+                @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingNumber.Value)
+                {
+                    <td id="@context.ContainerId" class="sticky left-[9px] z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200" />
+                }
+
+                else { @context.HiddenContainer }
+            </Container>
+        </HomeBallsEntriesCell>
 
         <HomeBallsEntriesCell
-            CreateElementId="@CreateLeftElementId"
-            OnAfterRenderTask="@OnCellAfterRenderAsync"
-            Class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200 whitespace-nowrap" />
+            OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerHeaderSpriteId"))"
+            OnInitializedTask="@(rerenderAction => OnColumnIdentifierInitializedAsync(rerenderAction, ColumnIdentifierSettings.IsShowingSprite))">
+            <Container>
+                @if (ColumnIdentifierSettings.IsUsingDefault.Value)
+                {
+                    <td id="@context.ContainerId" class="sticky z-20 min-w-[0px] max-w-[0px] w-0 bg-theme-white-500 border-b border-theme-black-200 md:min-w-[68px] md:max-w-[68px] md:w-[68px]" />
+                }
+
+                else if(ColumnIdentifierSettings.IsShowingSprite.Value)
+                {
+                    <td id="@context.ContainerId" class="sticky z-20 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 border-b border-theme-black-200" />
+                }
+
+                else { @context.HiddenContainer }
+            </Container>
+        </HomeBallsEntriesCell>
 
         <HomeBallsEntriesCell
-            CreateElementId="@CreateLeftElementId"
-            OnAfterRenderTask="@OnCellAfterRenderAsync"
-            Class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200 whitespace-nowrap" />
+            OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerHeaderNameId"))"
+            OnInitializedTask="@(rerenderAction => OnColumnIdentifierInitializedAsync(rerenderAction, ColumnIdentifierSettings.IsShowingName))">
+            <Container>
+                @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingName.Value)
+                {
+                    <td id="@context.ContainerId" class="sticky z-20 w-[1%] bg-theme-white-500 border-b border-theme-black-200" />
+                }
 
-        @foreach (var cell in Table.Header.Value)
+                else { @context.HiddenContainer }
+            </Container>
+        </HomeBallsEntriesCell>
+
+        @foreach (var cell in Header.Value)
         {
             <HomeBallsEntriesCell
-                CreateElementId="@CreateElementId"
-                IsRenderedWhen="@(() => IsCellRenderedWhen(cell))"
-                OnInitializedTask="@(rerenderCell => OnCellInitializedAsync(rerenderCell, cell))"
-                OnAfterRenderTask="@OnCellAfterRenderAsync"
-                class="sticky z-10 w-8 bg-theme-white-500 border-b border-theme-black-200 p-0">
-                <Body>
-                    <HomeBallsEntriesHeaderBall Cell="@cell" />
-                </Body>
+                OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerHeaderBallId"))"
+                OnInitializedTask="@(rerenderAction => OnBallCellInitializedAsync(rerenderAction, cell))">
+                <Container>
+                    @if (context.Content != default && IsBallCellShown(cell))
+                    {
+                        <td id="@context.ContainerId" class="sticky z-10 w-9 bg-theme-white-500 border-b border-theme-black-200 px-1 py-0">
+                            @context.Content
+                        </td>
+                    }
+
+                    else { @context.HiddenContainer }
+                </Container>
+                <Content>
+                    @if (State.HoveredBallId.Value == cell.Id)
+                    {
+                        <center class="w-7 h-7 mt-px -mb-px border-b-2 border-theme-primary-500 py-px">
+                            <HomeBallsEntriesBallSprite BallId="@cell.Id" />
+                        </center>
+                    }
+                    else
+                    {
+                        <center class="w-7 h-7 mt-px -mb-px border-b-2 border-transparent py-px">
+                            <HomeBallsEntriesBallSprite BallId="@cell.Id" />
+                        </center>
+                    }
+                </Content>
             </HomeBallsEntriesCell>
         }
 
         <HomeBallsEntriesCell
-            CreateElementId="@CreateElementId"
-            OnAfterRenderTask="@OnCellAfterRenderAsync"
-            Class="sticky z-10 bg-theme-white-500 border-b border-theme-black-200" />
+                OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerHeaderRightPaddingId"))">
+            <Container>
+                <td id="@context.ContainerId" class="sticky z-10 bg-theme-white-500 border-b border-theme-black-200" />
+            </Container>
+        </HomeBallsEntriesCell>
     </tr>
 }
 
 @code
 {
-    protected override string ElementIdPrefix => "entries-head";
+    protected virtual INotifyingProperty<IHomeBallsEntryHeadRow?> Header => Table.Header;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Table.Header.ValueChanged += OnHeaderChanged;
+        Header.ValueChanged += OnHeaderChanged;
+    }
+
+    protected override Task OnCellRenderedAsync(String containerId, String functionKey) =>
+        JSRuntime.InvokeVoidAsync(functionKey, new Object[] { containerId }).AsTask();
+
+    protected override async Task OnBallCellInitializedAsync(
+        Action rerenderAction,
+        IHomeBallsEntryHeadCell cell)
+    {
+        await base.OnBallCellInitializedAsync(rerenderAction, cell);
+        State.HoveredBallId.ValueChanged += (sender, e) => rerenderAction();
     }
 
     protected virtual void OnHeaderChanged(
         Object? sender,
         PropertyChangedEventArgs<IHomeBallsEntryHeadRow?> e) =>
         StateHasChanged();
-
-    protected virtual async Task OnCellAfterRenderAsync(
-        Boolean isFirstRender,
-        String elementId)
-    {
-        if (!String.IsNullOrWhiteSpace(elementId))
-            await JSRuntime.InvokeVoidAsync(
-                "updateEntriesElementPositionById",
-                new Object?[] { elementId });
-    }
 }

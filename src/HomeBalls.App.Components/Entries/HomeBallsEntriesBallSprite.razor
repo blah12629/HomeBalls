@@ -9,12 +9,14 @@
     String? _spriteUrl;
 
     [Parameter, EditorRequired]
-    public IHomeBallsItem Ball
-    {
-        get => _ball ?? throw new NullReferenceException();
-        init => (_ball, _spriteUrl) = (value, default);
-    }
+    public UInt16 BallId { get; init; }
 
-    protected virtual String SpriteUrl => _spriteUrl ??=
-        Sprites.GetBallSpriteUri(Ball).ToString();
+    protected virtual IHomeBallsItem Ball => _ball ??=
+        Data.Items.IsLoaded ? Data.Items[BallId] :
+        Data.Pokeballs.IsLoaded ? Data.Pokeballs[BallId] :
+        throw new NullReferenceException();
+
+    protected virtual String SpriteUrl => _spriteUrl ??= Sprites
+        .GetBallSpriteUri(Ball)
+        .ToString();
 }
