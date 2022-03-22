@@ -1,10 +1,10 @@
 @inherits HomeBallsEntriesRowComponentBase<IHomeBallsEntryBodyRow, IHomeBallsEntryBodyCell>
 @inject IHomeBallsBreedablesSpriteService Sprites
 
-<tr>
+<tr class="group">
     <HomeBallsEntriesCell>
         <Container>
-            <td id="@context.ContainerId" class="sticky left-0 z-10 min-h-[29px] h-[29px] bg-theme-white-500" />
+            <td id="@context.ContainerId" class="sticky left-0 z-10 min-h-[29px] h-[29px] bg-theme-white-500 group-hover:bg-theme-primary-100" />
         </Container>
     </HomeBallsEntriesCell>
 
@@ -13,7 +13,7 @@
         <Container>
             @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingNumber.Value)
             {
-                <td id="@context.ContainerId" class="sticky left-[9px] z-10 bg-theme-white-500 px-0.5 py-0 whitespace-nowrap">
+                <td id="@context.ContainerId" class="sticky left-[9px] z-10 bg-theme-white-500 px-1 py-0 whitespace-nowrap group-hover:bg-theme-primary-100">
                     @context.Content
                 </td>
             }
@@ -31,14 +31,14 @@
         <Container>
             @if (ColumnIdentifierSettings.IsUsingDefault.Value)
             {
-                <td id="@context.ContainerId" class="sticky z-10 min-w-[0px] max-w-[0px] w-[0px] bg-theme-white-500 p-0 md:min-w-[68px] md:max-w-[68px] md:w-[68px]">
+                <td id="@context.ContainerId" class="sticky z-10 min-w-[0px] max-w-[0px] w-[0px] bg-theme-white-500 p-0 group-hover:bg-theme-primary-100 md:min-w-[68px] md:max-w-[68px] md:w-[68px]">
                     @context.Content
                 </td>
             }
 
             else if (ColumnIdentifierSettings.IsShowingSprite.Value)
             {
-                <td id="@context.ContainerId" class="sticky z-10 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 p-0">
+                <td id="@context.ContainerId" class="sticky z-10 min-w-[68px] max-w-[68px] w-[68px] bg-theme-white-500 p-0 group-hover:bg-theme-primary-100">
                     @context.Content
                 </td>
             }
@@ -58,7 +58,7 @@
         <Container>
             @if (ColumnIdentifierSettings.IsUsingDefault.Value || ColumnIdentifierSettings.IsShowingName.Value)
             {
-                <td id="@context.ContainerId" class="sticky z-10 bg-theme-white-500 px-0.5 py-0 whitespace-nowrap">
+                <td id="@context.ContainerId" class="sticky z-10 bg-theme-white-500 px-1 py-0 whitespace-nowrap group-hover:bg-theme-primary-100">
                     @context.Content
                 </td>
             }
@@ -79,14 +79,20 @@
 
                 else if (cell.IsLegal.Value)
                 {
-                    <td id="@context.ContainerId" class="w-9 bg-theme-white-500 px-1 py-0">
+                    <td onmouseover="@((MouseEventArgs e) => OnBallCellMouseOver(e, cell.Id.BallId))"
+                        onmouseout="@((MouseEventArgs e) => OnBallCellMouseOut(e, cell.Id.BallId))"
+                        id="@context.ContainerId"
+                        class="cursor-pointer w-9 bg-theme-white-500 px-1 py-0">
                         @context.Content
                     </td>
                 }
 
                 else
                 {
-                    <td id="@context.ContainerId" class="w-9 bg-theme-primary-100 px-1 py-0">
+                    <td onmouseover="@((MouseEventArgs e) => OnBallCellMouseOver(e, cell.Id.BallId))"
+                        onmouseout="@((MouseEventArgs e) => OnBallCellMouseOut(e, cell.Id.BallId))"
+                        id="@context.ContainerId"
+                        class="cursor-pointer w-9 bg-theme-primary-400 px-1 py-0">
                         @context.Content
                     </td>
                 }
@@ -163,5 +169,12 @@
             BallIdsSettings.DefaultValues :
             BallIdsSettings.Collection)
             .Contains(cell.Id);
-}
 
+    protected virtual void OnBallCellMouseOver(MouseEventArgs e, UInt16 ballId) =>
+        State.HoveredBallId.Value = ballId;
+
+    protected virtual void OnBallCellMouseOut(MouseEventArgs e, UInt16 ballId)
+    {
+        if (State.HoveredBallId.Value == ballId) State.HoveredBallId.Value = default(UInt16?);
+    }
+}
