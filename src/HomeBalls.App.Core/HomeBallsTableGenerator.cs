@@ -93,7 +93,6 @@ public class HomeBallsTableGenerator : IHomeBallsTableGenerator
         table.Header.Value = rowFactory.CreateHeader();
         foreach (var row in rowFactory.CreateRows())
         {
-            if (i >= 30) break;
             var key = row.Id;
             await InvokeDelayedAsync(() => table.Rows.Add(row), millisecondsDelay, cancellationToken);
             await InvokeDelayedAsync(() => AddToTable(legalityList, table.Legalities, ref j, key), millisecondsDelay, cancellationToken);
