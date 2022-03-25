@@ -1,8 +1,10 @@
 @inherits HomeBallsLoggingComponent
 
-<div class="col-span-10 table px-1">
-    <div class="table-cell align-middle">
-        @Content
+<div class="@Class">
+    <div class="w-full table px-1">
+        <div class="table-cell align-middle">
+            @Content
+        </div>
     </div>
 </div>
 
@@ -16,4 +18,7 @@
         get => _content ?? throw new NullReferenceException();
         init => _content = value;
     }
+
+    [Parameter]
+    public String Class { get; init; } = String.Empty;
 }

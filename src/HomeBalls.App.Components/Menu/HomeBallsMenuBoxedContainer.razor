@@ -1,0 +1,24 @@
+@inherits HomeBallsLoggingComponent
+
+<div class="@Class">
+    <div class="w-full table rounded-md border-2 border-theme-black-100 px-1">
+        <div class="table-cell align-middle">
+            @Content
+        </div>
+    </div>
+</div>
+
+@code
+{
+    RenderFragment? _content;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Content
+    {
+        get => _content ?? throw new NullReferenceException();
+        init => _content = value;
+    }
+
+    [Parameter]
+    public String Class { get; init; } = String.Empty;
+}
