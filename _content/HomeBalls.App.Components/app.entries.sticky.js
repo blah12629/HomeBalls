@@ -61,12 +61,6 @@ window.elements.appRoot.onscroll = element => {
 
     console.log(`Scrolled by x. ${previousPosition.x}\t${currentPosition.x}`);
     getEntriesShadowedIds().forEach(id => tryUpdateEntriesShadow(id));
-    // if name is not null and has width: add shadow, return
-    // else if sprite is not null and has width: add shadow, return
-    // else if number is not null and has width: add shadow, return;
-    //
-    // do for header then all rows
-    // also add shadow to newly registered header and row
 };
 window.resizes.topContainer.observe(document.getElementById(window.elementIds.topContainer));
 

@@ -1,7 +1,7 @@
 var themeRootId = "theme-root";
-var themeKey = "Theme.Id";
+var themeKey = "Settings.Theme.Id";
 var themeDefault = "dream";
-var isDarkModeKey = "Theme.IsDarkMode";
+var isDarkModeKey = "Settings.Theme.IsDarkMode";
 var isDarkModeDefault = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 ensureThemeValuesExist();
