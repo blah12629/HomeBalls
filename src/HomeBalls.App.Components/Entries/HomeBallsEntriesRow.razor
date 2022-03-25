@@ -22,7 +22,7 @@
             else { @context.HiddenContainer }
         </Container>
         <Content>
-            <span class="font-semibold">@Row.Id.SpeciesId</span>
+            <span class="font-semibold tabular-nums">@Row.Id.SpeciesId.ToString().PadLeft(3, '0')</span>
         </Content>
     </HomeBallsEntriesCell>
 
@@ -47,9 +47,19 @@
             else { @context.HiddenContainer }
         </Container>
         <Content>
-            <center>
-                <img src="@SpriteUrl" class="object-contain scale-[.8]" />
-            </center>
+            @if (RowIdentifierSettings.IsUsingDefault.Value)
+            {
+                <center>
+                    <img src="@SpriteUrl" class="hidden object-contain scale-[.8] md:inline-block" />
+                </center>
+            }
+
+            else if (RowIdentifierSettings.IsShowingSprite.Value)
+            {
+                <center>
+                    <img src="@SpriteUrl" class="object-contain scale-[.8]" />
+                </center>
+            }
         </Content>
     </HomeBallsEntriesCell>
 

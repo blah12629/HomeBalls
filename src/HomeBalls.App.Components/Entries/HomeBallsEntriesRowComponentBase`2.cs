@@ -27,9 +27,6 @@ public abstract class HomeBallsEntriesRowComponentBase<TRow, TCell> :
         BallIdsSettings.IsUsingDefault.ValueChanged += (sender, e) => rerenderAction();
         BallIdsSettings.Collection.CollectionChanged += (sender, e) =>
         {
-            Logger.LogInformation($"[{Id}] {cell.Id}");
-            Logger.LogInformation($"[{Id}] {String.Join(',', e.OldItems?.Cast<Object>().Select(item => item.ToString()) ?? new String[] { })}");
-            Logger.LogInformation($"[{Id}] {String.Join(',', e.NewItems?.Cast<Object>().Select(item => item.ToString()) ?? new String[] { })}");
             if (e.IsChanged(cell.Id)) rerenderAction();
         };
         return Task.CompletedTask;
