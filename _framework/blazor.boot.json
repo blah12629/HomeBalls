@@ -11,13 +11,13 @@
   "resources": {
     "assembly": {
       "Blazored.LocalStorage.dll": "sha256-6RRoYeDP3d0xabXmcCMF66wXeJlXVPem28Trs8sQiis=",
-      "CEo.Pokemon.HomeBalls.App.Components.dll": "sha256-OCIjjpqQS1u1YJN3jfHqaHIX73vvSPyFvI8c\/qkOg7Q=",
+      "CEo.Pokemon.HomeBalls.App.Components.dll": "sha256-MPs8VvheSZkdoSmhP4HWGjNKm+GHJr9aXYDOWQo3mqk=",
       "CEo.Pokemon.HomeBalls.App.Core.dll": "sha256-N+cieN76+MkjpVcudysq+VqPNu969\/0\/dAGDzeYOWjA=",
-      "CEo.Pokemon.HomeBalls.App.UI.dll": "sha256-G0TGY0yRIsi2tBA0BIhDONR6VWKn0jKrShCfd6pr2SI=",
+      "CEo.Pokemon.HomeBalls.App.UI.dll": "sha256-F+9T5ckxr63BIBCpSrVEo8UmXvm+CMpTjvm3F4zHG9Q=",
       "CEo.Pokemon.HomeBalls.dll": "sha256-4UVYKJsO0+Jid3SnD6BrajAWkHG6pa3VJAb4oZpST8U=",
       "Mapster.Core.dll": "sha256-t4scC57orK9Pzk+stzDyapVp1P7RjVmaEkumPBlVL5c=",
       "Mapster.dll": "sha256-+lPyy3ceV5DvNOOuNjSSZF+ayNUIfFHpllnjpIQfTMA=",
-      "Microsoft.AspNetCore.Components.dll": "sha256-ze7ZYe4MBas2hEG2R76vwBTH1AQsx666Qf4E4p2L4H0=",
+      "Microsoft.AspNetCore.Components.dll": "sha256-N\/p9B56uuksiWOJ+NNkHl6rhby6C9NnsJQTFtJ9pxmg=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-dGE6E8lp4OgSRD8HxpnhQtwrKe1jYbi6HN9vQz2evQ0=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-lRa6y\/VvG5iqDE3rWMF8YDIQhSGFTWB4pJuzBq8jDiA=",
       "Microsoft.CSharp.dll": "sha256-H5rU\/3Yk5ftUwErFdrCjO6ahVJM680XLQoEX3baOk8c=",
