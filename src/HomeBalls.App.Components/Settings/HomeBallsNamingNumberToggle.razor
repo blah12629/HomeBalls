@@ -1,4 +1,4 @@
-@inherits HomeBallsNamingTextToggle
+@* @inherits HomeBallsNamingTextToggle
 
 @{ base.BuildRenderTree(__builder); }
 
@@ -7,5 +7,5 @@
     protected override RenderFragment TextContent => @<span>777</span>;
 
     protected override IMutableNotifyingProperty<Boolean> IsToggled =>
-        Settings.EntryTable.ColumnIdentifier.IsShowingNumber;
-}
+        Settings.Entries.ColumnIdentifier.IsShowingNumber;
+} *@

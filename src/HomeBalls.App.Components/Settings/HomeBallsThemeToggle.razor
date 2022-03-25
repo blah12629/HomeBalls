@@ -1,4 +1,4 @@
-@inherits HomeBallsSettingsToggleBase
+@* @inherits HomeBallsSettingsToggleBase
 @inject IHomeBallsBreedablesSpriteService Sprites
 
 <button onclick="@OnSelectionClicked" class="group w-6 h-6 overflow-hidden mx-0.5 rounded-md bg-theme-white-500 hover:bg-theme-primary-100 active:bg-theme-primary-100 lg:w-7 lg:h-7">
@@ -43,4 +43,4 @@
     {
         if (e.OldValue == ThemeId || e.NewValue == ThemeId) StateHasChanged();
     }
-}
+} *@

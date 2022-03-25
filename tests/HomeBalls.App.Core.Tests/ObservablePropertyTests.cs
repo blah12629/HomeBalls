@@ -1,4 +1,4 @@
-// namespace CEo.Pokemon.HomeBalls.App.Core.Tests;
+// namespace CEo.Pokemon.HomeBalls.App.Tests;
 
 // public class ObservablePropertyTests : ObservablePropertyTests<String?>
 // {

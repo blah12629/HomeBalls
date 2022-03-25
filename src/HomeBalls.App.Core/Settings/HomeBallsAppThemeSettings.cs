@@ -1,8 +1,7 @@
 namespace CEo.Pokemon.HomeBalls.App.Settings;
 
 public interface IHomeBallsAppThemeSettings :
-    IProperty,
-    IIdentifiable,
+    IHomeBallsAppSettingsProperty,
     IAsyncLoadable<IHomeBallsAppThemeSettings>
 {
     IHomeBallsAppSettingsValueProperty<String> Id { get; }
@@ -11,52 +10,44 @@ public interface IHomeBallsAppThemeSettings :
 }
 
 public class HomeBallsAppThemeSettings :
-    HomeBallsAppSettingsPropertyBase,
+    HomeBallsAppSettingsPropertyRoot,
     IHomeBallsAppThemeSettings,
     IAsyncLoadable<HomeBallsAppThemeSettings>
 {
-    public HomeBallsAppThemeSettings(
-        String propertyName,
-        ILocalStorageService localStorage,
-        IJSRuntime jsRuntime,
-        IEventRaiser eventRaiser,
-        ILoggerFactory? loggerFactory = default) :
-        this(propertyName, propertyName, localStorage, jsRuntime, eventRaiser, loggerFactory) { }
-
     public HomeBallsAppThemeSettings(
         String propertyName,
         String identifier,
         ILocalStorageService localStorage,
         IJSRuntime jsRuntime,
         IEventRaiser eventRaiser,
-        ILoggerFactory? loggerFactory = default) :
-        base(propertyName, identifier, localStorage, jsRuntime, eventRaiser, loggerFactory)
+        ILogger? logger = default) :
+        base(propertyName, identifier, localStorage, jsRuntime, eventRaiser, logger)
     {
-        Id = CreateThemeProperty(DreamThemeId, nameof(Id));
-        IsDarkMode = CreateThemeProperty(false, nameof(IsDarkMode));
+        Id = CreateValueProperty<String>(DreamThemeId, nameof(Id));
+        IsDarkMode = CreateValueProperty<Boolean>(false, nameof(IsDarkMode));
     }
 
     public IHomeBallsAppSettingsValueProperty<String> Id { get; }
 
     public IHomeBallsAppSettingsValueProperty<Boolean> IsDarkMode { get; }
 
-    protected internal override IReadOnlyCollection<IAsyncLoadable> CreateLoadables() =>
-        Array.AsReadOnly(new IAsyncLoadable[] { Id, IsDarkMode });
-
-    protected internal virtual HomeBallsAppThemeProperty<T> CreateThemeProperty<T>(
-        T defaultValue,
-        String propertyName) =>
-        new HomeBallsAppThemeProperty<T>(
-            defaultValue,
-            CreatePropertyName(propertyName),
-            LocalStorage, JSRuntime, EventRaiser, Logger);
-
     new public virtual async ValueTask<HomeBallsAppThemeSettings> EnsureLoadedAsync(
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         await base.EnsureLoadedAsync(cancellationToken);
         return this;
     }
+
+    protected internal override IHomeBallsAppSettingsValueProperty<TValue> CreateValueProperty<TValue>(
+        TValue defaultValue,
+        String propertyName) =>
+        new HomeBallsAppThemeSettingsValueProperty<TValue>(
+            new MutableNotifyingProperty<TValue>(defaultValue, propertyName, EventRaiser, Logger),
+            propertyName, CreateSubpropertyIdentifier(propertyName),
+            LocalStorage, JSRuntime, EventRaiser, Logger);
+
+    protected internal override IReadOnlyCollection<IHomeBallsAppSettingsProperty> CreateSubpropertyCollection() =>
+        new IHomeBallsAppSettingsProperty[] { Id, IsDarkMode }.AsReadOnly();
 
     async ValueTask<IHomeBallsAppThemeSettings> IAsyncLoadable<IHomeBallsAppThemeSettings>
         .EnsureLoadedAsync(CancellationToken cancellationToken) =>

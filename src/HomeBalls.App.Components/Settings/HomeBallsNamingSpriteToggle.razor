@@ -1,4 +1,4 @@
-@inherits HomeBallsNamingToggle
+@* @inherits HomeBallsNamingToggle
 
 @{ base.BuildRenderTree(__builder); }
 
@@ -10,5 +10,5 @@
 
     protected virtual RenderFragment SpriteFragment => @<img class="object-none w-6 h-6 scale-[.8]" src="https://www.serebii.net/pokedex-swsh/icon/774-r.png"/>;
 
-    protected override IMutableNotifyingProperty<Boolean> IsToggled => Settings.EntryTable.ColumnIdentifier.IsShowingSprite;
-}
+    protected override IMutableNotifyingProperty<Boolean> IsToggled => Settings.Entries.ColumnIdentifier.IsShowingSprite;
+} *@

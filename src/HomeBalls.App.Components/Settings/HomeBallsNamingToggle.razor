@@ -1,7 +1,7 @@
-@inherits HomeBallsSettingsToggleBase
+@* @inherits HomeBallsSettingsToggleBase
 
 <button onclick="@OnToggleClicked" class="group w-full h-6 table rounded-md bg-theme-white-500 hover:bg-theme-primary-100 active:bg-theme-primary-100 lg:h-[30px]">
-    @if (Settings.EntryTable.ColumnIdentifier.IsUsingDefault.Value) { @Content }
+    @if (Settings.Entries.ColumnIdentifier.IsUsingDefault.Value) { @Content }
     else if (IsToggled.Value) { @SelectedContent }
     else { @Content }
 </button>
@@ -17,7 +17,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Settings.EntryTable.ColumnIdentifier.IsUsingDefault.ValueChanged += OnDefaultSettingsToggled;
+        Settings.Entries.ColumnIdentifier.IsUsingDefault.ValueChanged += OnDefaultSettingsToggled;
         IsToggled.ValueChanged += OnToggleChanged;
     }
 
@@ -32,4 +32,4 @@
         StateHasChanged();
 
     protected virtual void OnToggleClicked() => IsToggled.Value = !IsToggled.Value;
-}
+} *@

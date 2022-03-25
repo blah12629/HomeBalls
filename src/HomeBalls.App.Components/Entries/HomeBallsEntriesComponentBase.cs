@@ -5,17 +5,17 @@ namespace CEo.Pokemon.HomeBalls.App.Components.Entries;
 public abstract class HomeBallsEntriesComponentBase :
     HomeBallsLoggingComponent
 {
-    IHomeBallsAppSettings? _settings;
+    IHomeBallsAppEntriesSettings? _entriesSettings;
     IHomeBallsAppStateContainer? _state;
     IHomeBallsEntryTable? _table;
     IHomeBallsLoadableDataSource? _data;
     IJSRuntime? _jsRuntime;
 
     [Inject]
-    protected internal IHomeBallsAppSettings Settings
+    protected internal IHomeBallsAppEntriesSettings EntriesSettings
     {
-        get => _settings ?? throw new NullReferenceException();
-        init => _settings = value;
+        get => _entriesSettings ?? throw new NullReferenceException();
+        init => _entriesSettings = value;
     }
 
     [Inject]

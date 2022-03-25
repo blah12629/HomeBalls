@@ -1,0 +1,61 @@
+@inherits HomeBallsLoggingComponent
+
+<div class="flex">
+    <div class="flex-grow table">
+        <div class="table-cell align-middle">
+            @Label
+        </div>
+    </div>
+
+    @if (Toggle != default)
+    {
+        <div class="flex-grow-0 table">
+            <div class="table-cell align-middle">
+                @Toggle
+            </div>
+        </div>
+    }
+</div>
+
+@code
+{
+    RenderFragment? _label;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Label
+    {
+        get => _label ?? throw new NullReferenceException();
+        init => _label = value;
+    }
+
+    [Parameter]
+    public RenderFragment? Toggle { get; init; }
+}
+
+@* @inherits HomeBallsLoggingComponent
+
+<div class="flex flex-row pl-1.5">
+    <div class="flex-grow">@Label</div>
+
+    <div class="flex-grow-0 table">
+        @if (Toggle != default)
+        {
+            <div class="table-cell align-middle">@Toggle</div>
+        }
+    </div>
+</div>
+
+@code
+{
+    RenderFragment? _label;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Label
+    {
+        get => _label ?? throw new NullReferenceException();
+        init => _label = value;
+    }
+
+    [Parameter]
+    public RenderFragment? Toggle { get; init; }
+} *@

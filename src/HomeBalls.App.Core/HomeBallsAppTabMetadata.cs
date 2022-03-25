@@ -20,6 +20,8 @@ public record HomeBallsAppTabMetadata : IHomeBallsAppTabMetadata
 
     public IMutableNotifyingProperty<Boolean> IsSelected { get; }
 
+    public Boolean IsDisabled { get; init; } = true;
+
     public IReadOnlyCollection<IHomeBallsString> Names { get; }
 
     protected internal IEventRaiser EventRaiser { get; }
@@ -51,6 +53,8 @@ public abstract class HomeBallsAppTab : IHomeBallsAppTab
 
     public IMutableNotifyingProperty<Boolean> IsSelected { get; }
 
+    public Boolean IsDisabled { get; init; }
+
     public IReadOnlyCollection<IHomeBallsString> Names { get; }
 
     protected internal IEventRaiser EventRaiser { get; }
@@ -79,7 +83,10 @@ public class HomeBallsAppAbout : HomeBallsAppTab, IHomeBallsAppAbout
 
 public class HomeBallsTrade : HomeBallsAppTab, IHomeBallsTrade
 {
-    public HomeBallsTrade(ILogger? logger = default) : base(logger) { }
+    public HomeBallsTrade(ILogger? logger = default) : base(logger)
+    {
+        IsDisabled = true;
+    }
 
     protected internal override IReadOnlyCollection<IHomeBallsString> CreateNames() =>
         new List<IHomeBallsString>
@@ -94,7 +101,10 @@ public class HomeBallsTrade : HomeBallsAppTab, IHomeBallsTrade
 
 public class HomeBallsEdit : HomeBallsAppTab, IHomeBallsEdit
 {
-    public HomeBallsEdit(ILogger? logger = default) : base(logger) { }
+    public HomeBallsEdit(ILogger? logger = default) : base(logger)
+    {
+        IsDisabled = true;
+    }
 
     protected internal override IReadOnlyCollection<IHomeBallsString> CreateNames() =>
         new List<IHomeBallsString>

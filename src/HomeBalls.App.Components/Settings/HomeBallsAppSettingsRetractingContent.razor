@@ -1,0 +1,80 @@
+@using CEo.Pokemon.HomeBalls.App.Components.Settings.Dividers
+@inherits HomeBallsLoggingComponent
+@inject IJSRuntime JSRuntime
+
+<div id="@OuterComponentId" class="overflow-hidden transition-[height]">
+    <div id="@InnerComponentId">
+        @Divider
+        @Content
+    </div>
+</div>
+
+@code
+{
+    CreateComponentId? _id;
+    RenderFragment? _content;
+    String? _outerComponentId, _innerComponentId;
+
+    [Parameter, EditorRequired]
+    public CreateComponentId CreateComponentId
+    {
+        get => _id ?? throw new NullReferenceException();
+        init
+        {
+            _id = value;
+            _outerComponentId = CreateComponentId(Id);
+            _innerComponentId = $"{OuterComponentId}-inner";
+        }
+    }
+
+    [Parameter]
+    public INotifyingProperty<Boolean>? IsOpen { get; init; }
+
+    [Parameter]
+    public INotifyingProperty<Boolean>? IsRetracted { get; init; }
+
+    [Parameter]
+    public RenderFragment Divider { get; init; } = @<HomeBallsAppSettingsDivider />;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Content
+    {
+        get => _content ?? throw new NullReferenceException();
+        init => _content = value;
+    }
+
+    protected virtual String OuterComponentId => _outerComponentId ?? throw new NullReferenceException();
+
+    protected virtual String InnerComponentId => _innerComponentId ?? throw new NullReferenceException();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if ((IsOpen == default) == (IsRetracted == default)) throw new ArgumentException();
+
+        if (IsOpen != default) IsOpen.ValueChanged += UpdateContainerHeight;
+        else if (IsRetracted != default) IsRetracted.ValueChanged += UpdateContainerHeight;
+    }
+
+    protected override async Task OnAfterRenderAsync(Boolean firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender) await UpdateContainerHeightAsync();
+    }
+
+    protected virtual async void UpdateContainerHeight(
+        Object? sender,
+        PropertyChangedEventArgs<Boolean> e) =>
+        await UpdateContainerHeightAsync();
+
+    protected virtual ValueTask UpdateContainerHeightAsync() =>
+        IsOpen == default ?
+            IsRetracted == default ?
+                throw new ArgumentException() :
+                IsRetracted.Value ? RetractComponentAsync() : OpenComponentAsync() :
+            IsOpen.Value ? OpenComponentAsync() : RetractComponentAsync();
+
+    protected virtual ValueTask OpenComponentAsync() => JSRuntime.InvokeVoidAsync("openComponent", new Object?[] { OuterComponentId, InnerComponentId });
+
+    protected virtual ValueTask RetractComponentAsync() => JSRuntime.InvokeVoidAsync("closeComponent", new Object?[] { OuterComponentId });
+}

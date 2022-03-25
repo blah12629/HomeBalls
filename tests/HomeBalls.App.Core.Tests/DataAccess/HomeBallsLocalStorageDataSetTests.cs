@@ -1,4 +1,4 @@
-// namespace CEo.Pokemon.HomeBalls.App.Core.DataAccess.Tests;
+// namespace CEo.Pokemon.HomeBalls.App.DataAccess.Tests;
 
 // public class HomeBallsLocalStorageDataSetTests :
 //     HomeBallsLocalStorageDataSetTests<HomeBallsEntryKey, IHomeBallsEntryLegality> { }

@@ -1,0 +1,32 @@
+@inherits HomeBallsBallIdsSettingsComponentBase
+
+@if (BallData.IsLoaded) foreach (var chunk in BallsSorted)
+{
+    <div class="ml-4 -indent-4">
+        @foreach (var ball in chunk)
+        {
+            <HomeBallsBallIdsSettingsOptionsToggle Ball="@ball" />
+        }
+    </div>
+}
+
+@code
+{
+    protected IHomeBallsLoadableDataSet<UInt16, IHomeBallsItem> BallData =>
+        Data.Pokeballs.IsLoaded ? Data.Pokeballs : Data.Items;
+
+    protected IEnumerable<IEnumerable<IHomeBallsItem>> BallsSorted => BallData
+        .OrderBy(ball => ball.Id, ItemIdComparer)
+        .SplitWhen(ball => ball.Id == 12 || ball.Id == 11 || ball.Id == 451);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        BallData.DataLoaded += OnPokeBallsLoaded;
+    }
+
+    protected virtual void OnPokeBallsLoaded(
+        Object? sender,
+        TimedActionEndedEventArgs e) =>
+        StateHasChanged();
+}

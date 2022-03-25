@@ -1,138 +1,89 @@
 namespace CEo.Pokemon.HomeBalls.App.Settings;
 
-public interface IHomeBallsAppSettingsCollectionProperty<T> :
+public interface IHomeBallsAppSettingsCollectionProperty<TValue> :
     IHomeBallsAppSettingsProperty,
-    IHomeBallsObservableList<T>,
-    IIdentifiable,
-    IAsyncLoadable<IHomeBallsAppSettingsCollectionProperty<T>> { }
+    IHomeBallsObservableCollection<TValue>,
+    IAsyncLoadable<IHomeBallsAppSettingsCollectionProperty<TValue>> { }
 
-public class HomeBallsAppSettingsCollectionProperty<T> :
-    IHomeBallsAppSettingsCollectionProperty<T>,
-    IAsyncLoadable<HomeBallsAppSettingsCollectionProperty<T>>
+public class HomeBallsAppSettingsCollectionProperty<TValue> :
+    HomeBallsAppSettingsPropertyEndpoint,
+    IHomeBallsAppSettingsCollectionProperty<TValue>,
+    IAsyncLoadable<HomeBallsAppSettingsCollectionProperty<TValue>>
 {
     public HomeBallsAppSettingsCollectionProperty(
-        IHomeBallsObservableList<T> items,
-        IList<T> itemsSilent,
-        String propertyName,
-        ILocalStorageService localStorage,
-        IEventRaiser eventRaiser,
-        ILogger? logger = default) :
-        this (items, itemsSilent, propertyName, propertyName, localStorage, eventRaiser, logger) { }
-
-    public HomeBallsAppSettingsCollectionProperty(
-        IHomeBallsObservableList<T> items,
-        IList<T> itemsSilent,
+        IHomeBallsObservableCollection<TValue> collection,
         String propertyName,
         String identifier,
         ILocalStorageService localStorage,
+        IJSRuntime jsRuntime,
         IEventRaiser eventRaiser,
-        ILogger? logger = default)
+        ILogger? logger = default) :
+        base(propertyName, identifier, localStorage, jsRuntime, eventRaiser, logger)
     {
-        (Items, ItemsSilent) = (items, itemsSilent);
-        (PropertyName, Identifier, ElementType) = (propertyName, identifier, typeof(T));
-        (LocalStorage, EventRaiser, Logger) = (localStorage, eventRaiser, logger);
+        Collection = collection;
         CollectionChanged += OnCollectionChanged;
     }
 
-    public virtual T this[Int32 index] { get => Items[index]; set => Items[index] = value; }
+    public virtual Type ElementType => Collection.ElementType;
 
-    public Type ElementType { get; }
+    public virtual Int32 Count => Collection.Count;
 
-    public Int32 Count => Items.Count;
+    public virtual Boolean IsReadOnly => Collection.IsReadOnly;
 
-    public Boolean IsReadOnly => Items.IsReadOnly;
-
-    public String Identifier { get; }
-
-    public String PropertyName { get; }
-
-    protected internal IHomeBallsObservableList<T> Items { get; }
-
-    protected internal IList<T> ItemsSilent { get; }
-
-    protected internal ILocalStorageService LocalStorage { get; }
-
-    protected internal IEventRaiser EventRaiser { get; }
-
-    protected internal ILogger? Logger { get; }
-
-    public virtual Boolean IsLoaded { get; protected internal set; }
+    protected internal IHomeBallsObservableCollection<TValue> Collection { get; }
 
     public event NotifyCollectionChangedEventHandler? CollectionChanged
     {
-        add => Items.CollectionChanged += value;
-        remove => Items.CollectionChanged -= value;
+        add => Collection.CollectionChanged += value;
+        remove => Collection.CollectionChanged -= value;
     }
 
-    public event EventHandler<TimedActionStartingEventArgs>? DataLoading;
+    public virtual IHomeBallsObservableCollection<TValue> Add(TValue item) => Collection.Add(item);
 
-    public event EventHandler<TimedActionEndedEventArgs>? DataLoaded;
+    public virtual IHomeBallsObservableCollection<TValue> Clear() => Collection.Clear();
 
-    public virtual IHomeBallsObservableList<T> Add(T item) => Items.Add(item);
+    public virtual Boolean Contains(TValue item) => Collection.Contains(item);
 
-    public virtual IHomeBallsObservableList<T> Clear() => Items.Clear();
+    public virtual IHomeBallsObservableCollection<TValue> CopyTo(TValue[] array, Int32 arrayIndex) => Collection.CopyTo(array, arrayIndex);
 
-    public virtual Boolean Contains(T item) => Items.Contains(item);
-
-    public virtual IHomeBallsObservableList<T> CopyTo(T[] array, Int32 arrayIndex) =>
-        Items.CopyTo(array, arrayIndex);
-
-    public virtual async ValueTask<HomeBallsAppSettingsCollectionProperty<T>> EnsureLoadedAsync(
+    new public virtual async ValueTask<HomeBallsAppSettingsCollectionProperty<TValue>> EnsureLoadedAsync(
         CancellationToken cancellationToken = default)
     {
-        if (IsLoaded) return this;
-        var start = EventRaiser.Raise(DataLoading, PropertyName);
-
-        if (!await LocalStorage.ContainKeyAsync(Identifier, cancellationToken)) await SaveAsync(cancellationToken);
-
-        ItemsSilent.Clear();
-        ItemsSilent.AddRange(await LocalStorage.GetItemAsync<IEnumerable<T>>(Identifier, cancellationToken));
-        EventRaiser.Raise(DataLoaded, start.StartTime, PropertyName);
-        IsLoaded = true;
+        await base.EnsureLoadedAsync(cancellationToken);
         return this;
     }
 
-    public virtual IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
+    public virtual IEnumerator<TValue> GetEnumerator() => Collection.GetEnumerator();
 
-    public virtual Int32 IndexOf(T item) => Items.IndexOf(item);
+    public virtual Boolean Remove(TValue item) => Collection.Remove(item);
 
-    public virtual IHomeBallsObservableList<T> Insert(Int32 index, T item) => Items.Insert(index, item);
-
-    public virtual Boolean Remove(T item) => Items.Remove(item);
-
-    public virtual IHomeBallsObservableList<T> RemoveAt(Int32 index) => Items.RemoveAt(index);
-
-    public virtual Task SaveAsync(CancellationToken cancellationToken = default) =>
-        LocalStorage.SetItemAsync(Identifier, Items, cancellationToken).AsTask();
+    protected internal override async Task LoadAsync(CancellationToken cancellationToken = default)
+    {
+        var items = await LocalStorage.GetItemAsync<IEnumerable<TValue>>(Identifier, cancellationToken);
+        Clear();
+        foreach (var item in items) Add(item);
+    }
 
     protected internal virtual async void OnCollectionChanged(
         Object? sender,
-        NotifyCollectionChangedEventArgs e) =>
-        await SaveAsync();
+        NotifyCollectionChangedEventArgs e)
+    {
+        if (!IsLoading) await SaveAsync();
+    }
 
-    IHomeBallsObservableCollection<T> IHomeBallsObservableCollection<T>.Add(T item) => Add(item);
+    protected internal override Task SaveAsync(CancellationToken cancellationToken = default) => LocalStorage
+        .SetItemAsync<IEnumerable<TValue>>(Identifier, this, cancellationToken)
+        .AsTask();
 
-    IHomeBallsObservableCollection<T> IHomeBallsObservableCollection<T>.Clear() => Clear();
+    void ICollection<TValue>.Add(TValue item) => Add(item);
 
-    IHomeBallsObservableCollection<T> IHomeBallsObservableCollection<T>.CopyTo(T[] array, Int32 arrayIndex) => CopyTo(array, arrayIndex);
+    void ICollection<TValue>.Clear() => Clear();
 
-    void IList<T>.Insert(Int32 index, T item) => Insert(index, item);
+    void ICollection<TValue>.CopyTo(TValue[] array, Int32 arrayIndex) => CopyTo(array, arrayIndex);
 
-    void IList<T>.RemoveAt(Int32 index) => RemoveAt(index);
-
-    void ICollection<T>.Add(T item) => Add(item);
-
-    void ICollection<T>.Clear() => Clear();
-
-    void ICollection<T>.CopyTo(T[] array, Int32 arrayIndex) => CopyTo(array, arrayIndex);
+    async ValueTask<IHomeBallsAppSettingsCollectionProperty<TValue>> IAsyncLoadable<IHomeBallsAppSettingsCollectionProperty<TValue>>
+        .EnsureLoadedAsync(CancellationToken cancellationToken) =>
+        await EnsureLoadedAsync(cancellationToken);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    async ValueTask<IHomeBallsAppSettingsCollectionProperty<T>> IAsyncLoadable<IHomeBallsAppSettingsCollectionProperty<T>>
-        .EnsureLoadedAsync(CancellationToken cancellationToken) =>
-        await EnsureLoadedAsync(cancellationToken);
-
-    async ValueTask IAsyncLoadable
-        .EnsureLoadedAsync(CancellationToken cancellationToken) =>
-        await EnsureLoadedAsync(cancellationToken);
 }

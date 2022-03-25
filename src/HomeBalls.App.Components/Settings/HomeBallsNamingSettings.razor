@@ -1,4 +1,4 @@
-@inherits HomeBallsLoggingComponent
+@* @inherits HomeBallsLoggingComponent
 @inject IHomeBallsAppSettings Settings
 
 <HomeBallsSettingsBoxedModule Class="col-span-6">
@@ -8,7 +8,7 @@
                 <span class="align-sub">Naming</span>
             </Label>
             <Toggle>
-                <HomeBallsSettingsCheckbox IsToggled="@Settings.EntryTable.ColumnIdentifier.IsUsingDefault" />
+                <HomeBallsSettingsCheckbox IsToggled="@Settings.Entries.ColumnIdentifier.IsUsingDefault" />
             </Toggle>
         </HomeBallsSettingsHeader>
     </Header>
@@ -20,4 +20,4 @@
             <div class="flex-grow"><HomeBallsNamingNameToggle /></div>
         </div>
     </Body>
-</HomeBallsSettingsBoxedModule>
+</HomeBallsSettingsBoxedModule> *@

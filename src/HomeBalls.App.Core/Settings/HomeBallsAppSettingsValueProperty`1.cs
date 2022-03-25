@@ -1,81 +1,79 @@
 namespace CEo.Pokemon.HomeBalls.App.Settings;
 
-public interface IHomeBallsAppSettingsValueProperty<T> :
+public interface IHomeBallsAppSettingsValueProperty<TValue> :
     IHomeBallsAppSettingsProperty,
-    IMutableNotifyingProperty<T>,
-    IAsyncLoadable<IHomeBallsAppSettingsValueProperty<T>> { }
+    IMutableNotifyingProperty<TValue>,
+    IAsyncLoadable<IHomeBallsAppSettingsValueProperty<TValue>> { }
 
-public class HomeBallsAppSettingsValueProperty<T> :
-    MutableNotifyingProperty<T>,
-    IHomeBallsAppSettingsValueProperty<T>,
-    IAsyncLoadable<HomeBallsAppSettingsValueProperty<T>>
+public class HomeBallsAppSettingsValueProperty<TValue> :
+    HomeBallsAppSettingsPropertyEndpoint,
+    IHomeBallsAppSettingsValueProperty<TValue>,
+    IAsyncLoadable<HomeBallsAppSettingsValueProperty<TValue>>
 {
     public HomeBallsAppSettingsValueProperty(
-        T defaultValue,
-        String propertyName,
-        ILocalStorageService localStorage,
-        IEventRaiser eventRaiser,
-        ILogger? logger = default,
-        IEqualityComparer<T>? comparer = default) :
-        base(defaultValue, propertyName, eventRaiser, logger, comparer) =>
-        LocalStorage = localStorage;
-
-    public HomeBallsAppSettingsValueProperty(
-        T defaultValue,
+        IMutableNotifyingProperty<TValue> property,
         String propertyName,
         String identifier,
         ILocalStorageService localStorage,
+        IJSRuntime jsRuntime,
         IEventRaiser eventRaiser,
-        ILogger? logger = default,
-        IEqualityComparer<T>? comparer = default) :
-        base(defaultValue, propertyName, identifier, eventRaiser, logger, comparer) =>
-        LocalStorage = localStorage;
+        ILogger? logger = default) :
+        base(propertyName, identifier, localStorage, jsRuntime, eventRaiser, logger)
+    {
+        IsValueString = typeof(TValue).IsAssignableTo(typeof(String));
+        Property = property;
+        ValueChanged += OnValueChanged;
+    }
 
-    protected internal virtual ILocalStorageService LocalStorage { get; }
+    public TValue Value
+    {
+        get => Property.Value;
+        set => Property.Value = value;
+    }
 
-    public virtual Boolean IsLoaded { get; set; }
+    protected internal Boolean IsValueString { get; }
 
-    public event EventHandler<TimedActionStartingEventArgs>? DataLoading;
+    protected internal IMutableNotifyingProperty<TValue> Property { get; }
 
-    public event EventHandler<TimedActionEndedEventArgs>? DataLoaded;
+    TValue INotifyingProperty<TValue>.Value => Value;
 
-    public virtual async ValueTask<HomeBallsAppSettingsValueProperty<T>> EnsureLoadedAsync(
+    TValue IProperty<TValue>.Value => Value;
+
+    public event EventHandler<PropertyChangedEventArgs<TValue>>? ValueChanged
+    {
+        add => Property.ValueChanged += value;
+        remove => Property.ValueChanged -= value;
+    }
+
+    new public virtual async ValueTask<HomeBallsAppSettingsValueProperty<TValue>> EnsureLoadedAsync(
         CancellationToken cancellationToken = default)
     {
-        if (IsLoaded) return this;
-        var start = EventRaiser.Raise(DataLoading, PropertyName);
-
-        if (!await LocalStorage.ContainKeyAsync(Identifier, cancellationToken))
-            await SaveAsync(cancellationToken);
-
-        ValueSilent = await LocalStorage.GetItemAsync<T>(Identifier, cancellationToken);
-        EventRaiser.Raise(DataLoaded, start.StartTime, PropertyName);
-        IsLoaded = true;
+        await base.EnsureLoadedAsync(cancellationToken);
         return this;
     }
 
-    protected override async void OnValueChanged(
+    protected internal override async Task LoadAsync(CancellationToken cancellationToken = default)
+    {
+        var value = IsValueString ?
+            (TValue)(Object)(await LocalStorage.GetItemAsStringAsync(Identifier, cancellationToken)) :
+            await LocalStorage.GetItemAsync<TValue>(Identifier, cancellationToken);
+
+        Property.Value = value;
+    }
+
+    protected internal override Task SaveAsync(CancellationToken cancellationToken = default) => (IsValueString ?
+        LocalStorage.SetItemAsStringAsync(Identifier, (String)(Object)Property.Value!, cancellationToken) :
+        LocalStorage.SetItemAsync(Identifier, Property.Value, cancellationToken))
+        .AsTask();
+
+    protected internal virtual async void OnValueChanged(
         Object? sender,
-        PropertyChangedEventArgs<T> e)
+        PropertyChangedEventArgs<TValue> value)
     {
-        base.OnValueChanged(sender, e);
-        await SaveAsync();
+        if (!IsLoading) await SaveAsync();
     }
 
-    public virtual Task SaveAsync(CancellationToken cancellationToken = default)
-    {
-        var valueTask = typeof(T) == typeof(String) ?
-            LocalStorage.SetItemAsStringAsync(Identifier, (String)(Object)ValueSilent!) :
-            LocalStorage.SetItemAsync(Identifier, ValueSilent);
-
-        return valueTask.AsTask();
-    }
-
-    async ValueTask<IHomeBallsAppSettingsValueProperty<T>> IAsyncLoadable<IHomeBallsAppSettingsValueProperty<T>>
-        .EnsureLoadedAsync(CancellationToken cancellationToken) =>
-        await EnsureLoadedAsync(cancellationToken);
-
-    async ValueTask IAsyncLoadable
+    async ValueTask<IHomeBallsAppSettingsValueProperty<TValue>> IAsyncLoadable<IHomeBallsAppSettingsValueProperty<TValue>>
         .EnsureLoadedAsync(CancellationToken cancellationToken) =>
         await EnsureLoadedAsync(cancellationToken);
 }

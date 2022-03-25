@@ -41,12 +41,7 @@ public static class HomeBallsAppServiceCollectionExtensions
                 services => new HomeBallsEdit(
                     services.GetService<ILogger<HomeBallsEdit>>()),
                 lifetime)
-            .Add<IHomeBallsAppSettings>(
-                services => new HomeBallsAppSettings(
-                    services.GetRequiredService<ILocalStorageService>(),
-                    services.GetRequiredService<IJSRuntime>(),
-                    services.GetService<ILoggerFactory>()),
-                lifetime)
+            .AddSettings(lifetime)
             .Add<IHomeBallsAppTabList>(
                 services => new HomeBallsAppTabList(
                     services.GetRequiredService<IHomeBallsAppAbout>(),
@@ -60,6 +55,29 @@ public static class HomeBallsAppServiceCollectionExtensions
                 lifetime)
             .Add<IReadOnlyCollection<IHomeBallsAppTab>>(
                 services => services.GetRequiredService<IHomeBallsAppTabList>(),
+                lifetime);
+
+    public static IServiceCollection AddSettings(
+        this IServiceCollection services,
+        ServiceLifetime lifetime) =>
+        services
+            .Add<IHomeBallsAppSettings>(
+                services => new HomeBallsAppSettings(
+                    services.GetRequiredService<ILocalStorageService>(),
+                    services.GetRequiredService<IJSRuntime>(),
+                    logger: services.GetService<ILogger<HomeBallsAppSettings>>()),
+                lifetime)
+            .Add<IHomeBallsAppThemeSettings>(
+                services => services.GetRequiredService<IHomeBallsAppSettings>().Theme,
+                lifetime)
+            .Add<IHomeBallsAppEntriesSettings>(
+                services => services.GetRequiredService<IHomeBallsAppSettings>().Entries,
+                lifetime)
+            .Add<IHomeBallsAppEntriesBallIdsSettings>(
+                services => services.GetRequiredService<IHomeBallsAppEntriesSettings>().BallIds,
+                lifetime)
+            .Add<IHomeBallsAppEntriesRowIdentifierSettings>(
+                services => services.GetRequiredService<IHomeBallsAppEntriesSettings>().RowIdentifier,
                 lifetime);
 
     public static IServiceCollection AddHttpClients(

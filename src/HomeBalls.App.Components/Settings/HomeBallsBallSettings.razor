@@ -1,4 +1,4 @@
-@inherits HomeBallsLoggingComponent
+@* @inherits HomeBallsLoggingComponent
 @inject IHomeBallsAppSettings Settings
 
 <div class="table h-full col-span-10">
@@ -8,7 +8,7 @@
                 <span class="align-sub">Balls</span>
             </Label>
             <Toggle>
-                <HomeBallsSettingsCheckbox IsToggled="@Settings.EntryTable.BallIdsShown.IsUsingDefault" />
+                <HomeBallsSettingsCheckbox IsToggled="@Settings.Entries.BallIds.IsUsingDefault" />
             </Toggle>
         </HomeBallsSettingsHeader>
 
@@ -16,4 +16,4 @@
 
         <HomeBallsBallSettingsBody />
     </div>
-</div>
+</div> *@

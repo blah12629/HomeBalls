@@ -33,4 +33,10 @@ internal static class _Values
     public const String EditTabEnglishName = "Edit";
 
     public const String SettingsTabEnglishName = "Settings";
+
+    public static IReadOnlyList<UInt16> DefaultBalIdsShown = new List<UInt16>
+    {
+        453, 454, 449, 450, 452, 455, 451,
+        617, 457, 5, 887
+    }.AsReadOnly();
 }

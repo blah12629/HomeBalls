@@ -1,4 +1,4 @@
-@inherits HomeBallsSettingsToggleBase
+@* @inherits HomeBallsSettingsToggleBase
 
 <div class="w-6 h-6 overflow-hidden lg:w-7 lg:h-7">
     <button onclick="@OnDarkModeClicked" class="group overflow-hidden rounded-md bg-theme-white-500 hover:bg-theme-primary-100 active:bg-theme-primary-100">
@@ -12,4 +12,4 @@
 {
     protected virtual void OnDarkModeClicked(MouseEventArgs e) =>
         Settings.Theme.IsDarkMode.Value = !Settings.Theme.IsDarkMode.Value;
-}
+} *@

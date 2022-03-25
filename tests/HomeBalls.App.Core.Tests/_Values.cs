@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Core.Tests;
+namespace CEo.Pokemon.HomeBalls.App.Tests;
 
 internal static class _Values
 {

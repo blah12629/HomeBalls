@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEo.Pokemon.HomeBalls.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEo.Pokemon.HomeBalls.Data.Tests", "tests\HomeBalls.Data.Tests\CEo.Pokemon.HomeBalls.Data.Tests.csproj", "{FC4AAD72-A3ED-4435-8CA1-3A80B4C74EA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEo.Pokemon.HomeBalls.App.Core.Tests", "tests\HomeBalls.App.Core.Tests\CEo.Pokemon.HomeBalls.App.Core.Tests.csproj", "{232E03DA-9A06-4178-A079-697C20E0258E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{D758B6E5-442E-4771-A185-BA7CA1839FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D758B6E5-442E-4771-A185-BA7CA1839FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D758B6E5-442E-4771-A185-BA7CA1839FBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232E03DA-9A06-4178-A079-697C20E0258E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232E03DA-9A06-4178-A079-697C20E0258E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232E03DA-9A06-4178-A079-697C20E0258E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232E03DA-9A06-4178-A079-697C20E0258E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{24CE13E0-95FD-415E-87D6-210CD22B72C4} = {8C4AB9BB-5425-4AD6-A1FB-375C93B55E98}
@@ -74,5 +80,6 @@ Global
 		{11CCA8F2-6EBA-4557-AF66-7F127517A9AF} = {A5A6BD01-2421-4EFB-AF7E-B64E65D79B89}
 		{FC4AAD72-A3ED-4435-8CA1-3A80B4C74EA9} = {A5A6BD01-2421-4EFB-AF7E-B64E65D79B89}
 		{D758B6E5-442E-4771-A185-BA7CA1839FBF} = {8C4AB9BB-5425-4AD6-A1FB-375C93B55E98}
+		{232E03DA-9A06-4178-A079-697C20E0258E} = {A5A6BD01-2421-4EFB-AF7E-B64E65D79B89}
 	EndGlobalSection
 EndGlobal

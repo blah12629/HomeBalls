@@ -1,4 +1,4 @@
-@inherits HomeBallsSettingsToggleBase
+@* @inherits HomeBallsSettingsToggleBase
 
 <div class="table-cell align-middle">
     <div class="w-5 h-5 overflow-hidden">
@@ -42,4 +42,4 @@
     protected virtual void OnToggleClick(MouseEventArgs e) => IsToggled.Value = !IsToggled.Value;
 
     protected virtual void OnToggleChanged(Object? sender, PropertyChangedEventArgs<Boolean> e) => StateHasChanged();
-}
+} *@

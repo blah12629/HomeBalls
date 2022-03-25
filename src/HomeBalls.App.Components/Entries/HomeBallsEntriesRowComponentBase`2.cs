@@ -7,15 +7,15 @@ public abstract class HomeBallsEntriesRowComponentBase<TRow, TCell> :
     where TRow : notnull, IHomeBallsEntryRow<TCell>
     where TCell : notnull, IHomeBallsEntryCell
 {
-    protected virtual IHomeBallsEntryColumnIdentifierSettings ColumnIdentifierSettings => Settings.EntryTable.ColumnIdentifier;
+    protected virtual IHomeBallsAppEntriesRowIdentifierSettings RowIdentifierSettings => EntriesSettings.RowIdentifier;
 
-    protected virtual IHomeBallsEntryBallIdsSettings BallIdsSettings => Settings.EntryTable.BallIdsShown;
+    protected virtual IHomeBallsAppEntriesBallIdsSettings BallIdsSettings => EntriesSettings.BallIds;
 
-    protected virtual Task OnColumnIdentifierInitializedAsync(
+    protected virtual Task OnRowIdentifierInitializedAsync(
         Action rerenderAction,
         INotifyingProperty<Boolean> identifierToggle)
     {
-        ColumnIdentifierSettings.IsUsingDefault.ValueChanged += (sender, e) => rerenderAction();
+        RowIdentifierSettings.IsUsingDefault.ValueChanged += (sender, e) => rerenderAction();
         identifierToggle.ValueChanged += (sender, e) => rerenderAction();
         return Task.CompletedTask;
     }
@@ -27,9 +27,10 @@ public abstract class HomeBallsEntriesRowComponentBase<TRow, TCell> :
         BallIdsSettings.IsUsingDefault.ValueChanged += (sender, e) => rerenderAction();
         BallIdsSettings.Collection.CollectionChanged += (sender, e) =>
         {
-            if ((e.OldItems?.Contains(cell.Id) ?? false) ||
-                (e.NewItems?.Contains(cell.Id) ?? false))
-                rerenderAction();
+            Logger.LogInformation($"[{Id}] {cell.Id}");
+            Logger.LogInformation($"[{Id}] {String.Join(',', e.OldItems?.Cast<Object>().Select(item => item.ToString()) ?? new String[] { })}");
+            Logger.LogInformation($"[{Id}] {String.Join(',', e.NewItems?.Cast<Object>().Select(item => item.ToString()) ?? new String[] { })}");
+            if (e.IsChanged(cell.Id)) rerenderAction();
         };
         return Task.CompletedTask;
     }
