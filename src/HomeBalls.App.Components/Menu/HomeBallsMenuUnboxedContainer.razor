@@ -1,7 +1,7 @@
 @inherits HomeBallsLoggingComponent
 
 <div class="@Class">
-    <div class="w-full table px-1">
+    <div class="w-full h-full table px-1">
         <div class="table-cell align-middle">
             @Content
         </div>
@@ -11,6 +11,7 @@
 @code
 {
     RenderFragment? _content;
+    String _class = "h-full";
 
     [Parameter, EditorRequired]
     public RenderFragment Content
@@ -20,5 +21,11 @@
     }
 
     [Parameter]
-    public String Class { get; init; } = String.Empty;
+    public String Class
+    {
+        get => _class;
+        init => _class = value +
+            (String.IsNullOrWhiteSpace(value) ? String.Empty : ' ') +
+            "h-full";
+    }
 }
