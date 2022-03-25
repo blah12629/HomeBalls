@@ -1,4 +1,4 @@
-namespace CEo.Pokemon.HomeBalls.App.Components.Settings.Entries;
+namespace CEo.Pokemon.HomeBalls.App.Components.Settings;
 
 public abstract class HomeBallsAppSettingsItemComponentBase<TSettings> :
     HomeBallsLoggingComponent

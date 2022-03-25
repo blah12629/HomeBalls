@@ -1,0 +1,8 @@
+@inherits HomeBallsThemeSettingsComponentBase
+
+<div>
+    @for (var i = 0; i < ThemeIds.Count; i ++)
+    {
+        <HomeBallsThemeSettingsOptionsToggle ThemeId="@ThemeIds[i]" />
+    }
+</div>
