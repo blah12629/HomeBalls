@@ -1,4 +1,3 @@
-@using CEo.Pokemon.HomeBalls.App.Components.Settings.Dividers
 @inherits HomeBallsLoggingComponent
 @inject IJSRuntime JSRuntime
 
@@ -34,7 +33,7 @@
     public INotifyingProperty<Boolean>? IsRetracted { get; init; }
 
     [Parameter]
-    public RenderFragment Divider { get; init; } = @<HomeBallsAppSettingsDivider />;
+    public RenderFragment Divider { get; init; } = @<HomeBallsMenuDivider />;
 
     [Parameter, EditorRequired]
     public RenderFragment Content
