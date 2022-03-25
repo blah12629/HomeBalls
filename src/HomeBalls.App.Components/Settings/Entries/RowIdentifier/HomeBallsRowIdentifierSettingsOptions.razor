@@ -1,0 +1,78 @@
+@inherits HomeBallsRowIdentifierSettingsComponentBase
+
+<div class="flex">
+    <HomeBallsRowIdentifierSettingsOptionsToggle
+        Property="@Settings.IsShowingNumber"
+        Class="flex-grow-0">
+        <Content>
+            @if (Settings.IsShowingNumber.Value)
+            {
+                <div class="mx-1 text-theme-primary-500">
+                    @NumberFragment
+                </div>
+            }
+
+            else
+            {
+                <div class="mx-1 text-theme-black-300 group-hover:text-theme-black-400 group-active:text-theme-black-400">
+                    @NumberFragment
+                </div>
+            }
+        </Content>
+    </HomeBallsRowIdentifierSettingsOptionsToggle>
+
+    <HomeBallsRowIdentifierSettingsOptionsToggle
+        Property="@Settings.IsShowingSprite"
+        Class="flex-grow-0">
+        <Content>
+            @if (Settings.IsShowingSprite.Value)
+            {
+                <div class="mx-0.5 w-6 h-6 overflow-hidden">
+                    @SpriteFragment
+                </div>
+            }
+
+            else
+            {
+                <div class="mx-0.5 w-6 h-6 overflow-hidden grayscale opacity-60 group-hover:opacity-100 group-active:opacity-100">
+                    @SpriteFragment
+                </div>
+            }
+        </Content>
+    </HomeBallsRowIdentifierSettingsOptionsToggle>
+
+    <HomeBallsRowIdentifierSettingsOptionsToggle
+        Property="@Settings.IsShowingName"
+        Class="flex-grow">
+        <Content>
+            @if (Settings.IsShowingName.Value)
+            {
+                <div class="mx-1 text-theme-primary-500">
+                    @NameFragment
+                </div>
+            }
+
+            else
+            {
+                <div class="mx-1 text-theme-black-300 group-hover:text-theme-black-400 group-active:text-theme-black-400">
+                    @NameFragment
+                </div>
+            }
+        </Content>
+    </HomeBallsRowIdentifierSettingsOptionsToggle>
+</div>
+
+@code
+{
+    protected virtual RenderFragment NumberFragment =>
+        @<span class="text-sm font-semibold tabular-nums">777</span>;
+
+    protected virtual RenderFragment SpriteFragment =>
+        @<img class="scale-105 inline-block" src="https://www.serebii.net/pokedex-sm/icon/774-r.png" loading="lazy" />;
+
+    protected virtual RenderFragment NameFragment =>
+        @<span>
+            <span class="text-sm font-semibold">Minior</span>
+            <span class="text-sm">red</span>
+        </span>;
+}

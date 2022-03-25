@@ -1,0 +1,44 @@
+@inherits HomeBallsRowIdentifierSettingsComponentBase
+
+<div class="@Class">
+    <button onclick="@OnToggleClicked" class="group w-full h-full rounded-md text-left hover:bg-theme-primary-100 active:bg-theme-primary-100">
+        @Content
+    </button>
+</div>
+
+@code
+{
+    RenderFragment? _content;
+    IMutableNotifyingProperty<Boolean>? _property;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Content
+    {
+        get => _content ?? throw new NullReferenceException();
+        init => _content = value;
+    }
+
+    [Parameter, EditorRequired]
+    public IMutableNotifyingProperty<Boolean> Property
+    {
+        get => _property ?? throw new NullReferenceException();
+        init => _property = value;
+    }
+
+    [Parameter]
+    public String Class { get; init; } = String.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Property.ValueChanged += OnPropertyChanged;
+    }
+
+    protected virtual void OnToggleClicked(MouseEventArgs e) =>
+        Property.Value = !Property.Value;
+
+    protected virtual void OnPropertyChanged(
+        Object? sender,
+        PropertyChangedEventArgs<Boolean> e) =>
+        StateHasChanged();
+}

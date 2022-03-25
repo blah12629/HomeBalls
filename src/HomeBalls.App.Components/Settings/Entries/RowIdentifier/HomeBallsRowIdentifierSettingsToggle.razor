@@ -1,0 +1,23 @@
+@inherits HomeBallsRowIdentifierSettingsComponentBase
+
+@if (Settings.IsUsingDefault.Value)
+{
+    <input type="checkbox" onchange="@OnToggled" class="peer sr-only" />
+}
+
+else
+{
+    <input type="checkbox" onchange="@OnToggled" class="peer sr-only" checked />
+}
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.IsUsingDefault.ValueChanged += RerenderOnUsingDefaultChanged;
+    }
+
+    protected virtual void OnToggled(ChangeEventArgs e) =>
+        Settings.IsUsingDefault.Value = !Settings.IsUsingDefault.Value;
+}
