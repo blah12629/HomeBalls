@@ -6,11 +6,7 @@
 
 @code
 {
-    protected override RenderFragment Body => builder =>
-    {
-        builder.OpenComponent<HomeBallsAppSettings>(0);
-        builder.CloseComponent();
-    };
+    protected override RenderFragment Body => @<HomeBallsAppSettings />;
 
     protected override IHomeBallsAppTab Tab => Settings;
 }

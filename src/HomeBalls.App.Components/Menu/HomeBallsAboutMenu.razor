@@ -1,3 +1,4 @@
+@using CEo.Pokemon.HomeBalls.App.Components.About
 @inherits HomeBallsMenuLayout
 @inject IHomeBallsAppAbout About
 
@@ -5,7 +6,7 @@
 
 @code
 {
-    protected override RenderFragment Body => @<div>about</div>;
+    protected override RenderFragment Body => @<HomeBallsAppAbout />;
 
     protected override IHomeBallsAppTab Tab => About;
 }

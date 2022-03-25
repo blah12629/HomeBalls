@@ -1,0 +1,28 @@
+@inherits HomeBallsLoggingComponent
+
+<div>
+    <h1 class="font-semibold text-theme-black-400">@Header</h1>
+
+    <CEo.Pokemon.HomeBalls.App.Components.Settings.Dividers.HomeBallsAppSettingsDivider />
+
+    <p class="text-theme-black-500 indent-8 text-justify">@Content</p>
+</div>
+
+@code
+{
+    RenderFragment? _header, _content;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Header
+    {
+        get => _header ?? throw new NullReferenceException();
+        init => _header = value;
+    }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Content
+    {
+        get => _content ?? throw new NullReferenceException();
+        init => _content = value;
+    }
+}

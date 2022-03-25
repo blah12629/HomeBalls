@@ -1,0 +1,24 @@
+@inherits HomeBallsLoggingComponent
+
+@if (Hyperlink == default)
+{
+    <a class="hover:text-theme-primary-400 active:text-theme-primary-500 focus:text-theme-primary-500">
+        @Content
+    </a>
+}
+
+else
+{
+    <a href="@Hyperlink" class="hover:text-theme-primary-400 active:text-theme-primary-500 focus:text-theme-primary-500">
+        @Content
+    </a>
+}
+
+@code
+{
+    [Parameter]
+    public String? Hyperlink { get; init; }
+
+    [Parameter]
+    public RenderFragment? Content { get; init; }
+}
