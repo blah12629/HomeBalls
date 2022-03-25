@@ -168,6 +168,7 @@
         IHomeBallsEntryBodyCell cell)
     {
         await base.OnBallCellInitializedAsync(rerenderAction, cell);
+        EntriesSettings.IsShowingIllegalEntries.ValueChanged += (sender, e) => rerenderAction();
         cell.IsLegal.ValueChanged += (sender, e) => rerenderAction();
         cell.IsLegalWithHiddenAbility.ValueChanged += (sender, e) => rerenderAction();
         cell.IsObtained.ValueChanged += (sender, e) => rerenderAction();

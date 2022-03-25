@@ -1,0 +1,19 @@
+@inherits HomeBallsLoggingComponent
+
+<div class="col-span-10 table px-1">
+    <div class="table-cell align-middle">
+        @Content
+    </div>
+</div>
+
+@code
+{
+    RenderFragment? _content;
+
+    [Parameter, EditorRequired]
+    public RenderFragment Content
+    {
+        get => _content ?? throw new NullReferenceException();
+        init => _content = value;
+    }
+}

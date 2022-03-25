@@ -1,33 +1,26 @@
-@using CEo.Pokemon.HomeBalls.App.Components.Settings.Entries.BallIds
-@inherits HomeBallsBallIdsSettingsComponentBase
+@using CEo.Pokemon.HomeBalls.App.Components.Settings.Entries.IllegalEntries
+@inherits HomeBallsIllegalEntriesSettingsComponentBase
 
 <HomeBallsAppSettingsUnboxedContainer>
     <Content>
         <HomeBallsSettingsLabel>
             <Label>
                 <div class="text-0">
-                    <span class="text-sm font-semibold text-theme-black-400">Poké Balls shown</span>
-                    <HomeBallsBallIdsSettingsLabelState />
+                    <span class="text-sm font-semibold text-theme-black-400">Illegal entries</span>
+                    <span class="text-sm">:&nbsp;</span>
+                    <HomeBallsIllegalEntriesSettingsLabelState />
                 </div>
             </Label>
 
             <Toggle>
                 <label class="cursor-pointer relative">
                     <div class="grid" style="grid-template-columns: 1fr;">
-                        <HomeBallsBallIdsSettingsToggle />
+                        <HomeBallsIllegalEntriesSettingsToggle />
                         <div class="row-start-1 col-start-1 w-9 h-[18px] rounded-full bg-theme-black-100 peer-hover:bg-theme-black-200"></div>
                         <div class="row-start-1 col-start-1 w-[14px] h-[14px] m-0.5 rounded-full bg-theme-white-500 transition peer-checked:translate-x-[17.5px] peer-checked:bg-theme-primary-500"></div>
                     </div>
                 </label>
             </Toggle>
         </HomeBallsSettingsLabel>
-
-        <HomeBallsAppSettingsRetractingContent
-            CreateComponentId="@(id => $"settings-balls-{id}")"
-            IsRetracted="@Settings.IsUsingDefault">
-            <Content>
-                <HomeBallsBallIdsSettingsOptions />
-            </Content>
-        </HomeBallsAppSettingsRetractingContent>
     </Content>
 </HomeBallsAppSettingsUnboxedContainer>

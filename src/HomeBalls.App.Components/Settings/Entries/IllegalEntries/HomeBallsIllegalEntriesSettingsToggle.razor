@@ -1,0 +1,23 @@
+@inherits HomeBallsIllegalEntriesSettingsComponentBase
+
+@if (Settings.Value)
+{
+    <input type="checkbox" onchange="@OnToggled" class="peer sr-only" checked />
+}
+
+else
+{
+    <input type="checkbox" onchange="@OnToggled" class="peer sr-only" />
+}
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.ValueChanged += RerenderOnValueChanged;
+    }
+
+    protected virtual void OnToggled(ChangeEventArgs e) =>
+        Settings.Value = !Settings.Value;
+}

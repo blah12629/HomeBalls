@@ -1,0 +1,13 @@
+@inherits HomeBallsIllegalEntriesSettingsComponentBase
+
+@if (Settings.Value) { <span class="text-sm">shown</span> }
+else { <span class="text-sm">hidden</span> }
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Settings.ValueChanged += RerenderOnValueChanged;
+    }
+}
