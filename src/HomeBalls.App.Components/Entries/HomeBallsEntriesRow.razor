@@ -2,10 +2,9 @@
 @inject IHomeBallsBreedablesSpriteService Sprites
 
 <tr class="group">
-    <HomeBallsEntriesCell
-        OnAfterRenderTask="@(id => OnCellRenderedAsync(id, "registerRowNumberId"))">
+    <HomeBallsEntriesCell>
         <Container>
-            <td id="@context.ContainerId" class="sticky left-0 z-10 min-h-[29px] h-[29px] bg-theme-white-500 group-hover:bg-theme-primary-100" />
+            <td id="@context.ContainerId" class="sticky left-0 z-10 min-h-[29px] h-[29px] bg-theme-white-500 group-hover:bg-theme-primary-100"></td>
         </Container>
     </HomeBallsEntriesCell>
 
@@ -122,7 +121,7 @@
 
     <HomeBallsEntriesCell>
         <Container>
-            <td id="@context.ContainerId" class="bg-theme-white-500" />
+            <td id="@context.ContainerId" class="bg-theme-white-500"></td>
         </Container>
     </HomeBallsEntriesCell>
 </tr>
