@@ -3,12 +3,23 @@
 
 @if (Tab.IsSelected.Value)
 {
-    <button onclick="@OnTabClicked" class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-theme-primary-500 px-px text-sm font-semibold text-theme-primary-500 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">@Name</button>
+    <button onclick="@OnTabClicked" class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-theme-primary-500 px-px text-sm font-semibold text-theme-primary-500 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">
+        @Name
+    </button>
+}
+
+else if (Tab.IsDisabled)
+{
+    <button disabled title="Feature under development." class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-200 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">
+        @Name
+    </button>
 }
 
 else
 {
-    <button onclick="@OnTabClicked" class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-400 hover:text-theme-black-500 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">@Name</button>
+    <button onclick="@OnTabClicked" class="inline-block h-7 mx-1 -mb-px mt-px border-b-2 border-transparent px-px text-sm font-semibold text-theme-black-400 hover:text-theme-black-500 lg:h-9 lg:mx-2 lg:border-b-[3px] lg:text-lg">
+        @Name
+    </button>
 }
 
 @code
