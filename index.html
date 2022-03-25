@@ -11,37 +11,9 @@
 </head>
 
 <body>
-  <!-- Current progress: https://play.tailwindcss.com/d4oNwracTy?size=360x640 -->
-  <!-- Current progress: https://play.tailwindcss.com/O09TzLuXG9?size=360x640 -->
-  <!-- 20220304 1948 https://play.tailwindcss.com/2VPDN9W9MP?size=360x640 -->
-  <!-- 20220305 1428 Desktop layout https://play.tailwindcss.com/CELsc4myD0 -->
-  <!-- 20220305 2139 Mobile layout https://play.tailwindcss.com/LDDvI4nAqL?size=360x640 -->
-  <!-- 20220305 2203 Desktop layout (unfinished) https://play.tailwindcss.com/hZPf36uGSj -->
-  <!-- 20220305 2227 Desktop layout https://play.tailwindcss.com/y50UF0UmPN -->
-  <!-- 20220306 1154 Mixed layout https://play.tailwindcss.com/my6FYOm3BH -->
-  <!-- 20220306 1235 Mobile tabs layout https://play.tailwindcss.com/ro6OMdZoxu?size=360x640 -->
-  <!-- 20220306 1250 Desktop tabs layout https://play.tailwindcss.com/dmt4usJYQm?layout=horizontal -->
-  <!-- 20220306 1400 Header https://play.tailwindcss.com/Igiz6ztzKZ?size=320x620 -->
-  <!-- 20220306 0454 Loading https://play.tailwindcss.com/9Bgerxvf2i -->
-  <!-- 20220306 0654 Loading was not sticky https://play.tailwindcss.com/vlhTmPWOEN?layout=horizontal -->
-  <!-- 20220306 1859 Isolated menu divs https://play.tailwindcss.com/dlI7KNBIsf?layout=horizontal -->
-  <!-- 20220306 1944 Border was on the bottom of the scrollable div on mobile https://play.tailwindcss.com/tgOJY9uQPQ?size=320x640 -->
-  <!-- 20220307 1604 Mobile settings https://play.tailwindcss.com/DTk12hibK8?size=320x640 -->
-  <!-- 20220307 1604 Desktop settings prelimary https://play.tailwindcss.com/hjc1zmPbEo?layout=horizontal -->
-  <!-- 20220307 1744 Bug found:
-    - select a non-dream theme.
-    - refresh page
-    - go back to settings
-    - dream is the selected despite theme being different
-  -->
-  <!-- 20220311 1559 Preliminary entry table https://play.tailwindcss.com/15x2GSQqDB?size=320x640 -->
-  <!-- 20220317 1657 Sticky readjust proof of concept https://jsfiddle.net/s79ey06L/2/ -->
-  <!-- Do: Ball selector class -->
-  <!-- https://play.tailwindcss.com/FdcAKfIe8c?size=540x720 -->
-
   <div id="theme-root">
     <div id="app-root" class="flex flex-col w-screen h-screen overflow-auto text-sm text-theme-black-500 lg:grid lg:grid-cols-10 lg:overflow-hidden lg:text-lg" style="grid-template-rows: auto 1fr;">
-      <header class="flex-grow-0 col-span-10 sticky left-0 h-fit bg-theme-white-500 border-b border-theme-black-200 px-2.5 pt-[5px] pb-[3px] lg:px-4 lg:pt-3 lg:pb-2">
+      <header class="flex-grow-0 col-span-10 sticky left-0 h-fit bg-theme-white-500 border-b border-theme-black-200 px-2.5 pt-[5px] pb-[3px] lg:px-4 lg:pt-3 lg:pb-2 dark:bg-theme-black-500 dark:border-theme-white-800">
         <div class="inline-block align-middle">
           <div class="w-8 h-8 overflow-hidden lg:w-12 lg:h-12">
             <img class="object-cover w-10 h-10 -mt-1 ml-px lg:w-15 lg:h-15 lg:-mt-1.5 lg:ml-0.5 transition-transform duration-200 cursor-pointer hover:rotate-12" id="app-icon-header" />
