@@ -59,7 +59,7 @@ window.elements.appRoot.onscroll = element => {
     let isLeftFlushed = { before: previousPosition.x <= 0, now: currentPosition.x <= 0 };
     if (isLeftFlushed.before == isLeftFlushed.now) return;
 
-    console.log(`Scrolled by x. ${previousPosition.x}\t${currentPosition.x}`);
+    // console.log(`Scrolled by x. ${previousPosition.x}\t${currentPosition.x}`);
     getEntriesShadowedIds().forEach(id => tryUpdateEntriesShadow(id));
 };
 window.resizes.topContainer.observe(document.getElementById(window.elementIds.topContainer));

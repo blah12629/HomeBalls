@@ -49,14 +49,14 @@
             @if (RowIdentifierSettings.IsUsingDefault.Value)
             {
                 <center>
-                    <img src="@SpriteUrl" class="hidden object-contain scale-[.8] md:inline-block" />
+                    <img src="@SpriteUrl" class="hidden object-contain md:inline-block" />
                 </center>
             }
 
             else if (RowIdentifierSettings.IsShowingSprite.Value)
             {
                 <center>
-                    <img src="@SpriteUrl" class="object-contain scale-[.8]" />
+                    <img src="@SpriteUrl" class="object-contain" />
                 </center>
             }
         </Content>

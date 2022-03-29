@@ -1,14 +1,14 @@
 @inherits HomeBallsBallIdsSettingsComponentBase
 
-<button onclick="@OnToggleClicked" class="group m-0.5 w-6 h-6 overflow-hidden rounded-md bg-theme-white-500 hover:bg-theme-primary-100 active:bg-theme-primary-100 lg:w-7 lg:h-7">
+<button onclick="@OnToggleClicked" class="group m-0.5 w-[30px] h-[30px] overflow-hidden rounded-md bg-theme-white-500 hover:bg-theme-primary-100 active:bg-theme-primary-100 lg:w-7 lg:h-7">
     @if (IsSelected)
     {
-        <img src="@SpriteUrl" class="inline-block object-contain w-6 h-6" loading="lazy" />
+        <img src="@SpriteUrl" class="inline-block object-contain" loading="lazy" />
     }
 
     else
     {
-        <img src="@SpriteUrl" class="grayscale inline-block object-contain w-6 h-6 opacity-60 group-hover:opacity-100 group-active:opacity-100" loading="lazy" />
+        <img src="@SpriteUrl" class="grayscale inline-block object-contain opacity-60 group-hover:opacity-100 group-active:opacity-100" loading="lazy" />
     }
 </button>
 

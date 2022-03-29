@@ -27,14 +27,14 @@
         <Content>
             @if (Settings.IsShowingSprite.Value)
             {
-                <div class="mx-0.5 w-6 h-6 overflow-hidden">
+                <div class="mx-0.5 w-[30px] h-[30px] overflow-hidden">
                     @SpriteFragment
                 </div>
             }
 
             else
             {
-                <div class="mx-0.5 w-6 h-6 overflow-hidden grayscale opacity-60 group-hover:opacity-100 group-active:opacity-100">
+                <div class="mx-0.5 w-[30px] h-[30px] overflow-hidden grayscale opacity-60 group-hover:opacity-100 group-active:opacity-100">
                     @SpriteFragment
                 </div>
             }
@@ -68,7 +68,7 @@
         @<span class="text-sm font-semibold tabular-nums">777</span>;
 
     protected virtual RenderFragment SpriteFragment =>
-        @<img class="scale-105 inline-block" src="https://www.serebii.net/pokedex-sm/icon/774-r.png" loading="lazy" />;
+        @<img class="inline-block" src="https://www.serebii.net/pokedex-sm/icon/774-r.png" loading="lazy" />;
 
     protected virtual RenderFragment NameFragment =>
         @<span>
